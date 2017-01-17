@@ -25,7 +25,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     url = "https://twitter.com/NickStrayer"
 
 [params]
-    description = "A statistics blog from two great Phd students."
+    description = "A statistics blog from two goofy Phd students."
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.9.0"
