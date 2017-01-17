@@ -1,0 +1,318 @@
+    <!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<meta name="description" content="A website built through Hugo and blogdown.">
+		<meta name="generator" content="Hugo 0.17" />
+		<title>Hill for the Data Scientist: an xkcd story &middot; Lithium Theme</title>
+		<link rel="shortcut icon" href="../../../../images/favicon.ico">
+		<link rel="stylesheet" href="../../../../css/style.css">
+		<link rel="stylesheet" href="../../../../css/highlight.css">
+		
+
+		
+		<link rel="stylesheet" href="../../../../css/monosocialiconsfont.css">
+		
+
+		
+
+		<meta property="og:title" content="Hill for the Data Scientist: an xkcd story" />
+<meta property="og:description" content="This was inspired by Hilary Parker &amp; Roger Peng&rsquo;s Not So Standard Deviations Episode 28, which can be found here. It was suggested that it would be useful to lay out Hill&rsquo;s criterion for data scientists, I agree!
+
+[causation: An event or outcome B is influenced by a change in A]
+
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/" />
+
+
+<meta property="og:updated_time" content="2016-12-15T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+	    
+	    
+<meta itemprop="name" content="Hill for the Data Scientist: an xkcd story">
+<meta itemprop="description" content="This was inspired by Hilary Parker &amp; Roger Peng&rsquo;s Not So Standard Deviations Episode 28, which can be found here. It was suggested that it would be useful to lay out Hill&rsquo;s criterion for data scientists, I agree!
+
+[causation: An event or outcome B is influenced by a change in A]
+
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship.">
+
+
+<meta itemprop="dateModified" content="2016-12-15T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="447">
+
+
+
+<meta itemprop="keywords" content="" />
+
+	    
+
+  <meta name="twitter:card" content="summary"/>
+
+
+
+<meta name="twitter:title" content="Hill for the Data Scientist: an xkcd story"/>
+<meta name="twitter:description" content="This was inspired by Hilary Parker &amp; Roger Peng&rsquo;s Not So Standard Deviations Episode 28, which can be found here. It was suggested that it would be useful to lay out Hill&rsquo;s criterion for data scientists, I agree!
+
+[causation: An event or outcome B is influenced by a change in A]
+
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship."/>
+
+
+
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='../../../../'> <span class="arrow">←</span>Home</a>
+	
+
+	
+		<a href='../../../../about'>About</a>
+	
+
+	
+</nav>
+
+        <section id="wrapper">
+            <article class="post">
+                <header>
+                    <h1>Hill for the Data Scientist: an xkcd story</h1>
+                    <h2 class="headline">
+                    December 15, 2016 
+                    <br>
+                    
+                    </h2>
+                </header>
+                <section id="post-body">
+                    
+
+<p><br></p>
+
+<p><em>This was inspired by Hilary Parker &amp; Roger Peng&rsquo;s Not So Standard Deviations Episode 28, which can be found <a href="https://soundcloud.com/nssd-podcast/episode-28-writing-is-a-lot-harder-than-just-talking">here</a>. It was suggested that it would be useful to lay out Hill&rsquo;s criterion for data scientists, I agree!</em></p>
+
+<p><br></p>
+
+<p><span style="color:#EB6864; font-size: 20pt">[<strong>causation</strong>: An event or outcome B is influenced by a change in A]</span></p>
+
+<p><br>
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship.[1] He determined the following aspects of associations ought to be considered when assessing causality. When thinking about this problem, an <a href="https://xkcd.com/">xkcd</a> comic I have seen in <em>every lecture</em> on this topic came to mind:</p>
+
+<p><a href="http://xkcd.com/552/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/correlation.png" alt="correlation">
+</a></p>
+
+<p><br></p>
+
+<p>This inspired me to attempt to explain Hill&rsquo;s criteria using xkcd comics, both because it seemed fun, and also to motivate causal inference instructures to have some variety in which xkcd comic they include in lectures (bear with me, some of these are a stretch 🙈💁🏻).</p>
+
+<p><br></p>
+
+<h3 id="strength">Strength</h3>
+
+<ul>
+<li>How big is the effect you are seeing?</li>
+<li>Note: Hill suggests that huge effects <em>can</em> suggest causality, however this does not mean small effects <em>cannot</em></li>
+</ul>
+
+<p><a href="http://xkcd.com/1592/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/overthinking.png" alt="strength">
+</a></p>
+
+<p><br></p>
+
+<h3 id="consistency">Consistency</h3>
+
+<ul>
+<li>This is essentially <a href="http://kbroman.org/steps2rr/">reproducibility</a> &amp; replicability</li>
+<li>Can your analysis be reproduced?</li>
+<li>Has anyone been able to replicate your findings?</li>
+</ul>
+
+<p><a href="http://xkcd.com/242/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/the_difference.png" alt="consistency">
+</a></p>
+
+<p><br></p>
+
+<h3 id="specificity">Specificity</h3>
+
+<ul>
+<li>Can the association be pinpointed to a specific cause with no other plausible explanation?</li>
+<li>I appreciate Hill&rsquo;s caveat here, <em>&ldquo;if specificity exists we may be able to draw conclusions without hesitation; if it is not apparent, we are not thereby necessarily left sitting irresolutely on the fence.&rdquo;</em></li>
+</ul>
+
+<p><a href="http://xkcd.com/1217/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/cells.png" alt="specificity">
+</a></p>
+
+<p><br></p>
+
+<h3 id="temporality">Temporality</h3>
+
+<ul>
+<li>Does the timeline make sense?</li>
+<li>In general, the exposure ought to come before the outcome it is said to cause.</li>
+</ul>
+
+<p><a href="http://xkcd.com/925/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/cell_phones.png" alt="temporality">
+</a></p>
+
+<p><br></p>
+
+<h3 id="biological-gradient">Biological gradient</h3>
+
+<ul>
+<li>The wording of this point makes it a bit difficult to untangle from the medical application, but generally this refers to a dose effect</li>
+<li>Does increasing an exposure yield a change in the outcome.</li>
+</ul>
+
+<p><a href="http://xkcd.com/323/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/ballmer_peak.png" alt="biological-gradient">
+</a></p>
+
+<p><br></p>
+
+<h3 id="plausibility">Plausibility</h3>
+
+<ul>
+<li>Does the causal relationship make sense?</li>
+<li><em>This is also a tricky one since plausibility depends on knowledge at the time. If we found it perfectly plausible, we may not need statistics to show the relationship.</em></li>
+</ul>
+
+<p><a href="http://xkcd.com/605/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/extrapolating.png" alt="plausibility">
+</a></p>
+
+<p><br></p>
+
+<h3 id="coherence">Coherence</h3>
+
+<ul>
+<li>Similar to plausibility, is there a logical argument that can be made by/to experts in the field regarding causality.</li>
+<li>Does it fit into the understanding of the field (<em>authors note</em>: this should have caveats too&hellip;the field could be wrong).</li>
+</ul>
+
+<p><a href="http://xkcd.com/1170/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/bridge.png" alt="coherence">
+</a></p>
+
+<p><br></p>
+
+<h3 id="experiment">Experiment</h3>
+
+<ul>
+<li>If a controlled experiment can take place, this can strengthen the argument for causality</li>
+<li>I view this as a general attempt to implement a counterfactual analysis.</li>
+</ul>
+
+<p><a href="http://xkcd.com/1462/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/blind_trials.png" alt="experiment">
+</a></p>
+
+<p><br></p>
+
+<h3 id="analogy">Analogy</h3>
+
+<ul>
+<li>Have we seen a similar effect from a similar exposure?</li>
+</ul>
+
+<p><a href="http://xkcd.com/882/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/significant.png" alt="analogy">
+</a></p>
+
+<p><br></p>
+
+<p>[1] Hill, A. B. (1965). The Environment and Disease: Association or Causation? Proceedings of the Royal Society of Medicine, 58(5), 295–300.</p>
+
+<p><em>Think I&rsquo;ve missed something? Submit a <a href="https://github.com/LucyMcGowan/lucymcgowan.github.io/pulls">PR</a>.</em></p>
+
+                </section>
+            </article>
+            <footer id="post-meta" class="clearfix">
+                
+                        <img class="avatar" src="../../../../images/avatar.png">
+                        <div>
+                            <span class="dark"></span>
+                            <span></span>
+                        </div>
+                    
+                <section id="sharing">
+                    <a class="twitter" href="https://twitter.com/intent/tweet?text=%2f2016%2f12%2f15%2fhill-for-the-data-scientist-an-xkcd-story%2f - Hill%20for%20the%20Data%20Scientist%3a%20an%20xkcd%20story "><span class="icon-twitter"> Tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+                </section>
+            </footer>
+
+            
+
+            <ul id="post-list" class="archive readmore">
+    <h3>Read more</h3>
+    
+    
+        
+        <li>
+            <a href="../../../../2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">Hill for the Data Scientist: an xkcd story<aside class="dates">Dec 15</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="../../../../about/">About<aside class="dates">May 5</aside></a>
+        </li>
+        
+   
+    
+        
+        <li>
+            <a href="../../../../1/01/01/"><aside class="dates">Jan 1</aside></a>
+        </li>
+        
+   
+</ul>
+            <footer id="footer">
+    
+    <p class="small">
+    
+        © Copyright 2017 
+    
+    </p>
+</footer>
+
+        </section>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="../../../../js/main.js"></script>
+<script src="../../../../js/highlight.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+    </body>
+</html>

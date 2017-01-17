@@ -1,0 +1,153 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2016-12-15
+title: "Hill for the Data Scientist: an xkcd story"
+---
+
+<br>
+
+*This was inspired by Hilary Parker & Roger Peng's Not So Standard Deviations Episode 28, which can be found [here](https://soundcloud.com/nssd-podcast/episode-28-writing-is-a-lot-harder-than-just-talking). It was suggested that it would be useful to lay out Hill's criterion for data scientists, I agree!*
+
+<br>
+
+<span style="color:#EB6864; font-size: 20pt">[**causation**: An event or outcome B is influenced by a change in A]</span>
+
+<br>
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship.[1] He determined the following aspects of associations ought to be considered when assessing causality. When thinking about this problem, an [xkcd](https://xkcd.com/) comic I have seen in *every lecture* on this topic came to mind:
+
+<a href="http://xkcd.com/552/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/correlation.png" alt="correlation">
+</a>
+
+<br>
+
+This inspired me to attempt to explain Hill's criteria using xkcd comics, both because it seemed fun, and also to motivate causal inference instructures to have some variety in which xkcd comic they include in lectures (bear with me, some of these are a stretch 🙈💁🏻). 
+
+
+
+<br>
+
+### Strength
+
+* How big is the effect you are seeing?
+* Note: Hill suggests that huge effects *can* suggest causality, however this does not mean small effects *cannot* 
+
+
+
+<a href="http://xkcd.com/1592/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/overthinking.png" alt="strength">
+</a>
+
+
+<br>
+
+### Consistency
+
+* This is essentially [reproducibility](http://kbroman.org/steps2rr/) & replicability
+* Can your analysis be reproduced?
+* Has anyone been able to replicate your findings?
+
+
+<a href="http://xkcd.com/242/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/the_difference.png" alt="consistency">
+</a>
+
+
+<br>
+
+### Specificity
+
+* Can the association be pinpointed to a specific cause with no other plausible explanation?
+* I appreciate Hill's caveat here, *"if specificity exists we may be able to draw conclusions without hesitation; if it is not apparent, we are not thereby necessarily left sitting irresolutely on the fence."*
+
+
+<a href="http://xkcd.com/1217/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/cells.png" alt="specificity">
+</a>
+
+
+<br>
+
+### Temporality
+
+* Does the timeline make sense? 
+* In general, the exposure ought to come before the outcome it is said to cause.
+
+
+<a href="http://xkcd.com/925/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/cell_phones.png" alt="temporality">
+</a>
+
+
+<br>
+
+### Biological gradient
+
+* The wording of this point makes it a bit difficult to untangle from the medical application, but generally this refers to a dose effect
+* Does increasing an exposure yield a change in the outcome.
+
+
+<a href="http://xkcd.com/323/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/ballmer_peak.png" alt="biological-gradient">
+</a>
+
+
+<br>
+
+### Plausibility
+
+* Does the causal relationship make sense?
+* *This is also a tricky one since plausibility depends on knowledge at the time. If we found it perfectly plausible, we may not need statistics to show the relationship.*
+
+
+<a href="http://xkcd.com/605/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/extrapolating.png" alt="plausibility">
+</a>
+
+
+<br>
+
+### Coherence
+
+* Similar to plausibility, is there a logical argument that can be made by/to experts in the field regarding causality.
+* Does it fit into the understanding of the field (*authors note*: this should have caveats too...the field could be wrong).
+
+
+<a href="http://xkcd.com/1170/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/bridge.png" alt="coherence">
+</a>
+
+
+<br>
+
+### Experiment
+
+* If a controlled experiment can take place, this can strengthen the argument for causality 
+* I view this as a general attempt to implement a counterfactual analysis.
+
+
+<a href="http://xkcd.com/1462/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/blind_trials.png" alt="experiment">
+</a>
+
+
+<br>
+
+### Analogy
+
+* Have we seen a similar effect from a similar exposure? 
+
+
+<a href="http://xkcd.com/882/" target="_blank">
+  <img src="http://imgs.xkcd.com/comics/significant.png" alt="analogy">
+</a>
+
+
+<br>
+
+
+[1] Hill, A. B. (1965). The Environment and Disease: Association or Causation? Proceedings of the Royal Society of Medicine, 58(5), 295–300.
+
+
+*Think I've missed something? Submit a [PR](https://github.com/LucyMcGowan/lucymcgowan.github.io/pulls).*
