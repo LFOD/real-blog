@@ -1,4 +1,5 @@
 baseurl = "/"
+publishDir = "docs"
 relativeurls = true
 languageCode = "en-us"
 title = "Lithium Theme"
