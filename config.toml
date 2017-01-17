@@ -2,8 +2,8 @@ baseurl = "/"
 publishDir = "docs"
 relativeurls = true
 languageCode = "en-us"
-title = "Lithium Theme"
-theme = "hugo-cactus-theme"
+title = "Live Free or Dichotomize"
+theme = "hugo-theme-casper"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
@@ -16,13 +16,16 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     url = "/about/"
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/rstudio/blogdown"
+    url = "https://github.com/lfod/blog"
 [[menu.main]]
-    name = "Twitter"
-    url = "https://twitter.com/rstudio"
+    name = "Lucy's Twitter"
+    url = "https://twitter.com/LucyStats"
+[[menu.main]]
+    name = "Nick's Twitter"
+    url = "https://twitter.com/NickStrayer"
 
 [params]
-    description = "A website built through Hugo and blogdown."
+    description = "A statistics blog from two great Phd students."
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.9.0"
@@ -30,7 +33,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     highlightjsTheme = "github"
 
     [params.logo]
-    url = "logo.png"
+    url = "images/logo.png"
     width = 50
     height = 50
     alt = "Logo"

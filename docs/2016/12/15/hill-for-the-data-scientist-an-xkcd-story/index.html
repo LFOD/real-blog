@@ -1,98 +1,158 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-us">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<meta name="description" content="A website built through Hugo and blogdown.">
-		<meta name="generator" content="Hugo 0.17" />
-		<title>Hill for the data scientist: an xkcd story &middot; Lithium Theme</title>
-		<link rel="shortcut icon" href="../../../../images/favicon.ico">
-		<link rel="stylesheet" href="../../../../css/style.css">
-		<link rel="stylesheet" href="../../../../css/highlight.css">
-		
+<head>
 
-		
-		<link rel="stylesheet" href="../../../../css/monosocialiconsfont.css">
-		
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-		
-
-		<meta property="og:title" content="Hill for the data scientist: an xkcd story" />
-<meta property="og:description" content="This was inspired by Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 28. It was suggested that it would be useful to lay out Hill&#39;s criterion for data scientists, I agree!" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/" />
+    
 
 
-<meta property="og:updated_time" content="2016-12-15T15:41:30-06:00"/>
-
-
-
-
-
-
-
-
-
-
-	    
-	    
-<meta itemprop="name" content="Hill for the data scientist: an xkcd story">
-<meta itemprop="description" content="This was inspired by Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 28. It was suggested that it would be useful to lay out Hill&#39;s criterion for data scientists, I agree!">
-
-
-<meta itemprop="dateModified" content="2016-12-15T15:41:30-06:00" />
-<meta itemprop="wordCount" content="447">
-
-
-
-<meta itemprop="keywords" content="" />
-
-	    
-
-  <meta name="twitter:card" content="summary"/>
+    
+        <meta name="twitter:card" content="summary"/>
+    
 
 
 
 <meta name="twitter:title" content="Hill for the data scientist: an xkcd story"/>
-<meta name="twitter:description" content="This was inspired by Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 28. It was suggested that it would be useful to lay out Hill&#39;s criterion for data scientists, I agree!"/>
+<meta name="twitter:description" content="This was inspired by Hilary Parker &amp; Roger Peng’s Not So Standard Deviations Episode 28, which can be found here. It was suggested that it would be useful to lay out Hill’s criterion for data scientists, I agree!
+
+ [causation: An event or outcome B is influenced by a change in A]  
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship."/>
+
+
+
+  	<meta property="og:title" content=" Hill for the data scientist: an xkcd story &middot;  Live Free or Dichotomize" />
+  	<meta property="og:site_name" content="Live Free or Dichotomize" />
+  	<meta property="og:url" content="/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2016-12-15T15:41:30-06:00" />
+
+    
+    
+
+    <title>
+       Hill for the data scientist: an xkcd story &middot;  Live Free or Dichotomize
+    </title>
+
+    <meta name="description" content="A statistics blog from two great Phd students." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="../../../../images/favicon.ico">
+	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.17" />
+
+    <link rel="canonical" href="../../../../2016/12/15/hill-for-the-data-scientist-an-xkcd-story/" />
+
+    
+
+    
 
 
 
 
 
 
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="../../../../about/">About</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/lfod/blog">GitHub</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/NickStrayer">Nick&#39;s Twitter</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
 
 
 
-	</head>
 
-    <body>
-       <nav class="main-nav">
-	
-	
-		<a href='../../../../'> <span class="arrow">←</span>Home</a>
-	
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
 
-	
-		<a href='../../../../about'>About</a>
-	
 
-	
-</nav>
+  
+      <a class="blog-logo" href="../../../../"><img src="../../../../#ZgotmplZ" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
 
-        <section id="wrapper">
-            <article class="post">
-                <header>
-                    <h1>Hill for the data scientist: an xkcd story</h1>
-                    <h2 class="headline">
-                    December 15, 2016 
-                    <br>
-                    
-                    </h2>
-                </header>
-                <section id="post-body">
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Hill for the data scientist: an xkcd story</h1>
+        <small>This was inspired by Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 28. It was suggested that it would be useful to lay out Hill&#39;s criterion for data scientists, I agree!</small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2016-12-15T15:41:30-06:00">
+            Dec 15, 2016
+          </time>
+        
+         
+        </section>
+    </header>
+
+    <section class="post-content">
 
 
 <p><br></p>
@@ -213,69 +273,80 @@
 
 
 
-                </section>
-            </article>
-            <footer id="post-meta" class="clearfix">
-                
-                        <img class="avatar" src="../../../../images/avatar.png">
-                        <div>
-                            <span class="dark"></span>
-                            <span></span>
-                        </div>
-                    
-                <section id="sharing">
-                    <a class="twitter" href="https://twitter.com/intent/tweet?text=%2f2016%2f12%2f15%2fhill-for-the-data-scientist-an-xkcd-story%2f - Hill%20for%20the%20data%20scientist%3a%20an%20xkcd%20story "><span class="icon-twitter"> Tweet</span></a>
+    </section>
 
-<a class="facebook" href="#" onclick="
-    window.open(
-      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
-      'facebook-share-dialog',
-      'width=626,height=436');
-    return false;"><span class="icon-facebook-rect"> Share</span>
-</a>
 
-                </section>
-            </footer>
+  <footer class="post-footer">
 
-            
 
-            <ul id="post-list" class="archive readmore">
-    <h3>Read more</h3>
     
+    <figure class="author-image">
+        <a class="img" href="../../../../" style="background-image: url(/#ZgotmplZ)"><span class="hidden">'s Picture</span></a>
+    </figure>
     
+
+    
+
+
+
+
+
+<section class="author">
+  <h4><a href="../../../../">Lucy D&#39;Agostino McGowan</a></h4>
+  
+  <p>Currently excited about: observational study methods, translational research, BB-8</p>
+  
+  <div class="author-meta">
+    <span class="author-location icon-location">Nashville, TN</span>
+    <span class="author-link icon-link"><a href="http://lucymcgowan.com">http://lucymcgowan.com</a></span>
+  </div>
+</section>
+
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Hill%20for%20the%20data%20scientist%3a%20an%20xkcd%20story&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=%2f2016%2f12%2f15%2fhill-for-the-data-scientist-an-xkcd-story%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=%2f2016%2f12%2f15%2fhill-for-the-data-scientist-an-xkcd-story%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+  <a class="icon-pinterest" style="font-size: 1.4em" href="http://pinterest.com/pin/create/button/?url=%2f2016%2f12%2f15%2fhill-for-the-data-scientist-an-xkcd-story%2f&amp;description=Hill%20for%20the%20data%20scientist%3a%20an%20xkcd%20story"
+      onclick="window.open(this.href, 'pinterest-share','width=580,height=296');return false;">
+      <span class="hidden">Pinterest</span>
+  </a>
+  <a class="icon-google-plus" style="font-size: 1.4em" href="https://plus.google.com/share?url=%2f2016%2f12%2f15%2fhill-for-the-data-scientist-an-xkcd-story%2f"
+     onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+      <span class="hidden">Google+</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
         
-        <li>
-            <a href="../../../../2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">Hill for the data scientist: an xkcd story<aside class="dates">Dec 15</aside></a>
-        </li>
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
         
-   
+    </footer>
+    </div>
+    <script type="text/javascript" src="../../../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../../../../js/index.js"></script>
     
-        
-        <li>
-            <a href="../../../../about/">About<aside class="dates">May 5</aside></a>
-        </li>
-        
-   
-</ul>
-            <footer id="footer">
-    
-    <p class="small">
-    
-        © Copyright 2017 
-    
-    </p>
-</footer>
-
-        </section>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="../../../../js/main.js"></script>
-<script src="../../../../js/highlight.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-
-
-
-    </body>
+</body>
 </html>
+
