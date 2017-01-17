@@ -49,7 +49,7 @@ flip_data &amp;lt;-  data_frame(flip = c(&amp;quot;tails&amp;quot;, &amp;quot;ta
 #Plot the coin flips. 
 #Code for plot_flips() is at the end of this document (it&amp;#39;s ugly)
 flip_data %&amp;gt;% plot_flips()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2016/12/24/wait-what-are-p-values/figures/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Okay, so we got &lt;strong&gt;2&lt;/strong&gt; heads on our &lt;strong&gt;6&lt;/strong&gt; flips. Obviously the data given to us is from an unfair coin. You’re a good &lt;a href=&#34;https://en.wikipedia.org/wiki/Frequentist_inference&#34;&gt;frequentist&lt;/a&gt; however, so you decide that, to be safe, you should repeat the experiment again to see what you get.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Oh no, you dropped your coin, better use R instead.&lt;/em&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#Function to flip our coin 6 times
@@ -63,7 +63,7 @@ second_flip &amp;lt;- flip_coin()
 
 #plot it
 second_flip %&amp;gt;% plot_flips()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2016/12/24/wait-what-are-p-values/figures/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Oh look at that… 2 heads… that’s nice, but maybe we should do this a few more times. Maybe 100?&lt;/p&gt;
 &lt;p&gt;Back to R…&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#Dataframe to hold our coin flips
@@ -88,7 +88,7 @@ flip_results %&amp;gt;%
   plot_flips() + 
   facet_wrap(~trial) + #make a new mini plot for each trial
   labs(title = &amp;quot;Six Coin Flips | 100 Trials&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2016/12/24/wait-what-are-p-values/figures/unnamed-chunk-3-1.png&#34; width=&#34;960&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;960&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Well look at that, investigating this plot it doesn’t actually seem that out of the ordinary to get 4 tails in 6 flips, even though intuitively that sounds like tails happening twice as often as heads.&lt;/p&gt;
 &lt;p&gt;Just to make sure lets simplify the above plot to summarize the number of tails we saw for each of our 100 trials.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#Count how many tails we got in each trial
@@ -149,7 +149,7 @@ tails_by_trial %&amp;gt;%
         panel.grid.minor = element_blank(),
         legend.position = &amp;quot;top&amp;quot;) + 
   scale_fill_discrete(guide = guide_legend(reverse=T))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/2016/12/24/wait-what-are-p-values/figures/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The data we have: &lt;strong&gt;4&lt;/strong&gt; tails out of &lt;strong&gt;6&lt;/strong&gt; flips, looks pretty darn normal if our coin was fair. Case closed, right? Well you are a statistician so it’s your job to distill this down to a number, so let’s see exactly how “normal” our result is. We will do this by simply counting. Looking at the 100 trials that we did, how many times did the number of tails look at least as unfair as our data? Aka, how many times did we flip 4 or more tails in our 100 trials?&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;unusualness &amp;lt;- sum(tails_by_trial$number_of_tails &amp;gt;= 4) 
 unusualness&lt;/code&gt;&lt;/pre&gt;
