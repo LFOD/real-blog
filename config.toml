@@ -32,9 +32,5 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     highlightjsLang = ["r", "yaml"]
     highlightjsTheme = "github"
 
-    [params.logo]
-    url = "images/logo.png"
-    width = 50
-    height = 50
-    alt = "Logo"
+    logo = "images/logo.png"
 
