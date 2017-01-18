@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+
+
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Regression modeling strategies: two students&#39; perspectives"/>
+<meta name="twitter:description" content="Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his book each spring at Vanderbilt.
+This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous distain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.
+This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it."/>
+
+
+
+  	<meta property="og:title" content=" Regression modeling strategies: two students&#39; perspectives &middot;  Live Free or Dichotomize" />
+  	<meta property="og:site_name" content="Live Free or Dichotomize" />
+  	<meta property="og:url" content="/2017/01/17/regression-modeling-strategies-two-students-perspectives/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2017-01-17T22:15:13-06:00" />
+
+    
+    <meta property="og:article:tag" content="rms" />
+    
+    
+
+    <title>
+       Regression modeling strategies: two students&#39; perspectives &middot;  Live Free or Dichotomize
+    </title>
+
+    <meta name="description" content="A statistics blog from two goofy Phd students." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="../../../../images/favicon.ico">
+	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.17" />
+
+    <link rel="canonical" href="../../../../2017/01/17/regression-modeling-strategies-two-students-perspectives/" />
+
+    
+
+    
+
+
+
+
+
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="../../../../about/">About</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/lfod/blog">GitHub</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/NickStrayer">Nick&#39;s Twitter</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="../../../../"><img src="../../../../images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Regression modeling strategies: two students&#39; perspectives</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-01-17T22:15:13-06:00">
+            Jan 17, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="../../../../tags/rms/">#rms</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+
+
+<p>Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his <a href="https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;qid=1484713166&amp;sr=8-1&amp;keywords=regression+modeling+strategies">book</a> each spring at Vanderbilt.</p>
+<p>This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous distain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.</p>
+<p>This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it. We will be using the #rms tag to thread the series to make it easy to follow along.</p>
+<p>To kick things off, I encourage everyone to get a flavor of our beloved professor’s style but trying out the following <code>R</code> code:</p>
+<pre><code>library(&quot;fortunes&quot;)
+fortune(&quot;Harrell&quot;)</code></pre>
+<p>Here is one of my personal favorites:</p>
+<pre><code>## 
+## The fact that some people murder doesn&#39;t mean we should copy them. And
+## murdering data, though not as serious, should also be avoided.
+##    -- Frank E. Harrell (answering a question on categorization of
+##       continuous variables in survival modelling)
+##       R-help (July 2005)</code></pre>
+<p>We have been planning on kicking this series off for a while, but it happens to serendipitously coincide with Frank jumping online via <a href="www.twitter.com/f2harrell">twitter</a> and a <a href="http://www.fharrell.com">blog</a>! We are so excited to see how this goes.</p>
+
+
+
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="../../../../" style="background-image: url(/images/logo.png)"><span class="hidden">'s Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+
+
+
+<div class="post-author">
+
+    <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/8431897?v=3&amp;s=460" alt="Lucy D&#39;Agostino McGowan image" width="90" height="90">
+    <br>
+    <span style="font-size: 1.02em;font-weight: bold;">
+        Lucy D&#39;Agostino McGowan
+    </span>
+    |
+    <a style = "text-decoration: none;" class = "post-author__text" href = http://lucymcgowan.com >
+        <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+    </a>
+
+    <a class="icon-twitter post-author__text" style="font-size: 1.4em; text-decoration: none;" href = https://twitter.com/lucyStats onclick="window.open(this.href"></a>
+
+    <a style = "text-decoration: none;" class = "post-author__text" href = https://github.com/LucyMcGowan >
+        <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+    </a>
+
+
+    <br>
+
+    <p class="post-author__text">Currently excited about: observational study methods, translational research, BB-8</p>
+    
+
+
+    
+<section class="share">
+  <h4>Share this post</h4>
+  <a class="icon-twitter" style="font-size: 1.4em" href="https://twitter.com/share?text=Regression%20modeling%20strategies%3a%20two%20students%27%20perspectives&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=%2f2017%2f01%2f17%2fregression-modeling-strategies-two-students-perspectives%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+      <span class="hidden">Twitter</span>
+  </a>
+  <a class="icon-facebook" style="font-size: 1.4em" href="https://www.facebook.com/sharer/sharer.php?u=%2f2017%2f01%2f17%2fregression-modeling-strategies-two-students-perspectives%2f"
+      onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+      <span class="hidden">Facebook</span>
+  </a>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="../../../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../../../../js/index.js"></script>
+    
+</body>
+</html>
+
