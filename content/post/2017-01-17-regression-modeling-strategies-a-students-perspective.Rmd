@@ -17,7 +17,7 @@ This was one of my all time favorite courses. It has just the right amount of pr
 
 This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it. We will be using the #rms tag to thread the series to make it easy to follow along.
 
-To kick things off, I encourage everyone to get a flavor of our beloved professor's style but trying out the following `R` code:
+To kick things off, I encourage everyone to get a flavor of our beloved professor's style by trying out the following `R` code:
 
 
 ```

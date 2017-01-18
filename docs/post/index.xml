@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Post-rsses on Live Free or Dichotomize</title>
+    <title>Posts on Live Free or Dichotomize</title>
     <link>/post/index.xml</link>
-    <description>Recent content in Post-rsses on Live Free or Dichotomize</description>
+    <description>Recent content in Posts on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 17 Jan 2017 22:15:13 -0600</lastBuildDate>
@@ -22,10 +22,11 @@
 &lt;p&gt;Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his &lt;a href=&#34;https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;amp;qid=1484713166&amp;amp;sr=8-1&amp;amp;keywords=regression+modeling+strategies&#34;&gt;book&lt;/a&gt; each spring at Vanderbilt.&lt;/p&gt;
 &lt;p&gt;This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.&lt;/p&gt;
 &lt;p&gt;This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it. We will be using the #rms tag to thread the series to make it easy to follow along.&lt;/p&gt;
-&lt;p&gt;To kick things off, I encourage everyone to get a flavor of our beloved professor’s style but trying out the following &lt;code&gt;R&lt;/code&gt; code:&lt;/p&gt;
+&lt;p&gt;To kick things off, I encourage everyone to get a flavor of our beloved professor’s style by trying out the following &lt;code&gt;R&lt;/code&gt; code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;library(&amp;quot;fortunes&amp;quot;)
 fortune(&amp;quot;Harrell&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is one of my personal favorites:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;fortunes&amp;#39; was built under R version 3.3.2&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## The fact that some people murder doesn&amp;#39;t mean we should copy them. And
 ## murdering data, though not as serious, should also be avoided.
