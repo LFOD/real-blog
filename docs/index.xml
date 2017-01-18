@@ -10,17 +10,17 @@
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Regression modeling strategies: two students&#39; perspectives</title>
-      <link>/2017/01/17/regression-modeling-strategies-two-students-perspectives/</link>
+      <title>Regression modeling strategies: a student&#39;s perspective</title>
+      <link>/2017/01/17/regression-modeling-strategies-a-students-perspective/</link>
       <pubDate>Tue, 17 Jan 2017 22:15:13 -0600</pubDate>
       
-      <guid>/2017/01/17/regression-modeling-strategies-two-students-perspectives/</guid>
+      <guid>/2017/01/17/regression-modeling-strategies-a-students-perspective/</guid>
       <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his &lt;a href=&#34;https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;amp;qid=1484713166&amp;amp;sr=8-1&amp;amp;keywords=regression+modeling+strategies&#34;&gt;book&lt;/a&gt; each spring at Vanderbilt.&lt;/p&gt;
-&lt;p&gt;This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous distain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.&lt;/p&gt;
+&lt;p&gt;This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.&lt;/p&gt;
 &lt;p&gt;This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it. We will be using the #rms tag to thread the series to make it easy to follow along.&lt;/p&gt;
 &lt;p&gt;To kick things off, I encourage everyone to get a flavor of our beloved professor’s style but trying out the following &lt;code&gt;R&lt;/code&gt; code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;library(&amp;quot;fortunes&amp;quot;)
