@@ -7,6 +7,8 @@ tags: ["javascript","visualization"]
 comments: true
 ---
 
+<br>
+
 I happened to stumble upon the [preview release page](https://www.rstudio.com/products/rstudio/download/preview/) for RStudio recently and noticed something that made me exorbitantly happy.  
 
 
