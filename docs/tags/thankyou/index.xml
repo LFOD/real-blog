@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Live Free or Dichotomize</title>
+    <link>/tags/thankyou/index.xml</link>
+    <description>Recent content on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/thankyou/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>CatterPlot thank you note</title>
+      <link>/2017/01/25/catterplot-thank-you-note/</link>
+      <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
+      
+      <guid>/2017/01/25/catterplot-thank-you-note/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/Amstat_Lara&#34;&gt;Lara Harmon&lt;/a&gt; has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+On the off-chance you have not felt judged by a cat today, my cat can help you out. &lt;a href=&#34;https://t.co/sApgbyYztD&#34;&gt;pic.twitter.com/sApgbyYztD&lt;/a&gt;
+&lt;/p&gt;
+— Lara Harmon (&lt;span class=&#34;citation&#34;&gt;@Amstat_Lara&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/Amstat_Lara/status/813800278059339776&#34;&gt;December 27, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+You&#39;ll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme. /life goals
+&lt;/p&gt;
+— Lara Harmon (&lt;span class=&#34;citation&#34;&gt;@Amstat_Lara&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/Amstat_Lara/status/824013270361264129&#34;&gt;January 24, 2017&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+Stats Cat&#39;s back from her first business trip. Looks about as jetlagged as I am! &lt;a href=&#34;https://twitter.com/hashtag/JMM17?src=hash&#34;&gt;#JMM17&lt;/a&gt; &lt;a href=&#34;https://t.co/JLzSbMKj3I&#34;&gt;pic.twitter.com/JLzSbMKj3I&lt;/a&gt;
+&lt;/p&gt;
+— Lara Harmon (&lt;span class=&#34;citation&#34;&gt;@Amstat_Lara&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/Amstat_Lara/status/818875591294337025&#34;&gt;January 10, 2017&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;so we decided to write her an appropriate thank you note, using &lt;a href=&#34;https://github.com/Gibbsdavidl/CatterPlots&#34;&gt;&lt;code&gt;CatterPlots&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;If you haven’t installed this purrrrfect package, do the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::install_github(&amp;quot;Gibbsdavidl/CatterPlots&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;CatterPlots&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/8082429/plot-a-heart-in-r&#34;&gt;Stack Overflow&lt;/a&gt; taught me how to plot a heart in &lt;code&gt;R&lt;/code&gt; (perhaps they will be the subject of my next thank you note):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t=seq(0, 2*pi, by=0.1)
+xhrt &amp;lt;- function(t) 16*sin(t)^3
+yhrt &amp;lt;- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
+y=yhrt(t)
+x=xhrt(t)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Thank you, Lara! We appreciate you!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;meow &amp;lt;- multicat(xs=x, ys=y,
+                 cat=c(1,2,3,4,5,6,7,8,9,10),
+                 catcolor=list(c(.31,.81,0,.85)),
+                 canvas=c(-0.1,1.1, -0.1, 1.1),
+                 xlab = &amp;quot;some cats&amp;quot;,
+                 ylab = &amp;quot;more cats&amp;quot;,
+                 main=&amp;quot;Thank you, Lara!&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-01-25-catterplot-thank-you-note_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>dplyr Thank You Note</title>
+      <link>/2017/01/07/dplyr-thank-you-note/</link>
+      <pubDate>Sat, 07 Jan 2017 12:12:28 -0600</pubDate>
+      
+      <guid>/2017/01/07/dplyr-thank-you-note/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using &lt;code&gt;dplyr&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dear &amp;lt;-function(input, you=&amp;quot;you&amp;quot;){
+  cat(input, &amp;quot;\nDear &amp;quot;, you,&amp;quot;,&amp;quot;, sep = &amp;quot;&amp;quot;)
+}
+thank_you &amp;lt;- function(input, for_the = &amp;quot;gift&amp;quot;){
+  cat(input, &amp;quot;\n Thank you for the&amp;quot;, for_the)
+}
+
+personal_touch &amp;lt;- function(input, from_the_heart = &amp;quot;I hope you have a lovely New Year!&amp;quot;){
+  cat(input, from_the_heart)
+}
+
+from &amp;lt;- function(input, us = &amp;quot;us&amp;quot;){
+  cat(input, &amp;quot;\n Cheers,\n&amp;quot;, us)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;quot;A dplyr Thank You Note&amp;quot; %&amp;gt;%
+  dear(you = &amp;quot;R Studio&amp;quot;) %&amp;gt;%
+  thank_you(for_the = &amp;quot;opportunity to attend rstudio::conf.&amp;quot;) %&amp;gt;%
+  personal_touch(from_the_heart = &amp;quot;We are SO looking forward to learning from and with you all.&amp;quot;) %&amp;gt;%
+  from(us = &amp;quot;Lucy, Jacquelyn, and Alli&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## A dplyr Thank You Note
+## Dear R Studio, 
+##  Thank you for the opportunity to attend rstudio::conf. We are SO looking forward to learning from and with you all. 
+##  Cheers,
+##  Lucy, Jacquelyn, and Alli&lt;/code&gt;&lt;/pre&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,62 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-01-25T12:18:31-06:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- thankyou
+title: "CatterPlot thank you note"
+excerpt: "Lara Harmon has put in countless hours to build and uplift the ASA Student community. We are SO grateful."
+---
+
+[Lara Harmon](https://twitter.com/Amstat_Lara) has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by
+
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">On the off-chance you have not felt judged by a cat today, my cat can help you out. <a href="https://t.co/sApgbyYztD">pic.twitter.com/sApgbyYztD</a></p>&mdash; Lara Harmon (@Amstat_Lara) <a href="https://twitter.com/Amstat_Lara/status/813800278059339776">December 27, 2016</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+and
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">You&#39;ll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme. /life goals</p>&mdash; Lara Harmon (@Amstat_Lara) <a href="https://twitter.com/Amstat_Lara/status/824013270361264129">January 24, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+and 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Stats Cat&#39;s back from her first business trip. Looks about as jetlagged as I am! <a href="https://twitter.com/hashtag/JMM17?src=hash">#JMM17</a> <a href="https://t.co/JLzSbMKj3I">pic.twitter.com/JLzSbMKj3I</a></p>&mdash; Lara Harmon (@Amstat_Lara) <a href="https://twitter.com/Amstat_Lara/status/818875591294337025">January 10, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+so we decided to write her an appropriate thank you note, using [`CatterPlots`](https://github.com/Gibbsdavidl/CatterPlots).
+
+If you haven't installed this purrrrfect package, do the following:
+
+```{r, eval=FALSE}
+devtools::install_github("Gibbsdavidl/CatterPlots")
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library('CatterPlots')
+```
+
+[Stack Overflow](http://stackoverflow.com/questions/8082429/plot-a-heart-in-r) taught me how to plot a heart in `R` (perhaps they will be the subject of my next thank you note):
+
+```{r}
+t=seq(0, 2*pi, by=0.1)
+xhrt <- function(t) 16*sin(t)^3
+yhrt <- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
+y=yhrt(t)
+x=xhrt(t)
+```
+
+Thank you, Lara! We appreciate you!
+
+```{r}
+meow <- multicat(xs=x, ys=y,
+                 cat=c(1,2,3,4,5,6,7,8,9,10),
+                 catcolor=list(c(.31,.81,0,.85)),
+                 canvas=c(-0.1,1.1, -0.1, 1.1),
+                 xlab = "some cats",
+                 ylab = "more cats",
+                 main="Thank you, Lara!")
+```
+

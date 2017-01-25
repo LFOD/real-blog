@@ -1,0 +1,48 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-01-07T12:12:28-06:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- thankyou
+title: "dplyr Thank You Note"
+excerpt: "It's that post-holiday time of year to write some thank yous! I'm getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using dplyr"
+---
+
+
+It's that post-holiday time of year to write some thank yous! I'm getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using `dplyr`.
+```{r, message=FALSE, warning=FALSE}
+require(dplyr)
+```
+
+```{r}
+dear <-function(input, you="you"){
+  cat(input, "\nDear ", you,",", sep = "")
+}
+thank_you <- function(input, for_the = "gift"){
+  cat(input, "\n Thank you for the", for_the)
+}
+
+personal_touch <- function(input, from_the_heart = "I hope you have a lovely New Year!"){
+  cat(input, from_the_heart)
+}
+
+from <- function(input, us = "us"){
+  cat(input, "\n Cheers,\n", us)
+}
+```
+
+
+```{r}
+"A dplyr Thank You Note" %>%
+  dear(you = "R Studio") %>%
+  thank_you(for_the = "opportunity to attend rstudio::conf.") %>%
+  personal_touch(from_the_heart = "We are SO looking forward to learning from and with you all.") %>%
+  from(us = "Lucy, Jacquelyn, and Alli")
+```
+
+
+

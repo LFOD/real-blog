@@ -14,29 +14,28 @@
 
 
 
-<meta name="twitter:title" content="Regression modeling strategies: a student&#39;s perspective"/>
-<meta name="twitter:description" content="Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his book each spring at Vanderbilt.
-This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.
-This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it."/>
+<meta name="twitter:title" content="dplyr Thank You Note"/>
+<meta name="twitter:description" content="It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using dplyr.
+require(dplyr) dear &lt;-function(input, you=&quot;you&quot;){ cat(input, &quot;\nDear &quot;, you,&quot;,&quot;, sep = &quot;&quot;) } thank_you &lt;- function(input, for_the = &quot;gift&quot;){ cat(input, &quot;\n Thank you for the&quot;, for_the) } personal_touch &lt;- function(input, from_the_heart = &quot;I hope you have a lovely New Year!"/>
 
 
 
-  	<meta property="og:title" content=" Regression modeling strategies: a student&#39;s perspective &middot;  Live Free or Dichotomize" />
+  	<meta property="og:title" content=" dplyr Thank You Note &middot;  Live Free or Dichotomize" />
   	<meta property="og:site_name" content="Live Free or Dichotomize" />
-  	<meta property="og:url" content="/2017/01/17/regression-modeling-strategies-a-students-perspective/" />
+  	<meta property="og:url" content="/2017/01/07/dplyr-thank-you-note/" />
 
     
   	<meta property="og:type" content="article" />
 
-    <meta property="og:article:published_time" content="2017-01-17T22:15:13-06:00" />
+    <meta property="og:article:published_time" content="2017-01-07T12:12:28-06:00" />
 
     
-    <meta property="og:article:tag" content="rms" />
+    <meta property="og:article:tag" content="thankyou" />
     
     
 
     <title>
-       Regression modeling strategies: a student&#39;s perspective &middot;  Live Free or Dichotomize
+       dplyr Thank You Note &middot;  Live Free or Dichotomize
     </title>
 
     <meta name="description" content="A statistics blog from two goofy Phd students." />
@@ -60,7 +59,7 @@ This semester, Nick is enrolled in the course, and I will be TAing it, so we tho
     
     <meta name="generator" content="Hugo 0.17" />
 
-    <link rel="canonical" href="../../../../2017/01/17/regression-modeling-strategies-a-students-perspective/" />
+    <link rel="canonical" href="../../../../2017/01/07/dplyr-thank-you-note/" />
 
     
 
@@ -140,17 +139,17 @@ This semester, Nick is enrolled in the course, and I will be TAing it, so we tho
   <article class="post post">
 
     <header class="post-header">
-        <h1 class="post-title">Regression modeling strategies: a student&#39;s perspective</h1>
+        <h1 class="post-title">dplyr Thank You Note</h1>
         <small></small>
 
         <section class="post-meta">
         
-          <time class="post-date" datetime="2017-01-17T22:15:13-06:00">
-            Jan 17, 2017
+          <time class="post-date" datetime="2017-01-07T12:12:28-06:00">
+            Jan 7, 2017
           </time>
         
          
-          <span class="post-tag small"><a href="../../../../tags/rms/">#rms</a></span>
+          <span class="post-tag small"><a href="../../../../tags/thankyou/">#thankyou</a></span>
          
         </section>
     </header>
@@ -158,20 +157,32 @@ This semester, Nick is enrolled in the course, and I will be TAing it, so we tho
     <section class="post-content">
 
 
-<p>Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his <a href="https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;qid=1484713166&amp;sr=8-1&amp;keywords=regression+modeling+strategies">book</a> each spring at Vanderbilt.</p>
-<p>This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.</p>
-<p>This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it. We will be using the #rms tag to thread the series to make it easy to follow along.</p>
-<p>To kick things off, I encourage everyone to get a flavor of our beloved professor’s style by trying out the following <code>R</code> code:</p>
-<pre><code>library(&quot;fortunes&quot;)
-fortune(&quot;Harrell&quot;)</code></pre>
-<p>Here is one of my personal favorites:</p>
-<pre><code>## 
-## The fact that some people murder doesn&#39;t mean we should copy them. And
-## murdering data, though not as serious, should also be avoided.
-##    -- Frank E. Harrell (answering a question on categorization of
-##       continuous variables in survival modelling)
-##       R-help (July 2005)</code></pre>
-<p>We have been planning on kicking this series off for a while, but it happens to serendipitously coincide with Frank jumping online via <a href="www.twitter.com/f2harrell">twitter</a> and a <a href="http://www.fharrell.com">blog</a>! We are so excited to see how this goes.</p>
+<p>It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using <code>dplyr</code>.</p>
+<pre class="r"><code>require(dplyr)</code></pre>
+<pre class="r"><code>dear &lt;-function(input, you=&quot;you&quot;){
+  cat(input, &quot;\nDear &quot;, you,&quot;,&quot;, sep = &quot;&quot;)
+}
+thank_you &lt;- function(input, for_the = &quot;gift&quot;){
+  cat(input, &quot;\n Thank you for the&quot;, for_the)
+}
+
+personal_touch &lt;- function(input, from_the_heart = &quot;I hope you have a lovely New Year!&quot;){
+  cat(input, from_the_heart)
+}
+
+from &lt;- function(input, us = &quot;us&quot;){
+  cat(input, &quot;\n Cheers,\n&quot;, us)
+}</code></pre>
+<pre class="r"><code>&quot;A dplyr Thank You Note&quot; %&gt;%
+  dear(you = &quot;R Studio&quot;) %&gt;%
+  thank_you(for_the = &quot;opportunity to attend rstudio::conf.&quot;) %&gt;%
+  personal_touch(from_the_heart = &quot;We are SO looking forward to learning from and with you all.&quot;) %&gt;%
+  from(us = &quot;Lucy, Jacquelyn, and Alli&quot;)</code></pre>
+<pre><code>## A dplyr Thank You Note
+## Dear R Studio, 
+##  Thank you for the opportunity to attend rstudio::conf. We are SO looking forward to learning from and with you all. 
+##  Cheers,
+##  Lucy, Jacquelyn, and Alli</code></pre>
 
 
 
@@ -224,7 +235,7 @@ fortune(&quot;Harrell&quot;)</code></pre>
 
     
 <section class="share">
-  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=Regression%20modeling%20strategies%3a%20a%20student%27s%20perspective&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f01%2f17%2fregression-modeling-strategies-a-students-perspective%2f"
+  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=dplyr%20Thank%20You%20Note&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f01%2f07%2fdplyr-thank-you-note%2f"
       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
  </a></p>
 </section>
