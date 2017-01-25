@@ -1,0 +1,239 @@
+---
+author: "Nick Strayer"
+date: 2017-01-24T10:54:24+02:00
+title: "Custom JavaScript Visualizations in RMarkdown"
+excerpt: "Recently RStudio added JavaScript chunks to RMarkdown. This makes many exciting things possible. Among these things is making your own custom JavaScript visualizations of data managed in R, all without leaving the .Rmd document. This is a quick walkthrough of doing just that."
+tags: ["javascript","visualization"]
+comments: true
+---
+
+I happened to stumble upon the [preview release page](https://www.rstudio.com/products/rstudio/download/preview/) for RStudio recently and noticed something that made me exorbitantly happy.  
+
+
+> A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes... Support for JavaScript and CSS chunks in R Notebooks...
+
+_"Support for JavaScript and CSS chunks in R Notebooks"_! As someone who loves using javascript for plotting (and secretly for manipulating) data this is massively exciting. Previously my workflow for generating an interactive graphic would be something like: 
+
+- Download data
+- Clean data and do preliminary visualization in R
+- Export what I liked to a csv file and make a new directory with a set of `.html, .js, .css` files in it. 
+- Load data into javascript/d3.js in the new javascript file. 
+- Plot. 
+
+This workflow has served me very well, I did it probably 20 times a day when working at the New York Times and I am very fast with it. If you want to just make a stand alone visualization it's fantastic, however, as a biostatistician who works with a lot of other biostatisticians, people tend to want to see where the data comes from. 
+
+With Javascript chunks in `.Rmd` files you can explicitly show the code for data gathering/cleaning etc. in a language that your collaborators can understand, along with making custom d3 charts with that data. All without ever leaving RStudio. I will show you my quick and dirty solution to doing so. 
+
+## Getting data into Javascript
+
+Instead of generating a csv file in R and then loading that into javascript we will instead send the data directly through the html to javascript. (_Note:_ This wont work well with super large data).
+
+Inspired by [this](https://medium.com/@becausealice2/getting-r-and-d3-js-to-play-nicely-in-r-markdown-270e302a52d3#.772g93eb3) medium post I wrote a little function that takes a dataframe and sends it to the html document in the `.json` format. 
+
+```{r,message=FALSE, warning=FALSE}
+library(tidyverse)
+library(jsonlite)
+
+send_df_to_js <- function(df){
+  cat(
+    paste(
+    '<script>
+      var data = ',toJSON(df),';
+    </script>'
+    , sep="")
+  )
+}
+```
+
+To illustrate how it works we will generate some random data into a dataframe. 
+
+```{r}
+#Generate some random x and y data to plot
+n <- 300
+random_data <- data_frame(x = runif(n)*10) %>% 
+  mutate(y = 0.5*x^3 - 1.3*x^2 + rnorm(n, mean = 0, sd = 80),
+         group = paste("group", sample(c(1,2,3), n, replace = T)))
+```
+
+Now we send a snippit of the dataframe into the function to see the output...
+
+```{r}
+random_data %>% 
+  head() %>% 
+  send_df_to_js()
+```
+ 
+Beautiful, we have our data, in `json` format, wrapped in a script tag. Now we can send the whole dataframe through. This time I am using the `results = "asis"` option in the code chunk (`{r, results = "asis"}`), to write the results directly to the html document and not to the output like we did above. 
+
+```{r, results = "asis"}
+#Initiate data transfer protocol one
+send_df_to_js(random_data)
+```
+
+Now our data is inside our page's javascript scope and ready to be played with! 
+
+## Drawing pretty pictures
+
+Let's make a super simple d3 scatter plot to see this randomly generated data. All I have to do is include my desired javascript libraries, make a `div` element for my visualization to go into and then put my `{js}` block in. RMarkdown will slot the javascript into the page and we're good to go.  
+
+In this example I did...
+
+```
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<div id = "viz"></div> 
+
+` ` `{js}
+//code goes here
+` ` `
+```
+
+## Did it work? 
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+<div id = "viz"></div> 
+
+```{js, echo=TRUE}
+var point_vals = d3.select("#viz").append("p").text("Mouseover some data!");
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $("#did-it-work").width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d => d.x);
+var y_extent = d3.extent(data, d => d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select("#viz").append("svg")
+    .attr("width", width + 2*margin)
+    .attr("height", height + 2*margin)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin + "," + margin + ")");
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(".dots")
+    .data(data)
+  .enter().append("circle")
+    .attr("class", "dots")
+    .attr("fill", d => d.group === "group 1"? "steelblue":"orangered")
+    .attr("fill-opacity", 0.3)
+    .attr("r", 5)
+    .attr("cx", d => x(d.x) )
+    .attr("cy", d => y(d.y) )
+    .on("mouseover", function(d){
+       d3.selectAll(".dots").attr("r", 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr("r", 10);
+      
+       point_vals.text("X:" + d.x + " Y:" + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append("g")
+    .call(d3.axisLeft(y));
+```
+
+ 
+## Why/ When
+
+This is a bad example of a visualization for this scenario as something like plotly could do this in much less effort. If you're doing something more complicated/ bespoke then this is a great resource to have. 
+
+## Addendum 
+
+If you're interested, here's the javascript code I included to make the above graph. 
+
+```
+var point_vals = d3.select("#viz").append("p").text("Mouseover some data!");
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $("#did-it-work").width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d => d.x);
+var y_extent = d3.extent(data, d => d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select("#viz").append("svg")
+    .attr("width", width + 2*margin)
+    .attr("height", height + 2*margin)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin + "," + margin + ")");
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(".dots")
+    .data(data)
+  .enter().append("circle")
+    .attr("class", "dots")
+    .attr("fill", d => d.group === "group 1"? "steelblue":"orangered")
+    .attr("fill-opacity", 0.3)
+    .attr("r", 5)
+    .attr("cx", d => x(d.x) )
+    .attr("cy", d => y(d.y) )
+    .on("mouseover", function(d){
+       d3.selectAll(".dots").attr("r", 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr("r", 10);
+      
+       point_vals.text("X:" + d.x + " Y:" + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append("g")
+    .call(d3.axisLeft(y));
+```

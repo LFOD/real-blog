@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+
+
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Custom JS visualizations in RMarkdown"/>
+<meta name="twitter:description" content="I happened to stumble upon the preview release page for RStudio recently and noticed something that made me exorbitantly happy.
+ A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes… Support for JavaScript and CSS chunks in R Notebooks…
+ “Support for JavaScript and CSS chunks in R Notebooks”! As someone who loves using javascript for plotting (and secretly for manipulating) data this is massively exciting."/>
+
+
+
+  	<meta property="og:title" content=" Custom JS visualizations in RMarkdown &middot;  Live Free or Dichotomize" />
+  	<meta property="og:site_name" content="Live Free or Dichotomize" />
+  	<meta property="og:url" content="/2017/01/24/custom-js-visualizations-in-rmarkdown/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2017-01-24T10:54:24&#43;02:00" />
+
+    
+    <meta property="og:article:tag" content="javascript" />
+    
+    <meta property="og:article:tag" content="visualization" />
+    
+    
+
+    <title>
+       Custom JS visualizations in RMarkdown &middot;  Live Free or Dichotomize
+    </title>
+
+    <meta name="description" content="A statistics blog from two goofy Phd students." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="../../../../images/favicon.ico">
+	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+
+    
+      
+          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="../../../../2017/01/24/custom-js-visualizations-in-rmarkdown/" />
+
+    
+
+    
+
+
+
+
+
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="../../../../about/">About</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/lfod/blog">GitHub</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/NickStrayer">Nick&#39;s Twitter</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="../../../../"><img src="../../../../images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Custom JS visualizations in RMarkdown</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-01-24T10:54:24&#43;02:00">
+            Jan 24, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="../../../../tags/javascript/">#javascript</a></span>
+         
+          <span class="post-tag small"><a href="../../../../tags/visualization/">#visualization</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+
+
+<p>I happened to stumble upon the <a href="https://www.rstudio.com/products/rstudio/download/preview/">preview release page</a> for RStudio recently and noticed something that made me exorbitantly happy.</p>
+<blockquote>
+<p>A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes… Support for JavaScript and CSS chunks in R Notebooks…</p>
+</blockquote>
+<p><em>“Support for JavaScript and CSS chunks in R Notebooks”</em>! As someone who loves using javascript for plotting (and secretly for manipulating) data this is massively exciting. Previously my workflow for generating an interactive graphic would be something like:</p>
+<ul>
+<li>Download data</li>
+<li>Clean data and do preliminary visualization in R</li>
+<li>Export what I liked to a csv file and make a new directory with a set of <code>.html, .js, .css</code> files in it.</li>
+<li>Load data into javascript/d3.js in the new javascript file.</li>
+<li>Plot.</li>
+</ul>
+<p>This workflow has served me very well, I did it probably 20 times a day when working at the New York Times and I am very fast with it. If you want to just make a stand alone visualization it’s fantastic, however, as a biostatistician who works with a lot of other biostatisticians, people tend to want to see where the data comes from.</p>
+<p>With Javascript chunks in <code>.Rmd</code> files you can explicitly show the code for data gathering/cleaning etc. in a language that your collaborators can understand, along with making custom d3 charts with that data. All without ever leaving RStudio. I will show you my quick and dirty solution to doing so.</p>
+<div id="getting-data-into-javascript" class="section level2">
+<h2>Getting data into Javascript</h2>
+<p>Instead of generating a csv file in R and then loading that into javascript we will instead send the data directly through the html to javascript. (<em>Note:</em> This wont work well with super large data).</p>
+<p>Inspired by <a href="https://medium.com/@becausealice2/getting-r-and-d3-js-to-play-nicely-in-r-markdown-270e302a52d3#.772g93eb3">this</a> medium post I wrote a little function that takes a dataframe and sends it to the html document in the <code>.json</code> format.</p>
+<pre class="r"><code>library(tidyverse)
+library(jsonlite)
+
+send_df_to_js &lt;- function(df){
+  cat(
+    paste(
+    &#39;&lt;script&gt;
+      var data = &#39;,toJSON(df),&#39;;
+    &lt;/script&gt;&#39;
+    , sep=&quot;&quot;)
+  )
+}</code></pre>
+<p>To illustrate how it works we will generate some random data into a dataframe.</p>
+<pre class="r"><code>#Generate some random x and y data to plot
+n &lt;- 300
+random_data &lt;- data_frame(x = runif(n)*10) %&gt;% 
+  mutate(y = 0.5*x^3 - 1.3*x^2 + rnorm(n, mean = 0, sd = 80),
+         group = paste(&quot;group&quot;, sample(c(1,2,3), n, replace = T)))</code></pre>
+<p>Now we send a snippit of the dataframe into the function to see the output…</p>
+<pre class="r"><code>random_data %&gt;% 
+  head() %&gt;% 
+  send_df_to_js()</code></pre>
+<pre><code>## &lt;script&gt;
+##       var data = [{&quot;x&quot;:6.9447,&quot;y&quot;:126.6087,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:6.601,&quot;y&quot;:99.0747,&quot;group&quot;:&quot;group 3&quot;},{&quot;x&quot;:0.0242,&quot;y&quot;:52.1329,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:0.3188,&quot;y&quot;:42.1536,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:8.2983,&quot;y&quot;:129.0399,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:1.492,&quot;y&quot;:52.5983,&quot;group&quot;:&quot;group 1&quot;}];
+##     &lt;/script&gt;</code></pre>
+<p>Beautiful, we have our data, in <code>json</code> format, wrapped in a script tag. Now we can send the whole dataframe through. This time I am using the <code>results = &quot;asis&quot;</code> option in the code chunk (<code>{r, results = &quot;asis&quot;}</code>), to write the results directly to the html document and not to the output like we did above.</p>
+<pre class="r"><code>#Initiate data transfer protocol one
+send_df_to_js(random_data)</code></pre>
+<script>
+      var data = [{"x":6.9447,"y":126.6087,"group":"group 2"},{"x":6.601,"y":99.0747,"group":"group 3"},{"x":0.0242,"y":52.1329,"group":"group 2"},{"x":0.3188,"y":42.1536,"group":"group 1"},{"x":8.2983,"y":129.0399,"group":"group 2"},{"x":1.492,"y":52.5983,"group":"group 1"},{"x":6.4946,"y":-31.893,"group":"group 2"},{"x":6.0553,"y":-81.0946,"group":"group 1"},{"x":2.0156,"y":16.9839,"group":"group 1"},{"x":8.8138,"y":301.8718,"group":"group 2"},{"x":5.5461,"y":33.5526,"group":"group 3"},{"x":0.4182,"y":20.4826,"group":"group 3"},{"x":4.7289,"y":93.8298,"group":"group 3"},{"x":6.2627,"y":48.5541,"group":"group 1"},{"x":3.0314,"y":-79.5402,"group":"group 2"},{"x":8.8603,"y":157.8759,"group":"group 3"},{"x":3.6325,"y":-221.795,"group":"group 1"},{"x":5.1769,"y":133.1994,"group":"group 3"},{"x":0.1683,"y":84.5547,"group":"group 3"},{"x":9.8771,"y":474.9027,"group":"group 1"},{"x":3.6867,"y":73.2128,"group":"group 3"},{"x":8.2262,"y":97.9587,"group":"group 3"},{"x":3.9676,"y":-71.4001,"group":"group 2"},{"x":4.1636,"y":-109.7273,"group":"group 2"},{"x":9.416,"y":359.3843,"group":"group 1"},{"x":1.1685,"y":-144.4243,"group":"group 1"},{"x":3.7866,"y":72.6138,"group":"group 3"},{"x":0.4196,"y":-261.4355,"group":"group 1"},{"x":7.6059,"y":83.2158,"group":"group 2"},{"x":7.6224,"y":209.9302,"group":"group 2"},{"x":5.5815,"y":98.2916,"group":"group 3"},{"x":2.765,"y":-90.925,"group":"group 1"},{"x":1.3116,"y":96.6581,"group":"group 2"},{"x":5.3427,"y":-4.2953,"group":"group 3"},{"x":8.7514,"y":321.1682,"group":"group 1"},{"x":1.6347,"y":-119.6963,"group":"group 1"},{"x":2.9722,"y":-108.1903,"group":"group 1"},{"x":6.1082,"y":126.5017,"group":"group 3"},{"x":5.1776,"y":-67.6831,"group":"group 3"},{"x":5.7721,"y":7.4559,"group":"group 1"},{"x":2.5541,"y":21.6164,"group":"group 2"},{"x":4.3392,"y":-37.7034,"group":"group 2"},{"x":3.4836,"y":59.5537,"group":"group 2"},{"x":8.6784,"y":152.1097,"group":"group 2"},{"x":7.3946,"y":-42.3893,"group":"group 2"},{"x":8.4342,"y":218.9546,"group":"group 1"},{"x":2.1597,"y":25.8243,"group":"group 1"},{"x":9.6753,"y":245.1472,"group":"group 3"},{"x":1.21,"y":186.2749,"group":"group 2"},{"x":5.3678,"y":11.297,"group":"group 1"},{"x":4.2837,"y":13.3729,"group":"group 1"},{"x":6.9684,"y":296.2498,"group":"group 3"},{"x":0.511,"y":-191.8304,"group":"group 2"},{"x":6.3233,"y":40.6184,"group":"group 3"},{"x":3.197,"y":14.5883,"group":"group 2"},{"x":3.8959,"y":142.9808,"group":"group 3"},{"x":9.3169,"y":273.9055,"group":"group 1"},{"x":4.7618,"y":-30.3582,"group":"group 1"},{"x":9.3802,"y":379.0481,"group":"group 3"},{"x":6.8159,"y":93.8428,"group":"group 2"},{"x":0.2814,"y":41.4005,"group":"group 3"},{"x":7.3429,"y":46.222,"group":"group 2"},{"x":6.9891,"y":89.8717,"group":"group 3"},{"x":9.5383,"y":335.9107,"group":"group 3"},{"x":1.0814,"y":2.3592,"group":"group 2"},{"x":2.5168,"y":42.4557,"group":"group 2"},{"x":8.9635,"y":114.7263,"group":"group 3"},{"x":2.6883,"y":53.6159,"group":"group 1"},{"x":6.2864,"y":247.5547,"group":"group 3"},{"x":0.5861,"y":-65.8933,"group":"group 3"},{"x":5.423,"y":-90.3775,"group":"group 2"},{"x":5.0854,"y":55.1625,"group":"group 3"},{"x":6.0284,"y":-3.3524,"group":"group 3"},{"x":4.0479,"y":55.9918,"group":"group 3"},{"x":5.249,"y":111.6104,"group":"group 2"},{"x":4.3377,"y":-130.2248,"group":"group 3"},{"x":1.2295,"y":-97.7038,"group":"group 3"},{"x":1.6903,"y":-68.6299,"group":"group 3"},{"x":0.4492,"y":-167.8117,"group":"group 1"},{"x":5.2486,"y":196.701,"group":"group 1"},{"x":7.6,"y":160.3447,"group":"group 3"},{"x":2.2978,"y":33.2981,"group":"group 1"},{"x":0.7765,"y":-34.5052,"group":"group 1"},{"x":1.9703,"y":62.0199,"group":"group 1"},{"x":5.7958,"y":146.5408,"group":"group 1"},{"x":6.1973,"y":56.7034,"group":"group 3"},{"x":8.9401,"y":117.6813,"group":"group 2"},{"x":7.2739,"y":104.2704,"group":"group 3"},{"x":7.487,"y":123.235,"group":"group 1"},{"x":3.9439,"y":93.0348,"group":"group 2"},{"x":9.0197,"y":262.7499,"group":"group 3"},{"x":8.8314,"y":260.577,"group":"group 2"},{"x":3.6726,"y":54.926,"group":"group 1"},{"x":7.5691,"y":138.4541,"group":"group 2"},{"x":8.7992,"y":270.6829,"group":"group 3"},{"x":8.7043,"y":184.9292,"group":"group 1"},{"x":9.7806,"y":174.0516,"group":"group 3"},{"x":3.4952,"y":122.4833,"group":"group 3"},{"x":9.3854,"y":351.9421,"group":"group 1"},{"x":6.5218,"y":86.7151,"group":"group 3"},{"x":5.2085,"y":111.2645,"group":"group 3"},{"x":2.6693,"y":-150.2981,"group":"group 1"},{"x":0.6265,"y":-64.8498,"group":"group 1"},{"x":3.0548,"y":-26.1571,"group":"group 3"},{"x":8.2793,"y":159.0026,"group":"group 1"},{"x":8.8017,"y":146.216,"group":"group 1"},{"x":4.9966,"y":195.0095,"group":"group 3"},{"x":6.5786,"y":-12.0803,"group":"group 1"},{"x":9.5621,"y":139.807,"group":"group 3"},{"x":3.3949,"y":-96.2275,"group":"group 3"},{"x":2.3186,"y":-106.4448,"group":"group 1"},{"x":8.1619,"y":98.1091,"group":"group 3"},{"x":2.4572,"y":6.9679,"group":"group 3"},{"x":6.2772,"y":150.6626,"group":"group 2"},{"x":7.5449,"y":212.2675,"group":"group 3"},{"x":5.7697,"y":135.0727,"group":"group 2"},{"x":9.8537,"y":301.9142,"group":"group 1"},{"x":4.6751,"y":-46.45,"group":"group 3"},{"x":0.8148,"y":97.1713,"group":"group 3"},{"x":6.3987,"y":96.5994,"group":"group 3"},{"x":3.3618,"y":30.5296,"group":"group 3"},{"x":4.9319,"y":163.8805,"group":"group 3"},{"x":8.6891,"y":272.2969,"group":"group 3"},{"x":5.3412,"y":-59.7821,"group":"group 3"},{"x":2.7906,"y":30.7319,"group":"group 1"},{"x":0.6452,"y":41.4247,"group":"group 3"},{"x":2.9035,"y":25.2678,"group":"group 2"},{"x":3.29,"y":38.7875,"group":"group 1"},{"x":9.8133,"y":338.9109,"group":"group 2"},{"x":8.5657,"y":117.2266,"group":"group 1"},{"x":1.3393,"y":9.1077,"group":"group 3"},{"x":6.0969,"y":161.2746,"group":"group 2"},{"x":5.6888,"y":-57.0495,"group":"group 1"},{"x":9.6612,"y":390.0568,"group":"group 1"},{"x":4.5579,"y":-48.5809,"group":"group 2"},{"x":8.1281,"y":80.6238,"group":"group 3"},{"x":8.4177,"y":308.15,"group":"group 2"},{"x":3.1841,"y":68.9469,"group":"group 3"},{"x":2.4893,"y":-124.9309,"group":"group 3"},{"x":2.4894,"y":-35.6964,"group":"group 1"},{"x":2.0077,"y":-25.6957,"group":"group 3"},{"x":4.6321,"y":48.4501,"group":"group 1"},{"x":2.5425,"y":-16.3981,"group":"group 3"},{"x":3.2518,"y":82.5922,"group":"group 3"},{"x":7.5265,"y":139.7804,"group":"group 1"},{"x":9.4611,"y":291.2883,"group":"group 2"},{"x":4.578,"y":-65.294,"group":"group 1"},{"x":3.6147,"y":-51.8936,"group":"group 1"},{"x":1.4505,"y":-131.6582,"group":"group 1"},{"x":3.4978,"y":-143.5131,"group":"group 3"},{"x":4.746,"y":148.4207,"group":"group 3"},{"x":5.0302,"y":-2.0295,"group":"group 3"},{"x":3.394,"y":45.2428,"group":"group 1"},{"x":2.3773,"y":8.6919,"group":"group 3"},{"x":8.2637,"y":119.1083,"group":"group 3"},{"x":5.4722,"y":32.9903,"group":"group 2"},{"x":3.4635,"y":6.4628,"group":"group 3"},{"x":8.315,"y":118.736,"group":"group 1"},{"x":8.5372,"y":190.6081,"group":"group 1"},{"x":4.6719,"y":98.6347,"group":"group 3"},{"x":1.5584,"y":43.797,"group":"group 2"},{"x":4.6296,"y":7.1393,"group":"group 2"},{"x":0.2322,"y":54.3721,"group":"group 3"},{"x":8.7,"y":205.5391,"group":"group 3"},{"x":3.6887,"y":57.0037,"group":"group 3"},{"x":1.9526,"y":-177.2172,"group":"group 2"},{"x":5.1906,"y":-96.9401,"group":"group 3"},{"x":8.2404,"y":173.2793,"group":"group 2"},{"x":3.9704,"y":12.3547,"group":"group 2"},{"x":2.4309,"y":129.1683,"group":"group 3"},{"x":6.2408,"y":11.5746,"group":"group 2"},{"x":5.5092,"y":183.2791,"group":"group 2"},{"x":7.2977,"y":119.0101,"group":"group 3"},{"x":7.4506,"y":122.0993,"group":"group 3"},{"x":0.8649,"y":-79.9347,"group":"group 1"},{"x":6.139,"y":80.8364,"group":"group 3"},{"x":4.3767,"y":44.1148,"group":"group 3"},{"x":3.1551,"y":110.9044,"group":"group 3"},{"x":4.3001,"y":93.543,"group":"group 2"},{"x":4.1314,"y":19.8806,"group":"group 1"},{"x":6.5895,"y":100.9584,"group":"group 1"},{"x":5.4191,"y":172.4793,"group":"group 2"},{"x":1.6955,"y":3.5265,"group":"group 1"},{"x":1.1026,"y":-6.6733,"group":"group 1"},{"x":2.5244,"y":1.0162,"group":"group 2"},{"x":5.2424,"y":-7.9503,"group":"group 2"},{"x":6.3084,"y":31.7214,"group":"group 1"},{"x":5.7788,"y":90.403,"group":"group 3"},{"x":4.1807,"y":83.4263,"group":"group 3"},{"x":8.2238,"y":180.28,"group":"group 2"},{"x":3.4799,"y":-188.1792,"group":"group 3"},{"x":1.4703,"y":-72.6878,"group":"group 3"},{"x":4.3044,"y":-46.3143,"group":"group 1"},{"x":7.7264,"y":157.744,"group":"group 1"},{"x":5.8421,"y":-20.6258,"group":"group 3"},{"x":0.2531,"y":-83.0357,"group":"group 2"},{"x":2.0629,"y":30.6658,"group":"group 2"},{"x":0.9265,"y":-61.665,"group":"group 1"},{"x":1.0873,"y":35.4639,"group":"group 1"},{"x":7.4082,"y":235.1992,"group":"group 1"},{"x":3.1413,"y":2.1073,"group":"group 1"},{"x":2.8928,"y":-37.8563,"group":"group 1"},{"x":1.9527,"y":-72.4807,"group":"group 2"},{"x":0.0659,"y":83.1773,"group":"group 3"},{"x":1.1205,"y":-35.5482,"group":"group 2"},{"x":9.8215,"y":385.9258,"group":"group 3"},{"x":6.0168,"y":31.3553,"group":"group 1"},{"x":6.4751,"y":-42.2557,"group":"group 1"},{"x":8.8421,"y":124.9501,"group":"group 2"},{"x":4.9909,"y":-168.2355,"group":"group 2"},{"x":5.8974,"y":-38.8604,"group":"group 1"},{"x":0.0145,"y":-45.7444,"group":"group 2"},{"x":7.7222,"y":205.372,"group":"group 2"},{"x":3.0585,"y":-137.2843,"group":"group 2"},{"x":3.3126,"y":-35.183,"group":"group 2"},{"x":4.1317,"y":185.3644,"group":"group 2"},{"x":4.098,"y":78.93,"group":"group 3"},{"x":0.3489,"y":84.6004,"group":"group 1"},{"x":9.8791,"y":414.4485,"group":"group 3"},{"x":0.0281,"y":-0.1256,"group":"group 3"},{"x":2.0047,"y":-124.8922,"group":"group 1"},{"x":1.3166,"y":37.8609,"group":"group 1"},{"x":3.5693,"y":-6.8591,"group":"group 2"},{"x":4.0226,"y":-149.5219,"group":"group 2"},{"x":2.4463,"y":21.42,"group":"group 1"},{"x":2.8268,"y":-83.932,"group":"group 3"},{"x":3.4747,"y":-44.0314,"group":"group 1"},{"x":7.6821,"y":93.3845,"group":"group 2"},{"x":7.4213,"y":175.9209,"group":"group 2"},{"x":1.1297,"y":21.8915,"group":"group 1"},{"x":7.6736,"y":171.7769,"group":"group 1"},{"x":2.1214,"y":66.1179,"group":"group 1"},{"x":2.1684,"y":-67.946,"group":"group 1"},{"x":8.3283,"y":208.2658,"group":"group 2"},{"x":7.2234,"y":59.5926,"group":"group 2"},{"x":6.7642,"y":108.3324,"group":"group 2"},{"x":4.6901,"y":9.8703,"group":"group 1"},{"x":0.5866,"y":10.735,"group":"group 2"},{"x":0.0448,"y":57.0007,"group":"group 1"},{"x":4.3894,"y":116.4087,"group":"group 3"},{"x":6.1342,"y":-8.7788,"group":"group 3"},{"x":6.0158,"y":191.0977,"group":"group 2"},{"x":1.7212,"y":7.5743,"group":"group 1"},{"x":1.4312,"y":139.9984,"group":"group 2"},{"x":6.681,"y":-12.7868,"group":"group 1"},{"x":6.7029,"y":135.4538,"group":"group 2"},{"x":8.7775,"y":158.8279,"group":"group 2"},{"x":5.6144,"y":56.4493,"group":"group 1"},{"x":1.0773,"y":-55.6078,"group":"group 2"},{"x":6.8441,"y":192.4795,"group":"group 3"},{"x":1.8306,"y":49.8337,"group":"group 1"},{"x":3.6148,"y":71.6034,"group":"group 1"},{"x":3.3958,"y":16.157,"group":"group 1"},{"x":8.9118,"y":258.6865,"group":"group 1"},{"x":3.8147,"y":-59.6644,"group":"group 1"},{"x":6.8322,"y":123.5471,"group":"group 1"},{"x":3.6732,"y":-39.341,"group":"group 1"},{"x":4.926,"y":31.1292,"group":"group 1"},{"x":4.0302,"y":-128.6176,"group":"group 1"},{"x":8.8433,"y":174.4355,"group":"group 1"},{"x":6.5489,"y":-7.8495,"group":"group 3"},{"x":2.557,"y":81.303,"group":"group 1"},{"x":3.1449,"y":32.0688,"group":"group 3"},{"x":7.8058,"y":195.7098,"group":"group 3"},{"x":5.7497,"y":-1.4237,"group":"group 3"},{"x":8.186,"y":162.817,"group":"group 2"},{"x":6.0631,"y":156.7355,"group":"group 2"},{"x":0.2809,"y":87.1142,"group":"group 1"},{"x":7.5633,"y":186.1028,"group":"group 2"},{"x":5.6791,"y":-36.2149,"group":"group 3"},{"x":8.639,"y":367.497,"group":"group 1"},{"x":3.7594,"y":-32.1275,"group":"group 1"},{"x":7.9166,"y":216.6245,"group":"group 1"},{"x":2.4864,"y":124.0514,"group":"group 1"},{"x":0.486,"y":214.2231,"group":"group 1"},{"x":3.5973,"y":84.3813,"group":"group 2"},{"x":5.4178,"y":47.9241,"group":"group 1"},{"x":7.6516,"y":133.6083,"group":"group 3"},{"x":9.8537,"y":391.1191,"group":"group 3"},{"x":5.8535,"y":20.8005,"group":"group 1"},{"x":4.7755,"y":33.8812,"group":"group 2"},{"x":5.7712,"y":-81.67,"group":"group 1"},{"x":9.6767,"y":425.763,"group":"group 2"},{"x":9.4867,"y":313.0243,"group":"group 3"},{"x":7.5795,"y":139.939,"group":"group 2"},{"x":9.1721,"y":124.7409,"group":"group 1"},{"x":0.5105,"y":11.694,"group":"group 3"},{"x":5.1788,"y":-151.7518,"group":"group 2"},{"x":1.674,"y":-13.3486,"group":"group 1"},{"x":5.722,"y":35.0176,"group":"group 3"},{"x":9.1556,"y":364.9312,"group":"group 1"},{"x":6.2739,"y":160.5812,"group":"group 3"},{"x":8.366,"y":222.3445,"group":"group 1"},{"x":5.1626,"y":71.5889,"group":"group 3"},{"x":1.4687,"y":70.1783,"group":"group 1"},{"x":9.9733,"y":389.9705,"group":"group 2"},{"x":5.659,"y":129.0211,"group":"group 3"},{"x":7.9807,"y":143.1043,"group":"group 2"},{"x":2.6422,"y":65.3446,"group":"group 1"},{"x":7.963,"y":236.3424,"group":"group 2"}];
+    </script>
+<p>Now our data is inside our page’s javascript scope and ready to be played with!</p>
+</div>
+<div id="drawing-pretty-pictures" class="section level2">
+<h2>Drawing pretty pictures</h2>
+<p>Let’s make a super simple d3 scatter plot to see this randomly generated data. All I have to do is include my desired javascript libraries, make a <code>div</code> element for my visualization to go into and then put my <code>{js}</code> block in. RMarkdown will slot the javascript into the page and we’re good to go.</p>
+<p>In this example I did…</p>
+<pre><code>&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;div id = &quot;viz&quot;&gt;&lt;/div&gt; 
+
+` ` `{js}
+//code goes here
+` ` `</code></pre>
+</div>
+<div id="did-it-work" class="section level2">
+<h2>Did it work?</h2>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<div id="viz">
+
+</div>
+<script type="text/javascript">
+var point_vals = d3.select("#viz").append("p").text("Mouseover some data!");
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $("#did-it-work").width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d => d.x);
+var y_extent = d3.extent(data, d => d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select("#viz").append("svg")
+    .attr("width", width + 2*margin)
+    .attr("height", height + 2*margin)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin + "," + margin + ")");
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(".dots")
+    .data(data)
+  .enter().append("circle")
+    .attr("class", "dots")
+    .attr("fill", d => d.group === "group 1"? "steelblue":"orangered")
+    .attr("fill-opacity", 0.3)
+    .attr("r", 5)
+    .attr("cx", d => x(d.x) )
+    .attr("cy", d => y(d.y) )
+    .on("mouseover", function(d){
+       d3.selectAll(".dots").attr("r", 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr("r", 10);
+      
+       point_vals.text("X:" + d.x + " Y:" + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append("g")
+    .call(d3.axisLeft(y));
+</script>
+</div>
+<div id="why-when" class="section level2">
+<h2>Why/ When</h2>
+<p>This is a bad example of a visualization for this scenario as something like plotly could do this in much less effort. If you’re doing something more complicated/ bespoke then this is a great resource to have.</p>
+</div>
+<div id="addendum" class="section level2">
+<h2>Addendum</h2>
+<p>If you’re interested, here’s the javascript code I included to make the above graph.</p>
+<pre><code>var point_vals = d3.select(&quot;#viz&quot;).append(&quot;p&quot;).text(&quot;Mouseover some data!&quot;);
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $(&quot;#did-it-work&quot;).width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d =&gt; d.x);
+var y_extent = d3.extent(data, d =&gt; d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select(&quot;#viz&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width + 2*margin)
+    .attr(&quot;height&quot;, height + 2*margin)
+  .append(&quot;g&quot;)
+    .attr(&quot;transform&quot;,
+          &quot;translate(&quot; + margin + &quot;,&quot; + margin + &quot;)&quot;);
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(&quot;.dots&quot;)
+    .data(data)
+  .enter().append(&quot;circle&quot;)
+    .attr(&quot;class&quot;, &quot;dots&quot;)
+    .attr(&quot;fill&quot;, d =&gt; d.group === &quot;group 1&quot;? &quot;steelblue&quot;:&quot;orangered&quot;)
+    .attr(&quot;fill-opacity&quot;, 0.3)
+    .attr(&quot;r&quot;, 5)
+    .attr(&quot;cx&quot;, d =&gt; x(d.x) )
+    .attr(&quot;cy&quot;, d =&gt; y(d.y) )
+    .on(&quot;mouseover&quot;, function(d){
+       d3.selectAll(&quot;.dots&quot;).attr(&quot;r&quot;, 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr(&quot;r&quot;, 10);
+      
+       point_vals.text(&quot;X:&quot; + d.x + &quot; Y:&quot; + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append(&quot;g&quot;)
+    .attr(&quot;transform&quot;, &quot;translate(0,&quot; + height + &quot;)&quot;)
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append(&quot;g&quot;)
+    .call(d3.axisLeft(y));</code></pre>
+</div>
+
+
+
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="../../../../" style="background-image: url(/images/logo.png)"><span class="hidden">'s Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+
+
+
+<div class="post-author">
+
+    <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
+    <br>
+    <span style="font-size: 1.02em;font-weight: bold;">
+        Nick Strayer
+    </span>
+    |
+    <a style = "text-decoration: none;" class = "post-author__text" href = http://nickstrayer.me >
+        <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+    </a>
+
+    <a class="icon-twitter post-author__text" style="font-size: 1.4em; text-decoration: none;" href = https://twitter.com/NicholasStrayer onclick="window.open(this.href"></a>
+
+    <a style = "text-decoration: none;" class = "post-author__text" href = https://github.com/nstrayer >
+        <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+    </a>
+
+
+    <br>
+
+    <p class="post-author__text">Randomly walking my way though a career in statistics</p>
+    
+
+
+    
+<section class="share">
+  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=Custom%20JS%20visualizations%20in%20RMarkdown&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f01%2f24%2fcustom-js-visualizations-in-rmarkdown%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+ </a></p>
+</section>
+
+
+
+    
+
+
+
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="../../../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../../../../js/index.js"></script>
+    
+</body>
+</html>
+

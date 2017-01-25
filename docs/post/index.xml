@@ -6,8 +6,240 @@
     <description>Recent content in Posts on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Jan 2017 22:15:13 -0600</lastBuildDate>
+    <lastBuildDate>Tue, 24 Jan 2017 10:54:24 +0200</lastBuildDate>
     <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Custom JavaScript Visualizations in RMarkdown</title>
+      <link>/2017/01/24/custom-javascript-visualizations-in-rmarkdown/</link>
+      <pubDate>Tue, 24 Jan 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/2017/01/24/custom-javascript-visualizations-in-rmarkdown/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;I happened to stumble upon the &lt;a href=&#34;https://www.rstudio.com/products/rstudio/download/preview/&#34;&gt;preview release page&lt;/a&gt; for RStudio recently and noticed something that made me exorbitantly happy.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes… Support for JavaScript and CSS chunks in R Notebooks…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;“Support for JavaScript and CSS chunks in R Notebooks”&lt;/em&gt;! As someone who loves using javascript for plotting (and secretly for manipulating) data this is massively exciting. Previously my workflow for generating an interactive graphic would be something like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Download data&lt;/li&gt;
+&lt;li&gt;Clean data and do preliminary visualization in R&lt;/li&gt;
+&lt;li&gt;Export what I liked to a csv file and make a new directory with a set of &lt;code&gt;.html, .js, .css&lt;/code&gt; files in it.&lt;/li&gt;
+&lt;li&gt;Load data into javascript/d3.js in the new javascript file.&lt;/li&gt;
+&lt;li&gt;Plot.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This workflow has served me very well, I did it probably 20 times a day when working at the New York Times and I am very fast with it. If you want to just make a stand alone visualization it’s fantastic, however, as a biostatistician who works with a lot of other biostatisticians, people tend to want to see where the data comes from.&lt;/p&gt;
+&lt;p&gt;With Javascript chunks in &lt;code&gt;.Rmd&lt;/code&gt; files you can explicitly show the code for data gathering/cleaning etc. in a language that your collaborators can understand, along with making custom d3 charts with that data. All without ever leaving RStudio. I will show you my quick and dirty solution to doing so.&lt;/p&gt;
+&lt;div id=&#34;getting-data-into-javascript&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting data into Javascript&lt;/h2&gt;
+&lt;p&gt;Instead of generating a csv file in R and then loading that into javascript we will instead send the data directly through the html to javascript. (&lt;em&gt;Note:&lt;/em&gt; This wont work well with super large data).&lt;/p&gt;
+&lt;p&gt;Inspired by &lt;a href=&#34;https://medium.com/@becausealice2/getting-r-and-d3-js-to-play-nicely-in-r-markdown-270e302a52d3#.772g93eb3&#34;&gt;this&lt;/a&gt; medium post I wrote a little function that takes a dataframe and sends it to the html document in the &lt;code&gt;.json&lt;/code&gt; format.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(jsonlite)
+
+send_df_to_js &amp;lt;- function(df){
+  cat(
+    paste(
+    &amp;#39;&amp;lt;script&amp;gt;
+      var data = &amp;#39;,toJSON(df),&amp;#39;;
+    &amp;lt;/script&amp;gt;&amp;#39;
+    , sep=&amp;quot;&amp;quot;)
+  )
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To illustrate how it works we will generate some random data into a dataframe.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#Generate some random x and y data to plot
+n &amp;lt;- 300
+random_data &amp;lt;- data_frame(x = runif(n)*10) %&amp;gt;% 
+  mutate(y = 0.5*x^3 - 1.3*x^2 + rnorm(n, mean = 0, sd = 80),
+         group = paste(&amp;quot;group&amp;quot;, sample(c(1,2,3), n, replace = T)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we send a snippit of the dataframe into the function to see the output…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;random_data %&amp;gt;% 
+  head() %&amp;gt;% 
+  send_df_to_js()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;lt;script&amp;gt;
+##       var data = [{&amp;quot;x&amp;quot;:8.1488,&amp;quot;y&amp;quot;:96.6117,&amp;quot;group&amp;quot;:&amp;quot;group 1&amp;quot;},{&amp;quot;x&amp;quot;:6.1778,&amp;quot;y&amp;quot;:-8.111,&amp;quot;group&amp;quot;:&amp;quot;group 3&amp;quot;},{&amp;quot;x&amp;quot;:7.5453,&amp;quot;y&amp;quot;:220.3397,&amp;quot;group&amp;quot;:&amp;quot;group 1&amp;quot;},{&amp;quot;x&amp;quot;:5.5064,&amp;quot;y&amp;quot;:151.3852,&amp;quot;group&amp;quot;:&amp;quot;group 2&amp;quot;},{&amp;quot;x&amp;quot;:7.1707,&amp;quot;y&amp;quot;:211.4072,&amp;quot;group&amp;quot;:&amp;quot;group 2&amp;quot;},{&amp;quot;x&amp;quot;:5.6925,&amp;quot;y&amp;quot;:73.8435,&amp;quot;group&amp;quot;:&amp;quot;group 1&amp;quot;}];
+##     &amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Beautiful, we have our data, in &lt;code&gt;json&lt;/code&gt; format, wrapped in a script tag. Now we can send the whole dataframe through. This time I am using the &lt;code&gt;results = &amp;quot;asis&amp;quot;&lt;/code&gt; option in the code chunk (&lt;code&gt;{r, results = &amp;quot;asis&amp;quot;}&lt;/code&gt;), to write the results directly to the html document and not to the output like we did above.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#Initiate data transfer protocol one
+send_df_to_js(random_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;script&gt;
+      var data = [{&#34;x&#34;:8.1488,&#34;y&#34;:96.6117,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.1778,&#34;y&#34;:-8.111,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.5453,&#34;y&#34;:220.3397,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.5064,&#34;y&#34;:151.3852,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.1707,&#34;y&#34;:211.4072,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.6925,&#34;y&#34;:73.8435,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.8733,&#34;y&#34;:434.6869,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.6548,&#34;y&#34;:-131.167,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.0106,&#34;y&#34;:82.6066,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:8.6302,&#34;y&#34;:217.2613,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.214,&#34;y&#34;:-65.5135,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.6978,&#34;y&#34;:95.5804,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.1345,&#34;y&#34;:-18.2683,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.796,&#34;y&#34;:51.7719,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.8365,&#34;y&#34;:164.7346,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.096,&#34;y&#34;:233.7256,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.9848,&#34;y&#34;:71.5214,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.232,&#34;y&#34;:36.3148,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.0791,&#34;y&#34;:29.6141,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.6498,&#34;y&#34;:-170.3427,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.3845,&#34;y&#34;:197.5176,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.6734,&#34;y&#34;:114.7644,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.5065,&#34;y&#34;:310.2111,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.4425,&#34;y&#34;:171.1377,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.3735,&#34;y&#34;:89.4814,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:8.759,&#34;y&#34;:334.2592,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.1302,&#34;y&#34;:-59.2159,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.7245,&#34;y&#34;:5.3107,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.9186,&#34;y&#34;:-79.7449,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.231,&#34;y&#34;:-7.8016,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.817,&#34;y&#34;:27.6046,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.0109,&#34;y&#34;:317.4605,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.2359,&#34;y&#34;:-13.5139,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.4167,&#34;y&#34;:-76.7657,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.2292,&#34;y&#34;:329.4708,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.7817,&#34;y&#34;:369.2217,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.3471,&#34;y&#34;:328.3486,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.3908,&#34;y&#34;:89.6909,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.9657,&#34;y&#34;:86.1436,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.8891,&#34;y&#34;:-90.6691,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.4244,&#34;y&#34;:-63.4164,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.3259,&#34;y&#34;:7.2115,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.2181,&#34;y&#34;:17.1653,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.5377,&#34;y&#34;:68.8204,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.6841,&#34;y&#34;:-1.2771,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.112,&#34;y&#34;:198.1667,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:1.312,&#34;y&#34;:-26.5314,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.1232,&#34;y&#34;:140.2705,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.8084,&#34;y&#34;:-100.7098,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.2974,&#34;y&#34;:109.4702,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.3821,&#34;y&#34;:28.4643,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.3244,&#34;y&#34;:-32.7479,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.7742,&#34;y&#34;:162.9056,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.9855,&#34;y&#34;:8.3306,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.5288,&#34;y&#34;:60.7449,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.6428,&#34;y&#34;:80.2048,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.577,&#34;y&#34;:-44.4998,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.9875,&#34;y&#34;:328.0166,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.1718,&#34;y&#34;:14.4197,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.2655,&#34;y&#34;:12.301,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.1075,&#34;y&#34;:23.8325,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.7661,&#34;y&#34;:-43.7026,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.3663,&#34;y&#34;:165.0451,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.1853,&#34;y&#34;:-33.8481,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.2968,&#34;y&#34;:39.4135,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.0567,&#34;y&#34;:-36.5431,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.3932,&#34;y&#34;:13.6117,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.748,&#34;y&#34;:252.4803,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.7829,&#34;y&#34;:-31.7217,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.3727,&#34;y&#34;:-85.6139,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.0901,&#34;y&#34;:264.6788,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.1755,&#34;y&#34;:361.7228,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.062,&#34;y&#34;:68.5985,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.947,&#34;y&#34;:388.0612,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.5611,&#34;y&#34;:273.4273,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.3715,&#34;y&#34;:-6.163,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.9083,&#34;y&#34;:159.5752,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.9829,&#34;y&#34;:3.6874,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.3529,&#34;y&#34;:276.9406,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.6288,&#34;y&#34;:115.8831,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.9271,&#34;y&#34;:301.8939,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.9099,&#34;y&#34;:-93.2433,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.6969,&#34;y&#34;:43.6875,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.3325,&#34;y&#34;:1.4383,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.9904,&#34;y&#34;:298.2119,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.3279,&#34;y&#34;:91.7876,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.0322,&#34;y&#34;:-43.2966,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.5481,&#34;y&#34;:-25.1443,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.1686,&#34;y&#34;:280.2127,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.7459,&#34;y&#34;:131.5106,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.2308,&#34;y&#34;:177.6994,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.6825,&#34;y&#34;:-4.5746,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.1892,&#34;y&#34;:295.403,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.097,&#34;y&#34;:86.5567,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.8767,&#34;y&#34;:231.3989,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.1523,&#34;y&#34;:47.5369,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.6576,&#34;y&#34;:-25.7604,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.0004,&#34;y&#34;:86.5305,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.925,&#34;y&#34;:-25.9616,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.8013,&#34;y&#34;:417.321,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.5659,&#34;y&#34;:137.998,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:1.7747,&#34;y&#34;:26.5261,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:8.2641,&#34;y&#34;:220.8199,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.6889,&#34;y&#34;:14.0728,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.1652,&#34;y&#34;:195.2591,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.7242,&#34;y&#34;:13.334,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.1423,&#34;y&#34;:-122.8527,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.0384,&#34;y&#34;:10.0007,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.5488,&#34;y&#34;:151.8752,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.6779,&#34;y&#34;:188.276,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.2525,&#34;y&#34;:-30.4503,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.8867,&#34;y&#34;:197.7038,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.9217,&#34;y&#34;:-19.3019,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.5967,&#34;y&#34;:-40.1165,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.9159,&#34;y&#34;:-128.7216,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.1983,&#34;y&#34;:-62.9792,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.1654,&#34;y&#34;:63.2177,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.4285,&#34;y&#34;:-49.8005,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.0708,&#34;y&#34;:297.2135,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:1.2174,&#34;y&#34;:107.2814,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.15,&#34;y&#34;:1.7787,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.0311,&#34;y&#34;:-33.8135,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.5327,&#34;y&#34;:104.5062,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.6486,&#34;y&#34;:320.9002,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.1423,&#34;y&#34;:-44.1586,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.6058,&#34;y&#34;:132.226,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.2502,&#34;y&#34;:-2.4986,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.9122,&#34;y&#34;:8.5875,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.8333,&#34;y&#34;:78.773,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.0771,&#34;y&#34;:11.6886,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:1.6329,&#34;y&#34;:-60.4577,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.8048,&#34;y&#34;:135.9305,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.9477,&#34;y&#34;:401.7237,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.9924,&#34;y&#34;:-123.717,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.8324,&#34;y&#34;:74.2628,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.6611,&#34;y&#34;:16.0797,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.6426,&#34;y&#34;:-41.0248,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:1.6662,&#34;y&#34;:-168.6713,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.961,&#34;y&#34;:149.366,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.5289,&#34;y&#34;:329.8511,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.3404,&#34;y&#34;:102.2839,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.2398,&#34;y&#34;:-54.2035,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:8.2753,&#34;y&#34;:57.2134,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.3239,&#34;y&#34;:37.2633,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.5986,&#34;y&#34;:222.8405,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.469,&#34;y&#34;:-105.5784,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.8452,&#34;y&#34;:321.6823,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.5565,&#34;y&#34;:-21.8723,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.5905,&#34;y&#34;:-39.668,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.6501,&#34;y&#34;:138.1454,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.8663,&#34;y&#34;:4.0695,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.2439,&#34;y&#34;:172.0617,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.4169,&#34;y&#34;:97.3631,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.1427,&#34;y&#34;:60.0807,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.8974,&#34;y&#34;:-69.7744,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.0622,&#34;y&#34;:60.9859,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.9725,&#34;y&#34;:182.7215,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:0.1846,&#34;y&#34;:-77.0495,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.1576,&#34;y&#34;:252.7403,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.4802,&#34;y&#34;:316.9895,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.5366,&#34;y&#34;:231.7284,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.2443,&#34;y&#34;:311.2115,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.6359,&#34;y&#34;:46.4196,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.2145,&#34;y&#34;:-17.0165,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.7374,&#34;y&#34;:111.9737,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.5718,&#34;y&#34;:287.4701,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.7331,&#34;y&#34;:90.2807,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.933,&#34;y&#34;:158.5714,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.8879,&#34;y&#34;:211.8243,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.7237,&#34;y&#34;:275.2952,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.0329,&#34;y&#34;:145.0443,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.2656,&#34;y&#34;:144.0652,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:1.459,&#34;y&#34;:-154.4802,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.0881,&#34;y&#34;:129.9454,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.7753,&#34;y&#34;:309.5602,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.9336,&#34;y&#34;:221.7583,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.3659,&#34;y&#34;:85.4336,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.7884,&#34;y&#34;:331.2559,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.5149,&#34;y&#34;:85.4318,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.072,&#34;y&#34;:185.3458,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.9163,&#34;y&#34;:47.7905,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.996,&#34;y&#34;:-10.2794,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.3051,&#34;y&#34;:83.4863,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.4143,&#34;y&#34;:126.3259,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.3504,&#34;y&#34;:308.0273,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:1.0056,&#34;y&#34;:53.0227,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.4414,&#34;y&#34;:18.7573,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.7477,&#34;y&#34;:103.0156,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.5585,&#34;y&#34;:84.444,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.0886,&#34;y&#34;:-6.2268,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.2458,&#34;y&#34;:-42.3138,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.2159,&#34;y&#34;:304.1449,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.1992,&#34;y&#34;:84.2164,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.3967,&#34;y&#34;:151.8024,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.7174,&#34;y&#34;:2.2449,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.6662,&#34;y&#34;:-147.5166,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.361,&#34;y&#34;:100.6867,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.6522,&#34;y&#34;:114.4148,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.8983,&#34;y&#34;:203.6418,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.5402,&#34;y&#34;:387.2282,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.02,&#34;y&#34;:221.3863,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.8905,&#34;y&#34;:-149.4168,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.4337,&#34;y&#34;:178.5885,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:1.2528,&#34;y&#34;:-126.3733,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.716,&#34;y&#34;:190.3307,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.2016,&#34;y&#34;:-0.217,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.3493,&#34;y&#34;:64.1655,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.7756,&#34;y&#34;:71.4518,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.9584,&#34;y&#34;:22.015,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.5255,&#34;y&#34;:-41.6199,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.8441,&#34;y&#34;:-29.7486,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.9268,&#34;y&#34;:196.3191,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.1238,&#34;y&#34;:120.5815,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.9184,&#34;y&#34;:316.1631,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.344,&#34;y&#34;:31.7727,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.4159,&#34;y&#34;:-47.7652,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.1224,&#34;y&#34;:332.5515,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:5.448,&#34;y&#34;:178.3089,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.2991,&#34;y&#34;:-76.2689,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.3714,&#34;y&#34;:89.6543,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.5024,&#34;y&#34;:-7.945,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.3957,&#34;y&#34;:-69.329,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.9532,&#34;y&#34;:335.61,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.8841,&#34;y&#34;:65.3812,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:1.1689,&#34;y&#34;:-26.7797,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.748,&#34;y&#34;:248.8227,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.3608,&#34;y&#34;:181.135,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.2214,&#34;y&#34;:82.6775,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.863,&#34;y&#34;:357.1058,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.1377,&#34;y&#34;:-76.1482,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.0263,&#34;y&#34;:24.3676,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.4501,&#34;y&#34;:-78.9687,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.3036,&#34;y&#34;:-4.1669,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.1971,&#34;y&#34;:180.4675,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.6497,&#34;y&#34;:-50.4289,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.2635,&#34;y&#34;:217.4576,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.8646,&#34;y&#34;:-35.2302,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.8265,&#34;y&#34;:290.5553,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.2156,&#34;y&#34;:-25.8883,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:2.0466,&#34;y&#34;:64.2717,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.8054,&#34;y&#34;:71.7501,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.9765,&#34;y&#34;:415.6296,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.9174,&#34;y&#34;:11.6958,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.6496,&#34;y&#34;:68.9215,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.2457,&#34;y&#34;:59.4708,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:0.4332,&#34;y&#34;:51.0574,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.4452,&#34;y&#34;:168.1651,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.1841,&#34;y&#34;:-36.191,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.575,&#34;y&#34;:40.483,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.2387,&#34;y&#34;:68.5785,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:8.8642,&#34;y&#34;:213.1703,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.1408,&#34;y&#34;:149.0038,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.7944,&#34;y&#34;:-19.1257,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.0945,&#34;y&#34;:310.4959,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.735,&#34;y&#34;:51.9031,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:3.1952,&#34;y&#34;:124.1522,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.5225,&#34;y&#34;:-14.207,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.4847,&#34;y&#34;:-40.6478,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.8083,&#34;y&#34;:0.2566,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:3.011,&#34;y&#34;:19.3055,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.5484,&#34;y&#34;:77.6457,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:6.653,&#34;y&#34;:169.5579,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:8.9888,&#34;y&#34;:280.4015,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.7346,&#34;y&#34;:-6.7714,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.9009,&#34;y&#34;:125.1055,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.6559,&#34;y&#34;:287.0226,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.1667,&#34;y&#34;:118.2562,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:3.1402,&#34;y&#34;:87.9427,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.1679,&#34;y&#34;:-64.06,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.7313,&#34;y&#34;:-25.3251,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.2418,&#34;y&#34;:-83.7573,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:8.6363,&#34;y&#34;:112.7522,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.8296,&#34;y&#34;:198.2495,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:7.2969,&#34;y&#34;:133.5956,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:8.1582,&#34;y&#34;:213.5543,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.52,&#34;y&#34;:-115.2981,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:9.6986,&#34;y&#34;:312.7312,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:2.97,&#34;y&#34;:37.8801,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:1.2905,&#34;y&#34;:-111.5205,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.5277,&#34;y&#34;:-20.6765,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.6193,&#34;y&#34;:-119.4391,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:0.2232,&#34;y&#34;:45.1704,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.8818,&#34;y&#34;:274.826,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.1684,&#34;y&#34;:-136.1441,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:6.9349,&#34;y&#34;:73.2017,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:7.5617,&#34;y&#34;:96.0936,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.6381,&#34;y&#34;:1.7014,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:7.8562,&#34;y&#34;:264.6896,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.7966,&#34;y&#34;:351.2419,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:4.1964,&#34;y&#34;:-7.577,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:6.4329,&#34;y&#34;:139.2896,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:4.2551,&#34;y&#34;:120.8192,&#34;group&#34;:&#34;group 3&#34;},{&#34;x&#34;:9.5846,&#34;y&#34;:368.413,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:5.0639,&#34;y&#34;:111.2266,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:2.3058,&#34;y&#34;:-28.4047,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:4.8919,&#34;y&#34;:1.3067,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:5.6095,&#34;y&#34;:25.9533,&#34;group&#34;:&#34;group 2&#34;},{&#34;x&#34;:1.6024,&#34;y&#34;:114.7654,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:1.5271,&#34;y&#34;:-86.2338,&#34;group&#34;:&#34;group 1&#34;},{&#34;x&#34;:9.1535,&#34;y&#34;:224.0281,&#34;group&#34;:&#34;group 1&#34;}];
+    &lt;/script&gt;
+&lt;p&gt;Now our data is inside our page’s javascript scope and ready to be played with!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;drawing-pretty-pictures&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Drawing pretty pictures&lt;/h2&gt;
+&lt;p&gt;Let’s make a super simple d3 scatter plot to see this randomly generated data. All I have to do is include my desired javascript libraries, make a &lt;code&gt;div&lt;/code&gt; element for my visualization to go into and then put my &lt;code&gt;{js}&lt;/code&gt; block in. RMarkdown will slot the javascript into the page and we’re good to go.&lt;/p&gt;
+&lt;p&gt;In this example I did…&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;script src=&amp;quot;https://code.jquery.com/jquery-3.1.1.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script src=&amp;quot;https://d3js.org/d3.v4.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;div id = &amp;quot;viz&amp;quot;&amp;gt;&amp;lt;/div&amp;gt; 
+
+` ` `{js}
+//code goes here
+` ` `&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;did-it-work&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Did it work?&lt;/h2&gt;
+&lt;script src=&#34;https://code.jquery.com/jquery-3.1.1.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://d3js.org/d3.v4.min.js&#34;&gt;&lt;/script&gt;
+&lt;div id=&#34;viz&#34;&gt;
+
+&lt;/div&gt;
+&lt;script type=&#34;text/javascript&#34;&gt;
+var point_vals = d3.select(&#34;#viz&#34;).append(&#34;p&#34;).text(&#34;Mouseover some data!&#34;);
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $(&#34;#did-it-work&#34;).width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d =&gt; d.x);
+var y_extent = d3.extent(data, d =&gt; d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select(&#34;#viz&#34;).append(&#34;svg&#34;)
+    .attr(&#34;width&#34;, width + 2*margin)
+    .attr(&#34;height&#34;, height + 2*margin)
+  .append(&#34;g&#34;)
+    .attr(&#34;transform&#34;,
+          &#34;translate(&#34; + margin + &#34;,&#34; + margin + &#34;)&#34;);
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(&#34;.dots&#34;)
+    .data(data)
+  .enter().append(&#34;circle&#34;)
+    .attr(&#34;class&#34;, &#34;dots&#34;)
+    .attr(&#34;fill&#34;, d =&gt; d.group === &#34;group 1&#34;? &#34;steelblue&#34;:&#34;orangered&#34;)
+    .attr(&#34;fill-opacity&#34;, 0.3)
+    .attr(&#34;r&#34;, 5)
+    .attr(&#34;cx&#34;, d =&gt; x(d.x) )
+    .attr(&#34;cy&#34;, d =&gt; y(d.y) )
+    .on(&#34;mouseover&#34;, function(d){
+       d3.selectAll(&#34;.dots&#34;).attr(&#34;r&#34;, 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr(&#34;r&#34;, 10);
+      
+       point_vals.text(&#34;X:&#34; + d.x + &#34; Y:&#34; + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append(&#34;g&#34;)
+    .attr(&#34;transform&#34;, &#34;translate(0,&#34; + height + &#34;)&#34;)
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append(&#34;g&#34;)
+    .call(d3.axisLeft(y));
+&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-when&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why/ When&lt;/h2&gt;
+&lt;p&gt;This is a bad example of a visualization for this scenario as something like plotly could do this in much less effort. If you’re doing something more complicated/ bespoke then this is a great resource to have.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;addendum&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Addendum&lt;/h2&gt;
+&lt;p&gt;If you’re interested, here’s the javascript code I included to make the above graph.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;var point_vals = d3.select(&amp;quot;#viz&amp;quot;).append(&amp;quot;p&amp;quot;).text(&amp;quot;Mouseover some data!&amp;quot;);
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $(&amp;quot;#did-it-work&amp;quot;).width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d =&amp;gt; d.x);
+var y_extent = d3.extent(data, d =&amp;gt; d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select(&amp;quot;#viz&amp;quot;).append(&amp;quot;svg&amp;quot;)
+    .attr(&amp;quot;width&amp;quot;, width + 2*margin)
+    .attr(&amp;quot;height&amp;quot;, height + 2*margin)
+  .append(&amp;quot;g&amp;quot;)
+    .attr(&amp;quot;transform&amp;quot;,
+          &amp;quot;translate(&amp;quot; + margin + &amp;quot;,&amp;quot; + margin + &amp;quot;)&amp;quot;);
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(&amp;quot;.dots&amp;quot;)
+    .data(data)
+  .enter().append(&amp;quot;circle&amp;quot;)
+    .attr(&amp;quot;class&amp;quot;, &amp;quot;dots&amp;quot;)
+    .attr(&amp;quot;fill&amp;quot;, d =&amp;gt; d.group === &amp;quot;group 1&amp;quot;? &amp;quot;steelblue&amp;quot;:&amp;quot;orangered&amp;quot;)
+    .attr(&amp;quot;fill-opacity&amp;quot;, 0.3)
+    .attr(&amp;quot;r&amp;quot;, 5)
+    .attr(&amp;quot;cx&amp;quot;, d =&amp;gt; x(d.x) )
+    .attr(&amp;quot;cy&amp;quot;, d =&amp;gt; y(d.y) )
+    .on(&amp;quot;mouseover&amp;quot;, function(d){
+       d3.selectAll(&amp;quot;.dots&amp;quot;).attr(&amp;quot;r&amp;quot;, 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr(&amp;quot;r&amp;quot;, 10);
+      
+       point_vals.text(&amp;quot;X:&amp;quot; + d.x + &amp;quot; Y:&amp;quot; + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append(&amp;quot;g&amp;quot;)
+    .attr(&amp;quot;transform&amp;quot;, &amp;quot;translate(0,&amp;quot; + height + &amp;quot;)&amp;quot;)
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append(&amp;quot;g&amp;quot;)
+    .call(d3.axisLeft(y));&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
     
     <item>
       <title>Regression modeling strategies: a student&#39;s perspective</title>
