@@ -1,0 +1,236 @@
+---
+author: "Nick Strayer"
+date: 2017-01-24T10:54:24+02:00
+title: "Custom JavaScript Visualizations in RMarkdown"
+excerpt: "Recently RStudio added JavaScript chunks to RMarkdown. This makes many exciting things possible. Among these things is making your own custom JavaScript visualizations of data managed in R, all without leaving the .Rmd document. This is a quick walkthrough of doing just that." 
+tags: ["javascript","visualization"]
+comments: true
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>I happened to stumble upon the <a href="https://www.rstudio.com/products/rstudio/download/preview/">preview release page</a> for RStudio recently and noticed something that made me exorbitantly happy.</p>
+<blockquote>
+<p>A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes… Support for JavaScript and CSS chunks in R Notebooks…</p>
+</blockquote>
+<p><em>“Support for JavaScript and CSS chunks in R Notebooks”</em>! As someone who loves using javascript for plotting (and secretly for manipulating) data this is massively exciting. Previously my workflow for generating an interactive graphic would be something like:</p>
+<ul>
+<li>Download data</li>
+<li>Clean data and do preliminary visualization in R</li>
+<li>Export what I liked to a csv file and make a new directory with a set of <code>.html, .js, .css</code> files in it.</li>
+<li>Load data into javascript/d3.js in the new javascript file.</li>
+<li>Plot.</li>
+</ul>
+<p>This workflow has served me very well, I did it probably 20 times a day when working at the New York Times and I am very fast with it. If you want to just make a stand alone visualization it’s fantastic, however, as a biostatistician who works with a lot of other biostatisticians, people tend to want to see where the data comes from.</p>
+<p>With Javascript chunks in <code>.Rmd</code> files you can explicitly show the code for data gathering/cleaning etc. in a language that your collaborators can understand, along with making custom d3 charts with that data. All without ever leaving RStudio. I will show you my quick and dirty solution to doing so.</p>
+<div id="getting-data-into-javascript" class="section level2">
+<h2>Getting data into Javascript</h2>
+<p>Instead of generating a csv file in R and then loading that into javascript we will instead send the data directly through the html to javascript. (<em>Note:</em> This wont work well with super large data).</p>
+<p>Inspired by <a href="https://medium.com/@becausealice2/getting-r-and-d3-js-to-play-nicely-in-r-markdown-270e302a52d3#.772g93eb3">this</a> medium post I wrote a little function that takes a dataframe and sends it to the html document in the <code>.json</code> format.</p>
+<pre class="r"><code>library(tidyverse)
+library(jsonlite)
+
+send_df_to_js &lt;- function(df){
+  cat(
+    paste(
+    &#39;&lt;script&gt;
+      var data = &#39;,toJSON(df),&#39;;
+    &lt;/script&gt;&#39;
+    , sep=&quot;&quot;)
+  )
+}</code></pre>
+<p>To illustrate how it works we will generate some random data into a dataframe.</p>
+<pre class="r"><code>#Generate some random x and y data to plot
+n &lt;- 300
+random_data &lt;- data_frame(x = runif(n)*10) %&gt;% 
+  mutate(y = 0.5*x^3 - 1.3*x^2 + rnorm(n, mean = 0, sd = 80),
+         group = paste(&quot;group&quot;, sample(c(1,2,3), n, replace = T)))</code></pre>
+<p>Now we send a snippit of the dataframe into the function to see the output…</p>
+<pre class="r"><code>random_data %&gt;% 
+  head() %&gt;% 
+  send_df_to_js()</code></pre>
+<pre><code>## &lt;script&gt;
+##       var data = [{&quot;x&quot;:5.1672,&quot;y&quot;:87.3694,&quot;group&quot;:&quot;group 3&quot;},{&quot;x&quot;:0.1433,&quot;y&quot;:-54.6532,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:9.4107,&quot;y&quot;:390.5269,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:6.3857,&quot;y&quot;:65.0051,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:1.9049,&quot;y&quot;:-34.3918,&quot;group&quot;:&quot;group 3&quot;},{&quot;x&quot;:0.8884,&quot;y&quot;:21.3158,&quot;group&quot;:&quot;group 2&quot;}];
+##     &lt;/script&gt;</code></pre>
+<p>Beautiful, we have our data, in <code>json</code> format, wrapped in a script tag. Now we can send the whole dataframe through. This time I am using the <code>results = &quot;asis&quot;</code> option in the code chunk (<code>{r, results = &quot;asis&quot;}</code>), to write the results directly to the html document and not to the output like we did above.</p>
+<pre class="r"><code>#Initiate data transfer protocol one
+send_df_to_js(random_data)</code></pre>
+<script>
+      var data = [{"x":5.1672,"y":87.3694,"group":"group 3"},{"x":0.1433,"y":-54.6532,"group":"group 1"},{"x":9.4107,"y":390.5269,"group":"group 1"},{"x":6.3857,"y":65.0051,"group":"group 2"},{"x":1.9049,"y":-34.3918,"group":"group 3"},{"x":0.8884,"y":21.3158,"group":"group 2"},{"x":6.1408,"y":190.7953,"group":"group 1"},{"x":6.6681,"y":128.386,"group":"group 2"},{"x":4.4288,"y":111.3281,"group":"group 1"},{"x":4.7584,"y":-21.8225,"group":"group 2"},{"x":1.9158,"y":28.5363,"group":"group 1"},{"x":5.513,"y":106.356,"group":"group 1"},{"x":9.8642,"y":205.8904,"group":"group 2"},{"x":7.4683,"y":153.44,"group":"group 3"},{"x":3.3135,"y":-88.2044,"group":"group 3"},{"x":3.4712,"y":-13.0811,"group":"group 1"},{"x":5.4807,"y":71.1016,"group":"group 3"},{"x":4.1628,"y":-35.4066,"group":"group 2"},{"x":2.1961,"y":-3.4944,"group":"group 3"},{"x":4.8061,"y":-29.0198,"group":"group 2"},{"x":5.3508,"y":66.73,"group":"group 1"},{"x":4.1358,"y":-53.4036,"group":"group 3"},{"x":6.7637,"y":-86.2603,"group":"group 3"},{"x":5.4136,"y":-0.6769,"group":"group 2"},{"x":0.5843,"y":108.0432,"group":"group 1"},{"x":4.5248,"y":57.4236,"group":"group 3"},{"x":6.4776,"y":35.8479,"group":"group 3"},{"x":0.5275,"y":158.534,"group":"group 1"},{"x":8.8261,"y":250.5278,"group":"group 3"},{"x":7.2697,"y":219.0864,"group":"group 1"},{"x":8.2802,"y":127.6001,"group":"group 2"},{"x":8.3995,"y":186.5165,"group":"group 1"},{"x":5.1601,"y":114.339,"group":"group 2"},{"x":5.2222,"y":5.6429,"group":"group 3"},{"x":6.7533,"y":91.4349,"group":"group 3"},{"x":7.7964,"y":57.4388,"group":"group 2"},{"x":1.9739,"y":34.3526,"group":"group 2"},{"x":0.6419,"y":13.4629,"group":"group 3"},{"x":2.5343,"y":27.4774,"group":"group 1"},{"x":6.1608,"y":72.7192,"group":"group 1"},{"x":8.1323,"y":65.9479,"group":"group 2"},{"x":9.8158,"y":339.8411,"group":"group 3"},{"x":8.4973,"y":189.8986,"group":"group 1"},{"x":1.4844,"y":-98.9686,"group":"group 1"},{"x":9.707,"y":329.6008,"group":"group 2"},{"x":2.9735,"y":-4.4628,"group":"group 2"},{"x":0.31,"y":54.7026,"group":"group 1"},{"x":4.8348,"y":45.624,"group":"group 3"},{"x":3.7075,"y":26.609,"group":"group 3"},{"x":7.6424,"y":63.1251,"group":"group 1"},{"x":6.9013,"y":153.3541,"group":"group 1"},{"x":5.4534,"y":110.8243,"group":"group 2"},{"x":4.6082,"y":-0.8208,"group":"group 3"},{"x":3.6086,"y":15.5805,"group":"group 2"},{"x":4.5509,"y":101.2566,"group":"group 1"},{"x":0.0713,"y":-2.5711,"group":"group 3"},{"x":4.0858,"y":-45.6463,"group":"group 1"},{"x":1.4745,"y":46.0676,"group":"group 2"},{"x":1.9476,"y":-100.6145,"group":"group 3"},{"x":5.8461,"y":-4.9632,"group":"group 3"},{"x":3.143,"y":6.745,"group":"group 2"},{"x":5.2718,"y":57.384,"group":"group 3"},{"x":5.5646,"y":-28.8613,"group":"group 2"},{"x":8.0571,"y":173.0176,"group":"group 1"},{"x":4.023,"y":-20.1804,"group":"group 1"},{"x":1.7695,"y":-94.7828,"group":"group 3"},{"x":8.0568,"y":183.2973,"group":"group 2"},{"x":9.8476,"y":295.1752,"group":"group 3"},{"x":0.5376,"y":69.7837,"group":"group 2"},{"x":3.137,"y":-12.8829,"group":"group 3"},{"x":0.8567,"y":165.1087,"group":"group 1"},{"x":1.6917,"y":-44.7029,"group":"group 3"},{"x":5.7163,"y":169.4461,"group":"group 2"},{"x":8.42,"y":198.888,"group":"group 3"},{"x":5.6835,"y":119.3173,"group":"group 3"},{"x":2.6085,"y":71.3551,"group":"group 2"},{"x":3.3225,"y":-5.3145,"group":"group 3"},{"x":8.3069,"y":237.6172,"group":"group 3"},{"x":0.0169,"y":-91.8767,"group":"group 2"},{"x":8.1651,"y":83.8203,"group":"group 3"},{"x":1.9309,"y":69.6114,"group":"group 3"},{"x":2.5135,"y":-68.6472,"group":"group 3"},{"x":3.5028,"y":-59.0269,"group":"group 1"},{"x":8.7199,"y":222.2651,"group":"group 3"},{"x":4.5128,"y":3.1027,"group":"group 1"},{"x":2.4668,"y":22.0952,"group":"group 2"},{"x":1.6924,"y":8.6445,"group":"group 1"},{"x":4.7656,"y":43.7474,"group":"group 1"},{"x":0.5976,"y":-19.5412,"group":"group 3"},{"x":5.2987,"y":49.5418,"group":"group 3"},{"x":4.2994,"y":47.9307,"group":"group 2"},{"x":1.7082,"y":-15.9949,"group":"group 3"},{"x":1.7753,"y":-144.4675,"group":"group 3"},{"x":0.3255,"y":9.1525,"group":"group 3"},{"x":5.199,"y":-29.1179,"group":"group 1"},{"x":5.4427,"y":-62.3833,"group":"group 3"},{"x":6.166,"y":-116.6663,"group":"group 1"},{"x":1.8257,"y":197.8047,"group":"group 2"},{"x":7.662,"y":218.8495,"group":"group 2"},{"x":7.7377,"y":132.0543,"group":"group 2"},{"x":6.5125,"y":74.5435,"group":"group 3"},{"x":5.7116,"y":124.4967,"group":"group 3"},{"x":7.9395,"y":-103.3903,"group":"group 2"},{"x":6.969,"y":213.4235,"group":"group 1"},{"x":6.3814,"y":68.0202,"group":"group 1"},{"x":3.7839,"y":-28.881,"group":"group 3"},{"x":6.5087,"y":110.4228,"group":"group 2"},{"x":8.3953,"y":184.0145,"group":"group 1"},{"x":6.2054,"y":-35.8775,"group":"group 1"},{"x":2.2345,"y":-39.3533,"group":"group 2"},{"x":1.2304,"y":-24.2599,"group":"group 1"},{"x":8.1083,"y":194.8125,"group":"group 2"},{"x":2.6616,"y":33.1625,"group":"group 2"},{"x":4.3726,"y":48.9583,"group":"group 3"},{"x":6.4232,"y":70.2064,"group":"group 3"},{"x":5.9711,"y":-4.7464,"group":"group 1"},{"x":4.7528,"y":16.7232,"group":"group 1"},{"x":0.561,"y":211.4595,"group":"group 2"},{"x":5.6242,"y":139.2021,"group":"group 2"},{"x":0.5345,"y":175.695,"group":"group 3"},{"x":8.1814,"y":285.1357,"group":"group 3"},{"x":1.7514,"y":97.007,"group":"group 1"},{"x":4.6301,"y":-14.1692,"group":"group 2"},{"x":0.8942,"y":-98.9339,"group":"group 3"},{"x":4.6891,"y":-22.1053,"group":"group 1"},{"x":0.7433,"y":117.4197,"group":"group 3"},{"x":8.2308,"y":167.3886,"group":"group 3"},{"x":3.9423,"y":68.529,"group":"group 3"},{"x":2.4738,"y":-138.0555,"group":"group 1"},{"x":7.3048,"y":172.5911,"group":"group 1"},{"x":2.3349,"y":-127.1037,"group":"group 1"},{"x":7.0227,"y":145.6236,"group":"group 3"},{"x":5.1718,"y":143.8452,"group":"group 3"},{"x":1.3368,"y":68.3559,"group":"group 1"},{"x":7.5305,"y":211.651,"group":"group 3"},{"x":3.3745,"y":-52.0447,"group":"group 1"},{"x":0.7915,"y":-8.5966,"group":"group 2"},{"x":4.561,"y":-10.1097,"group":"group 3"},{"x":8.2406,"y":109.1841,"group":"group 3"},{"x":0.9387,"y":64.0804,"group":"group 1"},{"x":3.0681,"y":92.7044,"group":"group 1"},{"x":7.8326,"y":195.1132,"group":"group 3"},{"x":8.9638,"y":252.7303,"group":"group 1"},{"x":9.9898,"y":440.9477,"group":"group 1"},{"x":5.8676,"y":-107.579,"group":"group 2"},{"x":1.5081,"y":-90.9037,"group":"group 2"},{"x":0.7755,"y":-27.7603,"group":"group 2"},{"x":4.8463,"y":33.1022,"group":"group 2"},{"x":5.2493,"y":40.129,"group":"group 3"},{"x":0.911,"y":-119.6904,"group":"group 1"},{"x":6.0022,"y":20.2151,"group":"group 3"},{"x":5.2717,"y":-6.529,"group":"group 2"},{"x":6.7604,"y":135.5169,"group":"group 1"},{"x":8.0541,"y":117.9617,"group":"group 3"},{"x":3.158,"y":-54.2407,"group":"group 3"},{"x":3.9032,"y":-84.5539,"group":"group 3"},{"x":8.5922,"y":257.7502,"group":"group 3"},{"x":2.3438,"y":-53.6737,"group":"group 1"},{"x":9.6052,"y":322.7167,"group":"group 2"},{"x":7.4077,"y":290.7942,"group":"group 3"},{"x":8.4842,"y":169.2014,"group":"group 2"},{"x":5.5627,"y":8.3719,"group":"group 3"},{"x":6.8813,"y":60.0146,"group":"group 1"},{"x":0.1603,"y":-106.5004,"group":"group 1"},{"x":9.6887,"y":352.1908,"group":"group 1"},{"x":3.4225,"y":11.7248,"group":"group 1"},{"x":6.1353,"y":85.8228,"group":"group 3"},{"x":3.4114,"y":-23.679,"group":"group 3"},{"x":2.5736,"y":59.8097,"group":"group 1"},{"x":6.2988,"y":184.786,"group":"group 3"},{"x":8.4262,"y":169.0127,"group":"group 1"},{"x":4.3619,"y":-8.4095,"group":"group 2"},{"x":4.4099,"y":-34.0839,"group":"group 1"},{"x":1.3785,"y":-17.4975,"group":"group 1"},{"x":4.4563,"y":27.8809,"group":"group 3"},{"x":4.9838,"y":257.1836,"group":"group 2"},{"x":0.6714,"y":-34.3227,"group":"group 1"},{"x":4.0358,"y":1.0028,"group":"group 1"},{"x":9.5683,"y":276.354,"group":"group 1"},{"x":2.6058,"y":8.5668,"group":"group 2"},{"x":7.7939,"y":199.2433,"group":"group 1"},{"x":3.1603,"y":36.6154,"group":"group 2"},{"x":6.5782,"y":53.1056,"group":"group 2"},{"x":8.4075,"y":248.2751,"group":"group 2"},{"x":5.4938,"y":-1.2228,"group":"group 1"},{"x":5.6307,"y":20.9225,"group":"group 1"},{"x":1.927,"y":-39.449,"group":"group 1"},{"x":0.6729,"y":-34.5635,"group":"group 3"},{"x":3.8394,"y":123.8564,"group":"group 1"},{"x":6.4069,"y":23.5731,"group":"group 3"},{"x":9.2631,"y":298.1299,"group":"group 2"},{"x":8.0054,"y":250.0955,"group":"group 2"},{"x":3.9223,"y":16.284,"group":"group 2"},{"x":2.0692,"y":-182.3728,"group":"group 1"},{"x":1.3085,"y":-137.8332,"group":"group 1"},{"x":9.6779,"y":381.8748,"group":"group 2"},{"x":1.0984,"y":-49.9626,"group":"group 1"},{"x":9.2319,"y":275.7885,"group":"group 3"},{"x":4.1249,"y":-91.0568,"group":"group 3"},{"x":8.6287,"y":341.2595,"group":"group 3"},{"x":5.6392,"y":17.5049,"group":"group 1"},{"x":2.2007,"y":80.0976,"group":"group 1"},{"x":1.0389,"y":4.8548,"group":"group 2"},{"x":6.6161,"y":179.8117,"group":"group 2"},{"x":6.5825,"y":146.6041,"group":"group 3"},{"x":9.761,"y":311.5813,"group":"group 1"},{"x":6.4668,"y":118.4418,"group":"group 1"},{"x":0.3316,"y":120.8767,"group":"group 3"},{"x":6.2456,"y":163.2828,"group":"group 2"},{"x":2.5561,"y":-121.4371,"group":"group 1"},{"x":8.5842,"y":261.461,"group":"group 2"},{"x":0.5787,"y":-76.7672,"group":"group 2"},{"x":4.454,"y":21.2401,"group":"group 3"},{"x":0.8793,"y":30.2634,"group":"group 2"},{"x":8.242,"y":123.5833,"group":"group 2"},{"x":7.8417,"y":123.7691,"group":"group 3"},{"x":6.5541,"y":-28.5422,"group":"group 3"},{"x":7.3347,"y":33.337,"group":"group 1"},{"x":9.9449,"y":350.6988,"group":"group 3"},{"x":1.1549,"y":-74.7261,"group":"group 2"},{"x":0.6861,"y":2.9076,"group":"group 1"},{"x":3.1639,"y":-21.4907,"group":"group 3"},{"x":2.1331,"y":-113.242,"group":"group 1"},{"x":0.2141,"y":-1.5934,"group":"group 1"},{"x":2.4371,"y":57.1336,"group":"group 2"},{"x":4.2783,"y":-35.3093,"group":"group 1"},{"x":7.9767,"y":164.2248,"group":"group 1"},{"x":9.9287,"y":360.3652,"group":"group 2"},{"x":3.1618,"y":-46.0718,"group":"group 1"},{"x":7.908,"y":210.0328,"group":"group 2"},{"x":9.7554,"y":444.9757,"group":"group 2"},{"x":6.2108,"y":165.4196,"group":"group 2"},{"x":2.8009,"y":-17.2803,"group":"group 1"},{"x":1.3936,"y":-101.5863,"group":"group 3"},{"x":6.7135,"y":103.5218,"group":"group 2"},{"x":5.4408,"y":-96.4059,"group":"group 1"},{"x":4.6903,"y":-12.0102,"group":"group 1"},{"x":9.6856,"y":108.1939,"group":"group 3"},{"x":6.5093,"y":99.7041,"group":"group 2"},{"x":7.8441,"y":178.1646,"group":"group 1"},{"x":9.4087,"y":379.7914,"group":"group 2"},{"x":7.3348,"y":125.572,"group":"group 3"},{"x":2.1579,"y":21.2044,"group":"group 2"},{"x":8.3621,"y":274.3614,"group":"group 2"},{"x":5.2146,"y":-18.2792,"group":"group 1"},{"x":2.4438,"y":-57.0349,"group":"group 1"},{"x":0.1161,"y":-36.2982,"group":"group 2"},{"x":3.893,"y":-98.1465,"group":"group 2"},{"x":1.338,"y":36.2524,"group":"group 1"},{"x":9.0867,"y":324.822,"group":"group 2"},{"x":2.6264,"y":-94.6715,"group":"group 3"},{"x":8.0625,"y":237.4776,"group":"group 1"},{"x":5.4215,"y":72.8027,"group":"group 1"},{"x":8.1643,"y":167.8006,"group":"group 3"},{"x":9.6285,"y":506.6523,"group":"group 3"},{"x":9.4679,"y":368.1956,"group":"group 2"},{"x":9.303,"y":324.578,"group":"group 3"},{"x":7.9613,"y":61.9534,"group":"group 3"},{"x":0.9667,"y":-3.1883,"group":"group 2"},{"x":7.8524,"y":271.0552,"group":"group 2"},{"x":8.4191,"y":201.345,"group":"group 1"},{"x":3.9377,"y":57.746,"group":"group 3"},{"x":0.1861,"y":144.8078,"group":"group 3"},{"x":9.1958,"y":241.524,"group":"group 1"},{"x":7.997,"y":122.9867,"group":"group 1"},{"x":5.56,"y":-112.7013,"group":"group 2"},{"x":8.1065,"y":223.6437,"group":"group 1"},{"x":0.5946,"y":138.5711,"group":"group 3"},{"x":7.7563,"y":148.0071,"group":"group 1"},{"x":4.1735,"y":83.4807,"group":"group 3"},{"x":4.5068,"y":205.1817,"group":"group 1"},{"x":4.2026,"y":-49.6565,"group":"group 1"},{"x":4.5075,"y":-90.632,"group":"group 3"},{"x":5.7047,"y":-42.3602,"group":"group 2"},{"x":4.3841,"y":-72.2532,"group":"group 2"},{"x":0.8344,"y":-49.4622,"group":"group 2"},{"x":6.4292,"y":-68.1165,"group":"group 3"},{"x":9.5755,"y":225.9582,"group":"group 1"},{"x":9.0034,"y":117.3608,"group":"group 1"},{"x":4.5213,"y":50.1202,"group":"group 3"},{"x":3.6766,"y":95.3862,"group":"group 3"},{"x":5.3776,"y":-17.5852,"group":"group 3"},{"x":9.1109,"y":311.6224,"group":"group 3"},{"x":3.6858,"y":141.2035,"group":"group 1"},{"x":1.519,"y":33.2841,"group":"group 1"},{"x":2.7498,"y":-60.5846,"group":"group 3"},{"x":1.4258,"y":-34.1601,"group":"group 1"},{"x":2.2071,"y":-2.1896,"group":"group 2"},{"x":3.3324,"y":67.7805,"group":"group 2"},{"x":8.5787,"y":144.6083,"group":"group 1"},{"x":3.1427,"y":-12.9322,"group":"group 3"},{"x":1.7064,"y":-6.1695,"group":"group 2"},{"x":2.832,"y":-12.9007,"group":"group 1"},{"x":4.2432,"y":105.0359,"group":"group 2"},{"x":2.7516,"y":18.8211,"group":"group 3"},{"x":4.3446,"y":67.5051,"group":"group 1"},{"x":8.4109,"y":265.7098,"group":"group 1"},{"x":6.2063,"y":14.5685,"group":"group 2"},{"x":4.2685,"y":195.9815,"group":"group 1"},{"x":9.8847,"y":250.6022,"group":"group 1"}];
+    </script>
+<p>Now our data is inside our page’s javascript scope and ready to be played with!</p>
+</div>
+<div id="drawing-pretty-pictures" class="section level2">
+<h2>Drawing pretty pictures</h2>
+<p>Let’s make a super simple d3 scatter plot to see this randomly generated data. All I have to do is include my desired javascript libraries, make a <code>div</code> element for my visualization to go into and then put my <code>{js}</code> block in. RMarkdown will slot the javascript into the page and we’re good to go.</p>
+<p>In this example I did…</p>
+<pre><code>&lt;script src=&quot;https://code.jquery.com/jquery-3.1.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;div id = &quot;viz&quot;&gt;&lt;/div&gt; 
+
+` ` `{js}
+//code goes here
+` ` `</code></pre>
+</div>
+<div id="did-it-work" class="section level2">
+<h2>Did it work?</h2>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<div id="viz">
+
+</div>
+<script type="text/javascript">
+var point_vals = d3.select("#viz")
+  .append("p")
+  .attr("align", "center")
+  .text("Mouseover some data!");
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $("#did-it-work").width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d => d.x);
+var y_extent = d3.extent(data, d => d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select("#viz").append("svg")
+    .attr("width", width + 2*margin)
+    .attr("height", height + 2*margin)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin + "," + margin + ")");
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(".dots")
+    .data(data)
+  .enter().append("circle")
+    .attr("class", "dots")
+    .attr("fill", d => d.group === "group 1"? "steelblue":"orangered")
+    .attr("fill-opacity", 0.3)
+    .attr("r", 5)
+    .attr("cx", d => x(d.x) )
+    .attr("cy", d => y(d.y) )
+    .on("mouseover", function(d){
+       d3.selectAll(".dots").attr("r", 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr("r", 10);
+      
+       point_vals.text("X:" + d.x + " Y:" + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append("g")
+    .call(d3.axisLeft(y));
+</script>
+</div>
+<div id="why-when" class="section level2">
+<h2>Why/ When</h2>
+<p>This is a bad example of a visualization for this scenario as something like plotly could do this in much less effort. If you’re doing something more complicated/ bespoke then this is a great resource to have.</p>
+</div>
+<div id="addendum" class="section level2">
+<h2>Addendum</h2>
+<p>If you’re interested, here’s the javascript code I included to make the above graph.</p>
+<pre><code>var point_vals = d3.select(&quot;#viz&quot;).append(&quot;p&quot;).text(&quot;Mouseover some data!&quot;);
+
+//Get how wide our page is in pixels so we can draw our plot in it
+var page_width = $(&quot;#did-it-work&quot;).width();
+  
+// set the dimensions and margins of the graph
+var margin = 20,
+    width = page_width - 2*margin,
+    height = page_width*0.8 - 2*margin;
+    
+// Find max data values
+var x_extent = d3.extent(data, d =&gt; d.x);
+var y_extent = d3.extent(data, d =&gt; d.y);
+
+// Set the scales 
+var x = d3.scaleLinear()
+  .domain(x_extent)
+  .range([0, width]);
+  
+var y = d3.scaleLinear()
+  .domain(y_extent)
+  .range([height, 0]);
+
+//Set up our SVG element
+var svg = d3.select(&quot;#viz&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width + 2*margin)
+    .attr(&quot;height&quot;, height + 2*margin)
+  .append(&quot;g&quot;)
+    .attr(&quot;transform&quot;,
+          &quot;translate(&quot; + margin + &quot;,&quot; + margin + &quot;)&quot;);
+
+var bounce_select = d3.transition()
+    .duration(1000)
+    .ease(d3.easeElastic.period(0.4));
+    
+// Add the scatterplot
+svg.selectAll(&quot;.dots&quot;)
+    .data(data)
+  .enter().append(&quot;circle&quot;)
+    .attr(&quot;class&quot;, &quot;dots&quot;)
+    .attr(&quot;fill&quot;, d =&gt; d.group === &quot;group 1&quot;? &quot;steelblue&quot;:&quot;orangered&quot;)
+    .attr(&quot;fill-opacity&quot;, 0.3)
+    .attr(&quot;r&quot;, 5)
+    .attr(&quot;cx&quot;, d =&gt; x(d.x) )
+    .attr(&quot;cy&quot;, d =&gt; y(d.y) )
+    .on(&quot;mouseover&quot;, function(d){
+       d3.selectAll(&quot;.dots&quot;).attr(&quot;r&quot;, 5) //make sure all the dots are small
+       d3.select(this)
+        .transition(bounce_select)
+        .attr(&quot;r&quot;, 10);
+      
+       point_vals.text(&quot;X:&quot; + d.x + &quot; Y:&quot; + d.y) //change the title of the graph to the datapoint
+    });
+    
+// Draw the axes    
+// Add the X Axis
+svg.append(&quot;g&quot;)
+    .attr(&quot;transform&quot;, &quot;translate(0,&quot; + height + &quot;)&quot;)
+    .call(d3.axisBottom(x));
+
+// Add the Y Axis
+svg.append(&quot;g&quot;)
+    .call(d3.axisLeft(y));</code></pre>
+</div>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->
