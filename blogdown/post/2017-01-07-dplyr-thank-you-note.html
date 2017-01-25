@@ -1,0 +1,56 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-01-07T12:12:28-06:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- thankyou
+title: "dplyr Thank You Note"
+excerpt: "It's that post-holiday time of year to write some thank yous! I'm getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using dplyr"
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using <code>dplyr</code>.</p>
+<pre class="r"><code>require(dplyr)</code></pre>
+<pre class="r"><code>dear &lt;-function(input, you=&quot;you&quot;){
+  cat(input, &quot;\nDear &quot;, you,&quot;,&quot;, sep = &quot;&quot;)
+}
+thank_you &lt;- function(input, for_the = &quot;gift&quot;){
+  cat(input, &quot;\n Thank you for the&quot;, for_the)
+}
+
+personal_touch &lt;- function(input, from_the_heart = &quot;I hope you have a lovely New Year!&quot;){
+  cat(input, from_the_heart)
+}
+
+from &lt;- function(input, us = &quot;us&quot;){
+  cat(input, &quot;\n Cheers,\n&quot;, us)
+}</code></pre>
+<pre class="r"><code>&quot;A dplyr Thank You Note&quot; %&gt;%
+  dear(you = &quot;R Studio&quot;) %&gt;%
+  thank_you(for_the = &quot;opportunity to attend rstudio::conf.&quot;) %&gt;%
+  personal_touch(from_the_heart = &quot;We are SO looking forward to learning from and with you all.&quot;) %&gt;%
+  from(us = &quot;Lucy, Jacquelyn, and Alli&quot;)</code></pre>
+<pre><code>## A dplyr Thank You Note
+## Dear R Studio, 
+##  Thank you for the opportunity to attend rstudio::conf. We are SO looking forward to learning from and with you all. 
+##  Cheers,
+##  Lucy, Jacquelyn, and Alli</code></pre>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->
