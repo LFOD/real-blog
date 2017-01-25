@@ -7,6 +7,8 @@ tags: ["javascript","visualization"]
 comments: true
 ---
 
+<br>
+
 I happened to stumble upon the [preview release page](https://www.rstudio.com/products/rstudio/download/preview/) for RStudio recently and noticed something that made me exorbitantly happy.  
 
 
@@ -107,7 +109,7 @@ var point_vals = d3.select("#viz")
 var page_width = $("#did-it-work").width();
   
 // set the dimensions and margins of the graph
-var margin = 20,
+var margin = 30,
     width = page_width - 2*margin,
     height = page_width*0.8 - 2*margin;
     
