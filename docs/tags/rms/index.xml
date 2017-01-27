@@ -9,6 +9,112 @@
     <atom:link href="/tags/rms/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Yoga for modeling</title>
+      <link>/2017/01/27/yoga-for-modeling/</link>
+      <pubDate>Fri, 27 Jan 2017 14:30:26 -0600</pubDate>
+      
+      <guid>/2017/01/27/yoga-for-modeling/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;A New Years resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.&lt;/p&gt;
+&lt;div id=&#34;what-do-you-mean-by-nonlinear-modeling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What do you mean by nonlinear modeling&lt;/h2&gt;
+&lt;p&gt;By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So you by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),&lt;/p&gt;
+&lt;p&gt;&lt;span style=&#34;color:#EB6864; font-size: 20pt&#34;&gt;“I firmly believe linear regression is a terrible name, we should be calling it Gaussian regression” &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;So you heard it here first, folks, from now on, refer to your ordinary least squares models as “Gaussian”. I spent a really long time trying to think up a whitty pun/slogan for this, alas, all you get is this:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;http://imgs.xkcd.com/comics/math_paper.png&#34; /&gt;
+
+&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;If you have a particulary clever slogan, &lt;a href=&#34;http://twitter.com/LucyStats&#34;&gt;send it to me.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;To do this nonlinear modeling, restricted cubic splines are suggested because 1. &lt;strong&gt;they force linearity in the tails&lt;/strong&gt; (that is before the first knot and after the last knot) &lt;em&gt;this is good because cubic spline functions can have weird behavior in the tails&lt;/em&gt;&lt;br /&gt;
+2. &lt;strong&gt;regression coeffcients can be estimated using standard techniques&lt;/strong&gt;&lt;br /&gt;
+3. &lt;strong&gt;it only costs &lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt; degrees of freedom&lt;/strong&gt; (here &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; is the total number of knots) &lt;em&gt;for comparison, unrestricted cubic splines require &lt;span class=&#34;math inline&#34;&gt;\(k+3\)&lt;/span&gt; parameters to be estimated&lt;/em&gt;&lt;br /&gt;
+4. &lt;strong&gt;there are easy functions in &lt;code&gt;R&lt;/code&gt; to do it&lt;/strong&gt; Harrell’s &lt;code&gt;rms&lt;/code&gt; package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the &lt;code&gt;rcs()&lt;/code&gt; function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit &lt;code&gt;x&lt;/code&gt; flexibly with 4 knots&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;k &amp;lt;- 4
+rms::ols(y~rms::rcs(x, k))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-should-i-care-about-nonlinear-modeling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why should I care about nonlinear modeling&lt;/h2&gt;
+&lt;p&gt;Fitting flexible models is an excellent way to avoid having to test a whole bunch of assumptions that are hard to prove/disprove! Additionally, once you’ve fit a model, changing it based on “model checking” procedures has the danger of inflating your type 1 error 😱. We discuss an excellent paper by &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1002/sim.4780100504/full&#34;&gt;Grambsch and O’Brien&lt;/a&gt; demonstrating that testing for nonlinear effects &amp;amp; then proceeding to drop from from the model if the test is not significant has real implications for the type 1 error. Might as well just model everything flexibly from the get-go! &lt;em&gt;But what about my degrees of freedom? ah yes, the next section is just for you!&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-if-i-dont-have-enough-degrees-of-freedom-for-nonlinear-modeling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What if I don’t have enough degrees of freedom for nonlinear modeling&lt;/h2&gt;
+&lt;p&gt;In predictive modeling, we are always concerned with &lt;em&gt;overfitting&lt;/em&gt;, or creating models that describe the population we’ve sampled very well, but are not generalizable. In the extreme case, you can imagine if you fit a model with 50 patients and included 50 covariates, one for each patient, you could perfectly predict any outcome (but that would be a pretty silly model). In order to avoid overfitting disasters, there are useful rules of thumb we try to follow. In general, we try to fit models that have around &lt;span class=&#34;math inline&#34;&gt;\(m/15\)&lt;/span&gt; covariates, where &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; varies depending on the type of model in the following manner (for those following along, this is on page 74 of &lt;a href=&#34;https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;amp;qid=1484713166&amp;amp;sr=8-1&amp;amp;keywords=regression+modeling+strategies&#34;&gt;Regression Modeling Strategies&lt;/a&gt;).&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Response&lt;/th&gt;
+&lt;th&gt;m&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;continuous&lt;/td&gt;
+&lt;td&gt;the total sample size&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;binary&lt;/td&gt;
+&lt;td&gt;# of events&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;survival&lt;/td&gt;
+&lt;td&gt;# of failures&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Now that we’ve convinced you that degrees of freedom matter, I’m sure you’re thinking “but nonlinear terms add degrees of freedom!” True. Restricted cubic splines are a bit less aggressive that regular cubic splines in terms of degrees of freedom usage, but even still sometimes that is not enough. In those cases, we need to determine how to best utilize our degrees of freedom. Professor Harrell recommends the following (page 67 of &lt;a href=&#34;https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;amp;qid=1484713166&amp;amp;sr=8-1&amp;amp;keywords=regression+modeling+strategies&#34;&gt;RMS&lt;/a&gt;):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Let all continuous predictors be represented as restricted cubic splines&lt;/li&gt;
+&lt;li&gt;Let all categorical predictors retain their original categories except for pooling of very low prevalence categories (e.g., ones containing &amp;lt; 6 observations).&lt;/li&gt;
+&lt;li&gt;Fit this general main effects model.&lt;/li&gt;
+&lt;li&gt;Compute the partial &lt;span class=&#34;math inline&#34;&gt;\(\chi^2\)&lt;/span&gt; statistic for testing the association of each predictor with the response, adjusted for all other predictors.&lt;/li&gt;
+&lt;li&gt;Sort the partial association statistics in descending order.&lt;/li&gt;
+&lt;li&gt;Assign more degrees of freedom for variables high on the list (ie allow for nonlinear terms/more knots for highly ranked covariates)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span style=&#34;color:#EB6864; font-size: 15pt&#34;&gt; VERY IMPORTANT: Make certain that tests of nonlinearity are not revealed as this would bias the analyst.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Here is a little snippet of &lt;code&gt;R&lt;/code&gt; code to do just that in a logistic regression case,&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;f &amp;lt;- rms::lrm(y ~ rcs(age,5) + rcs(weight, 5) + sex + race)
+plot(anova(f))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And there you have it.&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png&#34; width = 505&gt; &lt;em&gt;meme cred: Nick Strayer&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;take-away&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Take Away&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Always fit flexible models using restricted cubic splines&lt;/li&gt;
+&lt;li&gt;Never test for linearity &amp;amp; proceed to remove a nonlinear term based on the result&lt;/li&gt;
+&lt;li&gt;If necessary be choosy about where to spend degrees of freedom&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+
+&lt;!-- dynamically load mathjax for compatibility with self-contained --&gt;
+&lt;script&gt;
+  (function () {
+    var script = document.createElement(&#34;script&#34;);
+    script.type = &#34;text/javascript&#34;;
+    script.src  = &#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;;
+    if (location.protocol !== &#34;file:&#34; &amp;&amp; /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, &#39;&#39;);
+    document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);
+  })();
+&lt;/script&gt;
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Regression modeling strategies: a student&#39;s perspective</title>
       <link>/2017/01/17/regression-modeling-strategies-a-students-perspective/</link>
       <pubDate>Tue, 17 Jan 2017 22:15:13 -0600</pubDate>
