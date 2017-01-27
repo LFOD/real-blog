@@ -15,8 +15,10 @@
 
 
 <meta name="twitter:title" content="Yoga for modeling"/>
-<meta name="twitter:description" content="A New Year’s resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.
-What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms."/>
+<meta name="twitter:description" content="A New Year’s resolution for all of our models: get more flexible!
+As an aside, I’m better at implementing yoga for my models than yoga for myself, most of the time I end up like this:
+ Anyways, let’s make our models flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.
+What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting parametric models with nonlinear terms."/>
 
 
 
@@ -157,7 +159,13 @@ What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting pa
     <section class="post-content">
 
 
-<p>A New Year’s resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.</p>
+<p>A New Year’s resolution for all of our models: get more flexible!</p>
+<p><em>As an aside, I’m better at implementing yoga for my models than yoga for myself, most of the time I end up like this:</em></p>
+<div class="figure">
+<img src="http://imgs.xkcd.com/comics/picture_a_grassy_field.png" />
+
+</div>
+<p>Anyways, let’s make our models flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.</p>
 <div id="what-do-you-mean-by-nonlinear-modeling" class="section level2">
 <h2>What do you mean by nonlinear modeling</h2>
 <p>By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),</p>
@@ -222,7 +230,7 @@ f &lt;- lrm(hospdead ~ rcs(age,5) + rcs(temp, 5) + rcs(hrt, 5) + rcs(pafi, 5) + 
 plot(anova(f))</code></pre>
 <p><img src="figures/unnamed-chunk-1-1.png" width="672" /></p>
 <p>And there you have it.</p>
-<p><img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 506> <em>meme cred: Nick Strayer</em></p>
+<p><img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 60%> <em>meme cred: Nick Strayer</em></p>
 </div>
 <div id="take-away" class="section level2">
 <h2>Take Away</h2>

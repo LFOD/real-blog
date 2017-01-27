@@ -12,7 +12,13 @@ title: "Yoga for modeling"
 excerpt: "A New Year's resolution for all of our models: get more flexible! By flexible, we mean let's be more intential about fitting nonlinear parametric models."
 ---
 
-A New Year's resolution for all of our models: get more flexible! By flexible, we mean let's be more intentional about fitting nonlinear parametric models.
+A New Year's resolution for all of our models: get more flexible! 
+
+*As an aside, I'm better at implementing yoga for my models than yoga for myself, most of the time I end up like this:*
+
+![](http://imgs.xkcd.com/comics/picture_a_grassy_field.png)
+
+Anyways, let's make our models flexible! By flexible, we mean let's be more intentional about fitting nonlinear parametric models.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -81,7 +87,7 @@ plot(anova(f))
 
 And there you have it. 
 
-<img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 506>
+<img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 60%>
 *meme cred: Nick Strayer*
 
 
