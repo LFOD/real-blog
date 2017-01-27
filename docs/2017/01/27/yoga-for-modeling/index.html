@@ -168,18 +168,20 @@ What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting pa
 <p>Anyways, let’s make our models flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.</p>
 <div id="what-do-you-mean-by-nonlinear-modeling" class="section level2">
 <h2>What do you mean by nonlinear modeling</h2>
-<p>By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),</p>
-<p><span style="color:#EB6864; font-size: 20pt">“I firmly believe linear regression is a terrible name, we should be calling it Gaussian regression” </span></p>
-<p>So you heard it here first, folks, from now on, refer to your ordinary least squares models as “Gaussian”. I spent a really long time trying to think up a whitty pun/slogan for this, alas, all you get is this:</p>
+<p>By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, and setting on calling it “Gaussian regression” So you heard it here first, folks, from now on, refer to your ordinary least squares models as “Gaussian”. I spent a really long time trying to think up a whitty pun/slogan for this, alas, all you get is this:</p>
 <div class="figure">
 <img src="http://imgs.xkcd.com/comics/math_paper.png" />
 
 </div>
 <p><em>If you have a particulary clever slogan, <a href="http://twitter.com/LucyStats">send it to me.</a></em></p>
-<p>To do this nonlinear modeling, restricted cubic splines are suggested because 1. <strong>they force linearity in the tails</strong> (that is before the first knot and after the last knot) <em>this is good because cubic spline functions can have weird behavior in the tails</em><br />
-2. <strong>regression coeffcients can be estimated using standard techniques</strong><br />
-3. <strong>it only costs <span class="math inline">\(k-1\)</span> degrees of freedom</strong> (here <span class="math inline">\(k\)</span> is the total number of knots) <em>for comparison, unrestricted cubic splines require <span class="math inline">\(k+3\)</span> parameters to be estimated</em><br />
-4. <strong>there are easy functions in <code>R</code> to do it</strong> Harrell’s <code>rms</code> package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the <code>rcs()</code> function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit <code>x</code> flexibly with 4 knots:</p>
+<p>(Professor Harrell proofed this an suggested “what about just calling it OLS?”, so nevermind on Gaussian, it had a good run…)</p>
+<p>To do this nonlinear modeling, restricted cubic splines are suggested because</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>they allow for flexibility without costing too many degrees of freedom</strong> (it only costs <span class="math inline">\(k-1\)</span> degrees of freedom, here <span class="math inline">\(k\)</span> is the total number of knots) <em>for comparison, unrestricted cubic splines require <span class="math inline">\(k+3\)</span> parameters to be estimated</em></p></li>
+<li><p><strong>they force linearity in the tails</strong> (that is before the first knot and after the last knot) <em>this is good because cubic spline functions can have weird behavior in the tails</em></p></li>
+<li><p><strong>regression coeffcients can be estimated using standard techniques</strong></p></li>
+<li><p><strong>there are easy functions in <code>R</code> to do it</strong> Harrell’s <code>rms</code> package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the <code>rcs()</code> function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit <code>x</code> flexibly with 4 knots:</p></li>
+</ol>
 <pre><code>library(&#39;rms&#39;)
 k &lt;- 4
 ols(y~rcs(x, k))</code></pre>
