@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##What do you mean by nonlinear modeling
 
-By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So you by this definition, you could be fitting a "linear" model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),
+By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a "linear" model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),
 
 <span style="color:#EB6864; font-size: 20pt">"I firmly believe linear regression is a terrible name, we should be calling it Gaussian regression"
 </span>
@@ -36,11 +36,12 @@ To do this nonlinear modeling, restricted cubic splines are suggested because
 and after the last knot) *this is good because cubic spline functions can have weird behavior in the tails*  
 2. **regression coeffcients can be estimated using standard techniques**  
 3. **it only costs $k-1$ degrees of freedom** (here $k$ is the total number of knots) *for comparison, unrestricted cubic splines require $k+3$ parameters to be estimated*  
-4. **there are easy functions in `R` to do it** Harrell's `rms` package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the `rcs()` function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit `x` flexibly with 4 knots
+4. **there are easy functions in `R` to do it** Harrell's `rms` package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the `rcs()` function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit `x` flexibly with 4 knots:
 
 ```
+library('rms')
 k <- 4
-rms::ols(y~rms::rcs(x, k))
+ols(y~rcs(x, k))
 ```
 
 ##Why should I care about nonlinear modeling
@@ -49,7 +50,7 @@ Fitting flexible models is an excellent way to avoid having to test a whole bunc
 
 ##What if I don't have enough degrees of freedom for nonlinear modeling
 
-In predictive modeling, we are always concerned with *overfitting*, or creating models that describe the population we've sampled very well, but are not generalizable. In the extreme case, you can imagine if you fit a model with 50 patients and included 50 covariates, one for each patient, you could perfectly predict any outcome (but that would be a pretty silly model). In order to avoid overfitting disasters, there are useful rules of thumb we try to follow. In general, we try to fit models that have around $m/15$ covariates, where $m$ varies depending on the type of model in the following manner (for those following along, this is on page 74 of [Regression Modeling Strategies](https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&qid=1484713166&sr=8-1&keywords=regression+modeling+strategies)).
+In predictive modeling, we are always concerned with *overfitting*, or creating models that describe the population we've sampled very well, but are not generalizable. In the extreme case, you can imagine if you fit a model with 50 participants and included 50 covariates, one for each participant, you could perfectly predict any outcome (but that would be a pretty silly model). In order to avoid overfitting disasters, there are useful rules of thumb we try to follow. In general, we try to fit models that have around $m/15$ covariates, where $m$ varies depending on the type of model in the following manner (for those following along, this is on page 74 of [Regression Modeling Strategies](https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&qid=1484713166&sr=8-1&keywords=regression+modeling+strategies)).
 
 Response | m
 ------|----
@@ -69,16 +70,18 @@ Now that we've convinced you that degrees of freedom matter, I'm sure you're thi
 
 <span style="color:#EB6864; font-size: 15pt"> VERY IMPORTANT: Make certain that tests of nonlinearity are not revealed as this would bias the analyst.</span>
 
-Here is a little snippet of `R` code to do just that in a logistic regression case,
+Here is a little snippet of `R` code to do just that in a logistic regression case. We are using the `support2` dataset as an example.
 
-```
-f <- rms::lrm(y ~ rcs(age,5) + rcs(weight, 5) + sex + race)
+```{r, message = FALSE, warning = FALSE}
+library('rms')
+getHdata(support2)
+f <- lrm(hospdead ~ rcs(age,5) + rcs(temp, 5) + rcs(hrt, 5) + rcs(pafi, 5) + edu + sex, data = support2)
 plot(anova(f))
 ```
 
 And there you have it. 
 
-<img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 505>
+<img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 506>
 *meme cred: Nick Strayer*
 
 

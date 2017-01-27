@@ -16,7 +16,7 @@
 
 <meta name="twitter:title" content="Yoga for modeling"/>
 <meta name="twitter:description" content="A New Year’s resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.
-What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So you by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms."/>
+What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms."/>
 
 
 
@@ -160,7 +160,7 @@ What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting pa
 <p>A New Year’s resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.</p>
 <div id="what-do-you-mean-by-nonlinear-modeling" class="section level2">
 <h2>What do you mean by nonlinear modeling</h2>
-<p>By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So you by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),</p>
+<p>By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),</p>
 <p><span style="color:#EB6864; font-size: 20pt">“I firmly believe linear regression is a terrible name, we should be calling it Gaussian regression” </span></p>
 <p>So you heard it here first, folks, from now on, refer to your ordinary least squares models as “Gaussian”. I spent a really long time trying to think up a whitty pun/slogan for this, alas, all you get is this:</p>
 <div class="figure">
@@ -171,9 +171,10 @@ What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting pa
 <p>To do this nonlinear modeling, restricted cubic splines are suggested because 1. <strong>they force linearity in the tails</strong> (that is before the first knot and after the last knot) <em>this is good because cubic spline functions can have weird behavior in the tails</em><br />
 2. <strong>regression coeffcients can be estimated using standard techniques</strong><br />
 3. <strong>it only costs <span class="math inline">\(k-1\)</span> degrees of freedom</strong> (here <span class="math inline">\(k\)</span> is the total number of knots) <em>for comparison, unrestricted cubic splines require <span class="math inline">\(k+3\)</span> parameters to be estimated</em><br />
-4. <strong>there are easy functions in <code>R</code> to do it</strong> Harrell’s <code>rms</code> package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the <code>rcs()</code> function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit <code>x</code> flexibly with 4 knots</p>
-<pre><code>k &lt;- 4
-rms::ols(y~rms::rcs(x, k))</code></pre>
+4. <strong>there are easy functions in <code>R</code> to do it</strong> Harrell’s <code>rms</code> package makes restricted cubic spines very easy to implement. Simply wrap your predictor in the <code>rcs()</code> function within your model statement. For example, if I were to fit a Gaussian model (see what I did there 😉), I would run the following code to fit <code>x</code> flexibly with 4 knots:</p>
+<pre><code>library(&#39;rms&#39;)
+k &lt;- 4
+ols(y~rcs(x, k))</code></pre>
 </div>
 <div id="why-should-i-care-about-nonlinear-modeling" class="section level2">
 <h2>Why should I care about nonlinear modeling</h2>
@@ -181,7 +182,7 @@ rms::ols(y~rms::rcs(x, k))</code></pre>
 </div>
 <div id="what-if-i-dont-have-enough-degrees-of-freedom-for-nonlinear-modeling" class="section level2">
 <h2>What if I don’t have enough degrees of freedom for nonlinear modeling</h2>
-<p>In predictive modeling, we are always concerned with <em>overfitting</em>, or creating models that describe the population we’ve sampled very well, but are not generalizable. In the extreme case, you can imagine if you fit a model with 50 patients and included 50 covariates, one for each patient, you could perfectly predict any outcome (but that would be a pretty silly model). In order to avoid overfitting disasters, there are useful rules of thumb we try to follow. In general, we try to fit models that have around <span class="math inline">\(m/15\)</span> covariates, where <span class="math inline">\(m\)</span> varies depending on the type of model in the following manner (for those following along, this is on page 74 of <a href="https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;qid=1484713166&amp;sr=8-1&amp;keywords=regression+modeling+strategies">Regression Modeling Strategies</a>).</p>
+<p>In predictive modeling, we are always concerned with <em>overfitting</em>, or creating models that describe the population we’ve sampled very well, but are not generalizable. In the extreme case, you can imagine if you fit a model with 50 participants and included 50 covariates, one for each participant, you could perfectly predict any outcome (but that would be a pretty silly model). In order to avoid overfitting disasters, there are useful rules of thumb we try to follow. In general, we try to fit models that have around <span class="math inline">\(m/15\)</span> covariates, where <span class="math inline">\(m\)</span> varies depending on the type of model in the following manner (for those following along, this is on page 74 of <a href="https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;qid=1484713166&amp;sr=8-1&amp;keywords=regression+modeling+strategies">Regression Modeling Strategies</a>).</p>
 <table>
 <thead>
 <tr class="header">
@@ -214,11 +215,14 @@ rms::ols(y~rms::rcs(x, k))</code></pre>
 <li>Assign more degrees of freedom for variables high on the list (ie allow for nonlinear terms/more knots for highly ranked covariates)</li>
 </ul>
 <p><span style="color:#EB6864; font-size: 15pt"> VERY IMPORTANT: Make certain that tests of nonlinearity are not revealed as this would bias the analyst.</span></p>
-<p>Here is a little snippet of <code>R</code> code to do just that in a logistic regression case,</p>
-<pre><code>f &lt;- rms::lrm(y ~ rcs(age,5) + rcs(weight, 5) + sex + race)
+<p>Here is a little snippet of <code>R</code> code to do just that in a logistic regression case. We are using the <code>support2</code> dataset as an example.</p>
+<pre class="r"><code>library(&#39;rms&#39;)
+getHdata(support2)
+f &lt;- lrm(hospdead ~ rcs(age,5) + rcs(temp, 5) + rcs(hrt, 5) + rcs(pafi, 5) + edu + sex, data = support2)
 plot(anova(f))</code></pre>
+<p><img src="figures/unnamed-chunk-1-1.png" width="672" /></p>
 <p>And there you have it.</p>
-<p><img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 505> <em>meme cred: Nick Strayer</em></p>
+<p><img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 506> <em>meme cred: Nick Strayer</em></p>
 </div>
 <div id="take-away" class="section level2">
 <h2>Take Away</h2>
