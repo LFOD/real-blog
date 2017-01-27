@@ -19,7 +19,7 @@
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;p&gt;A New Years resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.&lt;/p&gt;
+&lt;p&gt;A New Year’s resolution for all of our models: get more flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.&lt;/p&gt;
 &lt;div id=&#34;what-do-you-mean-by-nonlinear-modeling&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;What do you mean by nonlinear modeling&lt;/h2&gt;
 &lt;p&gt;By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So you by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, to which Professor Harrell responded (and I paraphrase),&lt;/p&gt;
