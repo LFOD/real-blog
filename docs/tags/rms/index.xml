@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
+    <title>Rms on Live Free or Dichotomize</title>
     <link>/tags/rms/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <description>Recent content in Rms on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <atom:link href="/tags/rms/index.xml" rel="self" type="application/rss+xml" />
@@ -149,6 +149,7 @@ plot(anova(f))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;library(&amp;quot;fortunes&amp;quot;)
 fortune(&amp;quot;Harrell&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here is one of my personal favorites:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;fortunes&amp;#39; was built under R version 3.3.2&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 
 ## The fact that some people murder doesn&amp;#39;t mean we should copy them. And
 ## murdering data, though not as serious, should also be avoided.

@@ -25,6 +25,7 @@
    0. Normalize.css v2.1.3 | MIT License | git.io/normalize | (minified)
    ========================================================================== */
 
+
 article, aside, details,
 figcaption, figure,
 footer, header, hgroup,
@@ -472,6 +473,7 @@ margin on the iframe, cause it breaks stuff. */
     width: 80%;
     max-width: 710px;
     margin: 0 auto;
+    margin-top: -8%;
 }
 
 /* Centres vertically yo. (IE8+) */
@@ -509,12 +511,13 @@ body.nav-opened .site-wrapper {
     position: relative;
     display: table;
     width: 100%;
-    height: 100vh;
+    height: 40vh;
     margin-bottom: 5rem;
     text-align: center;
     background: #222 no-repeat center center;
     background-size: cover;
     overflow: hidden;
+    background-size: 100% 100%;
 }
 
 .main-header .inner {
@@ -877,7 +880,7 @@ body.nav-opened .menu-button .word {
     letter-spacing: -1px;
     font-weight: 700;
     font-family: "Open Sans", sans-serif;
-    color: #fff;
+    color: #636363;
 }
 
 .page-description {
@@ -887,7 +890,7 @@ body.nav-opened .menu-button .word {
     font-weight: 400;
     font-family: "Merriweather", serif;
     letter-spacing: 0.01rem;
-    color: rgba(255,255,255,0.8);
+    color: #636363;
 }
 
 .no-cover.main-header {
