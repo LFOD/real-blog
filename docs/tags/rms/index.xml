@@ -27,13 +27,19 @@
 &lt;p&gt;Anyways, let’s make our models flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.&lt;/p&gt;
 &lt;div id=&#34;what-do-you-mean-by-nonlinear-modeling&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;What do you mean by nonlinear modeling&lt;/h2&gt;
-&lt;p&gt;By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, and setting on calling it “Gaussian regression” So you heard it here first, folks, from now on, refer to your ordinary least squares models as “Gaussian”. I spent a really long time trying to think up a whitty pun/slogan for this, alas, all you get is this:&lt;/p&gt;
+&lt;p&gt;By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a “linear” model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, and setting on calling it “Gaussian regression” So you heard it here first, folks, from now on, refer to your ordinary least squares models as “Gaussian”.&lt;/p&gt;
+&lt;p style=&#34;text-align:right; color:#EB6864; font-size: 10pt;  LINE-HEIGHT:15px;&#34;&gt;
+Update: Professor Harrell proofed this and suggested &lt;br&gt; “what about just calling it OLS?”, so nevermind on &lt;br&gt; Gaussian, it had a good run…
+&lt;/p&gt;
+&lt;p&gt;I spent a really long time trying to think up a whitty pun/slogan for this name change, alas, all you get is this:&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;http://imgs.xkcd.com/comics/math_paper.png&#34; /&gt;
 
 &lt;/div&gt;
 &lt;p&gt;&lt;em&gt;If you have a particulary clever slogan, &lt;a href=&#34;http://twitter.com/LucyStats&#34;&gt;send it to me.&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;(Professor Harrell proofed this an suggested “what about just calling it OLS?”, so nevermind on Gaussian, it had a good run…)&lt;/p&gt;
+&lt;p style=&#34;text-align:right; color:#EB6864; font-size: 10pt;  LINE-HEIGHT:15px;&#34;&gt;
+Update 2: Actually! We’re putting it to a vote. &lt;br&gt; Gaussian may have another chance. &lt;br&gt; Will update in a further post.
+&lt;/p&gt;
 &lt;p&gt;To do this nonlinear modeling, restricted cubic splines are suggested because&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;they allow for flexibility without costing too many degrees of freedom&lt;/strong&gt; (it only costs &lt;span class=&#34;math inline&#34;&gt;\(k-1\)&lt;/span&gt; degrees of freedom, here &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; is the total number of knots) &lt;em&gt;for comparison, unrestricted cubic splines require &lt;span class=&#34;math inline&#34;&gt;\(k+3\)&lt;/span&gt; parameters to be estimated&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
