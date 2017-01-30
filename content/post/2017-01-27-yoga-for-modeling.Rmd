@@ -26,13 +26,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##What do you mean by nonlinear modeling
 
-By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a "linear" model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, and setting on calling it "Gaussian regression" So you heard it here first, folks, from now on, refer to your ordinary least squares models as "Gaussian". I spent a really long time trying to think up a whitty pun/slogan for this, alas, all you get is this:
+By nonlinear modeling, we mean fitting parametric models with nonlinear terms. In particular, Professor Harrell suggests restricted cubic splines (more on this below). So by this definition, you could be fitting a "linear" model (as on ordinary least squares), with nonlinear terms. We brought up in class that this can cause some confusion, and setting on calling it "Gaussian regression" So you heard it here first, folks, from now on, refer to your ordinary least squares models as "Gaussian". 
+
+<p style="text-align:right; color:#EB6864; font-size: 10pt;  LINE-HEIGHT:15px;">
+Update: Professor Harrell proofed this and suggested <br>
+"what about just calling it OLS?", so nevermind on <br> Gaussian, it had a good run...</p>
+
+I spent a really long time trying to think up a whitty pun/slogan for this name change, alas, all you get is this:
 
 ![](http://imgs.xkcd.com/comics/math_paper.png)
 
 *If you have a particulary clever slogan, [send it to me.](http://twitter.com/LucyStats)*
 
-(Professor Harrell proofed this an suggested "what about just calling it OLS?", so nevermind on Gaussian, it had a good run...)
+<p style="text-align:right; color:#EB6864; font-size: 10pt;  LINE-HEIGHT:15px;">
+Update 2: Actually! We're putting it to a vote. <br>
+Gaussian may have another chance. <br> Will update in a further post.</p>
 
 To do this nonlinear modeling, restricted cubic splines are suggested because
 
