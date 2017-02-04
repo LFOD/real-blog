@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>/</loc>
+    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/01/27/yoga-for-modeling/</loc>
     <lastmod>2017-01-27T14:30:26-06:00</lastmod>
   </url>
@@ -39,65 +44,6 @@
   <url>
     <loc>/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/data-science/</loc>
-    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/epidemiology/</loc>
-    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/javascript/</loc>
-    <lastmod>2017-01-24T10:54:24+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/rms/</loc>
-    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/thankyou/</loc>
-    <lastmod>2017-01-25T12:18:31-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/visualization/</loc>
-    <lastmod>2017-01-24T10:54:24+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/xkcd/</loc>
-    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>

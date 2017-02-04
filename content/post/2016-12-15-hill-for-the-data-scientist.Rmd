@@ -154,4 +154,4 @@ This inspired me to attempt to explain Hill's criteria using xkcd comics, both b
 [1] Hill, A. B. (1965). The Environment and Disease: Association or Causation? Proceedings of the Royal Society of Medicine, 58(5), 295–300.
 
 
-*Think I've missed something? Submit a [PR](https://github.com/LucyMcGowan/lucymcgowan.github.io/pulls).*
+*Think I've missed something? Submit a [PR](https://github.com/LFOD/real-blog/pulls).*
