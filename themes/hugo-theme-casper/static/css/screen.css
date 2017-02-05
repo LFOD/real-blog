@@ -1484,7 +1484,7 @@ body:not(.post-template) .post-title {
         height: auto;
         min-height: 240px;
         height: 60vh;
-        padding: 15% 0;
+        padding: 5% 0;
     }
 
     .scroll-down,
