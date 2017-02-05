@@ -18,6 +18,7 @@ var logistic = function(x, theta, i) {
 
 var width   = $(".main-header").width() ,
     height  = $(".main-header").height(),
+    // height  = width*0.4,
     padding = 20,
     numOfLines = 20,
     xs = seq(0.01, 5, .01),
@@ -146,7 +147,7 @@ var introMessage = "click"
 
 var intro = svg.append("text")
     .text(introMessage)
-    .attr("font-size", 45)
+    .attr("font-size", "1.3em")
     .attr("font-family", "optima")
     .attr("text-anchor", "middle")
     .attr("x", x(2.5))
