@@ -20,18 +20,15 @@ $( document ).ready(() => {
             Math.exp(-Math.pow((Math.log(x) - mu), 2) / (2 * Math.pow(theta, 2)))
         return y;
     }
-    
+
     var width   = $(".no-cover.main-header").width() ,
         height  = $(".no-cover.main-header").outerHeight(),
-        // height  = width*0.4,
-        padding = 20,
+        padding = 10,
         numOfLines = 20,
         xs = seq(0.01, 5, .01),
         colors = ['rgb(165,0,38)', 'rgb(215,48,39)', 'rgb(244,109,67)', 'rgb(253,174,97)', 'rgb(254,224,144)',
             'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
         ];
-
-    console.log(height);
 
     //define the svg.
     var svg = d3.select("#viz").append("svg")
@@ -57,14 +54,7 @@ $( document ).ready(() => {
               .style("stroke-width",2)
         })
 
-        intro
-            .transition()
-            .duration(800)
-            .attr("fill-opacity", 0)
-            .on("end", function(){
-                writeGreeting()
-            })
-            .remove()
+        writeGreeting()
     }
 
 
@@ -83,7 +73,7 @@ $( document ).ready(() => {
         .range([0, width]);
 
     var y = d3.scaleLinear()
-        .domain([0, 4])
+        .domain([0, 4.5])
         .range([height, 0]);
 
     // The line functions:
@@ -101,19 +91,22 @@ $( document ).ready(() => {
     //make a greeting message for after the line animation.
     function writeGreeting(){
 
+        var text_scale = width < 500 ? 1 : 0.65;
+        console.log(text_scale);
+        var intro_text = "Live Free or Dichotomize";
+
         var title = svg.append("text")
             .attr("font-size", 30)
             .attr("font-family", "optima")
             .attr("text-anchor", "end")
             .attr("fill-opacity", 0.65)
-            .attr("x", x(4.3))
-            .attr("y", y(2.7));
-
-        var hiSegment = title.append("tspan")
-            .attr("dy", "1.2em")
-            .attr("x", x(4.7))
+            .attr("x", width < 500 ? x(4.8) : x(4.2))
+            .attr("y", width < 500 ? y(3.12) : y(2.1) )
+            .attr("opacity", 0)
+            .text(intro_text)
+            .attr("font-size", function(d) { return ( text_scale*width - 8) / this.getComputedTextLength() * 24 + "px"; })
             .text("")
-            .attr("font-size", 50);
+            .attr("opacity", 1);
 
         (function drawGreeting (i, start, greeting) {
             setTimeout(function () {
@@ -121,13 +114,13 @@ $( document ).ready(() => {
                 //add next letter to the greeting in progress
                 start += greeting[i];
 
-                hiSegment.html(start) //append this to the html
+                title.html(start) //append this to the html
 
                 if (start.length < greeting.length) { //if the in progress greeting is less than the full, keep going.
                     drawGreeting(i+1,start,greeting);      //  increment i and call again.
                 };
             }, 100)
-        })(0, "", "Live Free or Dichotomize");
+        })(0, "", intro_text);
     }
 
 
@@ -150,15 +143,15 @@ $( document ).ready(() => {
         .style("fill", "none")
 
     // var introMessage = isMobile ? "tap" : "click"
-    var introMessage = "click"
-
-    var intro = svg.append("text")
-        .text(introMessage)
-        .attr("font-size", "1.3em")
-        .attr("font-family", "optima")
-        .attr("text-anchor", "middle")
-        .attr("x", x(2.5))
-        .attr("y", y(2.01))
+    // var introMessage = "click"
+    //
+    // var intro = svg.append("text")
+    //     .text(introMessage)
+    //     .attr("font-size", 35)
+    //     .attr("font-family", "optima")
+    //     .attr("text-anchor", "middle")
+    //     .attr("x", x(2.5))
+    //     .attr("y", y(2.01))
 
     //kick it off on a click. (or tap)
     animatelines(2)
