@@ -153,4 +153,5 @@ var intro = svg.append("text")
     .attr("y", y(2.01))
 
 //kick it off on a click. (or tap)
-d3.select("svg").on("click", function() { animatelines(2) })
+animatelines(2)
+// d3.select("svg").on("click", function() { animatelines(2) })
