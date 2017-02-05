@@ -33,4 +33,3 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     highlightjsTheme = "github"
 
     logo = "images/logo.png"
-    cover = "images/spline_regression.png"
