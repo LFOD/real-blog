@@ -141,6 +141,12 @@ $( document ).ready(() => {
         .style("stroke", function(d, i) { return colors[i % 10] })
         .style("opacity", 0)
         .style("fill", "none")
+        .on("mouseover", function(d){
+            d3.select(this).style("stroke", "black")
+        })
+        .on("mouseout", function(d,i){
+            d3.select(this).style("stroke", colors[i % 10])
+        })
 
     // var introMessage = isMobile ? "tap" : "click"
     // var introMessage = "click"
