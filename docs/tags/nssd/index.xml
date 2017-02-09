@@ -18,7 +18,7 @@
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;p&gt;This was inspired by &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; &amp;amp; &lt;a href=&#34;https://twitter.com/rdpeng&#34;&gt;Roger Peng’s&lt;/a&gt; &lt;a href=&#34;https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times&#34;&gt;Not So Standard Deviations Episode 32&lt;/a&gt;. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!&lt;/p&gt;
+&lt;p&gt;For today’s rendition of &lt;em&gt;I am curious about everything&lt;/em&gt;, in &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; &amp;amp; &lt;a href=&#34;https://twitter.com/rdpeng&#34;&gt;Roger Peng’s&lt;/a&gt; &lt;a href=&#34;https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times&#34;&gt;Not So Standard Deviations Episode 32&lt;/a&gt;, Roger suggested the prevalence of drunk podcasting as dramatically increased - so I thought I’d dig into it 🚧👷.&lt;/p&gt;
 &lt;p&gt;I pulled the iTunes API for the term &lt;code&gt;drunk&lt;/code&gt; in podcasts &amp;amp; plotted the prevalence over time. I also finally found an excuse to use &lt;a href=&#34;https://github.com/dill/emoGG&#34;&gt;emoGG&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;dplyr&amp;#39;)
 library(&amp;#39;ggplot2&amp;#39;)
