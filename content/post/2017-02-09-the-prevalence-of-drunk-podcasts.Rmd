@@ -30,7 +30,11 @@ req <- httr::GET(url = "https://itunes.apple.com/search",
           ))
 
 itunes <- jsonlite::fromJSON(httr::content(req))$results
+```
 
+This resulted in `170` podcasts, which I grouped by month/year released.
+
+```{r}
 itunes %>%
   mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %>%
   group_by(monyear) %>%
