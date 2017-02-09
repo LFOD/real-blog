@@ -5,7 +5,7 @@ languageCode = "en-us"
 title = "Live Free or Dichotomize"
 theme = "hugo-theme-casper"
 googleAnalytics = ""
-disqusShortname = ""
+disqusShortname = "livefreeordichotomize"
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 
 [permalinks]
