@@ -1,0 +1,52 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-02-09T12:56:22-06:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- NSSD
+- R code
+title: "The Prevalence of Drunk Podcasts"
+excerpt: "This was inspired by Hilary Parker & Roger Peng's Not So Standard Deviations Episode 32. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!"
+---
+
+This was inspired by [Hilary Parker](https://twitter.com/hspter) & [Roger Peng's](https://twitter.com/rdpeng) [Not So Standard Deviations Episode 32](https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times). It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!
+
+I pulled the iTunes API for the term `drunk` in podcasts & plotted the prevalence over time. I also finally found an excuse to use [emoGG](https://github.com/dill/emoGG).
+
+```{r, message = FALSE, warning = FALSE}
+library('dplyr')
+library('ggplot2')
+
+
+req <- httr::GET(url = "https://itunes.apple.com/search",
+          query = list(
+            term = "drunk",
+            media = "podcast",
+            limit = 200
+          ))
+
+itunes <- jsonlite::fromJSON(httr::content(req))$results
+
+itunes %>%
+  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %>%
+  group_by(monyear) %>%
+  summarise(n = n()) %>%
+  mutate(date = zoo::as.Date(monyear)) %>%
+  ggplot(aes(x = date,y=n)) +
+    scale_x_date() +
+    emoGG::geom_emoji(emoji="1f37a") + 
+    ylab("Number of 'Drunk' podcasts released")
+```
+
+
+It looks like Roger may be onto something. While it is certainly true that the prevalence of podcasts in general has certainly increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of "drunk" podcasts. 
+
+Here is a little shout out to my favorite drunk podcast [Drunk Monk](https://soundcloud.com/drunkmonkpodcast), with the lovely Keiko Agena (Gilmore Girls' Lane herself!).
+
+Cheers! 🍻
+
+*If you are interested in other things NSSD has inspired me to do, check out [this](http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/), or [this](http://www.lucymcgowan.com/NHTSA-safety-analysis.html)*.
