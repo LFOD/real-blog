@@ -6,8 +6,61 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Jan 2017 14:30:26 -0600</lastBuildDate>
+    <lastBuildDate>Thu, 09 Feb 2017 12:56:22 -0600</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>The Prevalence of Drunk Podcasts</title>
+      <link>/2017/02/09/the-prevalence-of-drunk-podcasts/</link>
+      <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
+      
+      <guid>/2017/02/09/the-prevalence-of-drunk-podcasts/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;This was inspired by &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; &amp;amp; &lt;a href=&#34;https://twitter.com/rdpeng&#34;&gt;Roger Peng’s&lt;/a&gt; &lt;a href=&#34;https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times&#34;&gt;Not So Standard Deviations Episode 32&lt;/a&gt;. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!&lt;/p&gt;
+&lt;p&gt;I pulled the iTunes API for the term &lt;code&gt;drunk&lt;/code&gt; in podcasts &amp;amp; plotted the prevalence over time. I also finally found an excuse to use &lt;a href=&#34;https://github.com/dill/emoGG&#34;&gt;emoGG&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;dplyr&amp;#39;)
+library(&amp;#39;ggplot2&amp;#39;)
+
+
+req &amp;lt;- httr::GET(url = &amp;quot;https://itunes.apple.com/search&amp;quot;,
+          query = list(
+            term = &amp;quot;drunk&amp;quot;,
+            media = &amp;quot;podcast&amp;quot;,
+            limit = 200
+          ))
+
+itunes &amp;lt;- jsonlite::fromJSON(httr::content(req))$results
+
+itunes %&amp;gt;%
+  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %&amp;gt;%
+  group_by(monyear) %&amp;gt;%
+  summarise(n = n()) %&amp;gt;%
+  mutate(date = zoo::as.Date(monyear)) %&amp;gt;%
+  ggplot(aes(x = date,y=n)) +
+    scale_x_date() +
+    emoGG::geom_emoji(emoji=&amp;quot;1f37a&amp;quot;) + 
+    ylab(&amp;quot;Number of &amp;#39;Drunk&amp;#39; podcasts released&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-02-09-the-prevalence-of-drunk-podcasts_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It looks like Roger may be onto something. While it is certainly true that the prevalence of podcasts in general has certainly increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of “drunk” podcasts.&lt;/p&gt;
+&lt;p&gt;Here is a little shout out to my favorite drunk podcast &lt;a href=&#34;https://soundcloud.com/drunkmonkpodcast&#34;&gt;Drunk Monk&lt;/a&gt;, with the lovely Keiko Agena (Gilmore Girls’ Lane herself!).&lt;/p&gt;
+&lt;p&gt;Cheers! 🍻&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;If you are interested in other things NSSD has inspired me to do, check out &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;this&lt;/a&gt;, or &lt;a href=&#34;http://www.lucymcgowan.com/NHTSA-safety-analysis.html&#34;&gt;this&lt;/a&gt;&lt;/em&gt;.&lt;/p&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
     
     <item>
       <title>Yoga for modeling</title>

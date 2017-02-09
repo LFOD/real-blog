@@ -1,0 +1,60 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-02-09T12:56:22-06:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- NSSD
+- R code
+title: "The Prevalence of Drunk Podcasts"
+excerpt: "This was inspired by Hilary Parker & Roger Peng's Not So Standard Deviations Episode 32. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!"
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>This was inspired by <a href="https://twitter.com/hspter">Hilary Parker</a> &amp; <a href="https://twitter.com/rdpeng">Roger Peng’s</a> <a href="https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times">Not So Standard Deviations Episode 32</a>. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!</p>
+<p>I pulled the iTunes API for the term <code>drunk</code> in podcasts &amp; plotted the prevalence over time. I also finally found an excuse to use <a href="https://github.com/dill/emoGG">emoGG</a>.</p>
+<pre class="r"><code>library(&#39;dplyr&#39;)
+library(&#39;ggplot2&#39;)
+
+
+req &lt;- httr::GET(url = &quot;https://itunes.apple.com/search&quot;,
+          query = list(
+            term = &quot;drunk&quot;,
+            media = &quot;podcast&quot;,
+            limit = 200
+          ))
+
+itunes &lt;- jsonlite::fromJSON(httr::content(req))$results
+
+itunes %&gt;%
+  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %&gt;%
+  group_by(monyear) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(date = zoo::as.Date(monyear)) %&gt;%
+  ggplot(aes(x = date,y=n)) +
+    scale_x_date() +
+    emoGG::geom_emoji(emoji=&quot;1f37a&quot;) + 
+    ylab(&quot;Number of &#39;Drunk&#39; podcasts released&quot;)</code></pre>
+<p><img src="#####../content/post/2017-02-09-the-prevalence-of-drunk-podcasts_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>It looks like Roger may be onto something. While it is certainly true that the prevalence of podcasts in general has certainly increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of “drunk” podcasts.</p>
+<p>Here is a little shout out to my favorite drunk podcast <a href="https://soundcloud.com/drunkmonkpodcast">Drunk Monk</a>, with the lovely Keiko Agena (Gilmore Girls’ Lane herself!).</p>
+<p>Cheers! 🍻</p>
+<p><em>If you are interested in other things NSSD has inspired me to do, check out <a href="http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">this</a>, or <a href="http://www.lucymcgowan.com/NHTSA-safety-analysis.html">this</a></em>.</p>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->

@@ -14,29 +14,31 @@
 
 
 
-<meta name="twitter:title" content="Regression modeling strategies: a student&#39;s perspective"/>
-<meta name="twitter:description" content="Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his book each spring at Vanderbilt.
-This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.
-This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it."/>
+<meta name="twitter:title" content="The Prevalence of Drunk Podcasts"/>
+<meta name="twitter:description" content="This was inspired by Hilary Parker &amp; Roger Peng’s Not So Standard Deviations Episode 32. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!
+I pulled the iTunes API for the term drunk in podcasts &amp; plotted the prevalence over time. I also finally found an excuse to use emoGG.
+library(&#39;dplyr&#39;) library(&#39;ggplot2&#39;) req &lt;- httr::GET(url = &quot;https://itunes.apple.com/search&quot;, query = list( term = &quot;drunk&quot;, media = &quot;podcast&quot;, limit = 200 )) itunes &lt;- jsonlite::fromJSON(httr::content(req))$results itunes %&gt;% mutate(date = as."/>
 
 
 
-  	<meta property="og:title" content=" Regression modeling strategies: a student&#39;s perspective &middot;  Live Free or Dichotomize" />
+  	<meta property="og:title" content=" The Prevalence of Drunk Podcasts &middot;  Live Free or Dichotomize" />
   	<meta property="og:site_name" content="Live Free or Dichotomize" />
-  	<meta property="og:url" content="/2017/01/17/regression-modeling-strategies-a-students-perspective/" />
+  	<meta property="og:url" content="/2017/02/09/the-prevalence-of-drunk-podcasts/" />
 
     
   	<meta property="og:type" content="article" />
 
-    <meta property="og:article:published_time" content="2017-01-17T22:15:13-06:00" />
+    <meta property="og:article:published_time" content="2017-02-09T12:56:22-06:00" />
 
     
-    <meta property="og:article:tag" content="rms" />
+    <meta property="og:article:tag" content="NSSD" />
+    
+    <meta property="og:article:tag" content="R code" />
     
     
 
     <title>
-       Regression modeling strategies: a student&#39;s perspective &middot;  Live Free or Dichotomize
+       The Prevalence of Drunk Podcasts &middot;  Live Free or Dichotomize
     </title>
 
     <meta name="description" content="A statistics blog from two goofy Phd students." />
@@ -59,7 +61,7 @@ This semester, Nick is enrolled in the course, and I will be TAing it, so we tho
     
     <meta name="generator" content="Hugo 0.17" />
 
-    <link rel="canonical" href="../../../../2017/01/17/regression-modeling-strategies-a-students-perspective/" />
+    <link rel="canonical" href="../../../../2017/02/09/the-prevalence-of-drunk-podcasts/" />
 
     
 
@@ -139,17 +141,19 @@ This semester, Nick is enrolled in the course, and I will be TAing it, so we tho
   <article class="post post">
 
     <header class="post-header">
-        <h1 class="post-title">Regression modeling strategies: a student&#39;s perspective</h1>
+        <h1 class="post-title">The Prevalence of Drunk Podcasts</h1>
         <small></small>
 
         <section class="post-meta">
         
-          <time class="post-date" datetime="2017-01-17T22:15:13-06:00">
-            Jan 17, 2017
+          <time class="post-date" datetime="2017-02-09T12:56:22-06:00">
+            Feb 9, 2017
           </time>
         
          
-          <span class="post-tag small"><a href="../../../../tags/rms/">#rms</a></span>
+          <span class="post-tag small"><a href="../../../../tags/nssd/">#NSSD</a></span>
+         
+          <span class="post-tag small"><a href="../../../../tags/r-code/">#R code</a></span>
          
         </section>
     </header>
@@ -157,20 +161,35 @@ This semester, Nick is enrolled in the course, and I will be TAing it, so we tho
     <section class="post-content">
 
 
-<p>Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his <a href="https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics/dp/3319194240/ref=sr_1_1?ie=UTF8&amp;qid=1484713166&amp;sr=8-1&amp;keywords=regression+modeling+strategies">book</a> each spring at Vanderbilt.</p>
-<p>This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.</p>
-<p>This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it. We will be using the #rms tag to thread the series to make it easy to follow along.</p>
-<p>To kick things off, I encourage everyone to get a flavor of our beloved professor’s style by trying out the following <code>R</code> code:</p>
-<pre><code>library(&quot;fortunes&quot;)
-fortune(&quot;Harrell&quot;)</code></pre>
-<p>Here is one of my personal favorites:</p>
-<pre><code>## 
-## The fact that some people murder doesn&#39;t mean we should copy them. And
-## murdering data, though not as serious, should also be avoided.
-##    -- Frank E. Harrell (answering a question on categorization of
-##       continuous variables in survival modelling)
-##       R-help (July 2005)</code></pre>
-<p>We have been planning on kicking this series off for a while, but it happens to serendipitously coincide with Frank jumping online via <a href="www.twitter.com/f2harrell">twitter</a> and a <a href="http://www.fharrell.com">blog</a>! We are so excited to see how this goes.</p>
+<p>This was inspired by <a href="https://twitter.com/hspter">Hilary Parker</a> &amp; <a href="https://twitter.com/rdpeng">Roger Peng’s</a> <a href="https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times">Not So Standard Deviations Episode 32</a>. It was suggested the prevalence of drunk podcasting as dramatically increased - curiosity strikes again!</p>
+<p>I pulled the iTunes API for the term <code>drunk</code> in podcasts &amp; plotted the prevalence over time. I also finally found an excuse to use <a href="https://github.com/dill/emoGG">emoGG</a>.</p>
+<pre class="r"><code>library(&#39;dplyr&#39;)
+library(&#39;ggplot2&#39;)
+
+
+req &lt;- httr::GET(url = &quot;https://itunes.apple.com/search&quot;,
+          query = list(
+            term = &quot;drunk&quot;,
+            media = &quot;podcast&quot;,
+            limit = 200
+          ))
+
+itunes &lt;- jsonlite::fromJSON(httr::content(req))$results
+
+itunes %&gt;%
+  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %&gt;%
+  group_by(monyear) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(date = zoo::as.Date(monyear)) %&gt;%
+  ggplot(aes(x = date,y=n)) +
+    scale_x_date() +
+    emoGG::geom_emoji(emoji=&quot;1f37a&quot;) + 
+    ylab(&quot;Number of &#39;Drunk&#39; podcasts released&quot;)</code></pre>
+<p><img src="figures/unnamed-chunk-1-1.png" width="672" /></p>
+<p>It looks like Roger may be onto something. While it is certainly true that the prevalence of podcasts in general has certainly increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of “drunk” podcasts.</p>
+<p>Here is a little shout out to my favorite drunk podcast <a href="https://soundcloud.com/drunkmonkpodcast">Drunk Monk</a>, with the lovely Keiko Agena (Gilmore Girls’ Lane herself!).</p>
+<p>Cheers! 🍻</p>
+<p><em>If you are interested in other things NSSD has inspired me to do, check out <a href="http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">this</a>, or <a href="http://www.lucymcgowan.com/NHTSA-safety-analysis.html">this</a></em>.</p>
 
 
 
@@ -223,7 +242,7 @@ fortune(&quot;Harrell&quot;)</code></pre>
 
     
 <section class="share">
-  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=Regression%20modeling%20strategies%3a%20a%20student%27s%20perspective&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f01%2f17%2fregression-modeling-strategies-a-students-perspective%2f"
+  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=The%20Prevalence%20of%20Drunk%20Podcasts&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f02%2f09%2fthe-prevalence-of-drunk-podcasts%2f"
       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
  </a></p>
 </section>
