@@ -39,7 +39,8 @@ itunes %>%
   ggplot(aes(x = date,y=n)) +
     scale_x_date() +
     emoGG::geom_emoji(emoji="1f37a") + 
-    ylab("Number of 'Drunk' podcasts released")
+    ylab("Number of 'Drunk' podcasts released") +
+    theme_minimal()
 ```
 
 
@@ -49,4 +50,4 @@ Here is a little shout out to my favorite drunk podcast [Drunk Monk](https://sou
 
 Cheers! 🍻
 
-*If you are interested in other things NSSD has inspired me to do, check out [this](http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/), or [this](http://www.lucymcgowan.com/NHTSA-safety-analysis.html)*.
+*If you are interested in other things NSSD has inspired me to do, check out [this](http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/), or [this](http://www.lucymcgowan.com/NHTSA-safety-analysis.html).*
