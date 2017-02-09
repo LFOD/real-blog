@@ -191,7 +191,31 @@ itunes &lt;- jsonlite::fromJSON(httr::content(req))$results</code></pre>
 <p>I tried to find the number of podcasts on iTunes by month over the past couple of years to adjust for this, but to no avail. If you have that data, please <a href="https://twitter.com/LucyStats">send it my way</a>, so I can complete this very crucial analysis. In the meantime, I’ll pretend it doesn’t matter: <em>While it is certainly true that the number of podcasts in general has absolutely increased over this time period, I would be surprised if the increase is as dramatic as the increase in the number of “drunk” podcasts.</em></p>
 <p>Here is a little shout out to my favorite drunk podcast <a href="https://soundcloud.com/drunkmonkpodcast">Drunk Monk</a>, with the lovely Keiko Agena (Gilmore Girls’ Lane herself!).</p>
 <p>Cheers! 🍻</p>
+<div id="update" class="section level2">
+<h2>Update!</h2>
+<p><a href="https://twitter.com/esjewett">Ethan</a> pointed out the curve was looking a little drunk…</p>
+<blockquote class="twitter-tweet" data-conversation="none" data-cards="hidden" data-lang="en">
+<p lang="en" dir="ltr">
+<a href="https://twitter.com/LucyStats"><span class="citation">@LucyStats</span></a> <a href="https://twitter.com/rdpeng"><span class="citation">@rdpeng</span></a> <a href="https://twitter.com/NSSDeviations"><span class="citation">@NSSDeviations</span></a> Wait … that curve is starting to wrap around. Is it drunk? <a href="https://t.co/YBAkAMLDM0">pic.twitter.com/YBAkAMLDM0</a>
+</p>
+— Ethan Jewett (<span class="citation">@esjewett</span>) <a href="https://twitter.com/esjewett/status/829785814347501569">February 9, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Indeed! We’ve left in February’s data (despite the fact that February is not even half way over 🙈).</p>
+<pre class="r"><code>itunes %&gt;%
+  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %&gt;%
+  filter(date &lt; as.Date(&#39;2017-02-01&#39;)) %&gt;% #add a filter!
+  group_by(monyear) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(date = zoo::as.Date(monyear)) %&gt;%
+  ggplot(aes(x = date,y=n)) +
+    scale_x_date() +
+    emoGG::geom_emoji(emoji=&quot;1f37a&quot;) + 
+    ylab(&quot;Number of &#39;Drunk&#39; podcasts released&quot;) +
+    theme_minimal()</code></pre>
+<p><img src="figures/unnamed-chunk-3-1.png" width="672" /></p>
 <p><em>If you are interested in other things NSSD has inspired me to do, check out <a href="http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">this</a>, or <a href="http://www.lucymcgowan.com/NHTSA-safety-analysis.html">this</a>.</em></p>
+</div>
 
 
 
