@@ -44,7 +44,9 @@ itunes %>%
 ```
 
 
-It looks like Roger may be onto something. While it is certainly true that the prevalence of podcasts in general has certainly increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of "drunk" podcasts. 
+**It looks like Roger may be onto something.**
+
+I tried to find the number of podcasts on iTunes by month over the past couple of years to adjust for this, but to no avail. If you have that data, please [send it my way](https://twitter.com/LucyStats), so I can complete this very crucial analysis. In the meantime, I'll pretend it doesn't matter: *While it is certainly true that the prevalence of podcasts in general has absolutely increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of "drunk" podcasts.*
 
 Here is a little shout out to my favorite drunk podcast [Drunk Monk](https://soundcloud.com/drunkmonkpodcast), with the lovely Keiko Agena (Gilmore Girls' Lane herself!).
 

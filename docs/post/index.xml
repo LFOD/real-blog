@@ -45,7 +45,8 @@ itunes %&amp;gt;%
     ylab(&amp;quot;Number of &amp;#39;Drunk&amp;#39; podcasts released&amp;quot;) +
     theme_minimal()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;#####../content/post/2017-02-09-the-prevalence-of-drunk-podcasts_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;It looks like Roger may be onto something. While it is certainly true that the prevalence of podcasts in general has certainly increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of “drunk” podcasts.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;It looks like Roger may be onto something.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I tried to find the number of podcasts on iTunes by month over the past couple of years to adjust for this, but to no avail. If you have that data, please &lt;a href=&#34;https://twitter.com/LucyStats&#34;&gt;send it my way&lt;/a&gt;, so I can complete this very crucial analysis. In the meantime, I’ll pretend it doesn’t matter: &lt;em&gt;While it is certainly true that the prevalence of podcasts in general has absolutely increased over this time period, I would be surprised if the increase is as dramatic as the increase in the prevalence of “drunk” podcasts.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Here is a little shout out to my favorite drunk podcast &lt;a href=&#34;https://soundcloud.com/drunkmonkpodcast&#34;&gt;Drunk Monk&lt;/a&gt;, with the lovely Keiko Agena (Gilmore Girls’ Lane herself!).&lt;/p&gt;
 &lt;p&gt;Cheers! 🍻&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;If you are interested in other things NSSD has inspired me to do, check out &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;this&lt;/a&gt;, or &lt;a href=&#34;http://www.lucymcgowan.com/NHTSA-safety-analysis.html&#34;&gt;this&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
