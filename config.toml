@@ -5,7 +5,7 @@ languageCode = "en-us"
 title = "Live Free or Dichotomize"
 theme = "hugo-theme-casper"
 googleAnalytics = ""
-disqusShortname = "livefreeordichotomize"
+disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 
 [permalinks]
@@ -33,3 +33,4 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     highlightjsTheme = "github"
 
     logo = "images/logo.png"
+

@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="The dire consequences of tests for linearity"/>
 <meta name="twitter:description" content="This is a tale of the dire type 1 error consequences that occur when you test for linearity.
  Edvard Munch’s The Scream (1893), coincidentally also the face Frank Harrell makes when he sees students testing for linearity. First, my favorite explanation of type 1 error 🐺:
-@jgschraiber @eagereyes Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error."/>
+ @jgschraiber @eagereyes Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error."/>
 
 
 
@@ -171,6 +171,7 @@
 <em>Edvard Munch’s The Scream (1893), coincidentally also the face <a href="https://twitter.com/f2harrell">Frank Harrell</a> makes when he sees students testing for linearity.</em>
 </p>
 <p>First, my favorite explanation of <strong>type 1 error</strong> 🐺:</p>
+<center>
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en">
 <p lang="en" dir="ltr">
 <a href="https://twitter.com/jgschraiber"><span class="citation">@jgschraiber</span></a> <a href="https://twitter.com/eagereyes"><span class="citation">@eagereyes</span></a> Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error.
@@ -178,6 +179,7 @@
 — Sam (<span class="citation">@geometrywarrior</span>) <a href="https://twitter.com/geometrywarrior/status/781162199540719616">September 28, 2016</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
 <p>We generally fix (or claim to fix) this <strong>type 1 error</strong> at 0.05, but sometimes our procedures can make this go awry!</p>
 <p>I’ve prepared a <strong>very</strong> basic simulation.</p>
 <ul>
@@ -206,12 +208,17 @@ if (wrong == TRUE &amp; anova(mod)[3,5] &gt; 0.05){
  #save the p-value
  anova(mod)[1,5]
 }</code></pre>
-<p><span style="color:#EB6864; font-size: 20pt"> [Type 1 error when removing non-significant nonlinear terms ]</span></p>
+<center>
+<p><span style="color:#EB6864; font-size: 20pt"> [Type 1 error when removing non-significant nonlinear terms]</p>
+<p></span></p>
+</center>
 <pre class="r"><code>test &lt;- replicate(10000, sim()) 
 cat(&quot;The type 1 error is&quot;, mean(test &lt;= 0.05)) </code></pre>
 <pre><code>## The type 1 error is 0.0853</code></pre>
 <p>Uh oh! That <strong>type 1 error</strong> is certainly higher than the nominal 0.05 we claim!</p>
+<center>
 <p><span style="color:#EB6864; font-size: 20pt"> [Type 1 error when not removing non-significant nonlinear terms]</span></p>
+</center>
 <p>We would expect the <strong>type 1 error</strong> to be 0.05 – I perform the same simulation omitting the step of removing non-significant nonlinear terms and calculate the <strong>type 1 error</strong> again.</p>
 <pre class="r"><code>test &lt;- replicate(10000, sim(wrong = FALSE))
 cat(&quot;The type 1 error is&quot;, mean(test &lt;= 0.05))</code></pre>
@@ -290,22 +297,6 @@ cat(&quot;The type 1 error is&quot;, mean(test &lt;= 0.05))</code></pre>
 
 
     
-
-
-  <div id="disqus_thread"></div>
-    <script type="text/javascript">
-       
-      var disqus_shortname = 'livefreeordichotomize'; 
-      var disqus_identifier = '\/2017\/02\/18\/the-dire-consequences-of-tests-for-linearity\/';
-       
-      (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
       
