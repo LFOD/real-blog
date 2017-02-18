@@ -10,10 +10,10 @@ tags:
 - NSSD
 - R code
 title: "The prevalence of drunk podcasts"
-excerpt: "For today's rendition of I am curious about everything, in Hilary Parker & Roger Peng's Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting as dramatically increased - so I thought I'd dig into it."
+excerpt: "For today's rendition of I am curious about everything, in Hilary Parker & Roger Peng's Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I'd dig into it."
 ---
 
-For today's rendition of *I am curious about everything*, in [Hilary Parker](https://twitter.com/hspter) & [Roger Peng's](https://twitter.com/rdpeng) [Not So Standard Deviations Episode 32](https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times), Roger suggested the prevalence of drunk podcasting as dramatically increased - so I thought I'd dig into it 🚧👷.
+For today's rendition of *I am curious about everything*, in [Hilary Parker](https://twitter.com/hspter) & [Roger Peng's](https://twitter.com/rdpeng) [Not So Standard Deviations Episode 32](https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times), Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I'd dig into it 🚧👷.
 
 I pulled the iTunes API for the term `drunk` in podcasts & plotted the results over time. I also finally found an excuse to use [emoGG](https://github.com/dill/emoGG).
 
