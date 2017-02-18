@@ -4,7 +4,7 @@ relativeurls = true
 languageCode = "en-us"
 title = "Live Free or Dichotomize"
 theme = "hugo-theme-casper"
-googleAnalytics = ""
+googleAnalytics = "UA-92165973-1"
 disqusShortname = "livefreeordichotomize"
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 
