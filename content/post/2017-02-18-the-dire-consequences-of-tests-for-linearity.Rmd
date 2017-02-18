@@ -26,9 +26,11 @@ First, my favorite explanation of **type 1 error** 🐺:
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/jgschraiber">@jgschraiber</a> <a href="https://twitter.com/eagereyes">@eagereyes</a> Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error.</p>&mdash; Sam (@geometrywarrior) <a href="https://twitter.com/geometrywarrior/status/781162199540719616">September 28, 2016</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+We generally fix (or claim to fix) this **type 1 error** at 0.05, but sometimes our procedures can make this go awry!
+
 I've prepared a **very** basic simulation. 
 
-* generate 100 data points from two independent random normal distributions, an outcome $y$ and a predictor $x$. 
+* generate 100 data points from two independent random normal distributions, an outcome $y$ and a predictor $x$<span style = "color:#EB6864"> (Since these are generated randomly, we would **not** expect there to be an association between $x$ and $y$. If all goes as planned, our **type 1 error** would be 0.05) </span>
 * fit simple linear model with a restricted cubic spline on the predictor $x$
 * test whether the nonlinear terms are significant
   * if they are, leave them in and test the association between $x$ and $y$

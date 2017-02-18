@@ -32,9 +32,10 @@ excerpt: "This is a tale of the dire (type 1 error) consequences that occur when
 — Sam (<span class="citation">@geometrywarrior</span>) <a href="https://twitter.com/geometrywarrior/status/781162199540719616">September 28, 2016</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>We generally fix (or claim to fix) this <strong>type 1 error</strong> at 0.05, but sometimes our procedures can make this go awry!</p>
 <p>I’ve prepared a <strong>very</strong> basic simulation.</p>
 <ul>
-<li>generate 100 data points from two independent random normal distributions, an outcome <span class="math inline">\(y\)</span> and a predictor <span class="math inline">\(x\)</span>.</li>
+<li>generate 100 data points from two independent random normal distributions, an outcome <span class="math inline">\(y\)</span> and a predictor <span class="math inline">\(x\)</span><span style="color:#EB6864"> (Since these are generated randomly, we would <strong>not</strong> expect there to be an association between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. If all goes as planned, our <strong>type 1 error</strong> would be 0.05) </span></li>
 <li>fit simple linear model with a restricted cubic spline on the predictor <span class="math inline">\(x\)</span></li>
 <li>test whether the nonlinear terms are significant</li>
 <li>if they are, leave them in and test the association between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></li>
