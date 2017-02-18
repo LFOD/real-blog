@@ -31,9 +31,10 @@
 — Sam (&lt;span class=&#34;citation&#34;&gt;@geometrywarrior&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/geometrywarrior/status/781162199540719616&#34;&gt;September 28, 2016&lt;/a&gt;
 &lt;/blockquote&gt;
 &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;We generally fix (or claim to fix) this &lt;strong&gt;type 1 error&lt;/strong&gt; at 0.05, but sometimes our procedures can make this go awry!&lt;/p&gt;
 &lt;p&gt;I’ve prepared a &lt;strong&gt;very&lt;/strong&gt; basic simulation.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;generate 100 data points from two independent random normal distributions, an outcome &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and a predictor &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;.&lt;/li&gt;
+&lt;li&gt;generate 100 data points from two independent random normal distributions, an outcome &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and a predictor &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;&lt;span style=&#34;color:#EB6864&#34;&gt; (Since these are generated randomly, we would &lt;strong&gt;not&lt;/strong&gt; expect there to be an association between &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;. If all goes as planned, our &lt;strong&gt;type 1 error&lt;/strong&gt; would be 0.05) &lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;fit simple linear model with a restricted cubic spline on the predictor &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;&lt;/li&gt;
 &lt;li&gt;test whether the nonlinear terms are significant&lt;/li&gt;
 &lt;li&gt;if they are, leave them in and test the association between &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;&lt;/li&gt;
