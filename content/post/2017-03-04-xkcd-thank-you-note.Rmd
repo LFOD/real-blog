@@ -14,7 +14,7 @@ excerpt: "Exploring the relationship between my time spent on statistics & my ti
 ---
 
 
-I've been looking for a way to incoporate xkcd in my #thankyou series, and then I came across this gem:
+I've been looking for a way to incoporate xkcd in my #thankyou series & recently came across this gem:
 
 <blockquote class="twitter-tweet" data-cards="hidden" data-lang="en"><p lang="en" dir="ltr">Did you know that there is a package in R to make your graphs in the style of xkcd comics? <a href="https://twitter.com/hashtag/Rstats?src=hash">#Rstats</a> <a href="https://t.co/29Cnp9t20N">https://t.co/29Cnp9t20N</a> <a href="https://t.co/iY1UsFdEfJ">pic.twitter.com/iY1UsFdEfJ</a></p>&mdash; Maria Gatta (@M_Gatta) <a href="https://twitter.com/M_Gatta/status/832952195784044545">February 18, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <br>
@@ -43,8 +43,8 @@ xkcdlabel <-  function(text,x,y, above= FALSE) {
     add = -4
     beg = -3
   }
-  te1 <- annotate("text", x=x, y = y , label=text,family ="xkcd")
-  list(te1,
+  ann <- annotate("text", x=x, y = y , label=text,family ="xkcd")
+  list(ann,
        xkcdline(aes(xbegin=xbegin, ybegin= ybegin, xend=xend,yend=yend),
                 data.frame(xbegin=x,ybegin= y+beg , xend=x,yend=y+add), xjitteramount = 0.5))
 }
@@ -93,8 +93,8 @@ xkcdlabel <-  function(text,x,y, above= FALSE) {
     add = -4
     beg = -3
   }
-  te1 <- annotate("text", x=x, y = y , label=text,family ="xkcd")
-  list(te1,
+ ann <- annotate("text", x=x, y = y , label=text,family ="xkcd")
+  list(ann,
        xkcdline(aes(xbegin=xbegin, ybegin= ybegin, xend=xend,yend=yend),
                 data.frame(xbegin=x,ybegin= y+beg , xend=x,yend=y+add), xjitteramount = 0.5))
 }

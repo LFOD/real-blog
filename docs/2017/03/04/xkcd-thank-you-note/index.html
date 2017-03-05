@@ -15,7 +15,7 @@
 
 
 <meta name="twitter:title" content="xkcd thank you note"/>
-<meta name="twitter:description" content="I’ve been looking for a way to incoporate xkcd in my #thankyou series, and then I came across this gem:
+<meta name="twitter:description" content="I’ve been looking for a way to incoporate xkcd in my #thankyou series &amp; recently came across this gem:
 Did you know that there is a package in R to make your graphs in the style of xkcd comics? #Rstats https://t.co/29Cnp9t20N pic.twitter.com/iY1UsFdEfJ — Maria Gatta (@M_Gatta) February 18, 2017    [I’m not saying xkcd makes me a better statistician, but I’m not not saying that either 💁🏻]"/>
 
 
@@ -169,7 +169,7 @@ Did you know that there is a package in R to make your graphs in the style of xk
     <section class="post-content">
 
 
-<p>I’ve been looking for a way to incoporate xkcd in my #thankyou series, and then I came across this gem:</p>
+<p>I’ve been looking for a way to incoporate xkcd in my #thankyou series &amp; recently came across this gem:</p>
 <blockquote class="twitter-tweet" data-cards="hidden" data-lang="en">
 <p lang="en" dir="ltr">
 Did you know that there is a package in R to make your graphs in the style of xkcd comics? <a href="https://twitter.com/hashtag/Rstats?src=hash">#Rstats</a> <a href="https://t.co/29Cnp9t20N">https://t.co/29Cnp9t20N</a> <a href="https://t.co/iY1UsFdEfJ">pic.twitter.com/iY1UsFdEfJ</a>
@@ -198,8 +198,8 @@ xkcdlabel &lt;-  function(text,x,y, above= FALSE) {
     add = -4
     beg = -3
   }
-  te1 &lt;- annotate(&quot;text&quot;, x=x, y = y , label=text,family =&quot;xkcd&quot;)
-  list(te1,
+ ann &lt;- annotate(&quot;text&quot;, x=x, y = y , label=text,family =&quot;xkcd&quot;)
+  list(ann,
        xkcdline(aes(xbegin=xbegin, ybegin= ybegin, xend=xend,yend=yend),
                 data.frame(xbegin=x,ybegin= y+beg , xend=x,yend=y+add), xjitteramount = 0.5))
 }
