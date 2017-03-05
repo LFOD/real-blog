@@ -22,7 +22,7 @@ I've been looking for a way to incoporate xkcd in my #thankyou series & recently
 </center>
 <br>
 
-[xkcd](http://xkcd.com) has been there during some of my [*finest*](http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/) statistical moments, so they certainly deserve a proper thank you. I use the [xkcd](https://cran.r-project.org/web/packages/xkcd/xkcd.pdf) package to explore the relationship between the time I've spent on statistics and the time I've spent on xkcd ([correlation $\neq$ causation](https://xkcd.com/552/)...but $\rho$ = 0.84). 
+[xkcd](http://xkcd.com) has been there during some of my [*finest*](http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/) statistical moments, so they certainly deserve a proper thank you. I use the [xkcd](https://cran.r-project.org/web/packages/xkcd/xkcd.pdf) `R` package to explore the relationship between the time I've spent on statistics and the time I've spent on xkcd ([correlation $\neq$ causation](https://xkcd.com/552/)...but $\rho$ = 0.84). 
 
 
 
