@@ -19,17 +19,25 @@
 /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;I’ve been looking for a way to incoporate xkcd in my #thankyou series, and then I came across this gem:&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-cards=&#34;hidden&#34; data-lang=&#34;en&#34;&gt;
 &lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
 Did you know that there is a package in R to make your graphs in the style of xkcd comics? &lt;a href=&#34;https://twitter.com/hashtag/Rstats?src=hash&#34;&gt;#Rstats&lt;/a&gt; &lt;a href=&#34;https://t.co/29Cnp9t20N&#34;&gt;https://t.co/29Cnp9t20N&lt;/a&gt; &lt;a href=&#34;https://t.co/iY1UsFdEfJ&#34;&gt;pic.twitter.com/iY1UsFdEfJ&lt;/a&gt;
 &lt;/p&gt;
 — Maria Gatta (&lt;span class=&#34;citation&#34;&gt;@M_Gatta&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/M_Gatta/status/832952195784044545&#34;&gt;February 18, 2017&lt;/a&gt;
 &lt;/blockquote&gt;
 &lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;p&gt;What could be better? &lt;a href=&#34;http://xkcd.com&#34;&gt;xkcd&lt;/a&gt; has been there during some of my most &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;&lt;em&gt;finest&lt;/em&gt;&lt;/a&gt; statistical moments. I decided to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/xkcd/xkcd.pdf&#34;&gt;xkcd&lt;/a&gt; package to explore the relationship between the time I’ve spent on statistics and the time I’ve spent on xkcd &amp;amp; express my extreme graditude for xkcd.&lt;/p&gt;
+&lt;br&gt;
+&lt;center&gt;
+&lt;span style=&#34;color:#EB6864; font-size: 15pt&#34;&gt;[I’m not saying xkcd makes me a better statistician, but I’m not &lt;b&gt;not&lt;/b&gt; saying that either 💁🏻]&lt;/span&gt;
+&lt;/center&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://xkcd.com&#34;&gt;xkcd&lt;/a&gt; has been there during some of my &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;&lt;em&gt;finest&lt;/em&gt;&lt;/a&gt; statistical moments, so they certainly deserve a proper thank you. I use the &lt;a href=&#34;https://cran.r-project.org/web/packages/xkcd/xkcd.pdf&#34;&gt;xkcd&lt;/a&gt; package to explore the relationship between the time I’ve spent on statistics and the time I’ve spent on xkcd (&lt;a href=&#34;https://xkcd.com/552/&#34;&gt;correlation &lt;span class=&#34;math inline&#34;&gt;\(\neq\)&lt;/span&gt; causation&lt;/a&gt;…but &lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt; = 0.84).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-04-xkcd-thank-you-note_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;You can make one too - run the code below with my data or input your own! Happy plotting 👯&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;ggplot2&amp;#39;)
 library(&amp;#39;xkcd&amp;#39;)
-load(&amp;quot;../../data/xkcd_data.rda&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+
+load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/data/xkcd_data.rda&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(916)
 xkcdlabel &amp;lt;-  function(text,x,y, above= FALSE) {
   if (above == TRUE){
@@ -62,9 +70,19 @@ p &amp;lt;- ggplot(data) +
         legend.position = c(.25,.75)) +
   ggtitle(&amp;quot;Thank you, xkcd!&amp;quot;)
 p&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-04-xkcd-thank-you-note_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 
+&lt;!-- dynamically load mathjax for compatibility with self-contained --&gt;
+&lt;script&gt;
+  (function () {
+    var script = document.createElement(&#34;script&#34;);
+    script.type = &#34;text/javascript&#34;;
+    script.src  = &#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;;
+    if (location.protocol !== &#34;file:&#34; &amp;&amp; /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, &#39;&#39;);
+    document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);
+  })();
+&lt;/script&gt;
 
 &lt;!-- BLOGDOWN-HEAD
 
