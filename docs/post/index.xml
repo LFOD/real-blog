@@ -19,7 +19,7 @@
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;p&gt;I’ve been looking for a way to incoporate xkcd in my &lt;a href=&#34;http://livefreeordichotomize.com/tags/thankyou/&#34;&gt;#thankyou&lt;/a&gt; series &amp;amp; recently came across this gem:&lt;/p&gt;
+&lt;p&gt;I’ve been looking for a way to incorporate xkcd in my &lt;a href=&#34;http://livefreeordichotomize.com/tags/thankyou/&#34;&gt;#thankyou&lt;/a&gt; series &amp;amp; recently came across this gem:&lt;/p&gt;
 &lt;blockquote class=&#34;twitter-tweet&#34; data-cards=&#34;hidden&#34; data-lang=&#34;en&#34;&gt;
 &lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
 Did you know that there is a package in R to make your graphs in the style of xkcd comics? &lt;a href=&#34;https://twitter.com/hashtag/Rstats?src=hash&#34;&gt;#Rstats&lt;/a&gt; &lt;a href=&#34;https://t.co/29Cnp9t20N&#34;&gt;https://t.co/29Cnp9t20N&lt;/a&gt; &lt;a href=&#34;https://t.co/iY1UsFdEfJ&#34;&gt;pic.twitter.com/iY1UsFdEfJ&lt;/a&gt;
@@ -34,11 +34,19 @@ Did you know that there is a package in R to make your graphs in the style of xk
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;http://xkcd.com&#34;&gt;xkcd&lt;/a&gt; has been there during some of my &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;&lt;em&gt;finest&lt;/em&gt;&lt;/a&gt; statistical moments, so they certainly deserve a proper thank you. I use the &lt;a href=&#34;https://cran.r-project.org/web/packages/xkcd/xkcd.pdf&#34;&gt;xkcd&lt;/a&gt; &lt;code&gt;R&lt;/code&gt; package to explore the relationship between the time I’ve spent on statistics and the time I’ve spent on xkcd (&lt;a href=&#34;https://xkcd.com/552/&#34;&gt;correlation &lt;span class=&#34;math inline&#34;&gt;\(\neq\)&lt;/span&gt; causation&lt;/a&gt;…but &lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt; = 0.84).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-04-xkcd-thank-you-note_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;You can make one too - run the code below with my data or input your own! Happy plotting 👯&lt;/p&gt;
+&lt;p&gt;You can make one too - run the code below with my data or input your own. Happy plotting!&lt;/p&gt;
+&lt;p style=&#34;text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:9px;&#34;&gt;
+Pro tip: if you don’t have the &lt;br&gt;&lt;br /&gt;
+xkcd font installed, check out &lt;br&gt;&lt;br /&gt;
+page 4 of the vignette.
+&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;ggplot2&amp;#39;)
 library(&amp;#39;xkcd&amp;#39;)
 
-load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/data/xkcd_data.rda&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/data/xkcd_data.rda&amp;quot;))
+
+#learn more about the xkcd package
+vignette(&amp;quot;xkcd-intro&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(916)
 xkcdlabel &amp;lt;-  function(text,x,y, above= FALSE) {
   if (above == TRUE){
