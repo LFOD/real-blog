@@ -9,6 +9,75 @@
     <atom:link href="/tags/xkcd/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>xkcd thank you note</title>
+      <link>/2017/03/04/xkcd-thank-you-note/</link>
+      <pubDate>Sat, 04 Mar 2017 19:23:45 -0600</pubDate>
+      
+      <guid>/2017/03/04/xkcd-thank-you-note/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;I’ve been looking for a way to incoporate xkcd in my #thankyou series, and then I came across this gem:&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+Did you know that there is a package in R to make your graphs in the style of xkcd comics? &lt;a href=&#34;https://twitter.com/hashtag/Rstats?src=hash&#34;&gt;#Rstats&lt;/a&gt; &lt;a href=&#34;https://t.co/29Cnp9t20N&#34;&gt;https://t.co/29Cnp9t20N&lt;/a&gt; &lt;a href=&#34;https://t.co/iY1UsFdEfJ&#34;&gt;pic.twitter.com/iY1UsFdEfJ&lt;/a&gt;
+&lt;/p&gt;
+— Maria Gatta (&lt;span class=&#34;citation&#34;&gt;@M_Gatta&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/M_Gatta/status/832952195784044545&#34;&gt;February 18, 2017&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;What could be better? &lt;a href=&#34;http://xkcd.com&#34;&gt;xkcd&lt;/a&gt; has been there during some of my most &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;&lt;em&gt;finest&lt;/em&gt;&lt;/a&gt; statistical moments. I decided to use the &lt;a href=&#34;https://cran.r-project.org/web/packages/xkcd/xkcd.pdf&#34;&gt;xkcd&lt;/a&gt; package to explore the relationship between the time I’ve spent on statistics and the time I’ve spent on xkcd &amp;amp; express my extreme graditude for xkcd.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;ggplot2&amp;#39;)
+library(&amp;#39;xkcd&amp;#39;)
+load(&amp;quot;../../data/xkcd_data.rda&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(916)
+xkcdlabel &amp;lt;-  function(text,x,y, above= FALSE) {
+  if (above == TRUE){
+    add = 4
+    beg = 3
+  } else {
+    add = -4
+    beg = -3
+  }
+  te1 &amp;lt;- annotate(&amp;quot;text&amp;quot;, x=x, y = y , label=text,family =&amp;quot;xkcd&amp;quot;)
+  list(te1,
+       xkcdline(aes(xbegin=xbegin, ybegin= ybegin, xend=xend,yend=yend),
+                data.frame(xbegin=x,ybegin= y+beg , xend=x,yend=y+add), xjitteramount = 0.5))
+}
+
+p &amp;lt;- ggplot(data) + 
+  geom_smooth(mapping=aes(x=time, y =spent, group = stat, linetype = stat), 
+              se = FALSE,
+              method=&amp;quot;loess&amp;quot;,
+              span = 0.25) +
+  xkcdaxis(c(2008,2018),c(0,44)) +
+  xkcdlabel(&amp;quot;BU\n SIBS&amp;quot;,x=2011.5,y = 12) +
+  xkcdlabel(&amp;quot;1st year comps\n closed book&amp;quot;,x=2015.3,y = 1.5, above = TRUE) +
+  xkcdlabel(&amp;quot;2nd year comps\n open book&amp;quot;,x=2016.7,y = 42) +
+  xkcdlabel(&amp;quot;Start \ncollege&amp;quot;,x = 2008.6,y = 8) +
+  scale_linetype_discrete(name = &amp;quot;Time spent on&amp;quot;) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        legend.position = c(.25,.75)) +
+  ggtitle(&amp;quot;Thank you, xkcd!&amp;quot;)
+p&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-04-xkcd-thank-you-note_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Hill for the data scientist: an xkcd story</title>
       <link>/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/</link>
       <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
