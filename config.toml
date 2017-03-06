@@ -16,7 +16,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     url = "/about/"
 [[menu.main]]
     name = "GitHub"
-    url = "https://github.com/lfod/blog"
+    url = "https://github.com/lfod/real-blog"
 [[menu.main]]
     name = "Lucy's Twitter"
     url = "https://twitter.com/LucyStats"
