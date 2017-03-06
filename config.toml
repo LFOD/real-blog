@@ -22,7 +22,7 @@ ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
     url = "https://twitter.com/LucyStats"
 [[menu.main]]
     name = "Nick's Twitter"
-    url = "https://twitter.com/NickStrayer"
+    url = "https://twitter.com/NicholasStrayer"
 
 [params]
     description = "A statistics blog from two goofy Phd students."
