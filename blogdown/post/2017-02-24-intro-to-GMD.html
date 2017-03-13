@@ -1,0 +1,103 @@
+---
+author: "Nick Strayer"
+date: 2017-02-24T10:54:24+02:00
+title: "Intro to GMD"
+excerpt: "Lucy and I have made a simple package that allows you to pull down a collaborative google doc directly into an RMD file on your computer. Hopefully speeding up the process of writing collaborative statistical documents." 
+tags: ["collaboration","R", "Google Docs"]
+comments: true
+---
+
+---
+author: "Nick Strayer"
+date: 2017-02-24T10:54:24+02:00
+title: "Intro to GMD"
+excerpt: "Lucy and I have made a simple package that allows you to pull down a collaborative google doc directly into an RMD file on your computer. Hopefully speeding up the process of writing collaborative statistical documents." 
+tags: ["collaboration","R", "Google Docs"]
+comments: true
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p><br> # Why</p>
+<div id="the-problem" class="section level2">
+<h2>The Problem</h2>
+<p>You are working in a collaborative situation working on some form of analysis. You want to produce a nice looking document of your work at the end and have easy contribution from all sources.</p>
+</div>
+<div id="the-solutions" class="section level2">
+<h2>The Solutions</h2>
+<p><strong>Sit in one room and have one person write up all your work as you do it</strong></p>
+<p><em>Problems:</em></p>
+<p>
+<img src="https://m.popkey.co/d81ec6/mrely.gif" height = 300, width = 300> <br> <span style="size=4"><a href = "https://m.popkey.co/d81ec6/mrely.gif">source</a></span>
+</p>
+<p><strong>Use github with branches and pull requests.</strong></p>
+<p><em>Problems:</em></p>
+<ul>
+<li>Requires groupmates to all get second PhD in git.</li>
+</ul>
+<p>
+<img src="git_confusing.png" height = 400, width = 400> <br> <span style="size=4"><a href = "http://www.someecards.com/">source</a> (This was cited as a good version too.)</span>
+</p>
+<div id="write-everything-in-a-collaborative-editor-like-google-docs." class="section level3">
+<h3>Write everything in a collaborative editor like google docs.</h3>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>You have to copy and paste every single time you want to change your code, group member changed something above that you forgot to copy and paste? Oh well.</li>
+</ul>
+<p>
+<img src="https://m.popkey.co/d81ec6/mrely.gif" height = 300, width = 300> <br> <br> <span style="size=4"><a href = "https://m.popkey.co/d81ec6/mrely.gif">source</a></span>
+</p>
+</div>
+<div id="use-gmd" class="section level3">
+<h3>Use GMD!</h3>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>It’s brand new software and it will break.</li>
+</ul>
+<p>
+<img src="https://news.tinypulse.com/wp-content/uploads/2016/02/Biting-laptop-793x581.jpg" height = 400, width = 400> <br> <br> <span style="size=4"><a href = "https://news.tinypulse.com/bad-software-and-bad-tech-training-is-costing-companies-1-8-trillion-55844/">source</a> This may be my favorite image on the internet.</span>
+</p>
+</div>
+</div>
+<div id="what" class="section level1">
+<h1>What</h1>
+<p><code>GMD</code> is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pulldown that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking.</p>
+</div>
+<div id="how" class="section level1">
+<h1>How</h1>
+<p>Currently the library is just on Github so we have to install it using <code>devtools</code>.</p>
+<div id="install" class="section level2">
+<h2>Install</h2>
+<pre class="r"><code>#in case you don&#39;t already have devtools
+install.packages(&quot;devtools&quot;)
+
+#install GMD from our github repo. 
+devtools::install_github(&quot;LFOD/GMD&quot;)</code></pre>
+<p>Sweet, now you have GMD installed (and loaded). Let’s actually do something with it.</p>
+</div>
+<div id="setup-google-doc" class="section level2">
+<h2>Setup Google Doc</h2>
+<p>First we will go make a nice google doc and share it with our collaborators.</p>
+<p>I’ve gone through the liberty of writing this intro in one so you can check it out.</p>
+<p>Simply grab the share link from the sharing settings and send it out to people. You can use this one</p>
+<p><code>https://docs.google.com/document/d/13jSZZ7o7xtQqFn8a8Po5a6nsKLBJEZl01s4PwY8KruM/edit</code></p>
+<div class="figure">
+<img src="share_settings.png" />
+
+</div>
+</div>
+</div>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->

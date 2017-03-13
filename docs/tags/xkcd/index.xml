@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
+    <title>Xkcd on Live Free or Dichotomize</title>
     <link>/tags/xkcd/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <description>Recent content in Xkcd on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <atom:link href="/tags/xkcd/index.xml" rel="self" type="application/rss+xml" />
@@ -14,7 +14,23 @@
       <pubDate>Sat, 04 Mar 2017 19:23:45 -0600</pubDate>
       
       <guid>/2017/03/04/xkcd-thank-you-note/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>---
+author: &#34;Lucy D&#39;Agostino McGowan&#34;
+comments: true
+date: 2017-03-04T19:23:45-06:00
+draft: false
+image: &#34;&#34;
+menu: &#34;&#34;
+share: true
+tags:
+- xkcd
+- thankyou
+title: &#34;xkcd thank you note&#34;
+excerpt: &#34;Exploring the relationship between my time spent on statistics &amp; my time spent on xkcd.&#34;
+---
+
+
+&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
