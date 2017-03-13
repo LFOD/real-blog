@@ -34,7 +34,7 @@ _Problems:_
 - Requires groupmates to all get second PhD in git. 
 
 <p>
-<img src="git_confusing.png" height = 400, width = 400>
+<img src="/images/git_confusing.png" height = 400, width = 400>
 <br> <span style="size=4"><a href = "http://www.someecards.com/">source</a> (This was cited as a good version too.)</span>
 </p>
 
