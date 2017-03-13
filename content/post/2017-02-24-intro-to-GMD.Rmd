@@ -8,6 +8,7 @@ comments: true
 ---
 
 <br>
+
 # Why
 
 ## The Problem
@@ -96,7 +97,7 @@ Now that you and your collaborators have the share link simply hop back into R r
 
 ## Authenticate with Google
 
-```{r}
+```{r, eval = FALSE}
 library(GMD) #if you didnt just install
 library(dplyr) #We made it pipe friendly 
 
@@ -110,7 +111,7 @@ The function `get_auth()` comunicates with google's server and authenticates you
 
 Now simply send the url you have to the command `GMD`...
 
-```{r}
+```{r, eval = FALSE}
 url <- "https://docs.google.com/document/d/13jSZZ7o7xtQqFn8a8Po5a6nsKLBJEZl01s4PwY8KruM/edit"
 
 myDoc <- GMD(url, token, output_name = "gmd_rocks")
@@ -122,7 +123,7 @@ You will notice that we set a variable equal to our function. What did we do exa
 
 The function `GMD` actualy returns another function. Now that you have the function saved as `myDoc` that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it. 
 
-```{r}
+```{r, eval = FALSE}
 myDoc()
 ```
 
