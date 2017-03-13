@@ -364,7 +364,7 @@ p&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;what&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;What&lt;/h1&gt;
-&lt;p&gt;&lt;code&gt;GMD&lt;/code&gt; is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pulldown that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;GMD&lt;/code&gt; is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pull down that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;how&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;How&lt;/h1&gt;
@@ -396,7 +396,7 @@ library(dplyr) #We made it pipe friendly
 
 #grab an authentication token
 token &amp;lt;- get_auth()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The function &lt;code&gt;get_auth()&lt;/code&gt; comunicates with google’s server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication “token” as a variable for later use.&lt;/p&gt;
+&lt;p&gt;The function &lt;code&gt;get_auth()&lt;/code&gt; communicates with google’s server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication “token” as a variable for later use.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;download-your-doc&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Download your Doc&lt;/h2&gt;
@@ -406,7 +406,7 @@ token &amp;lt;- get_auth()&lt;/code&gt;&lt;/pre&gt;
 myDoc &amp;lt;- GMD(url, token, output_name = &amp;quot;gmd_rocks&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;As long as no errors popped up, you should be in business.&lt;/p&gt;
 &lt;p&gt;You will notice that we set a variable equal to our function. What did we do exactly?&lt;/p&gt;
-&lt;p&gt;The function &lt;code&gt;GMD&lt;/code&gt; actualy returns another function. Now that you have the function saved as &lt;code&gt;myDoc&lt;/code&gt; that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it.&lt;/p&gt;
+&lt;p&gt;The function &lt;code&gt;GMD&lt;/code&gt; actually returns another function. Now that you have the function saved as &lt;code&gt;myDoc&lt;/code&gt; that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;myDoc()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That’s practically it. Now you can just run these few lines (or one if you pipe) and then anytime you want to update your copy of the google doc with what’s been added just run your function.&lt;/p&gt;
 &lt;/div&gt;
@@ -426,7 +426,7 @@ myDoc %&amp;gt;% live_update(refresh_rate = speediness)&lt;/code&gt;&lt;/pre&gt;
 &lt;ul&gt;
 &lt;li&gt;Current solution: run &lt;code&gt;system(&amp;quot;rm .httr-oauth&amp;quot;)&lt;/code&gt; to delete the cached token and re-authenticate.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;If you edit a live updating file, Rstudio will freak out at you and your computer will expload.
+&lt;li&gt;If you edit a live updating file, Rstudio will freak out at you and your computer will explode.
 &lt;ul&gt;
 &lt;li&gt;Current solution: Don’t do it.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;

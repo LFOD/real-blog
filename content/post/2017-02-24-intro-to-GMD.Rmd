@@ -65,7 +65,7 @@ __Problems:__
 
 # What
 
-`GMD` is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pulldown that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking. 
+`GMD` is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pull down that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking. 
 
 # How
 
@@ -113,7 +113,7 @@ library(dplyr) #We made it pipe friendly
 token <- get_auth()
 ```
 
-The function `get_auth()` comunicates with google's server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication "token" as a variable for later use. 
+The function `get_auth()` communicates with google's server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication "token" as a variable for later use. 
 
 ## Download your Doc
 
@@ -129,7 +129,7 @@ As long as no errors popped up, you should be in business.
 
 You will notice that we set a variable equal to our function. What did we do exactly? 
 
-The function `GMD` actualy returns another function. Now that you have the function saved as `myDoc` that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it. 
+The function `GMD` actually returns another function. Now that you have the function saved as `myDoc` that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it. 
 
 ```{r, eval = FALSE}
 myDoc()
@@ -154,7 +154,7 @@ GMD was created on a whim and is developed by two students who like to put too m
 
 - If you wait a while and your google authentication token expires, GMD sometimes doesn't recognize this and attempts to use the stale one, resulting in some confusingly labeled errors. 
     - Current solution: run `system("rm .httr-oauth")` to delete the cached token and re-authenticate.
-- If you edit a live updating file, Rstudio will freak out at you and your computer will expload. 
+- If you edit a live updating file, Rstudio will freak out at you and your computer will explode. 
     - Current solution: Don't do it.
 
 You will almost assuredly hit bugs in it. If you do either ping Lucy or I on slack, or even better submit an "issue" on the [GMD github page.](https://github.com/LucyMcGowan/GMD/issues).  

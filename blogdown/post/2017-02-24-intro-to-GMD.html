@@ -58,7 +58,7 @@ comments: true
 </div>
 <div id="what" class="section level1">
 <h1>What</h1>
-<p><code>GMD</code> is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pulldown that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking.</p>
+<p><code>GMD</code> is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pull down that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking.</p>
 </div>
 <div id="how" class="section level1">
 <h1>How</h1>
@@ -90,7 +90,7 @@ library(dplyr) #We made it pipe friendly
 
 #grab an authentication token
 token &lt;- get_auth()</code></pre>
-<p>The function <code>get_auth()</code> comunicates with google’s server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication “token” as a variable for later use.</p>
+<p>The function <code>get_auth()</code> communicates with google’s server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication “token” as a variable for later use.</p>
 </div>
 <div id="download-your-doc" class="section level2">
 <h2>Download your Doc</h2>
@@ -100,7 +100,7 @@ token &lt;- get_auth()</code></pre>
 myDoc &lt;- GMD(url, token, output_name = &quot;gmd_rocks&quot;)</code></pre>
 <p>As long as no errors popped up, you should be in business.</p>
 <p>You will notice that we set a variable equal to our function. What did we do exactly?</p>
-<p>The function <code>GMD</code> actualy returns another function. Now that you have the function saved as <code>myDoc</code> that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it.</p>
+<p>The function <code>GMD</code> actually returns another function. Now that you have the function saved as <code>myDoc</code> that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it.</p>
 <pre class="r"><code>myDoc()</code></pre>
 <p>That’s practically it. Now you can just run these few lines (or one if you pipe) and then anytime you want to update your copy of the google doc with what’s been added just run your function.</p>
 </div>
@@ -120,7 +120,7 @@ myDoc %&gt;% live_update(refresh_rate = speediness)</code></pre>
 <ul>
 <li>Current solution: run <code>system(&quot;rm .httr-oauth&quot;)</code> to delete the cached token and re-authenticate.</li>
 </ul></li>
-<li>If you edit a live updating file, Rstudio will freak out at you and your computer will expload.
+<li>If you edit a live updating file, Rstudio will freak out at you and your computer will explode.
 <ul>
 <li>Current solution: Don’t do it.</li>
 </ul></li>
