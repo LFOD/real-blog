@@ -1,0 +1,161 @@
+---
+author: "Nick Strayer"
+date: 2017-02-24T10:54:24+02:00
+title: "Intro to GMD"
+excerpt: "Lucy and I have made a simple package that allows you to pull down a collaborative google doc directly into an RMD file on your computer. Hopefully speeding up the process of writing collaborative statistical documents." 
+tags: ["collaboration","R", "Google Docs"]
+comments: true
+---
+
+<br>
+# Why
+
+## The Problem
+
+You are working in a collaborative situation working on some form of analysis. You want to produce a nice looking document of your work at the end and have easy contribution from all sources. 
+
+## The Solutions
+
+__Sit in one room and have one person write up all your work as you do it__
+
+_Problems:_ 
+
+<p >
+<img src="https://m.popkey.co/d81ec6/mrely.gif" height = 300, width = 300>
+<br> <span style="size=4"><a href = "https://m.popkey.co/d81ec6/mrely.gif">source</a></span>
+</p>
+
+
+__Use github with branches and pull requests.__
+
+_Problems:_
+
+- Requires groupmates to all get second PhD in git. 
+
+<p>
+<img src="git_confusing.png" height = 400, width = 400>
+<br> <span style="size=4"><a href = "http://www.someecards.com/">source</a> (This was cited as a good version too.)</span>
+</p>
+
+
+### Write everything in a collaborative editor like google docs. 
+
+__Problems:__
+
+- You have to copy and paste every single time you want to change your code, group member changed something above that you forgot to copy and paste? Oh well.
+
+<p>
+<img src="https://m.popkey.co/d81ec6/mrely.gif" height = 300, width = 300>
+<br> <br> <span style="size=4"><a href = "https://m.popkey.co/d81ec6/mrely.gif">source</a></span>
+</p>
+
+
+### Use GMD!
+
+__Problems:__
+
+- It's brand new software and it will break. 
+
+<p>
+<img src="https://news.tinypulse.com/wp-content/uploads/2016/02/Biting-laptop-793x581.jpg" height = 400, width = 400>
+<br> <br> <span style="size=4"><a href = "https://news.tinypulse.com/bad-software-and-bad-tech-training-is-costing-companies-1-8-trillion-55844/">source</a> This may be my favorite image on the internet.</span>
+</p>
+
+
+# What
+
+`GMD` is a simple R library that Lucy and I have made that, in a couple lines of R, allows you to link a project to a particular google doc and then easily pulldown that doc straight into Rstudio (or anywhere really) so you can run it. No more copy pasting, it also can run automatically for real time syntax checking. 
+
+# How
+
+Currently the library is just on Github so we have to install it using `devtools`. 
+
+## Install 
+
+```{r, eval = FALSE}
+#in case you don't already have devtools
+install.packages("devtools")
+
+#install GMD from our github repo. 
+devtools::install_github("LFOD/GMD")
+```
+
+Sweet, now you have GMD installed (and loaded). Let's actually do something with it. 
+
+## Setup Google Doc
+
+First we will go make a nice google doc and share it with our collaborators. 
+
+I've gone through the liberty of writing this intro in one so you can check it out. 
+
+Simply grab the share link from the sharing settings and send it out to people. You can use this one 
+
+`https://docs.google.com/document/d/13jSZZ7o7xtQqFn8a8Po5a6nsKLBJEZl01s4PwY8KruM/edit`
+
+Now that you and your collaborators have the share link simply hop back into R run these commands. 
+
+## Authenticate with Google
+
+```{r}
+library(GMD) #if you didnt just install
+library(dplyr) #We made it pipe friendly 
+
+#grab an authentication token
+token <- get_auth()
+```
+
+The function `get_auth()` comunicates with google's server and authenticates you as a google user allowing you to access the google docs that you own or are shared with you. We store this authentication "token" as a variable for later use. 
+
+## Download your Doc
+
+Now simply send the url you have to the command `GMD`...
+
+```{r}
+url <- "https://docs.google.com/document/d/13jSZZ7o7xtQqFn8a8Po5a6nsKLBJEZl01s4PwY8KruM/edit"
+
+myDoc <- GMD(url, token, output_name = "gmd_rocks")
+```
+
+As long as no errors popped up, you should be in business. 
+
+You will notice that we set a variable equal to our function. What did we do exactly? 
+
+The function `GMD` actualy returns another function. Now that you have the function saved as `myDoc` that has been associated with the given google doc link all you need to do to download the latest from your doc is simply call it. 
+
+```{r}
+myDoc()
+```
+
+That's practically it. Now you can just run these few lines (or one if you pipe) and then anytime you want to update your copy of the google doc with what's been added just run your function. 
+
+## But Wait, There's More.
+
+It's all fine and dandy that you can grab your document easily now, but really that saved you what, like 3 clicks? What if you wanted to essentially use google docs as the text editor for R? Well, you can do that too. 
+
+```{r, eval = FALSE}
+speediness <- 1 #how many seconds between redownloads
+myDoc %>% live_update(refresh_rate = speediness)
+```
+
+This now takes your document function and runs it every second (or however often you desire). Now you can simply write your code in google docs and have it show up here. 
+
+# Problems
+
+GMD was created on a whim and is developed by two students who like to put too much stuff on their plates, so it most likely will break. Some known issues are: 
+
+- If you wait a while and your google authentication token expires, GMD sometimes doesn't recognize this and attempts to use the stale one, resulting in some confusingly labeled errors. 
+    - Current solution: run `system("rm .httr-oauth")` to delete the cached token and re-authenticate.
+- If you edit a live updating file, Rstudio will freak out at you and your computer will expload. 
+    - Current solution: Don't do it.
+
+You will almost assuredly hit bugs in it. If you do either ping Lucy or I on slack, or even better submit an "issue" on the [GMD github page.](https://github.com/LucyMcGowan/GMD/issues).  
+ 
+# What's Next
+
+- Reverse the flow: 
+  - Type your stuff into your Rstudio editor to test it and then have it send up to the google doc. 
+  - Difficult with conflicts, need to basically re-engineer git. 
+  
+This is where you come in. If this package is convenient for you, give it a try. The package was made from a biased view of what someone would want in this system so when you get frustrated with the lack of a feature again, contact Lucy or I or [submit an issue.](https://github.com/LucyMcGowan/GMD/issues) 
+
+Please don't hesitate to complain about it, we want to make it better. (We may not actually fix the problem but we will at least think about it). Also don't hesitate to fork and try making your own changes and submitting a pull request. 

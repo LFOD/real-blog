@@ -2,13 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/</loc>
-    <lastmod>2017-03-04T19:23:45-06:00</lastmod>
+    <loc>/2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/</loc>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
   </url>
   
   <url>
     <loc>/2017/03/04/xkcd-thank-you-note/</loc>
     <lastmod>2017-03-04T19:23:45-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/02/24/intro-to-gmd/</loc>
+    <lastmod>2017-02-24T10:54:24+02:00</lastmod>
   </url>
   
   <url>
@@ -59,6 +64,107 @@
   <url>
     <loc>/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/collaboration/</loc>
+    <lastmod>2017-02-24T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data-science/</loc>
+    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/epidemiology/</loc>
+    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/google-docs/</loc>
+    <lastmod>2017-02-24T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/javascript/</loc>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/nonlinearity/</loc>
+    <lastmod>2017-02-18T09:03:06-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/nssd/</loc>
+    <lastmod>2017-02-09T12:56:22-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-02-24T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r-code/</loc>
+    <lastmod>2017-02-09T12:56:22-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rms/</loc>
+    <lastmod>2017-02-18T09:03:06-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/thankyou/</loc>
+    <lastmod>2017-03-04T19:23:45-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/type-1-error/</loc>
+    <lastmod>2017-02-18T09:03:06-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/visualization/</loc>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/xkcd/</loc>
+    <lastmod>2017-03-04T19:23:45-06:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

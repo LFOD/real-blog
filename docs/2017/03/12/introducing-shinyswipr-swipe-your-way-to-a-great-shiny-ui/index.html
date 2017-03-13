@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+
+
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="Introducing shinyswipr: swipe your way to a great Shiny UI"/>
+<meta name="twitter:description" content="One day Lucy was sitting around on twitter when she spotted this tweet:
+I built a “tinder for academic preprints” web app: https://t.co/fZYlgkn4WL for @biorxivpreprint preprints. — Jeff Leek (@jtleek) October 3, 2016   A tinder for preprints needs swiping though.
+Hilarious 😂 If only it was compatible with swiping..the tactile enjoyment of making snap judgements by swiping left/right is unrivaled #papr https://t.co/isg5hmsh7n — Lucy (@LucyStats) October 3, 2016   Soon she remembered that I know a bit of javascript…"/>
+
+
+
+  	<meta property="og:title" content=" Introducing shinyswipr: swipe your way to a great Shiny UI &middot;  Live Free or Dichotomize" />
+  	<meta property="og:site_name" content="Live Free or Dichotomize" />
+  	<meta property="og:url" content="/2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2017-03-12T10:54:24&#43;02:00" />
+
+    
+    <meta property="og:article:tag" content="javascript" />
+    
+    <meta property="og:article:tag" content="visualization" />
+    
+    
+
+    <title>
+       Introducing shinyswipr: swipe your way to a great Shiny UI &middot;  Live Free or Dichotomize
+    </title>
+
+    <meta name="description" content="A statistics blog from two goofy Phd students." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="../../../../images/favicon.ico">
+	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+    
+      
+          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <link rel="canonical" href="../../../../2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/" />
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    
+
+
+
+
+
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="../../../../about/">About</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/lfod/real-blog">GitHub</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/NicholasStrayer">Nick&#39;s Twitter</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="../../../../"><img src="../../../../images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">Introducing shinyswipr: swipe your way to a great Shiny UI</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-03-12T10:54:24&#43;02:00">
+            Mar 12, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="../../../../tags/javascript/">#javascript</a></span>
+         
+          <span class="post-tag small"><a href="../../../../tags/visualization/">#visualization</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+
+
+<p><br></p>
+<p>One day Lucy was sitting around on twitter when she spotted this tweet:</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+I built a “tinder for academic preprints” web app: <a href="https://t.co/fZYlgkn4WL">https://t.co/fZYlgkn4WL</a> for <a href="https://twitter.com/biorxivpreprint"><span class="citation">@biorxivpreprint</span></a> preprints.
+</p>
+— Jeff Leek (<span class="citation">@jtleek</span>) <a href="https://twitter.com/jtleek/status/782949505754861568">October 3, 2016</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>A tinder for preprints needs swiping though.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+Hilarious 😂 If only it was compatible with swiping..the tactile enjoyment of making snap judgements by swiping left/right is unrivaled <a href="https://twitter.com/hashtag/papr?src=hash">#papr</a> <a href="https://t.co/isg5hmsh7n">https://t.co/isg5hmsh7n</a>
+</p>
+— Lucy (<span class="citation">@LucyStats</span>) <a href="https://twitter.com/LucyStats/status/782953224420495365">October 3, 2016</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Soon she remembered that I know a bit of javascript…</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+<a href="https://twitter.com/geospacedman"><span class="citation">@geospacedman</span></a> <a href="https://twitter.com/jtleek"><span class="citation">@jtleek</span></a> <a href="https://twitter.com/jcheng"><span class="citation">@jcheng</span></a> I'm looping you in <a href="https://twitter.com/NicholasStrayer"><span class="citation">@NicholasStrayer</span></a> can you do some javascript magic to make this happen ✨💻
+</p>
+— Lucy (<span class="citation">@LucyStats</span>) <a href="https://twitter.com/LucyStats/status/782967208649580545">October 3, 2016</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>As we can’t pass up an oportunity to get distracted from coursework we immedaitely set about trying to implement swiping in papr.</p>
+<p>We were dismayed to find that no one had already designed a swipe-based input for Shiny. Surely this must be one of the most important and needed additions to the statistical app making world?!</p>
+<p>Never detered, after a few hours of hacking we had it working, but it was not pretty. The code was extremely hacky, with javascript injected haphazzardly here and there and elements hidden so shiny could see the changes. Since then we have made improvements to it, streamlining the code until it worked consistantly, and more importantly, looked good.</p>
+<p>Now we are ready to share with the world this input. <code>shinyswipr</code> is an R package that allows you to easily put in a swipe-based interface to any of your shiny apps. Here’s how you can start swiping immediately.</p>
+<div id="how-to" class="section level3">
+<h3>How To</h3>
+<p><strong>Install:</strong></p>
+<p>The package is hot off the presses and thus not yet on CRAN. Therefor you have to install via github.</p>
+<pre class="r"><code>devtools::install_github(&quot;nstrayer/shinyswipr&quot;)</code></pre>
+<p>Two functions included in <code>shinyswipr</code>: <code>shinySwiprUI</code> and <code>shinySwipr</code>. These two must be used in conjunction with each other in both the ui and server of your Shiny app respectively.</p>
+<p><strong><code>ui</code> function:</strong></p>
+<p><code>shinySwiprUI</code> is very flexible. Essentially it is just a wrapper for any other UI element you can think of. It takes the elements and presents them on a card that the user can then swipe.</p>
+<p>Here we will create a simple static card for swiping.</p>
+<pre class="r"><code>library(shinyswipr)
+
+u &lt;- fixedPage(
+  shinySwiprUI( &quot;my_swiper&quot;,
+                h4(&quot;Swipe Me!&quot;),
+                hr(),
+                p(&quot;This is some content that would warrent a good swipe&quot;)
+  )
+)</code></pre>
+<p><strong><code>server</code> function:</strong></p>
+<p>The server function is thankfully rather boring. It simply spits out a reactive variable that returns the swipe result. You can then do whatever you want with this variable.</p>
+<p>We will continue our simple app by writing a server function that takes the result of our swipe and prints it to the R console.</p>
+<pre class="r"><code>server &lt;- function(input, output, session) {
+  card_swipe &lt;- callModule(shinySwipr, &quot;my_swiper&quot;)
+
+ observeEvent( card_swipe(),{
+    print(card_swipe) #show last swipe result. 
+  }) 
+}
+
+#r ap it all together.
+shinyApp(ui, server)</code></pre>
+<p>That’s it. No fancy options, just simple good old fashion Shiny interface. This is what the above code produces:</p>
+<div class="figure">
+<img src="../../../../images/simple_swipe_app.png" />
+
+</div>
+</div>
+<div id="taking-it-farther" class="section level2">
+<h2>Taking it farther</h2>
+<p>A simple static swiping tool like that is great, but most of the time you want the content of your card to be dynamic. Luckily this is as easy with <code>shinyswipr</code> as it is with any other UI element in Shiny. Simple pass in whatever reactive elements you want to the <code>shinySwiprUI</code> function and they will be rendered within the card and updated at your will.</p>
+<p>Let’s demo this with a simple app. QuotR (trademark pending) is an app that lets you view statistician quotes from the wonderful <code>fortunes</code> app and rate them at your own discression.</p>
+<p><a href="https://nickstrayer.shinyapps.io/shinyswipr_demo/">Click here</a> to see a working demo. If you don’t feel like it, that’s fine. Here’s a screenshot of it.</p>
+<div class="figure">
+<img src="../../../../images/quotr.png" />
+
+</div>
+<p>In this app we use the output of the swipe function to store the results and also update the contents of the card/show past swipes. The UI code to make this app is:</p>
+<pre class="r"><code>ui &lt;- fixedPage(
+  h1(&quot;Stats Quotes&quot;),
+  p(&quot;This is a simple demo of the R package shinyswipr. Swipe on the quote card below to store your rating. What each direction (up, down, left, right) mean is up to you. (We won&#39;t tell.)&quot;),
+  hr(),
+  shinySwiprUI( &quot;quote_swiper&quot;,
+                h4(&quot;Swipe Me!&quot;),
+                hr(),
+                h4(&quot;Quote:&quot;),
+                textOutput(&quot;quote&quot;),
+                h4(&quot;Author(s):&quot;),
+                textOutput(&quot;quote_author&quot;)
+  ),
+  hr(),
+  h4(&quot;Swipe History&quot;),
+  tableOutput(&quot;resultsTable&quot;)
+)</code></pre>
+<p>All we had to do was pass our desired UI functions in and <code>shinyswipr</code> handles the rest. Easy, huh?</p>
+</div>
+<div id="future" class="section level2">
+<h2>Future:</h2>
+<p>As silly of an interface tool as swiping is with its connotations to a dating app, it truly is a much more mobile friendly interface tool than a button. What applications can you think of for swiping? Perhaps a Shiny app could used by a doctor to quickly parse through relevent patient data while walking through the ED, or a field ecologist can easily log data while in the field. Any way as statisticians and data scientists that we can make our products more inviting the better.</p>
+<p>It would be fantastic if you could try out <code>shinyswipr</code>. I want people to use it for things I didn’t design it for, break it, submit bug reports on the <a href="https://github.com/nstrayer/shinyswipr">github page</a>, request new features.</p>
+</div>
+<div id="appendix" class="section level2">
+<h2>Appendix</h2>
+<p>Here is the full code for the quotes app from above.</p>
+<pre class="r"><code>library(shinyswipr)
+library(shiny)
+library(fortunes)
+
+ui &lt;- fixedPage(
+  h1(&quot;Stats Quotes&quot;),
+  p(&quot;This is a simple demo of the R package shinyswipr. Swipe on the quote card below to store your rating. What each direction (up, down, left, right) mean is up to you. (We won&#39;t tell.)&quot;),
+  hr(),
+  shinySwiprUI( &quot;quote_swiper&quot;,
+                h4(&quot;Swipe Me!&quot;),
+                hr(),
+                h4(&quot;Quote:&quot;),
+                textOutput(&quot;quote&quot;),
+                h4(&quot;Author(s):&quot;),
+                textOutput(&quot;quote_author&quot;)
+  ),
+  hr(),
+  h4(&quot;Swipe History&quot;),
+  tableOutput(&quot;resultsTable&quot;)
+)
+
+server &lt;- function(input, output, session) {
+  card_swipe &lt;- callModule(shinySwipr, &quot;quote_swiper&quot;)
+
+  appVals &lt;- reactiveValues(
+    quote = fortune(),
+    swipes = data.frame(quote = character(), author = character(), swipe = character())
+  )
+
+  our_quote &lt;- isolate(appVals$quote)
+  output$quote &lt;- renderText({ our_quote$quote })
+  output$quote_author &lt;- renderText({ paste0(&quot;-&quot;,our_quote$author) })
+  output$resultsTable &lt;- renderDataTable({appVals$swipes})
+
+  observeEvent( card_swipe(),{
+    #Record our last swipe results.
+    appVals$swipes &lt;- rbind(
+      data.frame(quote = appVals$quote$quote,
+                 author = appVals$quote$author,
+                 swipe = card_swipe()
+      ), appVals$swipes
+    )
+    #send results to the output.
+    output$resultsTable &lt;- renderTable({appVals$swipes})
+
+    #update the quote
+    appVals$quote &lt;- fortune()
+
+    #send update to the ui.
+    output$quote &lt;- renderText({ appVals$quote$quote })
+
+    output$quote_author &lt;- renderText({ paste0(&quot;-&quot;,appVals$quote$author) })
+  }) #close event observe.
+}
+
+shinyApp(ui, server)</code></pre>
+<p>That is a lot of code, but to it is a full app.</p>
+</div>
+
+
+
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="../../../../" style="background-image: url(/images/logo.png)"><span class="hidden">'s Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+
+
+
+<div class="post-author">
+
+    <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
+    <br>
+    <span style="font-size: 1.02em;font-weight: bold;">
+        Nick Strayer
+    </span>
+    |
+    <a style = "text-decoration: none;" class = "post-author__text" href = http://nickstrayer.me >
+        <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+    </a>
+
+    <a class="icon-twitter post-author__text" style="font-size: 1.4em; text-decoration: none;" href = https://twitter.com/NicholasStrayer onclick="window.open(this.href"></a>
+
+    <a style = "text-decoration: none;" class = "post-author__text" href = https://github.com/nstrayer >
+        <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+    </a>
+
+
+    <br>
+
+    <p class="post-author__text">Randomly walking my way though a career in statistics</p>
+    
+
+
+    
+<section class="share">
+  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=Introducing%20shinyswipr%3a%20swipe%20your%20way%20to%20a%20great%20Shiny%20UI&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f03%2f12%2fintroducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+ </a></p>
+</section>
+
+
+
+    
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2017\/03\/12\/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="../../../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../../../../js/index.js"></script>
+        
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="../../../../js/header_lines.js"></script>
+
+    
+</body>
+</html>
+

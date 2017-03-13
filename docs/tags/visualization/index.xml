@@ -1,12 +1,196 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
+    <title>Visualization on Live Free or Dichotomize</title>
     <link>/tags/visualization/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <description>Recent content in Visualization on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <atom:link href="/tags/visualization/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Introducing shinyswipr: swipe your way to a great Shiny UI</title>
+      <link>/2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/</link>
+      <pubDate>Sun, 12 Mar 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;One day Lucy was sitting around on twitter when she spotted this tweet:&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+I built a “tinder for academic preprints” web app: &lt;a href=&#34;https://t.co/fZYlgkn4WL&#34;&gt;https://t.co/fZYlgkn4WL&lt;/a&gt; for &lt;a href=&#34;https://twitter.com/biorxivpreprint&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@biorxivpreprint&lt;/span&gt;&lt;/a&gt; preprints.
+&lt;/p&gt;
+— Jeff Leek (&lt;span class=&#34;citation&#34;&gt;@jtleek&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/jtleek/status/782949505754861568&#34;&gt;October 3, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;A tinder for preprints needs swiping though.&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+Hilarious 😂 If only it was compatible with swiping..the tactile enjoyment of making snap judgements by swiping left/right is unrivaled &lt;a href=&#34;https://twitter.com/hashtag/papr?src=hash&#34;&gt;#papr&lt;/a&gt; &lt;a href=&#34;https://t.co/isg5hmsh7n&#34;&gt;https://t.co/isg5hmsh7n&lt;/a&gt;
+&lt;/p&gt;
+— Lucy (&lt;span class=&#34;citation&#34;&gt;@LucyStats&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/LucyStats/status/782953224420495365&#34;&gt;October 3, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;Soon she remembered that I know a bit of javascript…&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
+&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
+&lt;a href=&#34;https://twitter.com/geospacedman&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@geospacedman&lt;/span&gt;&lt;/a&gt; &lt;a href=&#34;https://twitter.com/jtleek&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@jtleek&lt;/span&gt;&lt;/a&gt; &lt;a href=&#34;https://twitter.com/jcheng&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@jcheng&lt;/span&gt;&lt;/a&gt; I&#39;m looping you in &lt;a href=&#34;https://twitter.com/NicholasStrayer&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@NicholasStrayer&lt;/span&gt;&lt;/a&gt; can you do some javascript magic to make this happen ✨💻
+&lt;/p&gt;
+— Lucy (&lt;span class=&#34;citation&#34;&gt;@LucyStats&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/LucyStats/status/782967208649580545&#34;&gt;October 3, 2016&lt;/a&gt;
+&lt;/blockquote&gt;
+&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+&lt;p&gt;As we can’t pass up an oportunity to get distracted from coursework we immedaitely set about trying to implement swiping in papr.&lt;/p&gt;
+&lt;p&gt;We were dismayed to find that no one had already designed a swipe-based input for Shiny. Surely this must be one of the most important and needed additions to the statistical app making world?!&lt;/p&gt;
+&lt;p&gt;Never detered, after a few hours of hacking we had it working, but it was not pretty. The code was extremely hacky, with javascript injected haphazzardly here and there and elements hidden so shiny could see the changes. Since then we have made improvements to it, streamlining the code until it worked consistantly, and more importantly, looked good.&lt;/p&gt;
+&lt;p&gt;Now we are ready to share with the world this input. &lt;code&gt;shinyswipr&lt;/code&gt; is an R package that allows you to easily put in a swipe-based interface to any of your shiny apps. Here’s how you can start swiping immediately.&lt;/p&gt;
+&lt;div id=&#34;how-to&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;How To&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Install:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The package is hot off the presses and thus not yet on CRAN. Therefor you have to install via github.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::install_github(&amp;quot;nstrayer/shinyswipr&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Two functions included in &lt;code&gt;shinyswipr&lt;/code&gt;: &lt;code&gt;shinySwiprUI&lt;/code&gt; and &lt;code&gt;shinySwipr&lt;/code&gt;. These two must be used in conjunction with each other in both the ui and server of your Shiny app respectively.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;ui&lt;/code&gt; function:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;shinySwiprUI&lt;/code&gt; is very flexible. Essentially it is just a wrapper for any other UI element you can think of. It takes the elements and presents them on a card that the user can then swipe.&lt;/p&gt;
+&lt;p&gt;Here we will create a simple static card for swiping.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(shinyswipr)
+
+u &amp;lt;- fixedPage(
+  shinySwiprUI( &amp;quot;my_swiper&amp;quot;,
+                h4(&amp;quot;Swipe Me!&amp;quot;),
+                hr(),
+                p(&amp;quot;This is some content that would warrent a good swipe&amp;quot;)
+  )
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;server&lt;/code&gt; function:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The server function is thankfully rather boring. It simply spits out a reactive variable that returns the swipe result. You can then do whatever you want with this variable.&lt;/p&gt;
+&lt;p&gt;We will continue our simple app by writing a server function that takes the result of our swipe and prints it to the R console.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;server &amp;lt;- function(input, output, session) {
+  card_swipe &amp;lt;- callModule(shinySwipr, &amp;quot;my_swiper&amp;quot;)
+
+ observeEvent( card_swipe(),{
+    print(card_swipe) #show last swipe result. 
+  }) 
+}
+
+#r ap it all together.
+shinyApp(ui, server)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That’s it. No fancy options, just simple good old fashion Shiny interface. This is what the above code produces:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;../../images/simple_swipe_app.png&#34; /&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;taking-it-farther&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Taking it farther&lt;/h2&gt;
+&lt;p&gt;A simple static swiping tool like that is great, but most of the time you want the content of your card to be dynamic. Luckily this is as easy with &lt;code&gt;shinyswipr&lt;/code&gt; as it is with any other UI element in Shiny. Simple pass in whatever reactive elements you want to the &lt;code&gt;shinySwiprUI&lt;/code&gt; function and they will be rendered within the card and updated at your will.&lt;/p&gt;
+&lt;p&gt;Let’s demo this with a simple app. QuotR (trademark pending) is an app that lets you view statistician quotes from the wonderful &lt;code&gt;fortunes&lt;/code&gt; app and rate them at your own discression.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://nickstrayer.shinyapps.io/shinyswipr_demo/&#34;&gt;Click here&lt;/a&gt; to see a working demo. If you don’t feel like it, that’s fine. Here’s a screenshot of it.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;../../images/quotr.png&#34; /&gt;
+
+&lt;/div&gt;
+&lt;p&gt;In this app we use the output of the swipe function to store the results and also update the contents of the card/show past swipes. The UI code to make this app is:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ui &amp;lt;- fixedPage(
+  h1(&amp;quot;Stats Quotes&amp;quot;),
+  p(&amp;quot;This is a simple demo of the R package shinyswipr. Swipe on the quote card below to store your rating. What each direction (up, down, left, right) mean is up to you. (We won&amp;#39;t tell.)&amp;quot;),
+  hr(),
+  shinySwiprUI( &amp;quot;quote_swiper&amp;quot;,
+                h4(&amp;quot;Swipe Me!&amp;quot;),
+                hr(),
+                h4(&amp;quot;Quote:&amp;quot;),
+                textOutput(&amp;quot;quote&amp;quot;),
+                h4(&amp;quot;Author(s):&amp;quot;),
+                textOutput(&amp;quot;quote_author&amp;quot;)
+  ),
+  hr(),
+  h4(&amp;quot;Swipe History&amp;quot;),
+  tableOutput(&amp;quot;resultsTable&amp;quot;)
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All we had to do was pass our desired UI functions in and &lt;code&gt;shinyswipr&lt;/code&gt; handles the rest. Easy, huh?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;future&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Future:&lt;/h2&gt;
+&lt;p&gt;As silly of an interface tool as swiping is with its connotations to a dating app, it truly is a much more mobile friendly interface tool than a button. What applications can you think of for swiping? Perhaps a Shiny app could used by a doctor to quickly parse through relevent patient data while walking through the ED, or a field ecologist can easily log data while in the field. Any way as statisticians and data scientists that we can make our products more inviting the better.&lt;/p&gt;
+&lt;p&gt;It would be fantastic if you could try out &lt;code&gt;shinyswipr&lt;/code&gt;. I want people to use it for things I didn’t design it for, break it, submit bug reports on the &lt;a href=&#34;https://github.com/nstrayer/shinyswipr&#34;&gt;github page&lt;/a&gt;, request new features.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;appendix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Appendix&lt;/h2&gt;
+&lt;p&gt;Here is the full code for the quotes app from above.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(shinyswipr)
+library(shiny)
+library(fortunes)
+
+ui &amp;lt;- fixedPage(
+  h1(&amp;quot;Stats Quotes&amp;quot;),
+  p(&amp;quot;This is a simple demo of the R package shinyswipr. Swipe on the quote card below to store your rating. What each direction (up, down, left, right) mean is up to you. (We won&amp;#39;t tell.)&amp;quot;),
+  hr(),
+  shinySwiprUI( &amp;quot;quote_swiper&amp;quot;,
+                h4(&amp;quot;Swipe Me!&amp;quot;),
+                hr(),
+                h4(&amp;quot;Quote:&amp;quot;),
+                textOutput(&amp;quot;quote&amp;quot;),
+                h4(&amp;quot;Author(s):&amp;quot;),
+                textOutput(&amp;quot;quote_author&amp;quot;)
+  ),
+  hr(),
+  h4(&amp;quot;Swipe History&amp;quot;),
+  tableOutput(&amp;quot;resultsTable&amp;quot;)
+)
+
+server &amp;lt;- function(input, output, session) {
+  card_swipe &amp;lt;- callModule(shinySwipr, &amp;quot;quote_swiper&amp;quot;)
+
+  appVals &amp;lt;- reactiveValues(
+    quote = fortune(),
+    swipes = data.frame(quote = character(), author = character(), swipe = character())
+  )
+
+  our_quote &amp;lt;- isolate(appVals$quote)
+  output$quote &amp;lt;- renderText({ our_quote$quote })
+  output$quote_author &amp;lt;- renderText({ paste0(&amp;quot;-&amp;quot;,our_quote$author) })
+  output$resultsTable &amp;lt;- renderDataTable({appVals$swipes})
+
+  observeEvent( card_swipe(),{
+    #Record our last swipe results.
+    appVals$swipes &amp;lt;- rbind(
+      data.frame(quote = appVals$quote$quote,
+                 author = appVals$quote$author,
+                 swipe = card_swipe()
+      ), appVals$swipes
+    )
+    #send results to the output.
+    output$resultsTable &amp;lt;- renderTable({appVals$swipes})
+
+    #update the quote
+    appVals$quote &amp;lt;- fortune()
+
+    #send update to the ui.
+    output$quote &amp;lt;- renderText({ appVals$quote$quote })
+
+    output$quote_author &amp;lt;- renderText({ paste0(&amp;quot;-&amp;quot;,appVals$quote$author) })
+  }) #close event observe.
+}
+
+shinyApp(ui, server)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That is a lot of code, but to it is a full app.&lt;/p&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
     
     <item>
       <title>Custom JavaScript visualizations in RMarkdown</title>
