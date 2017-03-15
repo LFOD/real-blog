@@ -203,23 +203,7 @@ shinyApp(ui, server)&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Sat, 04 Mar 2017 19:23:45 -0600</pubDate>
       
       <guid>/2017/03/04/xkcd-thank-you-note/</guid>
-      <description>---
-author: &#34;Lucy D&#39;Agostino McGowan&#34;
-comments: true
-date: 2017-03-04T19:23:45-06:00
-draft: false
-image: &#34;&#34;
-menu: &#34;&#34;
-share: true
-tags:
-- xkcd
-- thankyou
-title: &#34;xkcd thank you note&#34;
-excerpt: &#34;Exploring the relationship between my time spent on statistics &amp; my time spent on xkcd.&#34;
----
-
-
-&lt;!-- BLOGDOWN-BODY-BEFORE
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 

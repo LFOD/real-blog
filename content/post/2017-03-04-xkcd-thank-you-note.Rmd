@@ -14,6 +14,7 @@ excerpt: "Exploring the relationship between my time spent on statistics & my ti
 ---
 
 
+
 I've been looking for a way to incorporate xkcd in my [#thankyou](http://livefreeordichotomize.com/tags/thankyou/) series & recently came across this gem:
 
 <blockquote class="twitter-tweet" data-cards="hidden" data-lang="en"><p lang="en" dir="ltr">Did you know that there is a package in R to make your graphs in the style of xkcd comics? <a href="https://twitter.com/hashtag/Rstats?src=hash">#Rstats</a> <a href="https://t.co/29Cnp9t20N">https://t.co/29Cnp9t20N</a> <a href="https://t.co/iY1UsFdEfJ">pic.twitter.com/iY1UsFdEfJ</a></p>&mdash; Maria Gatta (@M_Gatta) <a href="https://twitter.com/M_Gatta/status/832952195784044545">February 18, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
