@@ -1,0 +1,88 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-03-16T14:56:30-04:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- ENAR
+- tidytext
+- conferences
+title: "ENAR in words"
+excerpt: "I had an absolutely delightful time at [ENAR](http://www.enar.org) this year. Lots of talk about the intersection between data science & statistics, diversity, and great advancements in statistical methods. Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data."
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>I had an absolutely delightful time at <a href="http://www.enar.org">ENAR</a> this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and <strong>exceptional</strong> advancements in statistical methods.</p>
+<p>Check out this word cloud of the most commonly tweeted words</p>
+<p><img src="#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.</p>
+<div id="getting-twitter-credentials" class="section level2">
+<h2>Getting twitter credentials</h2>
+<p>Go <a href="https://apps.twitter.com">here</a> and create an app - this will give you a <strong>Consumer key</strong>, <strong>Consumer secret</strong>, <strong>Access token</strong>, &amp; <strong>Access secret</strong>.</p>
+</div>
+<div id="scraping-tweets" class="section level2">
+<h2>Scraping tweets</h2>
+<p>We will use the <code>twitteR</code> package to scrape the tweets using the <code>searchTwitter</code> function.</p>
+<pre class="r"><code>library(&#39;twitteR&#39;)
+setup_twitter_oauth(consumer_key=&quot;PASTE_YOUR_CONSUMER_KEY_HERE&quot;, 
+                    consumer_secret= &quot;PASTE_YOUR_CONSUMER_SECRET_HERE&quot;,
+                    access_token=&quot;PASTE_YOUR_ACCESS_TOKEN_HERE&quot;,
+                    access_secret=&quot;PASTE_YOUR_ACCESS_SECRET_HERE&quot;)
+
+dat &lt;- searchTwitter(&#39;#ENAR2017&#39;, n = 1e4, since = &#39;2017-03-10&#39;)</code></pre>
+</div>
+<div id="wrangle-tweets" class="section level2">
+<h2>Wrangle tweets</h2>
+Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (<code>dplyr</code>, <code>purrr</code>😺, and <code>stringr</code>) as well as Julia &amp; David’s <code>tidytext</code>.
+<p style="text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:14px;">
+For more details on how to analyze text, <br/> check out their book <a href="http://tidytextmining.com">Text Mining with R</a>, <br/> the code below is modified from one of <br/> their examples.
+</p>
+<p>We will then use the <code>wordcloud</code> package to display our results.</p>
+<pre class="r"><code>#load packages
+library(&#39;dplyr&#39;)
+library(&#39;purrr&#39;)
+library(&#39;stringr&#39;)
+library(&#39;tidytext&#39;)
+library(&#39;wordcloud&#39;)
+
+#map this into a dataframe
+tweets &lt;- map_df(dat, as.data.frame)
+
+#this will drop links &amp; symbols
+drop_pattern &lt;- &quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;|&amp;lt;|&amp;gt;|RT|https|ht&quot;
+#this pattern is great for twitter, includes #,
+unnest_pattern &lt;- &quot;([^A-Za-z_\\d#@&#39;]|&#39;(?![A-Za-z_\\d#@]))&quot;
+
+tidy_tweets &lt;- tweets %&gt;% 
+  filter( !grepl(&quot;#otorrino&quot;, text)) %&gt;% # we have one tweeter with our hashtag that wasn&#39;t at our conference
+  mutate(text = str_replace_all(text, drop_pattern, &quot;&quot;)) %&gt;%
+  unnest_tokens(word, text, token = &quot;regex&quot;, pattern = unnest_pattern) %&gt;%
+  filter(!word %in% stop_words$word,
+         str_detect(word, &quot;[a-z]&quot;)) 
+
+cols &lt;- c(brewer.pal(8,&quot;Dark2&quot;), rep(brewer.pal(8,&quot;Dark2&quot;), each = 5) )
+
+tidy_tweets %&gt;%
+  anti_join(stop_words) %&gt;%
+  filter( !grepl(&quot;@&quot;, word )) %&gt;%
+  count(word) %&gt;%
+  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))</code></pre>
+</div>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->

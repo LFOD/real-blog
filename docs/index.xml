@@ -6,8 +6,88 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Mar 2017 10:54:24 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 16 Mar 2017 14:56:30 -0400</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>ENAR in words</title>
+      <link>/2017/03/16/enar-in-words/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/2017/03/16/enar-in-words/</guid>
+      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE --&gt;
+
+&lt;p&gt;I had an absolutely delightful time at &lt;a href=&#34;http://www.enar.org&#34;&gt;ENAR&lt;/a&gt; this year. Lots of talk about the intersection between data science &amp;amp; statistics, diversity, and &lt;strong&gt;exceptional&lt;/strong&gt; advancements in statistical methods.&lt;/p&gt;
+&lt;p&gt;Check out this word cloud of the most commonly tweeted words&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.&lt;/p&gt;
+&lt;div id=&#34;getting-twitter-credentials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting twitter credentials&lt;/h2&gt;
+&lt;p&gt;Go &lt;a href=&#34;https://apps.twitter.com&#34;&gt;here&lt;/a&gt; and create an app - this will give you a &lt;strong&gt;Consumer key&lt;/strong&gt;, &lt;strong&gt;Consumer secret&lt;/strong&gt;, &lt;strong&gt;Access token&lt;/strong&gt;, &amp;amp; &lt;strong&gt;Access secret&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;scraping-tweets&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Scraping tweets&lt;/h2&gt;
+&lt;p&gt;We will use the &lt;code&gt;twitteR&lt;/code&gt; package to scrape the tweets using the &lt;code&gt;searchTwitter&lt;/code&gt; function.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;twitteR&amp;#39;)
+setup_twitter_oauth(consumer_key=&amp;quot;PASTE_YOUR_CONSUMER_KEY_HERE&amp;quot;, 
+                    consumer_secret= &amp;quot;PASTE_YOUR_CONSUMER_SECRET_HERE&amp;quot;,
+                    access_token=&amp;quot;PASTE_YOUR_ACCESS_TOKEN_HERE&amp;quot;,
+                    access_secret=&amp;quot;PASTE_YOUR_ACCESS_SECRET_HERE&amp;quot;)
+
+dat &amp;lt;- searchTwitter(&amp;#39;#ENAR2017&amp;#39;, n = 1e4, since = &amp;#39;2017-03-10&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wrangle-tweets&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Wrangle tweets&lt;/h2&gt;
+Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (&lt;code&gt;dplyr&lt;/code&gt;, &lt;code&gt;purrr&lt;/code&gt;😺, and &lt;code&gt;stringr&lt;/code&gt;) as well as Julia &amp;amp; David’s &lt;code&gt;tidytext&lt;/code&gt;.
+&lt;p style=&#34;text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:14px;&#34;&gt;
+For more details on how to analyze text, &lt;br/&gt; check out their book &lt;a href=&#34;http://tidytextmining.com&#34;&gt;Text Mining with R&lt;/a&gt;, &lt;br/&gt; the code below is modified from one of &lt;br/&gt; their examples.
+&lt;/p&gt;
+&lt;p&gt;We will then use the &lt;code&gt;wordcloud&lt;/code&gt; package to display our results.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#load packages
+library(&amp;#39;dplyr&amp;#39;)
+library(&amp;#39;purrr&amp;#39;)
+library(&amp;#39;stringr&amp;#39;)
+library(&amp;#39;tidytext&amp;#39;)
+library(&amp;#39;wordcloud&amp;#39;)
+
+#map this into a dataframe
+tweets &amp;lt;- map_df(dat, as.data.frame)
+
+#this will drop links &amp;amp; symbols
+drop_pattern &amp;lt;- &amp;quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;amp;|&amp;amp;lt;|&amp;amp;gt;|RT|https|ht&amp;quot;
+#this pattern is great for twitter, includes #,
+unnest_pattern &amp;lt;- &amp;quot;([^A-Za-z_\\d#@&amp;#39;]|&amp;#39;(?![A-Za-z_\\d#@]))&amp;quot;
+
+tidy_tweets &amp;lt;- tweets %&amp;gt;% 
+  filter( !grepl(&amp;quot;#otorrino&amp;quot;, text)) %&amp;gt;% # we have one tweeter with our hashtag that wasn&amp;#39;t at our conference
+  mutate(text = str_replace_all(text, drop_pattern, &amp;quot;&amp;quot;)) %&amp;gt;%
+  unnest_tokens(word, text, token = &amp;quot;regex&amp;quot;, pattern = unnest_pattern) %&amp;gt;%
+  filter(!word %in% stop_words$word,
+         str_detect(word, &amp;quot;[a-z]&amp;quot;)) 
+
+cols &amp;lt;- c(brewer.pal(8,&amp;quot;Dark2&amp;quot;), rep(brewer.pal(8,&amp;quot;Dark2&amp;quot;), each = 5) )
+
+tidy_tweets %&amp;gt;%
+  anti_join(stop_words) %&amp;gt;%
+  filter( !grepl(&amp;quot;@&amp;quot;, word )) %&amp;gt;%
+  count(word) %&amp;gt;%
+  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+
+
+&lt;!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD --&gt;
+</description>
+    </item>
     
     <item>
       <title>Introducing shinyswipr: swipe your way to a great Shiny UI</title>

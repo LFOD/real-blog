@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+
+
+    
+        <meta name="twitter:card" content="summary"/>
+    
+
+
+
+<meta name="twitter:title" content="ENAR in words"/>
+<meta name="twitter:description" content="I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and exceptional advancements in statistical methods.
+Check out this word cloud of the most commonly tweeted words
+Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.
+Getting twitter credentials Go here and create an app - this will give you a Consumer key, Consumer secret, Access token, &amp; Access secret."/>
+
+
+
+  	<meta property="og:title" content=" ENAR in words &middot;  Live Free or Dichotomize" />
+  	<meta property="og:site_name" content="Live Free or Dichotomize" />
+  	<meta property="og:url" content="/2017/03/16/enar-in-words/" />
+
+    
+  	<meta property="og:type" content="article" />
+
+    <meta property="og:article:published_time" content="2017-03-16T14:56:30-04:00" />
+
+    
+    <meta property="og:article:tag" content="ENAR" />
+    
+    <meta property="og:article:tag" content="tidytext" />
+    
+    <meta property="og:article:tag" content="conferences" />
+    
+    
+
+    <title>
+       ENAR in words &middot;  Live Free or Dichotomize
+    </title>
+
+    <meta name="description" content="A statistics blog from two goofy Phd students." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="../../../../images/favicon.ico">
+	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
+
+    
+      
+          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
+      
+      
+    
+    <meta name="generator" content="Hugo 0.17" />
+
+    <link rel="canonical" href="../../../../2017/03/16/enar-in-words/" />
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    
+
+
+
+
+
+
+</head>
+<body class="nav-closed">
+
+  <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        
+        
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="../../../../about/">About</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://github.com/lfod/real-blog">GitHub</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
+            </li>
+        
+            
+            <li class="nav-opened" role="presentation">
+            	<a href="https://twitter.com/NicholasStrayer">Nick&#39;s Twitter</a>
+            </li>
+        
+    </ul>
+    
+    
+    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
+    
+</div>
+<span class="nav-cover"></span>
+
+
+ <div class="site-wrapper">
+
+
+
+
+<header class="main-header post-head no-cover">
+  <nav class="main-nav clearfix">
+
+
+  
+      <a class="blog-logo" href="../../../../"><img src="../../../../images/logo.png" alt="Home" /></a>
+  
+  
+      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
+  
+  </nav>
+</header>
+
+
+
+<main class="content" role="main">
+
+
+
+
+  <article class="post post">
+
+    <header class="post-header">
+        <h1 class="post-title">ENAR in words</h1>
+        <small></small>
+
+        <section class="post-meta">
+        
+          <time class="post-date" datetime="2017-03-16T14:56:30-04:00">
+            Mar 16, 2017
+          </time>
+        
+         
+          <span class="post-tag small"><a href="../../../../tags/enar/">#ENAR</a></span>
+         
+          <span class="post-tag small"><a href="../../../../tags/tidytext/">#tidytext</a></span>
+         
+          <span class="post-tag small"><a href="../../../../tags/conferences/">#conferences</a></span>
+         
+        </section>
+    </header>
+
+    <section class="post-content">
+
+
+<p>I had an absolutely delightful time at <a href="http://www.enar.org">ENAR</a> this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and <strong>exceptional</strong> advancements in statistical methods.</p>
+<p>Check out this word cloud of the most commonly tweeted words</p>
+<p><img src="figures/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.</p>
+<div id="getting-twitter-credentials" class="section level2">
+<h2>Getting twitter credentials</h2>
+<p>Go <a href="https://apps.twitter.com">here</a> and create an app - this will give you a <strong>Consumer key</strong>, <strong>Consumer secret</strong>, <strong>Access token</strong>, &amp; <strong>Access secret</strong>.</p>
+</div>
+<div id="scraping-tweets" class="section level2">
+<h2>Scraping tweets</h2>
+<p>We will use the <code>twitteR</code> package to scrape the tweets using the <code>searchTwitter</code> function.</p>
+<pre class="r"><code>library(&#39;twitteR&#39;)
+setup_twitter_oauth(consumer_key=&quot;PASTE_YOUR_CONSUMER_KEY_HERE&quot;, 
+                    consumer_secret= &quot;PASTE_YOUR_CONSUMER_SECRET_HERE&quot;,
+                    access_token=&quot;PASTE_YOUR_ACCESS_TOKEN_HERE&quot;,
+                    access_secret=&quot;PASTE_YOUR_ACCESS_SECRET_HERE&quot;)
+
+dat &lt;- searchTwitter(&#39;#ENAR2017&#39;, n = 1e4, since = &#39;2017-03-10&#39;)</code></pre>
+</div>
+<div id="wrangle-tweets" class="section level2">
+<h2>Wrangle tweets</h2>
+Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (<code>dplyr</code>, <code>purrr</code>😺, and <code>stringr</code>) as well as Julia &amp; David’s <code>tidytext</code>.
+<p style="text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:14px;">
+For more details on how to analyze text, <br/> check out their book <a href="http://tidytextmining.com">Text Mining with R</a>, <br/> the code below is modified from one of <br/> their examples.
+</p>
+<p>We will then use the <code>wordcloud</code> package to display our results.</p>
+<pre class="r"><code>#load packages
+library(&#39;dplyr&#39;)
+library(&#39;purrr&#39;)
+library(&#39;stringr&#39;)
+library(&#39;tidytext&#39;)
+library(&#39;wordcloud&#39;)
+
+#map this into a dataframe
+tweets &lt;- map_df(dat, as.data.frame)
+
+#this will drop links &amp; symbols
+drop_pattern &lt;- &quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;|&amp;lt;|&amp;gt;|RT|https|ht&quot;
+#this pattern is great for twitter, includes #,
+unnest_pattern &lt;- &quot;([^A-Za-z_\\d#@&#39;]|&#39;(?![A-Za-z_\\d#@]))&quot;
+
+tidy_tweets &lt;- tweets %&gt;% 
+  filter( !grepl(&quot;#otorrino&quot;, text)) %&gt;% # we have one tweeter with our hashtag that wasn&#39;t at our conference
+  mutate(text = str_replace_all(text, drop_pattern, &quot;&quot;)) %&gt;%
+  unnest_tokens(word, text, token = &quot;regex&quot;, pattern = unnest_pattern) %&gt;%
+  filter(!word %in% stop_words$word,
+         str_detect(word, &quot;[a-z]&quot;)) 
+
+cols &lt;- c(brewer.pal(8,&quot;Dark2&quot;), rep(brewer.pal(8,&quot;Dark2&quot;), each = 5) )
+
+tidy_tweets %&gt;%
+  anti_join(stop_words) %&gt;%
+  filter( !grepl(&quot;@&quot;, word )) %&gt;%
+  count(word) %&gt;%
+  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))</code></pre>
+</div>
+
+
+
+
+    </section>
+
+
+  <footer class="post-footer">
+
+
+    
+    <figure class="author-image">
+        <a class="img" href="../../../../" style="background-image: url(/images/logo.png)"><span class="hidden">'s Picture</span></a>
+    </figure>
+    
+
+    
+
+
+
+
+
+
+
+
+<div class="post-author">
+
+    <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/8431897?v=3&amp;s=460" alt="Lucy D&#39;Agostino McGowan image" width="90" height="90">
+    <br>
+    <span style="font-size: 1.02em;font-weight: bold;">
+        Lucy D&#39;Agostino McGowan
+    </span>
+    |
+    <a style = "text-decoration: none;" class = "post-author__text" href = http://lucymcgowan.com >
+        <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+    </a>
+
+    <a class="icon-twitter post-author__text" style="font-size: 1.4em; text-decoration: none;" href = https://twitter.com/lucyStats onclick="window.open(this.href"></a>
+
+    <a style = "text-decoration: none;" class = "post-author__text" href = https://github.com/LucyMcGowan >
+        <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+    </a>
+
+
+    <br>
+
+    <p class="post-author__text">Currently excited about: observational study methods, translational research, BB-8</p>
+    
+
+
+    
+<section class="share">
+  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=ENAR%20in%20words&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f03%2f16%2fenar-in-words%2f"
+      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+ </a></p>
+</section>
+
+
+
+    
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2017\/03\/16\/enar-in-words\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+
+  </footer>
+</article>
+
+</main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
+        
+        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
+        
+    </footer>
+    </div>
+    <script type="text/javascript" src="../../../../js/jquery.js"></script>
+    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="../../../../js/index.js"></script>
+        
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="../../../../js/header_lines.js"></script>
+
+    
+</body>
+</html>
+
