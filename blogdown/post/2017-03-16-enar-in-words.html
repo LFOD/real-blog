@@ -21,7 +21,7 @@ excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk ab
 
 <p>I had an absolutely delightful time at <a href="http://www.enar.org">ENAR</a> this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and <strong>exceptional</strong> advancements in statistical methods.</p>
 <p>Check out this word cloud of the most commonly tweeted words</p>
-<p><img src="#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png" width="480" /></p>
 <p>Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.</p>
 <div id="get-twitter-credentials" class="section level2">
 <h2>Get twitter credentials</h2>
@@ -77,7 +77,7 @@ tidy_tweets %&gt;%
   count(word) %&gt;%
   with(wordcloud(word, 
                  n,
-                 min.freq = 3,
+                 min.freq = 5,
                  random.order = FALSE,
                  colors = cols))</code></pre>
 <p>You did it! Easy as <a href="https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665">π</a>.</p>

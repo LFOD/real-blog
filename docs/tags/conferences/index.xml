@@ -20,7 +20,7 @@
 
 &lt;p&gt;I had an absolutely delightful time at &lt;a href=&#34;http://www.enar.org&#34;&gt;ENAR&lt;/a&gt; this year. Lots of talk about the intersection between data science &amp;amp; statistics, diversity, and &lt;strong&gt;exceptional&lt;/strong&gt; advancements in statistical methods.&lt;/p&gt;
 &lt;p&gt;Check out this word cloud of the most commonly tweeted words&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.&lt;/p&gt;
 &lt;div id=&#34;get-twitter-credentials&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Get twitter credentials&lt;/h2&gt;
@@ -76,7 +76,7 @@ tidy_tweets %&amp;gt;%
   count(word) %&amp;gt;%
   with(wordcloud(word, 
                  n,
-                 min.freq = 3,
+                 min.freq = 5,
                  random.order = FALSE,
                  colors = cols))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You did it! Easy as &lt;a href=&#34;https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665&#34;&gt;π&lt;/a&gt;.&lt;/p&gt;

@@ -18,7 +18,7 @@ I had an absolutely delightful time at [ENAR](http://www.enar.org) this year. Lo
 
 Check out this word cloud of the most commonly tweeted words
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height = 5, fig.width=5}
 library('twitteR')
 load("../../data/enar_data.rda")
 
@@ -42,16 +42,15 @@ tidy_tweets <- tweets %>%
   mutate(text = str_replace_all(text, drop_pattern, "")) %>%
   unnest_tokens(word, text, token = "regex", pattern = unnest_pattern) %>%
   filter(!word %in% stop_words$word,
-         str_detect(word, "[a-z]")) 
+         str_detect(word, "[a-z]"),
+         !grepl("@", word )) 
 
 cols <- c(brewer.pal(8,"Dark2"), rep(brewer.pal(8,"Dark2"), each = 5) )
 
 set.seed(916)
 tidy_tweets %>%
-  anti_join(stop_words) %>%
-  filter( !grepl("@", word )) %>%
   count(word) %>%
-  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))
+  with(wordcloud(word, n,min.freq=5, random.order =FALSE,colors=cols))
 ```
 
 Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data.
@@ -126,7 +125,7 @@ tidy_tweets %>%
   count(word) %>%
   with(wordcloud(word, 
                  n,
-                 min.freq = 3,
+                 min.freq = 5,
                  random.order = FALSE,
                  colors = cols))
 ```
