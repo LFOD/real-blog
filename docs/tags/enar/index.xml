@@ -22,12 +22,12 @@
 &lt;p&gt;Check out this word cloud of the most commonly tweeted words&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.&lt;/p&gt;
-&lt;div id=&#34;getting-twitter-credentials&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Getting twitter credentials&lt;/h2&gt;
+&lt;div id=&#34;get-twitter-credentials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Get twitter credentials&lt;/h2&gt;
 &lt;p&gt;Go &lt;a href=&#34;https://apps.twitter.com&#34;&gt;here&lt;/a&gt; and create an app - this will give you a &lt;strong&gt;Consumer key&lt;/strong&gt;, &lt;strong&gt;Consumer secret&lt;/strong&gt;, &lt;strong&gt;Access token&lt;/strong&gt;, &amp;amp; &lt;strong&gt;Access secret&lt;/strong&gt;.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;scraping-tweets&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Scraping tweets&lt;/h2&gt;
+&lt;div id=&#34;scrape-tweets&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Scrape tweets&lt;/h2&gt;
 &lt;p&gt;We will use the &lt;code&gt;twitteR&lt;/code&gt; package to scrape the tweets using the &lt;code&gt;searchTwitter&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;twitteR&amp;#39;)
 setup_twitter_oauth(consumer_key=&amp;quot;PASTE_YOUR_CONSUMER_KEY_HERE&amp;quot;, 
@@ -60,7 +60,7 @@ drop_pattern &amp;lt;- &amp;quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&
 unnest_pattern &amp;lt;- &amp;quot;([^A-Za-z_\\d#@&amp;#39;]|&amp;#39;(?![A-Za-z_\\d#@]))&amp;quot;
 
 tidy_tweets &amp;lt;- tweets %&amp;gt;% 
-  filter( !grepl(&amp;quot;#otorrino&amp;quot;, text)) %&amp;gt;% # we have one tweeter with our hashtag that wasn&amp;#39;t at our conference
+  filter( !grepl(&amp;quot;#OTORRINO&amp;quot;, text)) %&amp;gt;% # we have one tweeter with our hashtag that wasn&amp;#39;t at our conference
   mutate(text = str_replace_all(text, drop_pattern, &amp;quot;&amp;quot;)) %&amp;gt;%
   unnest_tokens(word, text, token = &amp;quot;regex&amp;quot;, pattern = unnest_pattern) %&amp;gt;%
   filter(!word %in% stop_words$word,
@@ -73,6 +73,11 @@ tidy_tweets %&amp;gt;%
   filter( !grepl(&amp;quot;@&amp;quot;, word )) %&amp;gt;%
   count(word) %&amp;gt;%
   with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You did it! Easy as &lt;a href=&#34;https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665&#34;&gt;π&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://media.giphy.com/media/fBZXu9v0qjjTq/giphy.gif&#34; /&gt;
+
+&lt;/div&gt;
 &lt;/div&gt;
 
 

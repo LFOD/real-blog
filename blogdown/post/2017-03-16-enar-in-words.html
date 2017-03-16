@@ -23,12 +23,12 @@ excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk ab
 <p>Check out this word cloud of the most commonly tweeted words</p>
 <p><img src="#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data.</p>
-<div id="getting-twitter-credentials" class="section level2">
-<h2>Getting twitter credentials</h2>
+<div id="get-twitter-credentials" class="section level2">
+<h2>Get twitter credentials</h2>
 <p>Go <a href="https://apps.twitter.com">here</a> and create an app - this will give you a <strong>Consumer key</strong>, <strong>Consumer secret</strong>, <strong>Access token</strong>, &amp; <strong>Access secret</strong>.</p>
 </div>
-<div id="scraping-tweets" class="section level2">
-<h2>Scraping tweets</h2>
+<div id="scrape-tweets" class="section level2">
+<h2>Scrape tweets</h2>
 <p>We will use the <code>twitteR</code> package to scrape the tweets using the <code>searchTwitter</code> function.</p>
 <pre class="r"><code>library(&#39;twitteR&#39;)
 setup_twitter_oauth(consumer_key=&quot;PASTE_YOUR_CONSUMER_KEY_HERE&quot;, 
@@ -61,7 +61,7 @@ drop_pattern &lt;- &quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;
 unnest_pattern &lt;- &quot;([^A-Za-z_\\d#@&#39;]|&#39;(?![A-Za-z_\\d#@]))&quot;
 
 tidy_tweets &lt;- tweets %&gt;% 
-  filter( !grepl(&quot;#otorrino&quot;, text)) %&gt;% # we have one tweeter with our hashtag that wasn&#39;t at our conference
+  filter( !grepl(&quot;#OTORRINO&quot;, text)) %&gt;% # we have one tweeter with our hashtag that wasn&#39;t at our conference
   mutate(text = str_replace_all(text, drop_pattern, &quot;&quot;)) %&gt;%
   unnest_tokens(word, text, token = &quot;regex&quot;, pattern = unnest_pattern) %&gt;%
   filter(!word %in% stop_words$word,
@@ -74,6 +74,11 @@ tidy_tweets %&gt;%
   filter( !grepl(&quot;@&quot;, word )) %&gt;%
   count(word) %&gt;%
   with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))</code></pre>
+<p>You did it! Easy as <a href="https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665">π</a>.</p>
+<div class="figure">
+<img src="https://media.giphy.com/media/fBZXu9v0qjjTq/giphy.gif" />
+
+</div>
 </div>
 
 

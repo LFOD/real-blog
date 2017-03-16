@@ -56,11 +56,11 @@ tidy_tweets %>%
 
 Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data.
 
-## Getting twitter credentials
+## Get twitter credentials
 
 Go [here](https://apps.twitter.com) and create an app - this will give you a **Consumer key**, **Consumer secret**, **Access token**, & **Access secret**.
 
-## Scraping tweets
+## Scrape tweets
 
 We will use the `twitteR` package to scrape the tweets using the `searchTwitter` function.
 
@@ -103,7 +103,7 @@ drop_pattern <- "https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;|&lt;|&gt;|R
 unnest_pattern <- "([^A-Za-z_\\d#@']|'(?![A-Za-z_\\d#@]))"
 
 tidy_tweets <- tweets %>% 
-  filter( !grepl("#otorrino", text)) %>% # we have one tweeter with our hashtag that wasn't at our conference
+  filter( !grepl("#OTORRINO", text)) %>% # we have one tweeter with our hashtag that wasn't at our conference
   mutate(text = str_replace_all(text, drop_pattern, "")) %>%
   unnest_tokens(word, text, token = "regex", pattern = unnest_pattern) %>%
   filter(!word %in% stop_words$word,
@@ -118,3 +118,6 @@ tidy_tweets %>%
   with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))
 ```
 
+You did it! Easy as [π](https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665).
+
+![](https://media.giphy.com/media/fBZXu9v0qjjTq/giphy.gif)
