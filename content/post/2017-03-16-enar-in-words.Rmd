@@ -93,29 +93,42 @@ library('purrr')
 library('stringr')
 library('tidytext')
 library('wordcloud')
+```
 
+We are going to map the tweets into a lovely dataframe, get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.
+```{r, eval = FALSE}
 #map this into a dataframe
 tweets <- map_df(dat, as.data.frame)
 
 #this will drop links & symbols
 drop_pattern <- "https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;|&lt;|&gt;|RT|https|ht"
-#this pattern is great for twitter, includes #,
+#this pattern is great for twitter, includes # and @ symbols
 unnest_pattern <- "([^A-Za-z_\\d#@']|'(?![A-Za-z_\\d#@]))"
 
 tidy_tweets <- tweets %>% 
   filter( !grepl("#OTORRINO", text)) %>% # we have one tweeter with our hashtag that wasn't at our conference
   mutate(text = str_replace_all(text, drop_pattern, "")) %>%
-  unnest_tokens(word, text, token = "regex", pattern = unnest_pattern) %>%
-  filter(!word %in% stop_words$word,
-         str_detect(word, "[a-z]")) 
+  unnest_tokens(word, 
+                text, 
+                token = "regex", 
+                pattern = unnest_pattern) %>%
+  filter(!(word %in% stop_words$word),
+         str_detect(word, "[a-z]"),
+         !grepl("@", word )) 
+```
 
-cols <- c(brewer.pal(8,"Dark2"), rep(brewer.pal(8,"Dark2"), each = 5) )
+Now it's plotting time!
+
+```{r, eval = FALSE}
+cols <- c(brewer.pal(8,"Dark2"), rep(brewer.pal(8,"Dark2"), each = 5) ) #make some colors for our plot
 
 tidy_tweets %>%
-  anti_join(stop_words) %>%
-  filter( !grepl("@", word )) %>%
   count(word) %>%
-  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))
+  with(wordcloud(word, 
+                 n,
+                 min.freq = 3,
+                 random.order = FALSE,
+                 colors = cols))
 ```
 
 You did it! Easy as [π](https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665).

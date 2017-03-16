@@ -49,30 +49,36 @@ library(&amp;#39;dplyr&amp;#39;)
 library(&amp;#39;purrr&amp;#39;)
 library(&amp;#39;stringr&amp;#39;)
 library(&amp;#39;tidytext&amp;#39;)
-library(&amp;#39;wordcloud&amp;#39;)
-
-#map this into a dataframe
+library(&amp;#39;wordcloud&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We are going to map the tweets into a lovely dataframe, get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#map this into a dataframe
 tweets &amp;lt;- map_df(dat, as.data.frame)
 
 #this will drop links &amp;amp; symbols
 drop_pattern &amp;lt;- &amp;quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;amp;|&amp;amp;lt;|&amp;amp;gt;|RT|https|ht&amp;quot;
-#this pattern is great for twitter, includes #,
+#this pattern is great for twitter, includes # and @ symbols
 unnest_pattern &amp;lt;- &amp;quot;([^A-Za-z_\\d#@&amp;#39;]|&amp;#39;(?![A-Za-z_\\d#@]))&amp;quot;
 
 tidy_tweets &amp;lt;- tweets %&amp;gt;% 
   filter( !grepl(&amp;quot;#OTORRINO&amp;quot;, text)) %&amp;gt;% # we have one tweeter with our hashtag that wasn&amp;#39;t at our conference
   mutate(text = str_replace_all(text, drop_pattern, &amp;quot;&amp;quot;)) %&amp;gt;%
-  unnest_tokens(word, text, token = &amp;quot;regex&amp;quot;, pattern = unnest_pattern) %&amp;gt;%
-  filter(!word %in% stop_words$word,
-         str_detect(word, &amp;quot;[a-z]&amp;quot;)) 
-
-cols &amp;lt;- c(brewer.pal(8,&amp;quot;Dark2&amp;quot;), rep(brewer.pal(8,&amp;quot;Dark2&amp;quot;), each = 5) )
+  unnest_tokens(word, 
+                text, 
+                token = &amp;quot;regex&amp;quot;, 
+                pattern = unnest_pattern) %&amp;gt;%
+  filter(!(word %in% stop_words$word),
+         str_detect(word, &amp;quot;[a-z]&amp;quot;),
+         !grepl(&amp;quot;@&amp;quot;, word )) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now it’s plotting time!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cols &amp;lt;- c(brewer.pal(8,&amp;quot;Dark2&amp;quot;), rep(brewer.pal(8,&amp;quot;Dark2&amp;quot;), each = 5) ) #make some colors for our plot
 
 tidy_tweets %&amp;gt;%
-  anti_join(stop_words) %&amp;gt;%
-  filter( !grepl(&amp;quot;@&amp;quot;, word )) %&amp;gt;%
   count(word) %&amp;gt;%
-  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))&lt;/code&gt;&lt;/pre&gt;
+  with(wordcloud(word, 
+                 n,
+                 min.freq = 3,
+                 random.order = FALSE,
+                 colors = cols))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You did it! Easy as &lt;a href=&#34;https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665&#34;&gt;π&lt;/a&gt;.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;https://media.giphy.com/media/fBZXu9v0qjjTq/giphy.gif&#34; /&gt;

@@ -50,30 +50,36 @@ library(&#39;dplyr&#39;)
 library(&#39;purrr&#39;)
 library(&#39;stringr&#39;)
 library(&#39;tidytext&#39;)
-library(&#39;wordcloud&#39;)
-
-#map this into a dataframe
+library(&#39;wordcloud&#39;)</code></pre>
+<p>We are going to map the tweets into a lovely dataframe, get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.</p>
+<pre class="r"><code>#map this into a dataframe
 tweets &lt;- map_df(dat, as.data.frame)
 
 #this will drop links &amp; symbols
 drop_pattern &lt;- &quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;|&amp;lt;|&amp;gt;|RT|https|ht&quot;
-#this pattern is great for twitter, includes #,
+#this pattern is great for twitter, includes # and @ symbols
 unnest_pattern &lt;- &quot;([^A-Za-z_\\d#@&#39;]|&#39;(?![A-Za-z_\\d#@]))&quot;
 
 tidy_tweets &lt;- tweets %&gt;% 
   filter( !grepl(&quot;#OTORRINO&quot;, text)) %&gt;% # we have one tweeter with our hashtag that wasn&#39;t at our conference
   mutate(text = str_replace_all(text, drop_pattern, &quot;&quot;)) %&gt;%
-  unnest_tokens(word, text, token = &quot;regex&quot;, pattern = unnest_pattern) %&gt;%
-  filter(!word %in% stop_words$word,
-         str_detect(word, &quot;[a-z]&quot;)) 
-
-cols &lt;- c(brewer.pal(8,&quot;Dark2&quot;), rep(brewer.pal(8,&quot;Dark2&quot;), each = 5) )
+  unnest_tokens(word, 
+                text, 
+                token = &quot;regex&quot;, 
+                pattern = unnest_pattern) %&gt;%
+  filter(!(word %in% stop_words$word),
+         str_detect(word, &quot;[a-z]&quot;),
+         !grepl(&quot;@&quot;, word )) </code></pre>
+<p>Now it’s plotting time!</p>
+<pre class="r"><code>cols &lt;- c(brewer.pal(8,&quot;Dark2&quot;), rep(brewer.pal(8,&quot;Dark2&quot;), each = 5) ) #make some colors for our plot
 
 tidy_tweets %&gt;%
-  anti_join(stop_words) %&gt;%
-  filter( !grepl(&quot;@&quot;, word )) %&gt;%
   count(word) %&gt;%
-  with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))</code></pre>
+  with(wordcloud(word, 
+                 n,
+                 min.freq = 3,
+                 random.order = FALSE,
+                 colors = cols))</code></pre>
 <p>You did it! Easy as <a href="https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665">π</a>.</p>
 <div class="figure">
 <img src="https://media.giphy.com/media/fBZXu9v0qjjTq/giphy.gif" />
