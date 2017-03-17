@@ -17,7 +17,7 @@ excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk ab
 
 I had an absolutely delightful time at [ENAR](http://www.enar.org) this year. Lots of talk about the intersection between data science & statistics, diversity, and **exceptional** advancements in statistical methods. 
 
-Check out this word cloud of the most commonly tweeted words!
+I **loved** it, but let's see what others were saying! Check out this word cloud of the most commonly tweeted words.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library('twitteR')
@@ -54,6 +54,16 @@ tidy_tweets %>%
   with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))
 ```
 
+This certainly sums up my experience. Some of my favorites that make a big appearance:
+
+ * methods
+ * causal inference
+ * resources
+ * diversity
+ * data
+ * learning
+ * loving
+ 
 Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data in `R`.
 
 ## Get twitter credentials

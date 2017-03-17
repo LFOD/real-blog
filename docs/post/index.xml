@@ -20,8 +20,18 @@
 /BLOGDOWN-BODY-BEFORE --&gt;
 
 &lt;p&gt;I had an absolutely delightful time at &lt;a href=&#34;http://www.enar.org&#34;&gt;ENAR&lt;/a&gt; this year. Lots of talk about the intersection between data science &amp;amp; statistics, diversity, and &lt;strong&gt;exceptional&lt;/strong&gt; advancements in statistical methods.&lt;/p&gt;
-&lt;p&gt;Check out this word cloud of the most commonly tweeted words!&lt;/p&gt;
+&lt;p&gt;I &lt;strong&gt;loved&lt;/strong&gt; it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This certainly sums up my experience. Some of my favorites that make a big appearance:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;methods&lt;/li&gt;
+&lt;li&gt;causal inference&lt;/li&gt;
+&lt;li&gt;resources&lt;/li&gt;
+&lt;li&gt;diversity&lt;/li&gt;
+&lt;li&gt;data&lt;/li&gt;
+&lt;li&gt;learning&lt;/li&gt;
+&lt;li&gt;loving&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data in &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
 &lt;div id=&#34;get-twitter-credentials&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Get twitter credentials&lt;/h2&gt;
