@@ -137,9 +137,9 @@ You did it! Easy as [π](https://potpieshop.files.wordpress.com/2016/03/pi-day.j
 
 For giggles, let's try another word cloud package [`wordcloud2`](https://github.com/lchiffon/wordcloud2). This one is interactive (but not on CRAN, you can install using `devtools::install_github("lchiffon/wordcloud2")`).
  
-<center>
 
-```{r, message = FALSE, warning = FALSE}
+
+```{r, message = FALSE, warning = FALSE, fig.align='center'}
 library('wordcloud2')
 
 tidy_tweets %>%
@@ -148,4 +148,3 @@ tidy_tweets %>%
   wordcloud2(size = 3, minRotation = -pi/2, maxRotation = -pi/2)
 ```
 
-</center>
