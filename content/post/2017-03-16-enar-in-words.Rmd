@@ -139,7 +139,8 @@ You did it! Easy as [π](https://potpieshop.files.wordpress.com/2016/03/pi-day.j
 For giggles, let's try another word cloud package [`wordcloud2`](https://github.com/lchiffon/wordcloud2). This one is interactive (but not on CRAN, you can install using `devtools::install_github("lchiffon/wordcloud2")`).
  
 For a word cloud similar to the one above, we can use the `wordcloud2` function. 
-```{r, mval = FALSE}
+
+```{r, message = FALSE, warning = FALSE}
 library('wordcloud2')
 
 tidy_tweets %>%
@@ -149,20 +150,13 @@ tidy_tweets %>%
 
 ```
 
+Try the following to make an `R` shaped cloud using the `letterCloud` function!
 
-```{r, echo = FALSE}
-library('wordcloud2')
-```
-
-
-Instead I am going to make an `R` shaped cloud using `letterCloud`!
-
-
-```{r, message = FALSE, warning = FALSE, fig.align='center'}
-
+```{r, eval = FALSE}
 tidy_tweets %>%
   count(word) %>%
   filter(n > 1) %>%
   letterCloud(size = 3, word = "R") 
 ```
 
+Happy scraping!
