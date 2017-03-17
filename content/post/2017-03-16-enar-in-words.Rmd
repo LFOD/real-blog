@@ -17,10 +17,16 @@ excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk ab
 
 I had an absolutely delightful time at [ENAR](http://www.enar.org) this year. Lots of talk about the intersection between data science & statistics, diversity, and **exceptional** advancements in statistical methods. 
 
+<!-- My conference began with the [diversity workshop](https://www.enar.org/meetings/FosteringDiversity/) where we heard from my former adviser, [Dr. Melody Goodman](http://twitter.com/goodmanthebrain), about her journey to biostatistics & her work in community advocacy and health disparities, a career panel, and a graduate student panel. [Dr. Emma Benn](https://twitter.com/EKTBenn) pointed out that Miguel de Cervantes (author of Don Quixote) would have been a biostatistian in another life: -->
+
+<!-- <span style="color:#EB6864; font-size: 20pt">"By a small sample we may judge of the whole piece" -->
+<!-- </span> -->
+
+
 I **loved** it, but let's see what others were saying! Check out this word cloud of the most commonly tweeted words.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-library('twitteR')
+library('rtweet')
 load("../../data/enar_data.rda")
 
 #load packages
@@ -30,15 +36,12 @@ library('stringr')
 library('tidytext')
 library('wordcloud')
 
-#map this into a dataframe
-tweets <- map_df(dat, as.data.frame)
-
 #this will drop links & symbols
 drop_pattern <- "https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;|&lt;|&gt;|RT|https|ht"
 #this pattern is great for twitter, includes #,
 unnest_pattern <- "([^A-Za-z_\\d#@']|'(?![A-Za-z_\\d#@]))"
 
-tidy_tweets <- tweets %>% 
+tweets <- dat %>% 
   filter( !grepl("#OTORRINO", text)) %>% # we have one tweeter with our hashtag that wasn't at our conference
   mutate(text = str_replace_all(text, drop_pattern, "")) %>%
   unnest_tokens(word, text, token = "regex", pattern = unnest_pattern) %>%
@@ -48,8 +51,8 @@ tidy_tweets <- tweets %>%
 
 cols <- c(brewer.pal(8,"Dark2"), rep(brewer.pal(8,"Dark2"), each = 5) )
 
-set.seed(916)
-tidy_tweets %>%
+set.seed(1)
+tweets %>%
   count(word) %>%
   with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))
 ```
@@ -68,26 +71,46 @@ Since there was quite a bit of twitter action, I thought I'd do a quick tutorial
 
 ## Get twitter credentials
 
-Go [here](https://apps.twitter.com) and create an app - this will give you a **Consumer key**, **Consumer secret**, **Access token**, & **Access secret**.
+Go [here](https://apps.twitter.com) and create an app - this will give you a **Consumer key**, **Consumer secret**. 
+
+<p style = "text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;">
+Pro Tip: be sure to enter `http://127.0.0.1:1410`  <br/>
+as your `Callback URL`. If you get lost, there is a <br/>
+great tutorial on this process [here](https://mkearney.github.io/rtweet/articles/auth.html)
+</p>
 
 ## Scrape tweets
 
-We will use the `twitteR` package to scrape the tweets using the `searchTwitter` function.
+We will use the `rtweet` package to scrape the tweets using the `search_tweets` function.
+
+<p style = "text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;">
+My original tutorial used `twitteR`, but [Maëlle](https://twitter.com/ma_salmon)  <br/>
+kindly pointed out that it is on the way out and </br>
+`rtweet` is the better option, so it's been updated!
+</p>
 
 ```{r, eval = FALSE}
-library('twitteR')
-setup_twitter_oauth(consumer_key="PASTE_YOUR_CONSUMER_KEY_HERE", 
-                    consumer_secret= "PASTE_YOUR_CONSUMER_SECRET_HERE",
-                    access_token="PASTE_YOUR_ACCESS_TOKEN_HERE",
-                    access_secret="PASTE_YOUR_ACCESS_SECRET_HERE")
+library('rtweet')
 
-dat <- searchTwitter('#ENAR2017', n = 1e4, since = '2017-03-10')
+twitter_token <- create_token(
+  app = "PASTE_YOUR_APP_NAME_HERE",
+  consumer_key = "PASTE_YOUR_CONSUMER_KEY_HERE",
+  consumer_secret = "PASTE_YOUR_CONSUMER_SECRET_HERE")
+
+dat <- search_tweets('#ENAR2017', n = 1e4, since = '2017-03-10', token = twitter_token)
+```
+
+If you would like to practice with the ENAR tweet data, you can load mine in with the following code & continue with the example. 
+
+```{r, eval = FALSE}
+load(url("https://github.com/LFOD/real-blog/raw/master/data/enar_data.rda"))
 ```
 
 ## Wrangle tweets
 
 Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (`dplyr`, `purrr`😺, and `stringr`) as well as Julia & David's `tidytext`.
-<p style = "text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:14px;">
+
+<p style = "text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;">
 For more details on how to analyze text, <br/>
 check out their book [Text Mining with R](http://tidytextmining.com), <br/>
 the code below is modified from one of <br/>
@@ -105,17 +128,15 @@ library('tidytext')
 library('wordcloud')
 ```
 
-We are going to map the tweets into a lovely dataframe, get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.
-```{r, eval = FALSE}
-#map this into a dataframe
-tweets <- map_df(dat, as.data.frame)
+We are going to get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.
 
+```{r, eval = FALSE}
 #this will drop links & symbols
 drop_pattern <- "https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;|&lt;|&gt;|RT|https|ht"
 #this pattern is great for twitter, includes # and @ symbols
 unnest_pattern <- "([^A-Za-z_\\d#@']|'(?![A-Za-z_\\d#@]))"
 
-tidy_tweets <- tweets %>% 
+tweets <- dat %>% 
   filter( !grepl("#OTORRINO", text)) %>% # we have one tweeter with our hashtag that wasn't at our conference
   mutate(text = str_replace_all(text, drop_pattern, "")) %>%
   unnest_tokens(word, 
@@ -132,7 +153,7 @@ Now it's plotting time!
 ```{r, eval = FALSE}
 cols <- c(brewer.pal(8,"Dark2"), rep(brewer.pal(8,"Dark2"), each = 5) ) #make some colors for our plot
 
-tidy_tweets %>%
+tweets %>%
   count(word) %>%
   with(wordcloud(word, 
                  n,
@@ -153,7 +174,7 @@ For a word cloud similar to the one above, we can use the `wordcloud2` function.
 ```{r, message = FALSE, warning = FALSE}
 library('wordcloud2')
 
-tidy_tweets %>%
+tweets %>%
   count(word) %>%
   filter(n > 2) %>%
   wordcloud2(size = 3, minRotation = -pi/2, maxRotation = -pi/2)
@@ -163,7 +184,7 @@ tidy_tweets %>%
 Try the following to make an `R` shaped cloud using the `letterCloud` function!
 
 ```{r, eval = FALSE}
-tidy_tweets %>%
+tweets %>%
   count(word) %>%
   filter(n > 1) %>%
   letterCloud(size = 3, word = "R") 

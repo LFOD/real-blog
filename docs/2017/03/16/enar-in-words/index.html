@@ -16,9 +16,8 @@
 
 <meta name="twitter:title" content="ENAR in words"/>
 <meta name="twitter:description" content="I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and exceptional advancements in statistical methods.
-I loved it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.
-This certainly sums up my experience. Some of my favorites that make a big appearance:
- methods causal inference resources diversity data learning loving  Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data in R."/>
+&#34;By a small sample we may judge of the whole piece&#34; -- -- I loved it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.
+This certainly sums up my experience. Some of my favorites that make a big appearance:"/>
 
 
 
@@ -185,6 +184,9 @@ This certainly sums up my experience. Some of my favorites that make a big appea
 
 
 <p>I had an absolutely delightful time at <a href="http://www.enar.org">ENAR</a> this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and <strong>exceptional</strong> advancements in statistical methods.</p>
+<!-- My conference began with the [diversity workshop](https://www.enar.org/meetings/FosteringDiversity/) where we heard from my former adviser, [Dr. Melody Goodman](http://twitter.com/goodmanthebrain), about her journey to biostatistics & her work in community advocacy and health disparities, a career panel, and a graduate student panel. [Dr. Emma Benn](https://twitter.com/EKTBenn) pointed out that Miguel de Cervantes (author of Don Quixote) would have been a biostatistian in another life: -->
+<!-- <span style="color:#EB6864; font-size: 20pt">"By a small sample we may judge of the whole piece" -->
+<!-- </span> -->
 <p>I <strong>loved</strong> it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.</p>
 <p><img src="figures/unnamed-chunk-1-1.png" width="672" /></p>
 <p>This certainly sums up my experience. Some of my favorites that make a big appearance:</p>
@@ -200,23 +202,32 @@ This certainly sums up my experience. Some of my favorites that make a big appea
 <p>Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data in <code>R</code>.</p>
 <div id="get-twitter-credentials" class="section level2">
 <h2>Get twitter credentials</h2>
-<p>Go <a href="https://apps.twitter.com">here</a> and create an app - this will give you a <strong>Consumer key</strong>, <strong>Consumer secret</strong>, <strong>Access token</strong>, &amp; <strong>Access secret</strong>.</p>
+<p>Go <a href="https://apps.twitter.com">here</a> and create an app - this will give you a <strong>Consumer key</strong>, <strong>Consumer secret</strong>.</p>
+<p style="text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;">
+Pro Tip: be sure to enter <code>http://127.0.0.1:1410</code> <br/> as your <code>Callback URL</code>. If you get lost, there is a <br/> great tutorial on this process <a href="https://mkearney.github.io/rtweet/articles/auth.html">here</a>
+</p>
 </div>
 <div id="scrape-tweets" class="section level2">
 <h2>Scrape tweets</h2>
-<p>We will use the <code>twitteR</code> package to scrape the tweets using the <code>searchTwitter</code> function.</p>
-<pre class="r"><code>library(&#39;twitteR&#39;)
-setup_twitter_oauth(consumer_key=&quot;PASTE_YOUR_CONSUMER_KEY_HERE&quot;, 
-                    consumer_secret= &quot;PASTE_YOUR_CONSUMER_SECRET_HERE&quot;,
-                    access_token=&quot;PASTE_YOUR_ACCESS_TOKEN_HERE&quot;,
-                    access_secret=&quot;PASTE_YOUR_ACCESS_SECRET_HERE&quot;)
+<p>We will use the <code>rtweet</code> package to scrape the tweets using the <code>search_tweets</code> function.</p>
+<p style="text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;">
+My original tutorial used <code>twitteR</code>, but <a href="https://twitter.com/ma_salmon">Maëlle</a> <br/> kindly pointed out that it is on the way out and </br> <code>rtweet</code> is the better option, so it’s been updated!
+</p>
+<pre class="r"><code>library(&#39;rtweet&#39;)
 
-dat &lt;- searchTwitter(&#39;#ENAR2017&#39;, n = 1e4, since = &#39;2017-03-10&#39;)</code></pre>
+twitter_token &lt;- create_token(
+  app = &quot;PASTE_YOUR_APP_NAME_HERE&quot;,
+  consumer_key = &quot;PASTE_YOUR_CONSUMER_KEY_HERE&quot;,
+  consumer_secret = &quot;PASTE_YOUR_CONSUMER_SECRET_HERE&quot;)
+
+dat &lt;- search_tweets(&#39;#ENAR2017&#39;, n = 1e4, since = &#39;2017-03-10&#39;, token = twitter_token)</code></pre>
+<p>If you would like to practice with the ENAR tweet data, you can load mine in with the following code &amp; continue with the example.</p>
+<pre class="r"><code>load(url(&quot;https://github.com/LFOD/real-blog/raw/master/data/enar_data.rda&quot;))</code></pre>
 </div>
 <div id="wrangle-tweets" class="section level2">
 <h2>Wrangle tweets</h2>
-Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (<code>dplyr</code>, <code>purrr</code>😺, and <code>stringr</code>) as well as Julia &amp; David’s <code>tidytext</code>.
-<p style="text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:14px;">
+<p>Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (<code>dplyr</code>, <code>purrr</code>😺, and <code>stringr</code>) as well as Julia &amp; David’s <code>tidytext</code>.</p>
+<p style="text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;">
 For more details on how to analyze text, <br/> check out their book <a href="http://tidytextmining.com">Text Mining with R</a>, <br/> the code below is modified from one of <br/> their examples.
 </p>
 <p>We will then use the <code>wordcloud</code> package to display our results.</p>
@@ -226,16 +237,13 @@ library(&#39;purrr&#39;)
 library(&#39;stringr&#39;)
 library(&#39;tidytext&#39;)
 library(&#39;wordcloud&#39;)</code></pre>
-<p>We are going to map the tweets into a lovely dataframe, get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.</p>
-<pre class="r"><code>#map this into a dataframe
-tweets &lt;- map_df(dat, as.data.frame)
-
-#this will drop links &amp; symbols
+<p>We are going to get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.</p>
+<pre class="r"><code>#this will drop links &amp; symbols
 drop_pattern &lt;- &quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;|&amp;lt;|&amp;gt;|RT|https|ht&quot;
 #this pattern is great for twitter, includes # and @ symbols
 unnest_pattern &lt;- &quot;([^A-Za-z_\\d#@&#39;]|&#39;(?![A-Za-z_\\d#@]))&quot;
 
-tidy_tweets &lt;- tweets %&gt;% 
+tweets &lt;- dat %&gt;% 
   filter( !grepl(&quot;#OTORRINO&quot;, text)) %&gt;% # we have one tweeter with our hashtag that wasn&#39;t at our conference
   mutate(text = str_replace_all(text, drop_pattern, &quot;&quot;)) %&gt;%
   unnest_tokens(word, 
@@ -248,7 +256,7 @@ tidy_tweets &lt;- tweets %&gt;%
 <p>Now it’s plotting time!</p>
 <pre class="r"><code>cols &lt;- c(brewer.pal(8,&quot;Dark2&quot;), rep(brewer.pal(8,&quot;Dark2&quot;), each = 5) ) #make some colors for our plot
 
-tidy_tweets %&gt;%
+tweets %&gt;%
   count(word) %&gt;%
   with(wordcloud(word, 
                  n,
@@ -264,14 +272,14 @@ tidy_tweets %&gt;%
 <p>For a word cloud similar to the one above, we can use the <code>wordcloud2</code> function.</p>
 <pre class="r"><code>library(&#39;wordcloud2&#39;)
 
-tidy_tweets %&gt;%
+tweets %&gt;%
   count(word) %&gt;%
   filter(n &gt; 2) %&gt;%
   wordcloud2(size = 3, minRotation = -pi/2, maxRotation = -pi/2)</code></pre>
-<div id="htmlwidget-018a4080bf91d50c304d" style="width:672px;height:480px;" class="wordcloud2 html-widget"></div>
-<script type="application/json" data-for="htmlwidget-018a4080bf91d50c304d">{"x":{"word":["'get","#biostatistics","#causalinference","#datascience","#diversity","#drscarlettbellamy","#enar2017","#rlady","#rstats","45pm","abt","academic","accuracy","adaptive","adding","address","adherence","advice","afternoon","alzheimer's","amazing","analysis","assays","association","award","awards","ba","ballroom","basket","bayesian","bellamy","bingo","biomarkers","biostat","biostatistician","biostatisticians","biostatistics","books","bottom","browse","calc","career","chairs","change","chen","choice","cited","classic","clinical","colleage","colleague","coming","communities","comparative","competition","conference","confidence","congrats","constant","contribute","contributions","cool","create","cunanan","cv","dance","data","day","dc","decision","dependent","designs","diff","discusses","discussing","discussion","discussions","distinguised","diverse","diversify","doctoral","doug","dr","driven","east","editor","effectiveness","ehr","emrs","enar","engaging","enjoyed","error","estimation","evaluating","evidence","expect","expensive","experts","favorite","fay","fei","fellow","field","filling","final","flexible","folks","forward","found","framework","free","friends","fun","funding","future","gao","generation","github","giving","glickman","graduate","gurstelle","happening","hard","harnessing","health","hear","heterogeneous","history","hope","huge","hypothesis","impact","imposteriors","including","index","inference","info","innovative","inspiring","integrating","international","intl","introducing","involved","james","jiang","jon","journals","junior","keynote","kids","kristen","leaders","leading","learning","list","louise","love","loving","machine","marvin","materials","meeting","methodological","methods","microbial","mig","minute","missed","model","modeling","models","morn","morning","multi","multiple","nig","nonparametric","o'malley","office","official","opportunities","options","outcome","outstanding","page","paired","panel","paper","participants","party","patient","people","phd","pioneering","poe","policy","poster","power","powerhouse","ppl","precision","presentation","president","presidential","prez","program","promotion","puzzled","question","questions","rab","real","recommended","relevant","research","researcher","resources","rig","rna","robots","rocks","ryan","sample","scarlett","science","score","scraping","sd","seq","session","sessions","shaping","shiny","shout","shrinkage","similar","skills","smart","smartphon","start","statistics","stats","stoked","story","student","students","study","talk","talking","talks","tang","test","testing","time","tomorrow","trial","trials","tue","variety","voic","walked","wasteful","watching","web","wed","week","wiley","wilson","winners","wins","won","wonderful","workshop","world","wrapping","wrong","yue","zelen"],"freq":[3,18,12,3,49,4,400,3,8,7,10,6,3,6,10,11,3,5,5,4,3,10,3,3,9,5,7,3,3,6,11,5,3,9,4,21,21,38,4,4,3,11,5,3,4,3,3,3,9,3,4,6,3,5,6,5,3,6,6,4,6,11,4,3,3,5,43,11,8,4,3,5,3,7,6,6,3,3,7,3,9,3,5,4,3,4,5,3,4,3,6,3,3,3,7,4,6,5,5,4,6,4,3,3,3,4,6,3,4,6,4,3,4,3,4,16,7,18,7,14,3,3,4,3,8,4,6,11,4,4,4,3,4,3,3,34,3,6,3,6,5,5,11,3,3,3,4,5,4,4,5,17,10,3,6,5,12,50,3,5,10,7,3,34,12,3,10,5,3,3,3,9,6,8,3,4,4,3,4,3,4,3,4,6,10,3,6,4,3,9,22,3,3,8,10,8,3,3,7,29,4,3,4,4,9,11,6,4,10,7,3,3,3,6,4,6,4,21,6,37,7,5,3,3,3,5,11,4,3,7,4,6,32,10,3,7,7,4,4,3,10,3,4,9,4,7,3,34,9,3,29,6,10,3,5,5,12,7,5,4,3,3,4,3,5,7,7,3,5,4,4,14,3,4,3,68,6,5,6,5,3],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":1.35,"backgroundColor":"white","gridSize":0,"minRotation":-1.5707963267949,"maxRotation":-1.5707963267949,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-92e7900e1a54fdb6149d" style="width:672px;height:480px;" class="wordcloud2 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-92e7900e1a54fdb6149d">{"x":{"word":["'get","#biostat","#biostatistics","#causalinference","#datascience","#diversity","#drscarlettbellamy","#enar2017","#personalizedmedicine","#rlady","#rstats","45pm","abt","academic","accuracy","adaptive","adding","address","adherence","advice","afternoon","alzheimer's","amazing","analysis","assays","association","award","awards","ba","ballroom","basket","bayesian","bellamy","bingo","biomarkers","biostat","biostatistician","biostatisticians","biostatistics","books","bottom","brilliant","browse","calc","career","chairs","change","chen","choice","cited","classic","clinical","colleage","colleague","coming","communities","comparative","competition","conference","confidence","congrats","constant","contribute","contributions","cool","create","cunanan","cv","dance","data","day","dc","decision","dependent","designs","diff","discusses","discussing","discussion","discussions","distinguised","diverse","diversify","doctoral","doug","dr","driven","east","editor","effectiveness","ehr","emrs","enar","engaging","enjoyed","error","estimation","evaluating","evidence","expect","expensive","experts","favorite","fay","fei","fellow","field","filling","final","flexible","folks","forward","found","framework","free","friends","fun","funding","future","gao","generation","github","giving","glickman","graduate","gurstelle","happening","hard","harnessing","health","hear","heterogeneous","history","hope","huge","hypothesis","impact","imposteriors","including","index","inference","info","innovative","inspiring","integrating","international","intl","introducing","involved","james","jiang","jin","jon","journals","junior","keynote","kids","kristen","leaders","leading","learning","list","louise","love","loving","machine","marvin","materials","meeting","methodological","methods","microbial","mig","minute","missed","model","modeling","models","morn","morning","multi","multiple","nig","nonparametric","o'malley","office","official","opportunities","options","outcome","outstanding","page","paired","panel","paper","participants","party","patient","people","phd","pioneering","poe","policy","poster","power","powerhouse","ppl","precision","presentation","president","presidential","prez","program","promotion","puzzled","question","questions","quick","rab","real","recommended","relevant","research","researcher","resources","rig","rna","robots","rocks","ryan","sample","scarlett","science","score","scraping","sd","seq","session","sessions","shaping","shiny","shout","shrinkage","similar","single","skills","smart","smartphon","start","statistics","stats","stoked","story","student","students","study","talk","talking","talks","tang","test","testing","time","tomorrow","trial","trials","tue","tutorial","twitter","variety","voic","walked","wang","wasteful","watching","web","wed","week","wiley","wilson","winners","wins","won","wonderful","workshop","world","wrapping","wrong","yue","zelen"],"freq":[3,3,18,12,3,54,4,409,3,3,8,7,10,6,3,6,10,11,3,6,6,4,3,10,3,3,9,5,7,3,3,6,11,5,3,9,4,21,21,38,4,3,4,3,11,5,3,4,3,3,3,9,3,4,7,3,5,6,5,3,6,6,4,6,11,4,3,3,5,43,11,8,4,3,5,3,7,6,6,3,3,7,3,9,3,5,4,3,4,5,3,4,3,6,3,3,3,7,4,6,5,5,4,6,4,3,3,3,4,6,3,4,6,4,3,4,3,4,16,7,18,7,14,3,4,4,3,8,4,6,11,4,4,4,3,4,3,3,34,4,6,3,6,5,5,11,3,3,3,4,5,3,4,4,5,17,10,3,6,5,12,50,3,5,10,7,3,34,12,3,10,5,3,3,3,9,6,9,3,5,4,3,5,3,4,3,4,6,10,3,6,4,3,10,22,3,3,8,10,9,3,3,7,29,4,3,4,4,9,11,6,4,10,7,3,3,3,6,6,4,6,4,21,6,37,7,5,3,3,3,5,11,4,3,11,4,6,32,10,3,7,7,4,4,3,3,10,3,4,9,4,7,3,36,9,3,29,6,10,3,5,5,12,7,5,4,3,5,8,3,4,3,3,5,7,7,3,5,4,4,14,3,4,3,68,6,5,6,5,3],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":1.32029339853301,"backgroundColor":"white","gridSize":0,"minRotation":-1.5707963267949,"maxRotation":-1.5707963267949,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":[]}</script>
 <p>Try the following to make an <code>R</code> shaped cloud using the <code>letterCloud</code> function!</p>
-<pre class="r"><code>tidy_tweets %&gt;%
+<pre class="r"><code>tweets %&gt;%
   count(word) %&gt;%
   filter(n &gt; 1) %&gt;%
   letterCloud(size = 3, word = &quot;R&quot;) </code></pre>
