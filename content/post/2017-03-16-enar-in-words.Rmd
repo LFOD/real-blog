@@ -10,8 +10,9 @@ tags:
 - ENAR
 - tidytext
 - conferences
+- R code
 title: "ENAR in words"
-excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science & statistics, diversity, and great advancements in statistical methods. Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data."
+excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science & statistics, diversity, and great advancements in statistical methods. Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data in R."
 ---
 
 I had an absolutely delightful time at [ENAR](http://www.enar.org) this year. Lots of talk about the intersection between data science & statistics, diversity, and **exceptional** advancements in statistical methods. 
@@ -41,7 +42,7 @@ tidy_tweets <- tweets %>%
   filter( !grepl("#OTORRINO", text)) %>% # we have one tweeter with our hashtag that wasn't at our conference
   mutate(text = str_replace_all(text, drop_pattern, "")) %>%
   unnest_tokens(word, text, token = "regex", pattern = unnest_pattern) %>%
-  filter(!word %in% stop_words$word,
+  filter(!word %in% c(stop_words$word,"44pm", "30am"),
          str_detect(word, "[a-z]"),
          !grepl("@", word )) 
 
@@ -53,7 +54,7 @@ tidy_tweets %>%
   with(wordcloud(word, n,min.freq=3, random.order =FALSE,colors=cols))
 ```
 
-Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data.
+Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data in `R`.
 
 ## Get twitter credentials
 
@@ -137,14 +138,31 @@ You did it! Easy as [π](https://potpieshop.files.wordpress.com/2016/03/pi-day.j
 
 For giggles, let's try another word cloud package [`wordcloud2`](https://github.com/lchiffon/wordcloud2). This one is interactive (but not on CRAN, you can install using `devtools::install_github("lchiffon/wordcloud2")`).
  
-
-
-```{r, message = FALSE, warning = FALSE, fig.align='center'}
+For a word cloud similar to the one above, we can use the `wordcloud2` function. 
+```{r, mval = FALSE}
 library('wordcloud2')
 
 tidy_tweets %>%
   count(word) %>%
   filter(n > 2) %>%
   wordcloud2(size = 3, minRotation = -pi/2, maxRotation = -pi/2)
+
+```
+
+
+```{r, echo = FALSE}
+library('wordcloud2')
+```
+
+
+Instead I am going to make an `R` shaped cloud using `letterCloud`!
+
+
+```{r, message = FALSE, warning = FALSE, fig.align='center'}
+
+tidy_tweets %>%
+  count(word) %>%
+  filter(n > 1) %>%
+  letterCloud(size = 3, word = "R") 
 ```
 
