@@ -10,8 +10,10 @@ tags:
 - conference
 - big data
 title: "NSF BIGDATA and BDHubs Joint PI Meeting: a student's perspective"
-excerpt: "This summer I was funded by the South Big Data Hub's DataStart program to intern at a local startup. Through this opportunity, I met the co-executive director Dr. Lea Shanely, who invited me to attend Hub’s annual Principal Investigator (PI) meeting if I agreed to blog about it (easy sell!)."
+excerpt: "This summer I was funded by the South Big Data Hub's DataStart program to intern at a local startup. Through this opportunity, I met Dr. Lea Shanely, who invited me to attend Hub’s annual Principal Investigator meeting if I agreed to blog about it (easy sell!)."
 ---
+
+*This post was originally published on the South Big Data Hub's blog, [here](https://southbdhub.wordpress.com/2017/04/03/nsf-bigdata-and-bdhubs-joint-pi-meeting-a-students-perspective/)*.
 
 
 This summer I was funded by the [South Big Data Hub's](http://www.southbdhub.org) DataStart program to intern at a local startup. Through this opportunity, I met the co-executive director [Dr. Lea Shanely](https://twitter.com/Lea_Shanley), who invited me to attend Hub’s annual Principal Investigator (PI) meeting if I agreed to blog about it (easy sell!). The goal of the 2017 Joint PI Meeting was to gather PIs who are funded through the NSF’s BIGDATA research program and  Big Data Hubs and Spokes programs, along with industry and government invitees, to discuss current research, identify challenges, and examine promising opportunities and future directions of data research and education.
