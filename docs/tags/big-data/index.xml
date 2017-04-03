@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Live Free or Dichotomize</title>
+    <link>/tags/big-data/index.xml</link>
+    <description>Recent content on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="/tags/big-data/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>NSF BIGDATA and BDHubs Joint PI Meeting: a student&#39;s perspective</title>
+      <link>/2017/03/17/nsf-bigdata-and-bdhubs-joint-pi-meeting-a-students-perspective/</link>
+      <pubDate>Fri, 17 Mar 2017 11:34:19 -0400</pubDate>
+      
+      <guid>/2017/03/17/nsf-bigdata-and-bdhubs-joint-pi-meeting-a-students-perspective/</guid>
+      <description>
+
+&lt;p&gt;This summer I was funded by the &lt;a href=&#34;http://www.southbdhub.org&#34;&gt;South Big Data Hub&amp;rsquo;s&lt;/a&gt; DataStart program to intern at a local startup. Through this opportunity, I met the co-executive director &lt;a href=&#34;https://twitter.com/Lea_Shanley&#34;&gt;Dr. Lea Shanely&lt;/a&gt;, who invited me to attend Hub’s annual Principal Investigator (PI) meeting if I agreed to blog about it (easy sell!). The goal of the 2017 Joint PI Meeting was to gather PIs who are funded through the NSF’s BIGDATA research program and  Big Data Hubs and Spokes programs, along with industry and government invitees, to discuss current research, identify challenges, and examine promising opportunities and future directions of data research and education.&lt;/p&gt;
+
+&lt;h2 id=&#34;by-the-numbers&#34;&gt;By the numbers&lt;/h2&gt;
+
+&lt;p&gt;The meeting was comprised of:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;More than 150 PIs&lt;/li&gt;
+&lt;li&gt;Representatives of 84 universities&lt;/li&gt;
+&lt;li&gt;16 students&lt;/li&gt;
+&lt;li&gt;5 postdocs&lt;/li&gt;
+&lt;li&gt;9 government agencies&lt;/li&gt;
+&lt;li&gt;3 chief data officers&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;kick off the morning with some conf stats: 150+ PIs 👩🏾
+⚕️👩
+🏫 84 universities 🏫 16 students 👩🏾
+💻👩🏻
+🔬 9 government agencies 🇺🇸 &lt;a href=&#34;https://twitter.com/NSF&#34;&gt;@NSF&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt;&lt;/p&gt;&amp;mdash; Lucy (@LucyStats) &lt;a href=&#34;https://twitter.com/LucyStats/status/842354591916298240&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
+
+&lt;p&gt;A few themes that really jumped out were:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&amp;ldquo;Analytics in motion&amp;rdquo;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Access to data&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Diversity&lt;/li&gt;
+&lt;li&gt;Community-based participatory research&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;Collaboration&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;analysis-in-motion&#34;&gt;Analysis in motion&lt;/h3&gt;
+
+&lt;p&gt;New York City Chief Analytics Officer &lt;a href=&#34;https://twitter.com/AMashariki&#34;&gt;Amen Ra Mashariki&lt;/a&gt; from the &lt;a href=&#34;http://www1.nyc.gov/site/analytics/index.page&#34;&gt;Mayor’s Office of Data Analytics&lt;/a&gt; (MODA) discussed the nessessity of &lt;em&gt;analytics in motion&lt;/em&gt;, and the concept was reiterated throughout the remaining panels and discussions. He contrasted &lt;em&gt;analytics in motion&lt;/em&gt; with &lt;em&gt;restful analytics&lt;/em&gt; - or using analytics to anticipate a crisis compared to waiting for a crisis before running analytics. This is a topic I have heard discussed at great length in the statistics community, specifically when discussing what we can learn from data journalists.  For example &lt;a href=&#34;https://twitter.com/andrewflowers&#34;&gt;Andrew Flowers&lt;/a&gt;, former writer at &lt;a href=&#34;https://fivethirtyeight.com&#34;&gt;FiveThirtyEight&lt;/a&gt;, recently said  at RStudio&amp;rsquo;s annual conference that a key principle of data journalism is the deadline; therefore, be &lt;em&gt;fast&lt;/em&gt; or be left behind.&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Amazing keynote by &lt;a href=&#34;https://twitter.com/andrewflowers&#34;&gt;@andrewflowers&lt;/a&gt; on data storytelling at &lt;a href=&#34;https://twitter.com/hashtag/rstudioconf?src=hash&#34;&gt;#rstudioconf&lt;/a&gt; &lt;a href=&#34;https://t.co/G5Zbo0iaz5&#34;&gt;pic.twitter.com/G5Zbo0iaz5&lt;/a&gt;&lt;/p&gt;&amp;mdash; Julia Silge (@juliasilge) &lt;a href=&#34;https://twitter.com/juliasilge/status/820273572509786112&#34;&gt;January 14, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;I think this is a really nuanced topic that requires much more discussion. In theory, being fast is a great aspiration and I am 100 percent on board with the idea of analytics in motion, but certainly not at the expense of accuracy. Teams at organizations such as &lt;a href=&#34;http://www1.nyc.gov/site/analytics/index.page&#34;&gt;MODA&lt;/a&gt; and &lt;a href=&#34;https://fivethirtyeight.com&#34;&gt;FiveThirtyEight&lt;/a&gt; do a great job of striking this balance.&lt;/p&gt;
+
+&lt;h3 id=&#34;access-to-data&#34;&gt;Access to Data&lt;/h3&gt;
+
+&lt;p&gt;There was much discussion about &lt;em&gt;sharing data&lt;/em&gt; and finding ways to better incentivize data sharing.&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Still lack of incentives to share data. &lt;a href=&#34;https://twitter.com/NSF&#34;&gt;@NSF&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/bigdata?src=hash&#34;&gt;#bigdata&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt; PI meeting. &lt;a href=&#34;https://t.co/iCwJnvBPFS&#34;&gt;pic.twitter.com/iCwJnvBPFS&lt;/a&gt;&lt;/p&gt;&amp;mdash; Gari Clifford (@GariClifford) &lt;a href=&#34;https://twitter.com/GariClifford/status/842378153385447424&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;In a Federal Big Data panel moderated by our co-executive director Lea Shanely, Steve Dennis from the Department of Homeland Security stated that the future is not about owning all the data, but having access to it. Dan Morgan of the U.S. Department of Transportation made a call to put publically available data to work.&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Dan Morgan mentions National &lt;a href=&#34;https://twitter.com/hashtag/DataScience?src=hash&#34;&gt;#DataScience&lt;/a&gt; Challenge collaboration with &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt;: &amp;quot;Let&amp;#39;s put all the data available to work!&amp;quot; 🚗🚎🚲&lt;a href=&#34;https://twitter.com/hashtag/VisionZero?src=hash&#34;&gt;#VisionZero&lt;/a&gt;&lt;/p&gt;&amp;mdash; Meredith Lee (@mmlee) &lt;a href=&#34;https://twitter.com/mmlee/status/842385588242272257&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;And there was a push to replace &lt;em&gt;publish or perish&lt;/em&gt; with something more data-sharing oriented.&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Need a replacement for publish or perish-share&amp;hellip; or shrivel (open to suggestions 😂) &lt;a href=&#34;https://twitter.com/hashtag/OpenData?src=hash&#34;&gt;#OpenData&lt;/a&gt; &lt;a href=&#34;https://twitter.com/NSF&#34;&gt;@NSF&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/BIGDATA?src=hash&#34;&gt;#BIGDATA&lt;/a&gt;/&lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt; &lt;a href=&#34;https://t.co/nssq4Qqcgg&#34;&gt;pic.twitter.com/nssq4Qqcgg&lt;/a&gt;&lt;/p&gt;&amp;mdash; Lucy (@LucyStats) &lt;a href=&#34;https://twitter.com/LucyStats/status/842397613043376135&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;diversity&#34;&gt;Diversity&lt;/h3&gt;
+
+&lt;p&gt;An attendee commented that the meeting comprised a very diverse group of leaders, both in disciplines and backgrounds. This was &lt;em&gt;extremely&lt;/em&gt; refreshing. In an age where all white male panels are still very common, this was a breath of fresh air. There were nine panels, all comprised of a diverse set of leaders. Diversity in discipline was also refreshing. I sat at lunch with biologists, bioinformaticians, statisticians, and engineers. In a panel of the Hub Executive Directors, &lt;a href=&#34;https://twitter.com/mmlee&#34;&gt;Meredith Lee&lt;/a&gt; stated that diversity makes us stronger and diversity makes us better - I agree!&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Themes from &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt; executive director panel: diversity makes us better • include students • build relationships with partners &lt;a href=&#34;https://twitter.com/NSF&#34;&gt;@NSF&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/BIGDATA?src=hash&#34;&gt;#BIGDATA&lt;/a&gt;&lt;/p&gt;&amp;mdash; Lucy (@LucyStats) &lt;a href=&#34;https://twitter.com/LucyStats/status/842718696586072064&#34;&gt;March 17, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;community-based-participatory-research&#34;&gt;Community-based participatory research&lt;/h3&gt;
+
+&lt;p&gt;Community-based participatory research was my area of interest for my biostatistics &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4504145/pdf/fpubh-03-00179.pdf&#34;&gt;masters degree&lt;/a&gt;, so it is very near and dear to my heart. There was a lot of emphasis on community engagement and community buy-in. The structure of the Big Data Hubs - with regional and local hubs and spokes - lends itself well to community engagement. I think this is one of the &lt;em&gt;most valuable&lt;/em&gt; aspects of this program. I&amp;rsquo;d like to briefly highlight one project that is particularly great at this.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://twitter.com/GariClifford&#34;&gt;Gari Clifford&lt;/a&gt; leads a study titled &lt;em&gt;Large-Scale Medical Informatics for Patient Care Coordination and Engagement&lt;/em&gt;. His team looks at outcomes, such as cardiovascular disease, using &amp;ldquo;data in the wild&amp;rdquo; (I love this phrase📈🌾) such as personal fitness devices, mobile phone usage, local weather, pollution or even fast food restaurant maps. A key aim of this study is to &amp;ldquo;provide educational outreach and community participation, particularly in minority populations, to design a system which benefits users in both the short term (through employment and education) and the long term (through increased engagement and trust)&amp;rdquo;&lt;a href=&#34;https://www.nsf.gov/awardsearch/showAward?AWD_ID=1636933&amp;amp;HistoricalAwards=false&#34;&gt;1&lt;/a&gt;. This translates into having members of the community actively engaged in each stage of the study process, from app design to analysis. Community members are active members on the research team. Additionally, the group teaches coding and app development to members of the community.&lt;/p&gt;
+
+&lt;h3 id=&#34;collaboration&#34;&gt;Collaboration&lt;/h3&gt;
+
+&lt;p&gt;Community building and collaboration was a &lt;strong&gt;huge&lt;/strong&gt; theme.&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;New: National Science Foundation call for Spokes Proposals in collaboration w &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt;! ⚙️⚙️⚙️💡📈&lt;a href=&#34;https://twitter.com/hashtag/partnerships?src=hash&#34;&gt;#partnerships&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/datascience?src=hash&#34;&gt;#datascience&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/civictech?src=hash&#34;&gt;#civictech&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/impact?src=hash&#34;&gt;#impact&lt;/a&gt; &lt;a href=&#34;https://t.co/WvVMic0FWl&#34;&gt;https://t.co/WvVMic0FWl&lt;/a&gt;&lt;/p&gt;&amp;mdash; Meredith Lee (@mmlee) &lt;a href=&#34;https://twitter.com/mmlee/status/842450806225948672&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Discussing building a brighter future by leveraging BigData collaborations b/w industry + academia + govt agencies &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt; &lt;a href=&#34;https://twitter.com/SouthBigDataHub&#34;&gt;@SouthBigDataHub&lt;/a&gt; &lt;a href=&#34;https://t.co/PCbzjyvyKj&#34;&gt;pic.twitter.com/PCbzjyvyKj&lt;/a&gt;&lt;/p&gt;&amp;mdash; Arjun Sawhney (@ArjunSawhneyI) &lt;a href=&#34;https://twitter.com/ArjunSawhneyI/status/842442197580582917&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;Jim Kurose &lt;a href=&#34;https://twitter.com/NSF&#34;&gt;@NSF&lt;/a&gt; thanks &lt;a href=&#34;https://twitter.com/hashtag/bigdata?src=hash&#34;&gt;#bigdata&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/BDHubs?src=hash&#34;&gt;#BDHubs&lt;/a&gt; for pioneering a new way of building community. 👏🏽&lt;a href=&#34;https://twitter.com/hashtag/DataScience?src=hash&#34;&gt;#DataScience&lt;/a&gt; &lt;a href=&#34;https://twitter.com/hashtag/partnerships?src=hash&#34;&gt;#partnerships&lt;/a&gt; &lt;a href=&#34;https://t.co/50qpa1CjF0&#34;&gt;pic.twitter.com/50qpa1CjF0&lt;/a&gt;&lt;/p&gt;&amp;mdash; West Big Data Hub (@westbigdatahub) &lt;a href=&#34;https://twitter.com/westbigdatahub/status/842431436657430528&#34;&gt;March 16, 2017&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;All in all, this was such an awesome opportunity. I believe the future is quite bright for the Big Data movement, and am very grateful to NSF for funding these amazing programs.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
