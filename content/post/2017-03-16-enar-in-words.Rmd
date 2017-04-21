@@ -27,7 +27,7 @@ I **loved** it, but let's see what others were saying! Check out this word cloud
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 library('rtweet')
-load("../../data/enar_data.rda")
+load("../../static/data/enar_data.rda")
 
 #load packages
 library('dplyr')
@@ -103,7 +103,7 @@ dat <- search_tweets('#ENAR2017', n = 1e4, since = '2017-03-10', token = twitter
 If you would like to practice with the ENAR tweet data, you can load mine in with the following code & continue with the example. 
 
 ```{r, eval = FALSE}
-load(url("https://github.com/LFOD/real-blog/raw/master/data/enar_data.rda"))
+load(url("https://github.com/LFOD/real-blog/raw/master/static/data/enar_data.rda"))
 ```
 
 ## Wrangle tweets

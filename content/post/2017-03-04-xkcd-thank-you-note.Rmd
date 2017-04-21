@@ -30,7 +30,7 @@ I've been looking for a way to incorporate xkcd in my [#thankyou](http://livefre
 ```{r, message = FALSE, warning = FALSE, echo = FALSE}
 library('ggplot2')
 library('xkcd')
-load("../../data/xkcd_data.rda")
+load("../../static/data/xkcd_data.rda")
 ```
 
 
@@ -85,7 +85,7 @@ page 4 of the vignette.
 library('ggplot2')
 library('xkcd')
 
-load(url("https://github.com/LFOD/real-blog/raw/master/data/xkcd_data.rda"))
+load(url("https://github.com/LFOD/real-blog/raw/master/static/data/xkcd_data.rda"))
 
 #learn more about the xkcd package
 vignette("xkcd-intro")

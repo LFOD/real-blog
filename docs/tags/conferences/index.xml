@@ -57,7 +57,7 @@ twitter_token &amp;lt;- create_token(
 
 dat &amp;lt;- search_tweets(&amp;#39;#ENAR2017&amp;#39;, n = 1e4, since = &amp;#39;2017-03-10&amp;#39;, token = twitter_token)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If you would like to practice with the ENAR tweet data, you can load mine in with the following code &amp;amp; continue with the example.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/data/enar_data.rda&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/static/data/enar_data.rda&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;wrangle-tweets&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Wrangle tweets&lt;/h2&gt;

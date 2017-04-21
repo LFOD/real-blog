@@ -42,7 +42,7 @@ page 4 of the vignette.
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;ggplot2&amp;#39;)
 library(&amp;#39;xkcd&amp;#39;)
 
-load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/data/xkcd_data.rda&amp;quot;))
+load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/static/data/xkcd_data.rda&amp;quot;))
 
 #learn more about the xkcd package
 vignette(&amp;quot;xkcd-intro&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
