@@ -13,21 +13,21 @@
 
 
 
-<meta name="twitter:title" content="R Code"/>
+<meta name="twitter:title" content="Tag1"/>
 <meta name="twitter:description" content="A statistics blog from two goofy Phd students."/>
 
 
 
-  	<meta property="og:title" content=" R Code &middot;  Live Free or Dichotomize" />
+  	<meta property="og:title" content=" Tag1 &middot;  Live Free or Dichotomize" />
   	<meta property="og:site_name" content="Live Free or Dichotomize" />
-  	<meta property="og:url" content="/tags/r-code/" />
+  	<meta property="og:url" content="/tags/tag1/" />
 
     
     <meta property="og:type" content="website" />
     
 
     <title>
-       R Code &middot;  Live Free or Dichotomize
+       Tag1 &middot;  Live Free or Dichotomize
     </title>
 
     <meta name="description" content="A statistics blog from two goofy Phd students." />
@@ -47,12 +47,12 @@
           <link href="../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
       
       
-        <link href="../../tags/r-code/index.xml" rel="alternate" type="application/rss+xml" title="R Code &middot; Live Free or Dichotomize" />
+        <link href="../../tags/tag1/index.xml" rel="alternate" type="application/rss+xml" title="Tag1 &middot; Live Free or Dichotomize" />
       
     
     <meta name="generator" content="Hugo 0.17" />
 
-    <link rel="canonical" href="../../tags/r-code/" />
+    <link rel="canonical" href="../../tags/tag1/" />
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -101,7 +101,7 @@
     </ul>
     
     
-    <a class="subscribe-button icon-feed" href="../../tags/r-code/index.xml">Subscribe</a>
+    <a class="subscribe-button icon-feed" href="../../tags/tag1/index.xml">Subscribe</a>
     
 </div>
 <span class="nav-cover"></span>
@@ -124,7 +124,7 @@
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">R Code</h1>
+            <h1 class="page-title">Tag1</h1>
             <h2 class="page-description">
                 
             </h2>
@@ -152,9 +152,8 @@
     </header>
     <section class="post-excerpt">
         
-            
-                <p>Today I gave the department seminar on a piece of one of my dissertation topics. My brilliant classmate Ryan has created an app called &#34;Seminar Survival&#34; that allows audience members to &#34;check in&#34; and &#34;check out&#34; throughout the seminar, indicating whether they are following along. Below are the results from my talk. <a class="read-more" href="../../2017/05/03/seminar-survival/">&raquo;</a></p>
-            
+            <p>Today I gave the department seminar on a piece of one of my dissertation topics. My brilliant classmate Ryan has created an app called “Seminar Survival” that allows audience members to “check in” and “check out” throughout the seminar, indicating whether they are following along. Below are the results from my talk.
+require(&#39;dplyr&#39;) library(&#39;ggplot2&#39;) dat &lt;- readr::read_csv(&quot;../../data/seminar_data.csv&quot;) dat %&gt;% mutate(awake = ifelse(awake == 0, -1, awake), attendance = cumsum(awake)) %&gt;% select(time, awake, attendance) %&gt;% ggplot(aes(x = time, y = attendance)) + geom_step() + ylab(&quot;cognitative attendance&quot;) + scale_x_continuous(breaks=c(18. <a class="read-more" href="../../2017/05/03/seminar-survival/">&raquo;</a></p>
         
     </section>
     <footer class="post-meta">
@@ -163,77 +162,13 @@
             
         on
             
-                <a href="../../tags/survival/">#survival</a>,
+                <a href="../../tags/tag1/">#tag1</a>,
             
-                <a href="../../tags/r-code/">#r code</a>,
+                <a href="../../tags/tag2/">#tag2</a>,
             
         
         <time class="post-date" datetime="2017-05-03T17:37:37-05:00">
             3 May 2017
-        </time>
-    </footer>
-</article>
-
-	
-	   
-<article class="post post">
-    <header class="post-header">
-        <h2 class="post-title"><a href="../../2017/03/16/enar-in-words/">ENAR in words</a></h2>
-    </header>
-    <section class="post-excerpt">
-        
-            
-                <p>I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and great advancements in statistical methods. Since there was quite a bit of twitter action, I thought I&#39;d do a quick tutorial in scraping twitter data in R. <a class="read-more" href="../../2017/03/16/enar-in-words/">&raquo;</a></p>
-            
-        
-    </section>
-    <footer class="post-meta">
-              
-                 Lucy D&#39;Agostino McGowan
-            
-        on
-            
-                <a href="../../tags/enar/">#ENAR</a>,
-            
-                <a href="../../tags/tidytext/">#tidytext</a>,
-            
-                <a href="../../tags/conferences/">#conferences</a>,
-            
-                <a href="../../tags/r-code/">#R code</a>,
-            
-        
-        <time class="post-date" datetime="2017-03-16T14:56:30-04:00">
-            16 Mar 2017
-        </time>
-    </footer>
-</article>
-
-	
-	   
-<article class="post post">
-    <header class="post-header">
-        <h2 class="post-title"><a href="../../2017/02/09/the-prevalence-of-drunk-podcasts/">The prevalence of drunk podcasts</a></h2>
-    </header>
-    <section class="post-excerpt">
-        
-            
-                <p>For today&#39;s rendition of I am curious about everything, in Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I&#39;d dig into it. <a class="read-more" href="../../2017/02/09/the-prevalence-of-drunk-podcasts/">&raquo;</a></p>
-            
-        
-    </section>
-    <footer class="post-meta">
-              
-                 Lucy D&#39;Agostino McGowan
-            
-        on
-            
-                <a href="../../tags/nssd/">#NSSD</a>,
-            
-                <a href="../../tags/r-code/">#R code</a>,
-            
-        
-        <time class="post-date" datetime="2017-02-09T12:56:22-06:00">
-            9 Feb 2017
         </time>
     </footer>
 </article>

@@ -1,0 +1,42 @@
+---
+author: "Lucy D'Agostino McGowan"
+comments: true
+date: 2017-05-03T17:37:37-05:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- survival
+- r code
+title: "Seminar Survival"
+excerpt: Today I gave the department seminar on a piece of one of my dissertation topics. My brilliant classmate Ryan has created an app called "Seminar Survival" that allows audience members to "check in" and "check out" throughout the seminar, indicating whether they are following along. Below are the results from my talk.
+---
+
+Today I gave the department seminar on a piece of one of my [dissertation topics](https://github.com/LucyMcGowan/talks/blob/master/2017-05-03_department-seminar/2017-05-03_seminar.key). My brilliant classmate Ryan has created an [app](https://ryan-j-apps.shinyapps.io/seminarSurvival/) called "Seminar Survival" that allows audience members to "check in" and "check out" throughout the seminar, indicating whether they are following along. Below are the results from my talk.
+
+```{r, message = FALSE, warning = FALSE}
+require('dplyr')
+library('ggplot2')
+```
+
+```{r}
+dat <- readr::read_csv("../../data/seminar_data.csv")
+
+dat %>%
+  mutate(awake = ifelse(awake == 0, -1, awake),
+         attendance = cumsum(awake)) %>%
+         select(time, awake, attendance) %>%
+  ggplot(aes(x = time, y = attendance)) + 
+  geom_step() + 
+  ylab("cognitative attendance") + 
+  scale_x_continuous(breaks=c(18.5,18.75,19,19.25,19.5),
+                     labels = c("1:30 pm","1:45 pm","2:00 pm","2:15 pm","2:30 pm")) +
+  annotate("text", x = 18.8, y = 6, label = "lengthy derivation", color = "#EB6864") + 
+  geom_segment(x = 18.82, y = 6.2, xend = 18.85, yend = 6.8, arrow = arrow(length = unit(0.1,"cm")), color ='#EB6864' )
+
+```
+
+We had a real dip right around the 1:52 mark. I had a rather lengthy derivation there that clearly lost the audience's interest, perhaps more emojis were necessary `r emo::ji('sunflower')`.
+
+Interested in contributing to Seminar Survival? [Do it!](https://github.com/jarretrt/seminarSurvival)
