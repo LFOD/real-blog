@@ -13,7 +13,7 @@ title: "Seminar Survival"
 excerpt: Today I gave the department seminar on a piece of one of my dissertation topics. My brilliant classmate Ryan has created an app called "Seminar Survival" that allows audience members to "check in" and "check out" throughout the seminar, indicating whether they are following along. Below are the results from my talk.
 ---
 
-Today I gave the department seminar on a piece of one of my [dissertation topics](https://github.com/LucyMcGowan/talks/blob/master/2017-05-03_department-seminar/2017-05-03_seminar.key). My brilliant classmate Ryan has created an [app](https://ryan-j-apps.shinyapps.io/seminarSurvival/) called "Seminar Survival" that allows audience members to "check in" and "check out" throughout the seminar, indicating whether they are following along. Below are the results from my talk.
+Today I gave the department seminar on a piece of one of my [dissertation topics](https://www.slideshare.net/LucyDAgostinoMcGowan/clarifying-and-contextualizing-sensitivity-to-unmeasured-confounders-tipping-point-analyses). My brilliant classmate Ryan has created an [app](https://ryan-j-apps.shinyapps.io/seminarSurvival/) called "Seminar Survival" that allows audience members to "check in" and "check out" throughout the seminar, indicating whether they are following along. Below are the results from my talk.
 
 ```{r, message = FALSE, warning = FALSE}
 require('dplyr')

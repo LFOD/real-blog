@@ -18,7 +18,7 @@
 
 /BLOGDOWN-BODY-BEFORE --&gt;
 
-&lt;p&gt;Today I gave the department seminar on a piece of one of my &lt;a href=&#34;https://github.com/LucyMcGowan/talks/blob/master/2017-05-03_department-seminar/2017-05-03_seminar.key&#34;&gt;dissertation topics&lt;/a&gt;. My brilliant classmate Ryan has created an &lt;a href=&#34;https://ryan-j-apps.shinyapps.io/seminarSurvival/&#34;&gt;app&lt;/a&gt; called “Seminar Survival” that allows audience members to “check in” and “check out” throughout the seminar, indicating whether they are following along. Below are the results from my talk.&lt;/p&gt;
+&lt;p&gt;Today I gave the department seminar on a piece of one of my &lt;a href=&#34;https://www.slideshare.net/LucyDAgostinoMcGowan/clarifying-and-contextualizing-sensitivity-to-unmeasured-confounders-tipping-point-analyses&#34;&gt;dissertation topics&lt;/a&gt;. My brilliant classmate Ryan has created an &lt;a href=&#34;https://ryan-j-apps.shinyapps.io/seminarSurvival/&#34;&gt;app&lt;/a&gt; called “Seminar Survival” that allows audience members to “check in” and “check out” throughout the seminar, indicating whether they are following along. Below are the results from my talk.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(&amp;#39;dplyr&amp;#39;)
 library(&amp;#39;ggplot2&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dat &amp;lt;- readr::read_csv(&amp;quot;../../data/seminar_data.csv&amp;quot;)
