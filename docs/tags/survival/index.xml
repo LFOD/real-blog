@@ -29,7 +29,7 @@ dat %&amp;gt;%
          select(time, awake, attendance) %&amp;gt;%
   ggplot(aes(x = time, y = attendance)) + 
   geom_step() + 
-  ylab(&amp;quot;cognitative attendance&amp;quot;) + 
+  ylab(&amp;quot;cognitive attendance&amp;quot;) + 
   scale_x_continuous(breaks=c(18.5,18.75,19,19.25,19.5),
                      labels = c(&amp;quot;1:30 pm&amp;quot;,&amp;quot;1:45 pm&amp;quot;,&amp;quot;2:00 pm&amp;quot;,&amp;quot;2:15 pm&amp;quot;,&amp;quot;2:30 pm&amp;quot;)) +
   annotate(&amp;quot;text&amp;quot;, x = 18.8, y = 6, label = &amp;quot;lengthy derivation&amp;quot;, color = &amp;quot;#EB6864&amp;quot;) + 

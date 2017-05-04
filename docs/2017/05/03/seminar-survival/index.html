@@ -16,7 +16,7 @@
 
 <meta name="twitter:title" content="Seminar Survival"/>
 <meta name="twitter:description" content="Today I gave the department seminar on a piece of one of my dissertation topics. My brilliant classmate Ryan has created an app called “Seminar Survival” that allows audience members to “check in” and “check out” throughout the seminar, indicating whether they are following along. Below are the results from my talk.
-require(&#39;dplyr&#39;) library(&#39;ggplot2&#39;) dat &lt;- readr::read_csv(&quot;../../data/seminar_data.csv&quot;) dat %&gt;% mutate(awake = ifelse(awake == 0, -1, awake), attendance = cumsum(awake)) %&gt;% select(time, awake, attendance) %&gt;% ggplot(aes(x = time, y = attendance)) &#43; geom_step() &#43; ylab(&quot;cognitative attendance&quot;) &#43; scale_x_continuous(breaks=c(18."/>
+require(&#39;dplyr&#39;) library(&#39;ggplot2&#39;) dat &lt;- readr::read_csv(&quot;../../data/seminar_data.csv&quot;) dat %&gt;% mutate(awake = ifelse(awake == 0, -1, awake), attendance = cumsum(awake)) %&gt;% select(time, awake, attendance) %&gt;% ggplot(aes(x = time, y = attendance)) &#43; geom_step() &#43; ylab(&quot;cognitive attendance&quot;) &#43; scale_x_continuous(breaks=c(18."/>
 
 
 
@@ -180,7 +180,7 @@ dat %&gt;%
          select(time, awake, attendance) %&gt;%
   ggplot(aes(x = time, y = attendance)) + 
   geom_step() + 
-  ylab(&quot;cognitative attendance&quot;) + 
+  ylab(&quot;cognitive attendance&quot;) + 
   scale_x_continuous(breaks=c(18.5,18.75,19,19.25,19.5),
                      labels = c(&quot;1:30 pm&quot;,&quot;1:45 pm&quot;,&quot;2:00 pm&quot;,&quot;2:15 pm&quot;,&quot;2:30 pm&quot;)) +
   annotate(&quot;text&quot;, x = 18.8, y = 6, label = &quot;lengthy derivation&quot;, color = &quot;#EB6864&quot;) + 
