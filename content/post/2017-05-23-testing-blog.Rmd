@@ -1,0 +1,17 @@
+---
+author: "Nick Strayer"
+comments: true
+date: 2017-05-23T17:37:37-05:00
+draft: false
+image: ""
+menu: ""
+share: true
+tags:
+- survival
+- R code
+- Shiny
+title: "Why you no work?"
+excerpt: I have no idea why this blog doesnt just work
+---
+
+Hello, world.
