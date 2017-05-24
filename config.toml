@@ -23,7 +23,7 @@ author = "Nick Strayer"
     url = "https://twitter.com/rstudio"
 
 [params]
-    description = "A website built through Hugo and blogdown."
+    description = "A statistics blog from two goofy Phd students."
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.11.0"
