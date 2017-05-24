@@ -1,5 +1,6 @@
 body{
   padding-left: 0;
+  background-color: #fffff8;
 }
 code {
   background-color: #f7f7f7;
@@ -20,4 +21,53 @@ code {
 
 .brand a{
    background-repeat: no-repeat, no-repeat, no-repeat !important;
+}
+
+#homepage{
+  width: 50%;
+  margin: 0 auto;
+  font-family: "et-book";
+  color: #111111;
+}
+
+#homepage a {
+   color: #4A4A4A;
+}
+
+h1 {
+  font-weight: 400;
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  line-height: 1;
+  text-decoration: none;
+  font-family: "et-book";
+}
+
+h1 a{
+  text-decoration: none;
+}
+
+p {
+  font-size: 1.1em;
+  color: #3a4145;
+  text-rendering: geometricPrecision;
+}
+
+span.content-meta {
+  color: #64696e;
+}
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  #homepage{
+    width: 75%;
+  }
+}
+
+/* Small screens */
+@media all and (max-width: 500px) {
+   #homepage{
+    width: 95%;
+  }
 }
