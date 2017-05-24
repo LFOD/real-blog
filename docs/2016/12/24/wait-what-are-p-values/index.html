@@ -1,167 +1,90 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
 <head>
+<title>Live Free or Dichotomize - Wait, what are P-values?</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.20.2" />
 
-    
-
-
-    
-        <meta name="twitter:card" content="summary"/>
-    
-
-
-
-<meta name="twitter:title" content="Wait, what are P-values?"/>
-<meta name="twitter:description" content="Frequently, and especially recently, misunderstandings of common statistical terms/ concepts have caused confusion and even anger. I would like to (attempt) to clear up a big player in the world of commonly used (and commonly misunderstood) statistical concepts: the p-value.
-  Stealing Lucy D’Agostino McGowan’s XKCD embedding strategy. TL DR A p-value is not a probability of the true parameter being something, but the percentage of times that the data you saw, or more extreme data, would occur given some “null” model."/>
+  
+  
 
 
 
-  	<meta property="og:title" content=" Wait, what are P-values? &middot;  Live Free or Dichotomize" />
-  	<meta property="og:site_name" content="Live Free or Dichotomize" />
-  	<meta property="og:url" content="/2016/12/24/wait-what-are-p-values/" />
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 
-    
-  	<meta property="og:type" content="article" />
 
-    <meta property="og:article:published_time" content="2016-12-24T15:50:12-06:00" />
-
-    
-    
-
-    <title>
-       Wait, what are P-values? &middot;  Live Free or Dichotomize
-    </title>
-
-    <meta name="description" content="A statistics blog from two goofy Phd students." />
-
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="shortcut icon" href="../../../../images/favicon.ico">
-	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
-
-    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
-
-    
-      
-          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
-      
-      
-    
-    <meta name="generator" content="Hugo 0.17" />
-
-    <link rel="canonical" href="../../../../2016/12/24/wait-what-are-p-values/" />
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-92165973-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 
 
 
 
 
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="../../../../css/tufte.css">
+<link rel="stylesheet" href="../../../../css/hugo-tufte.css">
+<link rel="stylesheet" href="../../../../css/hugo-tufte-override.css">
+<link rel="stylesheet" href="../../../../css/custom_style.css">
 
 </head>
-<body class="nav-closed">
 
-  <div class="nav">
-    <h3 class="nav-title">Menu</h3>
-    <a href="#" class="nav-close">
-        <span class="hidden">Close</span>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
     </a>
-    <ul>
-        
-        
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="../../../../about/">About</a>
-            </li>
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="https://github.com/lfod/real-blog">GitHub</a>
-            </li>
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
-            </li>
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="https://twitter.com/NicholasStrayer">Nick&#39;s Twitter</a>
-            </li>
-        
-    </ul>
-    
-    
-    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
-    
-</div>
-<span class="nav-cover"></span>
-
-
- <div class="site-wrapper">
-
-
-
-
-<header class="main-header post-head no-cover">
-  <nav class="main-nav clearfix">
-
-
-  
-      <a class="blog-logo" href="../../../../"><img src="../../../../images/logo.png" alt="Home" /></a>
-  
-  
-      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
-  
-  </nav>
+  </h1>
 </header>
 
+<section>
+<h1 class="content-title">
+  
+  <a href="../../../../2016/12/24/wait-what-are-p-values/">Wait, what are P-values?</a>
+  
+</h1>
 
 
-<main class="content" role="main">
+
+  <span class="content-meta">
+    
+       <i class="fa fa-user">&nbsp;</i><span class="author">
+         &nbsp;Nick Strayer</span> <br>
+    
+
+
+    
+      <i class="fa fa-calendar"></i>
+      &nbsp;Dec 24, 2016
+    
+
+    
+      &nbsp;<i class="fa fa-clock-o"></i>
+      &nbsp;8 min read
+    
+
+    
+  </span>
+
+
+</section>
 
 
 
-
-  <article class="post post">
-
-    <header class="post-header">
-        <h1 class="post-title">Wait, what are P-values?</h1>
-        <small></small>
-
-        <section class="post-meta">
-        
-          <time class="post-date" datetime="2016-12-24T15:50:12-06:00">
-            Dec 24, 2016
-          </time>
-        
-         
-        </section>
-    </header>
-
-    <section class="post-content">
-
-
-<p>Frequently, and especially <a href="http://www.nytimes.com/2016/11/09/podcasts/election-analysis-run-up.html">recently</a>, misunderstandings of common statistical terms/ concepts have caused confusion and even <a href="http://www.theverge.com/2016/11/8/13571216/new-york-times-election-forecast-jitter-needle">anger</a>. I would like to (attempt) to clear up a big player in the world of commonly used (and commonly misunderstood) statistical concepts: the <strong><em>p</em>-value</strong>.</p>
+<section><p>Frequently, and especially <a href="http://www.nytimes.com/2016/11/09/podcasts/election-analysis-run-up.html">recently</a>, misunderstandings of common statistical terms/ concepts have caused confusion and even <a href="http://www.theverge.com/2016/11/8/13571216/new-york-times-election-forecast-jitter-needle">anger</a>. I would like to (attempt) to clear up a big player in the world of commonly used (and commonly misunderstood) statistical concepts: the <strong><em>p</em>-value</strong>.</p>
 <p style="font-size: 7; font-style:italic">
 <a href = "http://imgs.xkcd.com/comics/p_values.png"> <img style="width:40%" src="http://imgs.xkcd.com/comics/p_values.png" align="middle"> </a> </br> Stealing <a href = "https://twitter.com/LucyStats">Lucy D’Agostino McGowan’s</a> <a href = "http://xkcd.com">XKCD</a> embedding strategy.
 </p>
@@ -191,7 +114,7 @@ flip_data &lt;-  data_frame(flip = c(&quot;tails&quot;, &quot;tails&quot;, &quot
 #Plot the coin flips. 
 #Code for plot_flips() is at the end of this document (it&#39;s ugly)
 flip_data %&gt;% plot_flips()</code></pre>
-<p><img src="figures/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Okay, so we got <strong>2</strong> heads on our <strong>6</strong> flips. Obviously the data given to us is from an unfair coin. You’re a good <a href="https://en.wikipedia.org/wiki/Frequentist_inference">frequentist</a> however, so you decide that, to be safe, you should repeat the experiment again to see what you get.</p>
 <p><em>Oh no, you dropped your coin, better use R instead.</em></p>
 <pre class="r"><code>#Function to flip our coin 6 times
@@ -205,7 +128,7 @@ second_flip &lt;- flip_coin()
 
 #plot it
 second_flip %&gt;% plot_flips()</code></pre>
-<p><img src="figures/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Oh look at that… 2 heads… that’s nice, but maybe we should do this a few more times. Maybe 100?</p>
 <p>Back to R…</p>
 <pre class="r"><code>#Dataframe to hold our coin flips
@@ -230,7 +153,7 @@ flip_results %&gt;%
   plot_flips() + 
   facet_wrap(~trial) + #make a new mini plot for each trial
   labs(title = &quot;Six Coin Flips | 100 Trials&quot;)</code></pre>
-<p><img src="figures/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Well look at that, investigating this plot it doesn’t actually seem that out of the ordinary to get 4 tails in 6 flips, even though intuitively that sounds like tails happening twice as often as heads.</p>
 <p>Just to make sure lets simplify the above plot to summarize the number of tails we saw for each of our 100 trials.</p>
 <pre class="r"><code>#Count how many tails we got in each trial
@@ -291,7 +214,7 @@ tails_by_trial %&gt;%
         panel.grid.minor = element_blank(),
         legend.position = &quot;top&quot;) + 
   scale_fill_discrete(guide = guide_legend(reverse=T))</code></pre>
-<p><img src="figures/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="../../../../post/2016-12-24-wait-what-are-p-values_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The data we have: <strong>4</strong> tails out of <strong>6</strong> flips, looks pretty darn normal if our coin was fair. Case closed, right? Well you are a statistician so it’s your job to distill this down to a number, so let’s see exactly how “normal” our result is. We will do this by simply counting. Looking at the 100 trials that we did, how many times did the number of tails look at least as unfair as our data? Aka, how many times did we flip 4 or more tails in our 100 trials?</p>
 <pre class="r"><code>unusualness &lt;- sum(tails_by_trial$number_of_tails &gt;= 4) 
 unusualness</code></pre>
@@ -336,116 +259,169 @@ plot_flips &lt;- function(flip_data){
           legend.title = element_blank()) 
 }</code></pre>
 </div>
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-
-    </section>
-
-
-  <footer class="post-footer">
-
-
-    
-    <figure class="author-image">
-        <a class="img" href="../../../../" style="background-image: url(/images/logo.png)"><span class="hidden">'s Picture</span></a>
-    </figure>
-    
-
-    
-
-
-
-
-
-
-
-
-<div class="post-author">
-
-    <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
-    <br>
-    <span style="font-size: 1.02em;font-weight: bold;">
-        Nick Strayer
-    </span>
-    |
-    <a style = "text-decoration: none;" class = "post-author__text" href = http://nickstrayer.me >
-        <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
-    </a>
-
-    <a class="icon-twitter post-author__text" style="font-size: 1.4em; text-decoration: none;" href = https://twitter.com/NicholasStrayer onclick="window.open(this.href"></a>
-
-    <a style = "text-decoration: none;" class = "post-author__text" href = https://github.com/nstrayer >
-        <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
-    </a>
-
-
-    <br>
-
-    <p class="post-author__text">Randomly walking my way though a career in statistics</p>
-    
-
-
-    
-<section class="share">
-  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=Wait%2c%20what%20are%20P-values%3f&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2016%2f12%2f24%2fwait-what-are-p-values%2f"
-      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
- </a></p>
 </section>
+<section>
+  
 
 
 
-    
 
 
-  <div id="disqus_thread"></div>
-    <script type="text/javascript">
-       
-      var disqus_shortname = 'livefreeordichotomize'; 
-      var disqus_identifier = '\/2016\/12\/24\/wait-what-are-p-values\/';
-       
-      (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
+
+
+<style>
+
+  .author_blurb {
+    display: flex;
+    flex-direction: row;    
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 150px;
+    text-decoration none;
+  }
+  
+  .author_photo {
+  }
+  
+  .photo{
+    width: 90px;
+  }
+  
+  .author_info{
+    display: flex;
+    flex-direction: column;    
+    padding-left: 15px;
+    justify-content: center;
+  }
+  
+  .name{
+    font-family: "Merriweather", serif;
+    letter-spacing: 0.01rem;
+    font-size: 1.7rem;
+  }
+  
+  .contact_info{
+    align-content: center;
+  }
+  
+  .contact_info a {
+    background-repeat: no-repeat, no-repeat, no-repeat !important;
+    text-decoration: none !important;
+  }
+  
+  .bio{
+    height: 100px;
+    padding-top: 0px;
+  }
+  
+  .bio_text{
+    padding-top: 5px;
+    margin-top: auto;
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    font-weight: 200;
+    color: #636363;
+    letter-spacing: 0;
+    text-indent: 0;
+  }
+  
+   
+  @media all and (max-width: 800px) {
+    .author_blurb {
       
+    }
+  }
+  
+   
+  @media all and (max-width: 500px) {
+    .author_blurb {
+      flex-direction: column;    
+    }
+    .author_info{
+      padding-top: 40px;
+    }
+    .author_photo {
+      align-self: center;
+    }
+  }
+  
+</style>
 
-  </footer>
-</article>
 
-</main>
-    <footer class="site-footer clearfix">
-        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
-        
-        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
-        
-    </footer>
+<div class="author_blurb">
+
+  <div class="author_photo">
+    <div class="photo">
+      <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
     </div>
-    <script type="text/javascript" src="../../../../js/jquery.js"></script>
-    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="../../../../js/index.js"></script>
         
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="../../../../js/header_lines.js"></script>
-
+  </div>
+  <div class = "author_info">
     
+    <div class = "contact_info">
+        <span class = "name"> Nick Strayer |</span>
+        
+        <a class = "social_buttons" href = http://nickstrayer.me >
+            <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+        </a>
+        
+        <a class="social_buttons" href = https://twitter.com/NicholasStrayer>
+          <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+        </a>
+    
+        <a class = "social_buttons" href = https://github.com/nstrayer >
+          <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+        </a>
+    </div>
+    
+    
+    <div class = "bio">
+      <p class = "bio_text">Randomly walking my way though a career in statistics</p>
+    </div>
+    
+  </div>
+
+  
+</div>
+
+
+  
+
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy; 2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+
+
+</section>
+</article>
+</div>
 </body>
 </html>
-

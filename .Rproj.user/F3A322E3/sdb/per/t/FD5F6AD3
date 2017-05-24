@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "<style>\n\n  .author_blurb {\n    display: flex;\n    flex-direction: row;    \n    justify-content: flex-start;\n    align-items: flex-start;\n    height: 150px;\n    text-decoration none;\n  }\n  \n  .author_photo {\n  }\n  \n  .photo{\n    width: 90px;\n  }\n  \n  .author_info{\n    display: flex;\n    flex-direction: column;    \n    padding-left: 15px;\n    justify-content: center;\n  }\n  \n  .name{\n    font-family: \"Merriweather\", serif;\n    letter-spacing: 0.01rem;\n    font-size: 1.7rem;\n  }\n  \n  .contact_info{\n    align-content: center;\n  }\n  \n  .contact_info a {\n    background-repeat: no-repeat, no-repeat, no-repeat !important;\n    text-decoration: none !important;\n  }\n  \n  .bio{\n    height: 100px;\n    padding-top: 0px;\n  }\n  \n  .bio_text{\n    padding-top: 5px;\n    margin-top: auto;\n    font-size: 1.2rem;\n    line-height: 1.5em;\n    font-weight: 200;\n    color: #636363;\n    letter-spacing: 0;\n    text-indent: 0;\n  }\n  \n  /* Medium screens */\n  @media all and (max-width: 800px) {\n    .author_blurb {\n      \n    }\n  }\n  \n  /* Small screens */\n  @media all and (max-width: 500px) {\n    .author_blurb {\n      flex-direction: column;    \n    }\n    .author_info{\n      padding-top: 40px;\n    }\n    .author_photo {\n      align-self: center;\n    }\n  }\n  \n</style>\n\n",
+    "created" : 1495647962639.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1308920180",
+    "id" : "FD5F6AD3",
+    "lastKnownWriteTime" : 1495647989,
+    "last_content_update" : 1495647989209,
+    "path" : "~/new_blog/layouts/partials/authorStyle.html",
+    "project_path" : "layouts/partials/authorStyle.html",
+    "properties" : {
+    },
+    "relative_order" : 11,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "html"
+}

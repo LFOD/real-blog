@@ -1,0 +1,23 @@
+body{
+  padding-left: 0;
+}
+code {
+  background-color: #f7f7f7;
+  font-size: 0.85em !important;
+}
+
+.main-header {
+  height: 30vh;
+  width: 100%;
+  position:relative;
+  z-index:1;
+  margin:0 auto;
+}
+
+.brand{
+  margin-bottom:-50px;
+}
+
+.brand a{
+   background-repeat: no-repeat, no-repeat, no-repeat !important;
+}

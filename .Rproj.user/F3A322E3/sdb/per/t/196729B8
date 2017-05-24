@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"About\"\ndate: \"2016-05-05T21:48:51-07:00\"\n---\n\nWe are Lucy and Nick, we have things to say and we think people should be tricked into reading them, thus we created this blog. ",
+    "created" : 1495647372978.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3418883714",
+    "id" : "196729B8",
+    "lastKnownWriteTime" : 1495647386,
+    "last_content_update" : 1495647386058,
+    "path" : "~/new_blog/content/about.md",
+    "project_path" : "content/about.md",
+    "properties" : {
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "markdown"
+}

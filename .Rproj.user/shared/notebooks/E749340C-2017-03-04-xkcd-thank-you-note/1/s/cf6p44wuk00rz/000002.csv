@@ -1,0 +1,4 @@
+"0","library('ggplot2')"
+"0","library('xkcd')"
+"0","library('extrafont')"
+"0","load(""../../static/data/xkcd_data.rda"")"

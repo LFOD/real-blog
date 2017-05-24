@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "<!-- Syntax highlighting -->\n<!-- {{ partial \"highlight.html\" . }} -->\n\n<!-- Pure css -->\n<link rel=\"stylesheet\" href=\"http://yui.yahooapis.com/pure/0.6.0/pure-min.css\">\n<!--[if lte IE 8]>\n    <link rel=\"stylesheet\" href=\"http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css\">\n<![endif]-->\n<!--[if gt IE 8]><!-->\n    <link rel=\"stylesheet\" href=\"http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css\">\n<!--<![endif]-->\n\n<!-- Fonts -->\n<!-- <link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Open+Sans\"> -->\n<!-- <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface\"> -->\n<!-- <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'> -->\n\n<!-- Font Awesome -->\n<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css\">\n\n<!-- Main CSS file based on Pure blog layout -->\n<link rel=\"stylesheet\" href=\"{{ \"/css/tufte.css\" | absURL }}\">\n<link rel=\"stylesheet\" href=\"{{ \"/css/hugo-tufte.css\" | absURL }}\">\n<link rel=\"stylesheet\" href=\"{{ \"/css/hugo-tufte-override.css\" | absURL }}\">\n<link rel=\"stylesheet\" href=\"{{ \"/css/custom_style.css\" | absURL }}\">\n",
+    "created" : 1495644178682.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2200698264",
+    "id" : "F0205462",
+    "lastKnownWriteTime" : 1495644563,
+    "last_content_update" : 1495644563330,
+    "path" : "~/new_blog/layouts/partials/header.includes.html",
+    "project_path" : "layouts/partials/header.includes.html",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "html"
+}

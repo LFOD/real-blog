@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "<nav class=\"pagination\" role=\"navigation\">\n\t{{if .HasPrev}}\n\t    <a class=\"newer-posts\" href=\"{{ .Prev.URL }}\">&larr; Newer Posts</a>\n\t{{end}}\n\t<span class=\"page-number\">Page {{ .PageNumber }} of {{.TotalPages}}</span>\n\t{{if .HasNext}}\n\t    <a class=\"older-posts\" href=\"{{ .Next.URL }}\">Older Posts &rarr;</a>\n\t{{end}}\n</nav>",
+    "created" : 1495645601932.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2187496281",
+    "id" : "E8B34B05",
+    "lastKnownWriteTime" : 1495645606,
+    "last_content_update" : 1495645606933,
+    "path" : "~/new_blog/layouts/partials/pagination.html",
+    "project_path" : "layouts/partials/pagination.html",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "html"
+}

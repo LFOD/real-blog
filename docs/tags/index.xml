@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Live Free or Dichotomize</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Feb 2017 10:54:24 +0200</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Collaboration</title>
+      <link>/tags/collaboration/</link>
+      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/tags/collaboration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Conferences</title>
+      <link>/tags/conferences/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/tags/conferences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Science</title>
+      <link>/tags/data-science/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/tags/data-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Enar</title>
+      <link>/tags/enar/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/tags/enar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Epidemiology</title>
+      <link>/tags/epidemiology/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/tags/epidemiology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google Docs</title>
+      <link>/tags/google-docs/</link>
+      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/tags/google-docs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Javascript</title>
+      <link>/tags/javascript/</link>
+      <pubDate>Sun, 12 Mar 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Modeling</title>
+      <link>/tags/modeling/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/modeling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nonlinearity</title>
+      <link>/tags/nonlinearity/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/tags/nonlinearity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nssd</title>
+      <link>/tags/nssd/</link>
+      <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
+      
+      <guid>/tags/nssd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Code</title>
+      <link>/tags/r-code/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/tags/r-code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Regression</title>
+      <link>/tags/regression/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rms</title>
+      <link>/tags/rms/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/tags/rms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Thankyou</title>
+      <link>/tags/thankyou/</link>
+      <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
+      
+      <guid>/tags/thankyou/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tidytext</title>
+      <link>/tags/tidytext/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/tags/tidytext/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Type 1 Error</title>
+      <link>/tags/type-1-error/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/tags/type-1-error/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visualization</title>
+      <link>/tags/visualization/</link>
+      <pubDate>Sun, 12 Mar 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/tags/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Xkcd</title>
+      <link>/tags/xkcd/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/tags/xkcd/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
