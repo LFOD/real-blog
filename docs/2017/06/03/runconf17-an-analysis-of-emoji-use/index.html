@@ -180,7 +180,7 @@ used_emoji &lt;- regex_left_join(data, dico, by = c(text = &quot;Native&quot;)) 
   group_by(`tweeted #runconf` = runconf, `used emoji` = used_emoji) %&gt;%
   tally() %&gt;%
   mutate(`%` = 100*prop.table(n)) %&gt;%
-  knitr::kable(digits = 1, format = &quot;pandoc&quot;)</code></pre>
+  knitr::kable(digits = 1)</code></pre>
 <table>
 <thead>
 <tr class="header">

@@ -124,7 +124,7 @@ used_emoji %>%
   group_by(`tweeted #runconf` = runconf, `used emoji` = used_emoji) %>%
   tally() %>%
   mutate(`%` = 100*prop.table(n)) %>%
-  knitr::kable(digits = 1, format = "pandoc")
+  knitr::kable(digits = 1)
 ```
 
 
