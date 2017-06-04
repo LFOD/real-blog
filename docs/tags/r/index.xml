@@ -20,19 +20,5 @@
       <description>Motivation Recently I was pointed in the direction of a post titled Visualizing Regression on the blog of the popular data-visualization practitioner Stephanie Evergreen (although it is a guest post and not written by Stephanie). In it the authors point out the fact that common regression tables are an all around bad way of reporting the results of a regression. While I whole heartedly agree with the premise there were a few rather large mistakes in the interpretations behind the regression output.</description>
     </item>
     
-    <item>
-      <title>Intro to GMD</title>
-      <link>/2017/02/24/intro-to-gmd/</link>
-      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
-      
-      <guid>/2017/02/24/intro-to-gmd/</guid>
-      <description>Why The Problem You are working in a collaborative situation working on some form of analysis. You want to produce a nice looking document of your work at the end and have easy contribution from all sources.
- The Solutions Sit in one room and have one person write up all your work as you do it
-Problems:
- source Use github with branches and pull requests.
-Problems:
- Requires groupmates to all get second PhD in git.</description>
-    </item>
-    
   </channel>
 </rss>

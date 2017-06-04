@@ -26,7 +26,7 @@ code {
 #homepage{
   width: 50%;
   margin: 0 auto;
-  font-family: "et-book";
+  font-family: "optima";
   color: #111111;
 }
 
@@ -41,7 +41,7 @@ h1 {
   font-size: 3rem;
   line-height: 1;
   text-decoration: none;
-  font-family: "et-book";
+  font-family: "optima";
 }
 
 h1 a{

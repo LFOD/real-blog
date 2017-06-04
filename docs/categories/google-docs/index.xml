@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Google Docs on Live Free or Dichotomize</title>
+    <link>/categories/google-docs/</link>
+    <description>Recent content in Google Docs on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 24 Feb 2017 10:54:24 +0200</lastBuildDate>
+    
+	<atom:link href="/categories/google-docs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Intro to GMD</title>
+      <link>/2017/02/24/intro-to-gmd/</link>
+      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/2017/02/24/intro-to-gmd/</guid>
+      <description>Why The Problem You are working in a collaborative situation working on some form of analysis. You want to produce a nice looking document of your work at the end and have easy contribution from all sources.
+ The Solutions Sit in one room and have one person write up all your work as you do it
+Problems:
+ source Use github with branches and pull requests.
+Problems:
+ Requires groupmates to all get second PhD in git.</description>
+    </item>
+    
+  </channel>
+</rss>

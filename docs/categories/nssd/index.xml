@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nssd on Live Free or Dichotomize</title>
+    <link>/categories/nssd/</link>
+    <description>Recent content in Nssd on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 09 Feb 2017 12:56:22 -0600</lastBuildDate>
+    
+	<atom:link href="/categories/nssd/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The prevalence of drunk podcasts</title>
+      <link>/2017/02/09/the-prevalence-of-drunk-podcasts/</link>
+      <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
+      
+      <guid>/2017/02/09/the-prevalence-of-drunk-podcasts/</guid>
+      <description>For today’s rendition of I am curious about everything, in Hilary Parker &amp;amp; Roger Peng’s Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I’d dig into it 🚧👷.
+I pulled the iTunes API for the term drunk in podcasts &amp;amp; plotted the results over time. I also finally found an excuse to use emoGG.
+library(&amp;#39;dplyr&amp;#39;) library(&amp;#39;ggplot2&amp;#39;) req &amp;lt;- httr::GET(url = &amp;quot;https://itunes.</description>
+    </item>
+    
+    <item>
+      <title>Hill for the data scientist: an xkcd story</title>
+      <link>/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/</guid>
+      <description>This was inspired by Hilary Parker &amp;amp; Roger Peng’s Not So Standard Deviations Episode 28, which can be found here. It was suggested that it would be useful to lay out Hill’s criterion for data scientists, I agree!
+
+[causation: An event or outcome B is influenced by a change in A]
+
+Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship.</description>
+    </item>
+    
+  </channel>
+</rss>

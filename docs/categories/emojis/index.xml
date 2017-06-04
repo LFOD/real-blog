@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Emojis on Live Free or Dichotomize</title>
+    <link>/categories/emojis/</link>
+    <description>Recent content in Emojis on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
+    
+	<atom:link href="/categories/emojis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>runconf17, an analysis of emoji use</title>
+      <link>/2017/06/03/runconf17-an-analysis-of-emoji-use/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/2017/06/03/runconf17-an-analysis-of-emoji-use/</guid>
+      <description>I had such a delightful time at rOpenSci’s unconference last week. ⊕21 📦 were produced! Not only was it extremely productive, but in between the crazy productivity was some epic community building.
+Stefanie kicked the conference off with ice breakers, where we explored topics ranging from #rcatladies &amp;amp; #rdogfellas ⊕for the record, I’m an #rchickenlady, IT’S HAPPENING to impostor syndrome. It was an excellent way to get conversations starting!
+work Karthik and I worked on two packages:</description>
+    </item>
+    
+    <item>
+      <title>The prevalence of drunk podcasts</title>
+      <link>/2017/02/09/the-prevalence-of-drunk-podcasts/</link>
+      <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
+      
+      <guid>/2017/02/09/the-prevalence-of-drunk-podcasts/</guid>
+      <description>For today’s rendition of I am curious about everything, in Hilary Parker &amp;amp; Roger Peng’s Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I’d dig into it 🚧👷.
+I pulled the iTunes API for the term drunk in podcasts &amp;amp; plotted the results over time. I also finally found an excuse to use emoGG.
+library(&amp;#39;dplyr&amp;#39;) library(&amp;#39;ggplot2&amp;#39;) req &amp;lt;- httr::GET(url = &amp;quot;https://itunes.</description>
+    </item>
+    
+    <item>
+      <title>CatterPlot thank you note</title>
+      <link>/2017/01/25/catterplot-thank-you-note/</link>
+      <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
+      
+      <guid>/2017/01/25/catterplot-thank-you-note/</guid>
+      <description>Lara Harmon has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by
+On the off-chance you have not felt judged by a cat today, my cat can help you out. pic.twitter.com/sApgbyYztD — Lara Harmon (@Amstat_Lara) December 27, 2016   and
+You&#39;ll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme.</description>
+    </item>
+    
+  </channel>
+</rss>

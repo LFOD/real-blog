@@ -1,5 +1,0 @@
-"0","library('ggplot2')"
-"0","library('xkcd')"
-"0","load(url(""https://github.com/LFOD/real-blog/raw/master/data/xkcd_data.rda""))"
-"0","#learn more about the xkcd package"
-"0","vignette(""xkcd-intro"")"

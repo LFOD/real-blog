@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rms on Live Free or Dichotomize</title>
+    <link>/categories/rms/</link>
+    <description>Recent content in Rms on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 18 Feb 2017 09:03:06 -0600</lastBuildDate>
+    
+	<atom:link href="/categories/rms/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The dire consequences of tests for linearity</title>
+      <link>/2017/02/18/the-dire-consequences-of-tests-for-linearity/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/2017/02/18/the-dire-consequences-of-tests-for-linearity/</guid>
+      <description>This is a tale of the dire type 1 error consequences that occur when you test for linearity.
+ Edvard Munch’s The Scream (1893), coincidentally also the face Frank Harrell makes when he sees students testing for linearity. First, my favorite explanation of type 1 error 🐺:
+ @jgschraiber @eagereyes Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error.</description>
+    </item>
+    
+    <item>
+      <title>Regression modeling strategies: a student&#39;s perspective</title>
+      <link>/2017/01/17/regression-modeling-strategies-a-students-perspective/</link>
+      <pubDate>Tue, 17 Jan 2017 22:15:13 -0600</pubDate>
+      
+      <guid>/2017/01/17/regression-modeling-strategies-a-students-perspective/</guid>
+      <description>Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his book each spring at Vanderbilt.
+This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.
+This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it.</description>
+    </item>
+    
+  </channel>
+</rss>

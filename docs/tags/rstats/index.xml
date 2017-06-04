@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rstats on Live Free or Dichotomize</title>
+    <link>/tags/rstats/</link>
+    <description>Recent content in Rstats on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
+    
+	<atom:link href="/tags/rstats/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>runconf17, an analysis of emoji use</title>
+      <link>/2017/06/03/runconf17-an-analysis-of-emoji-use/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/2017/06/03/runconf17-an-analysis-of-emoji-use/</guid>
+      <description>I had such a delightful time at rOpenSci’s unconference last week. ⊕21 📦 were produced! Not only was it extremely productive, but in between the crazy productivity was some epic community building.
+Stefanie kicked the conference off with ice breakers, where we explored topics ranging from #rcatladies &amp;amp; #rdogfellas ⊕for the record, I’m an #rchickenlady, IT’S HAPPENING to impostor syndrome. It was an excellent way to get conversations starting!
+work Karthik and I worked on two packages:</description>
+    </item>
+    
+    <item>
+      <title>ENAR in words</title>
+      <link>/2017/03/16/enar-in-words/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/2017/03/16/enar-in-words/</guid>
+      <description>I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science &amp;amp; statistics, diversity, and exceptional advancements in statistical methods.
+&#34;By a small sample we may judge of the whole piece&#34; -- -- I loved it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.
+This certainly sums up my experience.</description>
+    </item>
+    
+    <item>
+      <title>Yoga for modeling</title>
+      <link>/2017/01/27/yoga-for-modeling/</link>
+      <pubDate>Fri, 27 Jan 2017 14:30:26 -0600</pubDate>
+      
+      <guid>/2017/01/27/yoga-for-modeling/</guid>
+      <description>A New Year’s resolution for all of our models: get more flexible!
+As an aside, I’m better at implementing yoga for my models than yoga for myself, most of the time I end up like this:
+ Anyways, let’s make our models flexible! By flexible, we mean let’s be more intentional about fitting nonlinear parametric models.
+What do you mean by nonlinear modeling By nonlinear modeling, we mean fitting parametric models with nonlinear terms.</description>
+    </item>
+    
+  </channel>
+</rss>

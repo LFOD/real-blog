@@ -10,7 +10,7 @@ tags:
 - ENAR
 - tidytext
 - conferences
-- R code
+- rstats
 title: "ENAR in words"
 excerpt: "I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science & statistics, diversity, and great advancements in statistical methods. Since there was quite a bit of twitter action, I thought I'd do a quick tutorial in scraping twitter data in R."
 ---

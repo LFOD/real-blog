@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>runconf17, an analysis of emoji use</title>
+      <link>/2017/06/03/runconf17-an-analysis-of-emoji-use/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/2017/06/03/runconf17-an-analysis-of-emoji-use/</guid>
+      <description>I had such a delightful time at rOpenSci’s unconference last week. ⊕21 📦 were produced! Not only was it extremely productive, but in between the crazy productivity was some epic community building.
+Stefanie kicked the conference off with ice breakers, where we explored topics ranging from #rcatladies &amp;amp; #rdogfellas ⊕for the record, I’m an #rchickenlady, IT’S HAPPENING to impostor syndrome. It was an excellent way to get conversations starting!
+work Karthik and I worked on two packages:</description>
+    </item>
     
     <item>
       <title>Visualizing Regression Results</title>

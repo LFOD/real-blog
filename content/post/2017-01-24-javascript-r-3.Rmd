@@ -3,7 +3,7 @@ author: "Nick Strayer"
 date: 2017-01-24T10:54:24+02:00
 title: "Custom JavaScript visualizations in RMarkdown"
 excerpt: "Recently RStudio added JavaScript chunks to RMarkdown. This makes many exciting things possible. Among these things is making your own custom JavaScript visualizations of data managed in R, all without leaving the .Rmd document. This is a quick walkthrough of doing just that." 
-tags: ["javascript","visualization"]
+categories: ["javascript","visualization"]
 comments: true
 ---
 
