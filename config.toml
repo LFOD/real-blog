@@ -5,9 +5,9 @@ languageCode = "en-us"
 title = "Live Free or Dichotomize"
 theme = "hugo-tufte"
 googleAnalytics = ""
-disqusShortname = ""
+disqusShortname = "livefreeordichotomize"
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
-author = "Nick Strayer"
+author = "Nick Strayer & Lucy D'Agostino McGowan"
 
 [permalinks]
     post = "/:year/:month/:day/:slug/"
@@ -19,8 +19,11 @@ author = "Nick Strayer"
     name = "GitHub"
     url = "https://github.com/rstudio/blogdown"
 [[menu.main]]
-    name = "Twitter"
-    url = "https://twitter.com/rstudio"
+    name = "Lucy's Twitter"
+    url = "https://twitter.com/LucyStats"
+[[menu.main]]
+    name = "Nicks's Twitter"
+    url = "https://twitter.com/NicholasStrayer"    
 
 [params]
     description = "A statistics blog from two goofy Phd students."
