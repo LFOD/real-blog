@@ -71,3 +71,10 @@ span.content-meta {
     width: 95%;
   }
 }
+
+@media (max-width: 760px) {
+    pre code {
+        width: 90% !important;
+        padding: 0 !important;
+    }
+ }
