@@ -25,19 +25,14 @@ excerpt: "I had such a delightful time at rOpenSci's unconference. Not only was 
 <div id="play" class="section level2">
 <h2>play</h2>
 <p><span class="newthought">Between our package building</span>, there were SO many opportunities to get to know some of the most talented people.</p>
-<div class="figure">
-<img src="https://github.com/LFOD/real-blog/raw/master/static/images/jenny_lucy.jpg" />
-
-</div>
-<p>Jenny &amp; I enthusiastically working on <a href="https://github.com/tidyverse/googledrive">googledrive</a>.</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">More than anything, this was an excellent opportunity to feel like a part of a community – and a community that certainly extends beyond the people that attended the unconference! There were so many people following along, tweeting along, and assisting along the way.</span></p>
+<p><span class="marginnote"> <img src = "https://github.com/LFOD/real-blog/raw/master/static/images/jenny_lucy.jpg""> </img><br> <em>Jenny &amp; I enthusiastically working on <a href="https://github.com/tidyverse/googledrive">googledrive</a>.</em> </span> More than anything, this was an excellent opportunity to feel like a part of a community – and a community that certainly extends beyond the people that attended the unconference! There were so many people following along, tweeting along, and assisting along the way.</p>
 <p>a few highlights:</p>
 <ul>
 <li>🍨 ice cream outings</li>
 <li>🎤 karaoke adventures<br />
 </li>
 <li>🍸 happy hours (complete with <a href="https://twitter.com/revodavid/status/867901254466506752">R-themed drinks</a>)</li>
-<li>💪 Karthik attempting to lick his elbow</li>
+<li>💪 Karthik attempting to <a href="https://twitter.com/kara_woo/status/868353913296044032">lick his elbow</a></li>
 </ul>
 </div>
 <div id="analysis" class="section level2">
@@ -47,7 +42,7 @@ excerpt: "I had such a delightful time at rOpenSci's unconference. Not only was 
 <li>pulled all tweets (excluding retweets) using the hashtag #runconf17 between May 24th and May 30th</li>
 <li>also pulled all tweets (excluding retweets) using the hashtag #rstats during the same time period</li>
 </ul>
-<p><strong>Question</strong>: Are twitter users to used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period?</p>
+<p><span style="color:#EB6864"> <strong>Question</strong>: Are twitter users to used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period? </span></p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I used the <strong>rtweet</strong> package to pull the tweets, <strong>dplyr</strong> and <strong>fuzzyjoin</strong> to wrangle the data a bit, and <strong>rms</strong> to analyze it.</span></p>
 <pre class="r"><code>library(&quot;rtweet&quot;)
 library(&quot;dplyr&quot;)
@@ -60,7 +55,7 @@ library(&quot;rms&quot;)</code></pre>
 rstats &lt;- search_tweets(q = &quot;#rstats AND since:2017-05-23 AND until:2017-05-31&quot;,
                         n = 1e4,
                         include_rts = FALSE)</code></pre>
-<p><span class="newthought">After pulling in the tweets</span>, I categorized tweeters as either using the #runconf17 hashtag during the week or not. I then merged the tweets with an emoji dictionary <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The emoji dictionary was discoved by the lovely <a href="https://twitter.com/ma_salmon">Maëlle</a>!</span>, and grouped by tweeter. If the tweeter used an emoji at any point during the week, they were categorized as an emoji-user, if not, they were sad. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">jk, there is room for all here!</span></p>
+<p><span class="newthought">After pulling in the tweets</span>, I categorized tweeters as either using the #runconf17 hashtag during the week or not. I then merged the tweets with an emoji dictionary <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The emoji dictionary was discoved by the lovely <a href="https://twitter.com/ma_salmon">Maëlle</a>!</span>, and grouped by tweeter. If the tweeter used an emoji at any point during the week, they were categorized as an emoji-user, if not, they were sad (jk, there is room for all here!).</p>
 <pre class="r"><code>## create variable for whether tweeted about runconf
 runconf$runconf &lt;- &quot;yes&quot;
 
@@ -178,12 +173,14 @@ Effects          &emsp;&emsp;Response: <code>used_emoji</code></td></tr>
 </tbody>
 </table>
 
-<p><strong>Tweeting the #runconf17 hashtag seems undeniably associated with a higher odds of emoji use (OR: 5.4, 95% CI: 3.1, 9.5).</strong></p>
+<p><span class="marginnote"> <img src = "http://media.tumblr.com/4d904a2237a400973c9ba6bfd7ef8404/tumblr_inline_mtwlrqiTCg1qih9gi.gif"> </img> </span></p>
+<p><span style="color:#EB6864"> <strong>Tweeting the #runconf17 hashtag seems undeniably associated with a higher odds of emoji use (OR: 5.4, 95% CI: 3.1, 9.5).</strong> </span></p>
 </div>
 <div id="most-popular-emojis" class="section level2">
 <h2>most popular emojis</h2>
 <p><span class="newthought">Now let’s checkout</span> which emojis were most popular among #runconf17 tweeters. This time I’ll allow for retweets 👯</p>
-<pre class="r"><code>runconf_emojis &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;, n = 1e4)</code></pre>
+<pre class="r"><code>runconf_emojis &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;,
+                                n = 1e4)</code></pre>
 <pre class="r"><code>emojis &lt;- regex_left_join(runconf_emojis, dico, by = c(text = &quot;Native&quot;)) %&gt;%
   group_by(Native) %&gt;%
   filter(!is.na(Native)) %&gt;%

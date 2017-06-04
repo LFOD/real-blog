@@ -28,18 +28,20 @@ Not only was it [extremely productive](https://ropenscilabs.github.io/runconf17-
 ## play
 `r tufte::newthought("Between our package building")`, there were SO many opportunities to get to know some of the most talented people.
 
-![](https://github.com/LFOD/real-blog/raw/master/static/images/jenny_lucy.jpg) 
+<span class = "marginnote">
+<img src = "https://github.com/LFOD/real-blog/raw/master/static/images/jenny_lucy.jpg""> </img><br>
+*Jenny & I enthusiastically working on [googledrive](https://github.com/tidyverse/googledrive).*
+</span>
+More than anything, this was an excellent opportunity to feel like a part of a community -- and a community that certainly extends beyond the people that attended the unconference! There were so many people following along, tweeting along, and assisting along the way.
 
-Jenny & I enthusiastically working on [googledrive](https://github.com/tidyverse/googledrive).
 
-`r tufte::margin_note("More than anything, this was an excellent opportunity to feel like a part of a community -- and a community that certainly extends beyond the people that attended the unconference! There were so many people following along, tweeting along, and assisting along the way.")`
 
 a few highlights: 
 
 * `r emo::ji("ice_cream")` ice cream outings
 * `r emo::ji("microphone")` karaoke adventures  
 * `r emo::ji("cocktail")` happy hours (complete with [R-themed drinks](https://twitter.com/revodavid/status/867901254466506752))
-* `r emo::ji("tongue"); emo::ji("muscle")` Karthik attempting to lick his elbow
+* `r emo::ji("tongue"); emo::ji("muscle")` Karthik attempting to [lick his elbow](https://twitter.com/kara_woo/status/868353913296044032)
 
 ## analysis 
 
@@ -48,7 +50,9 @@ a few highlights:
 * pulled all tweets (excluding retweets) using the hashtag #runconf17 between May 24th and May 30th
 * also pulled all tweets (excluding retweets) using the hashtag #rstats during the same time period
 
+<span style="color:#EB6864">
 **Question**: Are twitter users to used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period?
+</span>
 
 
 `r tufte::margin_note("I used the **rtweet** package to pull the tweets, **dplyr** and **fuzzyjoin** to wrangle the data a bit, and **rms** to analyze it.")`
@@ -82,7 +86,7 @@ load("../../static/data/runconf.rda")
 load("../../static/data/rstats.rda")
 ```
 
-`r tufte::newthought("After pulling in the tweets")`, I categorized tweeters as either using the #runconf17 hashtag during the week or not. I then merged the tweets with an emoji dictionary `r tufte::margin_note("The emoji dictionary was discoved by the lovely [Maëlle](https://twitter.com/ma_salmon)!")`, and grouped by tweeter. If the tweeter used an emoji at any point during the week, they were categorized as an emoji-user, if not, they were sad. `r tufte::margin_note("jk, there is room for all here!")`
+`r tufte::newthought("After pulling in the tweets")`, I categorized tweeters as either using the #runconf17 hashtag during the week or not. I then merged the tweets with an emoji dictionary `r tufte::margin_note("The emoji dictionary was discoved by the lovely [Maëlle](https://twitter.com/ma_salmon)!")`, and grouped by tweeter. If the tweeter used an emoji at any point during the week, they were categorized as an emoji-user, if not, they were sad (jk, there is room for all here!).
 
 ```{r}
 ## create variable for whether tweeted about runconf
@@ -135,14 +139,23 @@ lrm(used_emoji~runconf, data = used_emoji) %>%
   html()
 ```
 
+<span class = "marginnote">
+<img src = "http://media.tumblr.com/4d904a2237a400973c9ba6bfd7ef8404/tumblr_inline_mtwlrqiTCg1qih9gi.gif">
+</img>
+</span>
+
+
+<span style="color:#EB6864">
 **Tweeting the #runconf17 hashtag seems undeniably associated with a higher odds of emoji use (OR: 5.4, 95% CI: 3.1, 9.5).**
+</span>
 
 ## most popular emojis
 
 `r tufte::newthought("Now let's checkout")` which emojis were most popular among #runconf17 tweeters. This time I'll allow for retweets `r emo::ji("dancing_women")`
 
 ```{r, eval = FALSE}
-runconf_emojis <- search_tweets(q = "#runconf17 AND since:2017-05-23 AND until:2017-05-31", n = 1e4)
+runconf_emojis <- search_tweets(q = "#runconf17 AND since:2017-05-23 AND until:2017-05-31",
+                                n = 1e4)
 ```
 
 ```{r, echo = FALSE, eval = FALSE}
