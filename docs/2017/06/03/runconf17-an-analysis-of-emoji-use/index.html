@@ -270,20 +270,56 @@ Effects          &emsp;&emsp;Response: <code>used_emoji</code></td></tr>
 <div id="most-popular-emojis" class="section level2">
 <h2>most popular emojis</h2>
 <p><span class="newthought">Now let’s checkout</span> which emojis were most popular among #runconf17 tweeters. This time I’ll allow for retweets 👯</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">For this I used ggplot2, magick, and <a href="https://github.com/wch/webshot">webshot</a>.</span></p>
 <pre class="r"><code>library(&quot;ggplot2&quot;)
 library(&quot;webshot&quot;)
 library(&quot;magick&quot;)</code></pre>
 <pre class="r"><code>runconf_emojis &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;,
                                 n = 1e4)</code></pre>
-<p><a href="https://github.com/wch/webshot">webshot</a></p>
-<pre class="r"><code>out_png &lt;- purrr::map_chr(emojis$n, f)
+<pre class="r"><code>emojis &lt;- regex_left_join(runconf_emojis, dico, by = c(text = &quot;Native&quot;)) %&gt;%
+  group_by(Native) %&gt;%
+  filter(!is.na(Native)) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n)) %&gt;%
+  head(15) %&gt;%
+  mutate(num = 1:15)</code></pre>
+<p>This (like many things I do) was very much inspired by Maëlle’s <a href="http://www.masalmon.eu/2017/02/18/complot/">post</a>.</p>
+<pre class="r"><code>plot_emojis &lt;- function(limit) {
+  emojis_filter &lt;- emojis %&gt;%
+    filter(emojis$n &lt;= limit)
+  out_svg &lt;- paste0(&quot;file://emojis_&quot;, limit,&quot;.svg&quot;)
+  out_png &lt;- paste0(&quot;emojis_&quot;, limit, &quot;.png&quot;)
+  p &lt;- ggplot(emojis_filter, aes(num, n)) + 
+    geom_col() + 
+    xlim(c(0,16)) +
+    geom_text(aes(x = num, 
+                  y = n + 1,
+                  label = Native), size = 5)  +
+    theme(axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          legend.position=&quot;none&quot;) + 
+    ylim(c(0, max(emojis$n) + 10)) +
+    xlab(&quot;emoji&quot;) + 
+    ggtitle(&quot;#runconf17 emojis&quot;) +
+    coord_flip() 
+  print(p)
+  gridSVG::grid.export(out_svg)
+  webshot(out_svg,
+          out_png,
+          vwidth = 100,
+          vheight = 100,
+          zoom = 3)
+  out_png
+}</code></pre>
+<p>Now let’s make them into a gif!</p>
+<pre class="r"><code>out_png &lt;- purrr::map_chr(emojis$n, plot_emojis)
 
 purrr::map(rev(out_png), image_read) %&gt;%
   image_join() %&gt;%
   image_animate(fps=1) %&gt;%
-  image_write(&quot;../../static/images/runconf_emojis.gif&quot;)</code></pre>
+  image_write(&quot;runconf_emojis.gif&quot;)</code></pre>
 <div class="figure">
-<embed src="%22../../static/images/runconf_emojis.gif%22" />
+<img src="https://github.com/LFOD/real-blog/raw/master/static/images/runconf_emojis.gif" />
 
 </div>
 <p>The purple heart seems to be the most popular emoji, which makes sense given <a href="https://twitter.com/nistara_r/status/867974699044687872">25% of us were #RLadies</a>!</p>

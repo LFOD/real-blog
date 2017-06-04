@@ -155,6 +155,7 @@ lrm(used_emoji~runconf, data = used_emoji) %>%
 
 `r tufte::newthought("Now let's checkout")` which emojis were most popular among #runconf17 tweeters. This time I'll allow for retweets `r emo::ji("dancing_women")`
 
+`r tufte::margin_note("For this I used ggplot2, magick, and  [webshot](https://github.com/wch/webshot).")`
 ```{r, message = FALSE, warning = FALSE}
 library("ggplot2")
 library("webshot")
@@ -169,25 +170,28 @@ runconf_emojis <- search_tweets(q = "#runconf17 AND since:2017-05-23 AND until:2
 ```{r, echo = FALSE, eval = FALSE}
 save(runconf_emojis, file = "runconf_emojis.rda")
 ```
-[webshot](https://github.com/wch/webshot)
+
 ```{r, echo = FALSE}
 load("../../static/data/runconf_emojis.rda")
 ```
 
-```{r, eval = FALSE, echo = FALSE}
+```{r, eval = FALSE}
 emojis <- regex_left_join(runconf_emojis, dico, by = c(text = "Native")) %>%
   group_by(Native) %>%
   filter(!is.na(Native)) %>%
   summarise(n = n()) %>%
   arrange(desc(n)) %>%
-  head(15)
+  head(15) %>%
+  mutate(num = 1:15)
+```
 
+```{r, eval = FALSE, echo = FALSE}
 base <- "file:///Users/LucyMcGowan/Documents/wonderland/live-free-or-dichotomize/static/images/emojis/"
-emojis$num <- 1:15
-f <- function(limit) {
+
+plot_emojis <- function(limit) {
   emojis_filter <- emojis %>%
     filter(emojis$n <= limit)
-  out_svg <- paste0(base,"emojis_",limit,".svg")
+  out_svg <- paste0(base,"emojis_", limit,".svg")
   out_png <- paste0("../../static/images/emojis/emojis_", limit, ".png")
   p <- ggplot(emojis_filter, aes(num, n)) + 
     geom_col() + 
@@ -204,13 +208,15 @@ f <- function(limit) {
     coord_flip() 
   print(p)
   gridSVG::grid.export(out_svg)
-  webshot(out_svg, out_png)
+  webshot(out_svg,
+          out_png,
+          vwidth = 100,
+          vheight = 100,
+          zoom = 3)
   out_png
 }
-```
 
-```{r, eval = FALSE}
-out_png <- purrr::map_chr(emojis$n, f)
+out_png <- purrr::map_chr(emojis$n, plot_emojis)
 
 purrr::map(rev(out_png), image_read) %>%
   image_join() %>%
@@ -218,7 +224,49 @@ purrr::map(rev(out_png), image_read) %>%
   image_write("../../static/images/runconf_emojis.gif")
 ```
 
-![]("../../static/images/runconf_emojis.gif")
+This (like many things I do) was very much inspired by Maëlle's [post](http://www.masalmon.eu/2017/02/18/complot/).
+
+```{r, eval = FALSE}
+plot_emojis <- function(limit) {
+  emojis_filter <- emojis %>%
+    filter(emojis$n <= limit)
+  out_svg <- paste0("file://emojis_", limit,".svg")
+  out_png <- paste0("emojis_", limit, ".png")
+  p <- ggplot(emojis_filter, aes(num, n)) + 
+    geom_col() + 
+    xlim(c(0,16)) +
+    geom_text(aes(x = num, 
+                  y = n + 1,
+                  label = Native), size = 5)  +
+    theme(axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          legend.position="none") + 
+    ylim(c(0, max(emojis$n) + 10)) +
+    xlab("emoji") + 
+    ggtitle("#runconf17 emojis") +
+    coord_flip() 
+  print(p)
+  gridSVG::grid.export(out_svg)
+  webshot(out_svg,
+          out_png,
+          vwidth = 100,
+          vheight = 100,
+          zoom = 3)
+  out_png
+}
+```
+
+Now let's make them into a gif!
+```{r, eval = FALSE}
+out_png <- purrr::map_chr(emojis$n, plot_emojis)
+
+purrr::map(rev(out_png), image_read) %>%
+  image_join() %>%
+  image_animate(fps=1) %>%
+  image_write("runconf_emojis.gif")
+```
+
+![](https://github.com/LFOD/real-blog/raw/master/static/images/runconf_emojis.gif)
 
 The purple heart seems to be the most popular emoji, which makes sense given [25% of us were #RLadies](https://twitter.com/nistara_r/status/867974699044687872)! 
 

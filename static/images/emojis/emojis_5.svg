@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="456px" height="281.83px" viewBox="0 0 456 281.83" version="1.1">
   <metadata xmlns:gridsvg="http://www.stat.auckland.ac.nz/~paul/R/gridSVG/">
-    <gridsvg:generator name="gridSVG" version="1.5-1" time="2017-06-04 15:06:29"/>
+    <gridsvg:generator name="gridSVG" version="1.5-1" time="2017-06-04 15:42:07"/>
     <gridsvg:argument name="name" value="file:///Users/LucyMcGowan/Documents/wonderland/live-free-or-dichotomize/static/images/emojis/emojis_5.svg"/>
     <gridsvg:argument name="exportCoords" value="none"/>
     <gridsvg:argument name="exportMappings" value="none"/>
@@ -33,79 +33,79 @@
           </g>
           <defs>
             <clipPath id="layout::panel.6-4-6-4.1.clipPath">
-              <rect x="24.43" y="30.02" width="426.09" height="246.32" fill="none" stroke="none"/>
+              <rect x="24.43" y="30.02" width="426.09" height="227.44" fill="none" stroke="none"/>
             </clipPath>
           </defs>
           <g id="layout::panel.6-4-6-4.1" clip-path="url(#layout::panel.6-4-6-4.1.clipPath)">
             <g id="panel.6-4-6-4.1">
-              <g id="grill.gTree.5374.1">
-                <g id="panel.background..rect.5365.1">
-                  <rect id="panel.background..rect.5365.1.1" x="24.43" y="30.02" width="426.09" height="246.32" stroke-width="1.07" stroke="none" fill="rgb(235,235,235)" stroke-dasharray="none" stroke-opacity="0" fill-opacity="1"/>
+              <g id="grill.gTree.6281.1">
+                <g id="panel.background..rect.6272.1">
+                  <rect id="panel.background..rect.6272.1.1" x="24.43" y="30.02" width="426.09" height="227.44" stroke-width="1.07" stroke="none" fill="rgb(235,235,235)" stroke-dasharray="none" stroke-opacity="0" fill-opacity="1"/>
                 </g>
-                <g id="panel.grid.minor.y..polyline.5367.1">
-                  <polyline id="panel.grid.minor.y..polyline.5367.1.1" points="24.43,76.21 450.52,76.21" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.minor.y..polyline.5367.1.2" points="24.43,146.19 450.52,146.19" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.minor.y..polyline.5367.1.3" points="24.43,216.17 450.52,216.17" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                <g id="panel.grid.minor.y..polyline.6274.1">
+                  <polyline id="panel.grid.minor.y..polyline.6274.1.1" points="24.43,72.67 450.52,72.67" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.minor.y..polyline.6274.1.2" points="24.43,137.29 450.52,137.29" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.minor.y..polyline.6274.1.3" points="24.43,201.9 450.52,201.9" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
                 </g>
-                <g id="panel.grid.minor.x..polyline.5369.1">
-                  <polyline id="panel.grid.minor.x..polyline.5369.1.1" points="101.62,30.02 101.62,276.35" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.minor.x..polyline.5369.1.2" points="217.24,30.02 217.24,276.35" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.minor.x..polyline.5369.1.3" points="332.87,30.02 332.87,276.35" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.minor.x..polyline.5369.1.4" points="448.5,30.02 448.5,276.35" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                <g id="panel.grid.minor.x..polyline.6276.1">
+                  <polyline id="panel.grid.minor.x..polyline.6276.1.1" points="101.62,30.02 101.62,257.47" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.minor.x..polyline.6276.1.2" points="217.24,30.02 217.24,257.47" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.minor.x..polyline.6276.1.3" points="332.87,30.02 332.87,257.47" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.minor.x..polyline.6276.1.4" points="448.5,30.02 448.5,257.47" stroke-width="0.53" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
                 </g>
-                <g id="panel.grid.major.y..polyline.5371.1">
-                  <polyline id="panel.grid.major.y..polyline.5371.1.1" points="24.43,41.22 450.52,41.22" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.major.y..polyline.5371.1.2" points="24.43,111.2 450.52,111.2" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.major.y..polyline.5371.1.3" points="24.43,181.18 450.52,181.18" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.major.y..polyline.5371.1.4" points="24.43,251.16 450.52,251.16" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                <g id="panel.grid.major.y..polyline.6278.1">
+                  <polyline id="panel.grid.major.y..polyline.6278.1.1" points="24.43,40.36 450.52,40.36" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.major.y..polyline.6278.1.2" points="24.43,104.98 450.52,104.98" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.major.y..polyline.6278.1.3" points="24.43,169.59 450.52,169.59" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.major.y..polyline.6278.1.4" points="24.43,234.21 450.52,234.21" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
                 </g>
-                <g id="panel.grid.major.x..polyline.5373.1">
-                  <polyline id="panel.grid.major.x..polyline.5373.1.1" points="43.8,30.02 43.8,276.35" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.major.x..polyline.5373.1.2" points="159.43,30.02 159.43,276.35" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.major.x..polyline.5373.1.3" points="275.06,30.02 275.06,276.35" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
-                  <polyline id="panel.grid.major.x..polyline.5373.1.4" points="390.68,30.02 390.68,276.35" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                <g id="panel.grid.major.x..polyline.6280.1">
+                  <polyline id="panel.grid.major.x..polyline.6280.1.1" points="43.8,30.02 43.8,257.47" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.major.x..polyline.6280.1.2" points="159.43,30.02 159.43,257.47" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.major.x..polyline.6280.1.3" points="275.06,30.02 275.06,257.47" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
+                  <polyline id="panel.grid.major.x..polyline.6280.1.4" points="390.68,30.02 390.68,257.47" stroke-width="1.07" stroke="rgb(255,255,255)" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="1" fill="none"/>
                 </g>
               </g>
-              <g id="geom_rect.rect.5360.1">
-                <rect id="geom_rect.rect.5360.1.1" x="43.8" y="188.88" width="28.91" height="12.6" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
-                <rect id="geom_rect.rect.5360.1.2" x="43.8" y="202.87" width="28.91" height="12.6" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
-                <rect id="geom_rect.rect.5360.1.3" x="43.8" y="216.87" width="28.91" height="12.6" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
-                <rect id="geom_rect.rect.5360.1.4" x="43.8" y="230.86" width="17.34" height="12.6" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
-                <rect id="geom_rect.rect.5360.1.5" x="43.8" y="244.86" width="17.34" height="12.6" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
+              <g id="geom_rect.rect.6267.1">
+                <rect id="geom_rect.rect.6267.1.1" x="43.8" y="176.7" width="28.91" height="11.63" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
+                <rect id="geom_rect.rect.6267.1.2" x="43.8" y="189.62" width="28.91" height="11.63" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
+                <rect id="geom_rect.rect.6267.1.3" x="43.8" y="202.55" width="28.91" height="11.63" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
+                <rect id="geom_rect.rect.6267.1.4" x="43.8" y="215.47" width="17.34" height="11.63" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
+                <rect id="geom_rect.rect.6267.1.5" x="43.8" y="228.39" width="17.34" height="11.63" stroke="none" fill="rgb(89,89,89)" stroke-width="1.07" stroke-dasharray="none" stroke-linecap="butt" stroke-opacity="0" fill-opacity="1"/>
               </g>
-              <g id="GRID.text.5361.1">
-                <g id="GRID.text.5361.1.1" transform="translate(78.49, 195.17)" stroke-width="0.1">
-                  <g id="GRID.text.5361.1.1.scale" transform="scale(1, -1)">
-                    <text x="0" y="0" id="GRID.text.5361.1.1.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                      <tspan id="GRID.text.5361.1.1.tspan.1" dy="5.08" x="0">✈</tspan>
+              <g id="GRID.text.6268.1">
+                <g id="GRID.text.6268.1.1" transform="translate(78.49, 182.52)" stroke-width="0.1">
+                  <g id="GRID.text.6268.1.1.scale" transform="scale(1, -1)">
+                    <text x="0" y="0" id="GRID.text.6268.1.1.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                      <tspan id="GRID.text.6268.1.1.tspan.1" dy="5.08" x="0">✈</tspan>
                     </text>
                   </g>
                 </g>
-                <g id="GRID.text.5361.1.2" transform="translate(78.49, 209.17)" stroke-width="0.1">
-                  <g id="GRID.text.5361.1.2.scale" transform="scale(1, -1)">
-                    <text x="0" y="0" id="GRID.text.5361.1.2.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                      <tspan id="GRID.text.5361.1.2.tspan.1" dy="5.08" x="0">❤</tspan>
+                <g id="GRID.text.6268.1.2" transform="translate(78.49, 195.44)" stroke-width="0.1">
+                  <g id="GRID.text.6268.1.2.scale" transform="scale(1, -1)">
+                    <text x="0" y="0" id="GRID.text.6268.1.2.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                      <tspan id="GRID.text.6268.1.2.tspan.1" dy="5.08" x="0">❤</tspan>
                     </text>
                   </g>
                 </g>
-                <g id="GRID.text.5361.1.3" transform="translate(78.49, 223.17)" stroke-width="0.1">
-                  <g id="GRID.text.5361.1.3.scale" transform="scale(1, -1)">
-                    <text x="0" y="0" id="GRID.text.5361.1.3.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                      <tspan id="GRID.text.5361.1.3.tspan.1" dy="5.08" x="0">🐶</tspan>
+                <g id="GRID.text.6268.1.3" transform="translate(78.49, 208.36)" stroke-width="0.1">
+                  <g id="GRID.text.6268.1.3.scale" transform="scale(1, -1)">
+                    <text x="0" y="0" id="GRID.text.6268.1.3.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                      <tspan id="GRID.text.6268.1.3.tspan.1" dy="5.08" x="0">🐶</tspan>
                     </text>
                   </g>
                 </g>
-                <g id="GRID.text.5361.1.4" transform="translate(66.93, 237.16)" stroke-width="0.1">
-                  <g id="GRID.text.5361.1.4.scale" transform="scale(1, -1)">
-                    <text x="0" y="0" id="GRID.text.5361.1.4.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                      <tspan id="GRID.text.5361.1.4.tspan.1" dy="5.08" x="0">❄</tspan>
+                <g id="GRID.text.6268.1.4" transform="translate(66.93, 221.28)" stroke-width="0.1">
+                  <g id="GRID.text.6268.1.4.scale" transform="scale(1, -1)">
+                    <text x="0" y="0" id="GRID.text.6268.1.4.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                      <tspan id="GRID.text.6268.1.4.tspan.1" dy="5.08" x="0">❄</tspan>
                     </text>
                   </g>
                 </g>
-                <g id="GRID.text.5361.1.5" transform="translate(66.93, 251.16)" stroke-width="0.1">
-                  <g id="GRID.text.5361.1.5.scale" transform="scale(1, -1)">
-                    <text x="0" y="0" id="GRID.text.5361.1.5.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                      <tspan id="GRID.text.5361.1.5.tspan.1" dy="5.08" x="0">🐔</tspan>
+                <g id="GRID.text.6268.1.5" transform="translate(66.93, 234.21)" stroke-width="0.1">
+                  <g id="GRID.text.6268.1.5.scale" transform="scale(1, -1)">
+                    <text x="0" y="0" id="GRID.text.6268.1.5.text" text-anchor="middle" stroke="rgb(0,0,0)" font-size="14.23" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                      <tspan id="GRID.text.6268.1.5.tspan.1" dy="5.08" x="0">🐔</tspan>
                     </text>
                   </g>
                 </g>
@@ -118,12 +118,12 @@
           <g id="layout::spacer.5-3-5-3.1"/>
           <g id="layout::axis-t.5-4-5-4.1"/>
           <g id="layout::axis-l.6-3-6-3.1">
-            <g id="layout::axis-l.6-3-6-3::GRID.VP.768.1">
+            <g id="layout::axis-l.6-3-6-3::GRID.VP.912.1">
               <g id="axis-l.6-3-6-3.1">
-                <g id="layout::axis-l.6-3-6-3::GRID.VP.768::axis.1">
+                <g id="layout::axis-l.6-3-6-3::GRID.VP.912::axis.1">
                   <g id="axis.1">
-                    <g id="layout::axis-l.6-3-6-3::GRID.VP.768::axis::axis.1-1-1-1.1"/>
-                    <g id="layout::axis-l.6-3-6-3::GRID.VP.768::axis::axis.1-2-1-2.1"/>
+                    <g id="layout::axis-l.6-3-6-3::GRID.VP.912::axis::axis.1-1-1-1.1"/>
+                    <g id="layout::axis-l.6-3-6-3::GRID.VP.912::axis::axis.1-2-1-2.1"/>
                   </g>
                 </g>
               </g>
@@ -131,41 +131,41 @@
           </g>
           <g id="layout::axis-r.6-5-6-5.1"/>
           <g id="layout::axis-b.7-4-7-4.1">
-            <g id="layout::axis-b.7-4-7-4::GRID.VP.767.1">
+            <g id="layout::axis-b.7-4-7-4::GRID.VP.911.1">
               <g id="axis-b.7-4-7-4.1">
-                <g id="layout::axis-b.7-4-7-4::GRID.VP.767::axis.1">
+                <g id="layout::axis-b.7-4-7-4::GRID.VP.911::axis.1">
                   <g id="axis.2">
-                    <g id="layout::axis-b.7-4-7-4::GRID.VP.767::axis::axis.1-1-1-1.1"/>
-                    <g id="layout::axis-b.7-4-7-4::GRID.VP.767::axis::axis.2-1-2-1.1">
-                      <g id="layout::axis-b.7-4-7-4::GRID.VP.767::axis::axis.2-1-2-1::GRID.VP.765.1" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
-                        <g id="layout::axis-b.7-4-7-4::GRID.VP.767::axis::axis.2-1-2-1::GRID.VP.765::GRID.VP.766.1">
+                    <g id="layout::axis-b.7-4-7-4::GRID.VP.911::axis::axis.1-1-1-1.1"/>
+                    <g id="layout::axis-b.7-4-7-4::GRID.VP.911::axis::axis.2-1-2-1.1">
+                      <g id="layout::axis-b.7-4-7-4::GRID.VP.911::axis::axis.2-1-2-1::GRID.VP.909.1" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
+                        <g id="layout::axis-b.7-4-7-4::GRID.VP.911::axis::axis.2-1-2-1::GRID.VP.909::GRID.VP.910.1">
                           <g id="axis.2-1-2-1.1">
-                            <g id="GRID.text.5383.1">
-                              <g id="GRID.text.5383.1.1" transform="translate(43.8, 25.09)" stroke-width="0.1">
-                                <g id="GRID.text.5383.1.1.scale" transform="scale(1, -1)">
-                                  <text x="0" y="0" id="GRID.text.5383.1.1.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                                    <tspan id="GRID.text.5383.1.1.tspan.1" dy="6.28" x="0">0</tspan>
+                            <g id="GRID.text.6290.1">
+                              <g id="GRID.text.6290.1.1" transform="translate(43.8, 25.09)" stroke-width="0.1">
+                                <g id="GRID.text.6290.1.1.scale" transform="scale(1, -1)">
+                                  <text x="0" y="0" id="GRID.text.6290.1.1.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                                    <tspan id="GRID.text.6290.1.1.tspan.1" dy="6.28" x="0">0</tspan>
                                   </text>
                                 </g>
                               </g>
-                              <g id="GRID.text.5383.1.2" transform="translate(159.43, 25.09)" stroke-width="0.1">
-                                <g id="GRID.text.5383.1.2.scale" transform="scale(1, -1)">
-                                  <text x="0" y="0" id="GRID.text.5383.1.2.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                                    <tspan id="GRID.text.5383.1.2.tspan.1" dy="6.28" x="0">20</tspan>
+                              <g id="GRID.text.6290.1.2" transform="translate(159.43, 25.09)" stroke-width="0.1">
+                                <g id="GRID.text.6290.1.2.scale" transform="scale(1, -1)">
+                                  <text x="0" y="0" id="GRID.text.6290.1.2.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                                    <tspan id="GRID.text.6290.1.2.tspan.1" dy="6.28" x="0">20</tspan>
                                   </text>
                                 </g>
                               </g>
-                              <g id="GRID.text.5383.1.3" transform="translate(275.06, 25.09)" stroke-width="0.1">
-                                <g id="GRID.text.5383.1.3.scale" transform="scale(1, -1)">
-                                  <text x="0" y="0" id="GRID.text.5383.1.3.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                                    <tspan id="GRID.text.5383.1.3.tspan.1" dy="6.28" x="0">40</tspan>
+                              <g id="GRID.text.6290.1.3" transform="translate(275.06, 25.09)" stroke-width="0.1">
+                                <g id="GRID.text.6290.1.3.scale" transform="scale(1, -1)">
+                                  <text x="0" y="0" id="GRID.text.6290.1.3.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                                    <tspan id="GRID.text.6290.1.3.tspan.1" dy="6.28" x="0">40</tspan>
                                   </text>
                                 </g>
                               </g>
-                              <g id="GRID.text.5383.1.4" transform="translate(390.68, 25.09)" stroke-width="0.1">
-                                <g id="GRID.text.5383.1.4.scale" transform="scale(1, -1)">
-                                  <text x="0" y="0" id="GRID.text.5383.1.4.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                                    <tspan id="GRID.text.5383.1.4.tspan.1" dy="6.28" x="0">60</tspan>
+                              <g id="GRID.text.6290.1.4" transform="translate(390.68, 25.09)" stroke-width="0.1">
+                                <g id="GRID.text.6290.1.4.scale" transform="scale(1, -1)">
+                                  <text x="0" y="0" id="GRID.text.6290.1.4.text" text-anchor="middle" font-size="8.8" stroke="rgb(77,77,77)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(77,77,77)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                                    <tspan id="GRID.text.6290.1.4.tspan.1" dy="6.28" x="0">60</tspan>
                                   </text>
                                 </g>
                               </g>
@@ -181,14 +181,14 @@
           </g>
           <g id="layout::xlab-t.4-4-4-4.1"/>
           <g id="layout::xlab-b.8-4-8-4.1">
-            <g id="layout::xlab-b.8-4-8-4::GRID.VP.763.1" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
-              <g id="layout::xlab-b.8-4-8-4::GRID.VP.763::GRID.VP.764.1">
+            <g id="layout::xlab-b.8-4-8-4::GRID.VP.907.1" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
+              <g id="layout::xlab-b.8-4-8-4::GRID.VP.907::GRID.VP.908.1">
                 <g id="xlab-b.8-4-8-4.1">
-                  <g id="GRID.text.5380.1">
-                    <g id="GRID.text.5380.1.1" transform="translate(237.48, 13.33)" stroke-width="0.1">
-                      <g id="GRID.text.5380.1.1.scale" transform="scale(1, -1)">
-                        <text x="0" y="0" id="GRID.text.5380.1.1.text" text-anchor="middle" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                          <tspan id="GRID.text.5380.1.1.tspan.1" dy="7.85" x="0">n</tspan>
+                  <g id="GRID.text.6287.1">
+                    <g id="GRID.text.6287.1.1" transform="translate(237.48, 13.33)" stroke-width="0.1">
+                      <g id="GRID.text.6287.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="GRID.text.6287.1.1.text" text-anchor="middle" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                          <tspan id="GRID.text.6287.1.1.tspan.1" dy="7.85" x="0">n</tspan>
                         </text>
                       </g>
                     </g>
@@ -198,14 +198,14 @@
             </g>
           </g>
           <g id="layout::ylab-l.6-2-6-2.1">
-            <g id="layout::ylab-l.6-2-6-2::GRID.VP.761.1" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
-              <g id="layout::ylab-l.6-2-6-2::GRID.VP.761::GRID.VP.762.1">
+            <g id="layout::ylab-l.6-2-6-2::GRID.VP.905.1" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
+              <g id="layout::ylab-l.6-2-6-2::GRID.VP.905::GRID.VP.906.1">
                 <g id="ylab-l.6-2-6-2.1">
-                  <g id="GRID.text.5377.1">
-                    <g id="GRID.text.5377.1.1" transform="translate(5.48, 153.19)" stroke-width="0.1">
-                      <g id="GRID.text.5377.1.1.scale" transform="scale(1, -1)">
-                        <text x="0" y="0" id="GRID.text.5377.1.1.text" transform="rotate(-90)" text-anchor="middle" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
-                          <tspan id="GRID.text.5377.1.1.tspan.1" dy="7.85" x="0">emoji</tspan>
+                  <g id="GRID.text.6284.1">
+                    <g id="GRID.text.6284.1.1" transform="translate(5.48, 143.75)" stroke-width="0.1">
+                      <g id="GRID.text.6284.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="GRID.text.6284.1.1.text" transform="rotate(-90)" text-anchor="middle" font-size="11" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                          <tspan id="GRID.text.6284.1.1.tspan.1" dy="7.85" x="0">emoji</tspan>
                         </text>
                       </g>
                     </g>
@@ -216,7 +216,23 @@
           </g>
           <g id="layout::ylab-r.6-6-6-6.1"/>
           <g id="layout::subtitle.3-4-3-4.1"/>
-          <g id="layout::title.2-4-2-4.1"/>
+          <g id="layout::title.2-4-2-4.1">
+            <g id="layout::title.2-4-2-4::GRID.VP.913.1" font-size="13.2" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" stroke-opacity="1" font-weight="normal" font-style="normal">
+              <g id="layout::title.2-4-2-4::GRID.VP.913::GRID.VP.914.1">
+                <g id="title.2-4-2-4.1">
+                  <g id="GRID.text.6300.1">
+                    <g id="GRID.text.6300.1.1" transform="translate(24.43, 276.35)" stroke-width="0.1">
+                      <g id="GRID.text.6300.1.1.scale" transform="scale(1, -1)">
+                        <text x="0" y="0" id="GRID.text.6300.1.1.text" text-anchor="start" font-size="13.2" stroke="rgb(0,0,0)" font-family="Helvetica, Arial, FreeSans, Liberation Sans, Nimbus Sans L, sans-serif" fill="rgb(0,0,0)" stroke-opacity="1" fill-opacity="1" font-weight="normal" font-style="normal">
+                          <tspan id="GRID.text.6300.1.1.tspan.1" dy="9.42" x="0">#runconf17 emojis</tspan>
+                        </text>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
           <g id="layout::caption.9-4-9-4.1"/>
         </g>
       </g>
