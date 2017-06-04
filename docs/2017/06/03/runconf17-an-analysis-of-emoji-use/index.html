@@ -82,7 +82,7 @@
 
     
       &nbsp;<i class="fa fa-clock-o"></i>
-      &nbsp;6 min read
+      &nbsp;5 min read
     
 
     
@@ -270,26 +270,22 @@ Effects          &emsp;&emsp;Response: <code>used_emoji</code></td></tr>
 <div id="most-popular-emojis" class="section level2">
 <h2>most popular emojis</h2>
 <p><span class="newthought">Now let’s checkout</span> which emojis were most popular among #runconf17 tweeters. This time I’ll allow for retweets 👯</p>
+<pre class="r"><code>library(&quot;ggplot2&quot;)
+library(&quot;webshot&quot;)
+library(&quot;magick&quot;)</code></pre>
 <pre class="r"><code>runconf_emojis &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;,
                                 n = 1e4)</code></pre>
-<pre class="r"><code>emojis &lt;- regex_left_join(runconf_emojis, dico, by = c(text = &quot;Native&quot;)) %&gt;%
-  group_by(Native) %&gt;%
-  filter(!is.na(Native)) %&gt;%
-  summarise(n = n()) %&gt;%
-  arrange(desc(n)) %&gt;%
-  head(10)</code></pre>
-<pre class="r"><code>pretty &lt;- function(x, y) cat(y, &quot;:&quot;, rep(x, y), &quot;\n\n&quot;)
-purrr::walk2(emojis$Native, emojis$n, pretty)</code></pre>
-<p>57 : 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜</p>
-<p>51 : 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻</p>
-<p>44 : 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦</p>
-<p>40 : 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉</p>
-<p>38 : ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐</p>
-<p>18 : 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯</p>
-<p>13 : 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎</p>
-<p>11 : 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏</p>
-<p>10 : 😍 😍 😍 😍 😍 😍 😍 😍 😍 😍</p>
-<p>8 : 😎 😎 😎 😎 😎 😎 😎 😎</p>
+<p><a href="https://github.com/wch/webshot">webshot</a></p>
+<pre class="r"><code>out_png &lt;- purrr::map_chr(emojis$n, f)
+
+purrr::map(rev(out_png), image_read) %&gt;%
+  image_join() %&gt;%
+  image_animate(fps=1) %&gt;%
+  image_write(&quot;../../static/images/runconf_emojis.gif&quot;)</code></pre>
+<div class="figure">
+<embed src="%22../../static/images/runconf_emojis.gif%22" />
+
+</div>
 <p>The purple heart seems to be the most popular emoji, which makes sense given <a href="https://twitter.com/nistara_r/status/867974699044687872">25% of us were #RLadies</a>!</p>
 <p>All in all, it was an epic experience. Thank you so much to the conference organizers, attendees, and #runconf17 tweeters for such a delightful week!</p>
 </div>

@@ -155,6 +155,12 @@ lrm(used_emoji~runconf, data = used_emoji) %>%
 
 `r tufte::newthought("Now let's checkout")` which emojis were most popular among #runconf17 tweeters. This time I'll allow for retweets `r emo::ji("dancing_women")`
 
+```{r, message = FALSE, warning = FALSE}
+library("ggplot2")
+library("webshot")
+library("magick")
+```
+
 ```{r, eval = FALSE}
 runconf_emojis <- search_tweets(q = "#runconf17 AND since:2017-05-23 AND until:2017-05-31",
                                 n = 1e4)
@@ -163,25 +169,56 @@ runconf_emojis <- search_tweets(q = "#runconf17 AND since:2017-05-23 AND until:2
 ```{r, echo = FALSE, eval = FALSE}
 save(runconf_emojis, file = "runconf_emojis.rda")
 ```
-
+[webshot](https://github.com/wch/webshot)
 ```{r, echo = FALSE}
 load("../../static/data/runconf_emojis.rda")
 ```
 
-```{r}
+```{r, eval = FALSE, echo = FALSE}
 emojis <- regex_left_join(runconf_emojis, dico, by = c(text = "Native")) %>%
   group_by(Native) %>%
   filter(!is.na(Native)) %>%
   summarise(n = n()) %>%
   arrange(desc(n)) %>%
-  head(10)
+  head(15)
+
+base <- "file:///Users/LucyMcGowan/Documents/wonderland/live-free-or-dichotomize/static/images/emojis/"
+emojis$num <- 1:15
+f <- function(limit) {
+  emojis_filter <- emojis %>%
+    filter(emojis$n <= limit)
+  out_svg <- paste0(base,"emojis_",limit,".svg")
+  out_png <- paste0("../../static/images/emojis/emojis_", limit, ".png")
+  p <- ggplot(emojis_filter, aes(num, n)) + 
+    geom_col() + 
+    xlim(c(0,16)) +
+    geom_text(aes(x = num, 
+                  y = n + 1,
+                  label = Native), size = 5)  +
+    theme(axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          legend.position="none") + 
+    ylim(c(0, max(emojis$n) + 10)) +
+    xlab("emoji") + 
+    ggtitle("#runconf17 emojis") +
+    coord_flip() 
+  print(p)
+  gridSVG::grid.export(out_svg)
+  webshot(out_svg, out_png)
+  out_png
+}
 ```
 
+```{r, eval = FALSE}
+out_png <- purrr::map_chr(emojis$n, f)
 
-```{r, results = "asis"}
-pretty <- function(x, y) cat(y, ":", rep(x, y), "\n\n")
-purrr::walk2(emojis$Native, emojis$n, pretty)
+purrr::map(rev(out_png), image_read) %>%
+  image_join() %>%
+  image_animate(fps=1) %>%
+  image_write("../../static/images/runconf_emojis.gif")
 ```
+
+![]("../../static/images/runconf_emojis.gif")
 
 The purple heart seems to be the most popular emoji, which makes sense given [25% of us were #RLadies](https://twitter.com/nistara_r/status/867974699044687872)! 
 
