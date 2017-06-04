@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Live Free or Dichotomize</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Collaboration</title>
+      <link>/categories/collaboration/</link>
+      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/categories/collaboration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Conferences</title>
+      <link>/categories/conferences/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/categories/conferences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data Science</title>
+      <link>/categories/data-science/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/categories/data-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Emojis</title>
+      <link>/categories/emojis/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/categories/emojis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Epidemiology</title>
+      <link>/categories/epidemiology/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/categories/epidemiology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google Docs</title>
+      <link>/categories/google-docs/</link>
+      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/categories/google-docs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Javascript</title>
+      <link>/categories/javascript/</link>
+      <pubDate>Sun, 12 Mar 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/categories/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Modeling</title>
+      <link>/categories/modeling/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/modeling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nonlinearity</title>
+      <link>/categories/nonlinearity/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/categories/nonlinearity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nssd</title>
+      <link>/categories/nssd/</link>
+      <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
+      
+      <guid>/categories/nssd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/categories/r/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rms</title>
+      <link>/categories/rms/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/categories/rms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ropensci</title>
+      <link>/categories/ropensci/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/categories/ropensci/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rstats</title>
+      <link>/categories/rstats/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/categories/rstats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Thankyou</title>
+      <link>/categories/thankyou/</link>
+      <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
+      
+      <guid>/categories/thankyou/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Type 1 Error</title>
+      <link>/categories/type-1-error/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/categories/type-1-error/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Visualization</title>
+      <link>/categories/visualization/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Xkcd</title>
+      <link>/categories/xkcd/</link>
+      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
+      
+      <guid>/categories/xkcd/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

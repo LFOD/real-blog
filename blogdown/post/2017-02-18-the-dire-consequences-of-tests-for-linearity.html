@@ -14,11 +14,11 @@ title: "The dire consequences of tests for linearity"
 excerpt: "This is a tale of the dire (type 1 error) consequences that occur when you test for linearity 😱"
 ---
 
+<!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
 
-<!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE -->
-
+<!-- BLOGDOWN-BODY-BEFORE -->
+<!-- /BLOGDOWN-BODY-BEFORE -->
 <p>This is a tale of the dire <strong>type 1 error</strong> consequences that occur when you test for linearity.</p>
 <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Scream.jpg/603px-The_Scream.jpg" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Scream.jpg/603px-The_Scream.jpg" width=50% alt="the scream"> </a>
 <p style="color:#EB6864; font-size: 10pt;LINE-HEIGHT:15px;">
@@ -80,25 +80,3 @@ cat(&quot;The type 1 error is&quot;, mean(test &lt;= 0.05))</code></pre>
 <p>Much better 👯</p>
 <p>The conclusion: <a href="http://livefreeordichotomize.com/2017/01/27/yoga-for-modeling/">fit flexible models</a> - skip the tests for linearity!</p>
 <p><em>This has been elegently demonstrated by others, check out <a href="http://onlinelibrary.wiley.com/doi/10.1002/sim.4780100504/full">Grambsch and O’Brien</a>.</em></p>
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-<!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD -->

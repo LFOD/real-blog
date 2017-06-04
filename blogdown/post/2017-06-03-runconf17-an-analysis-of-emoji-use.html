@@ -1,0 +1,230 @@
+---
+author: "Lucy D'Agostino McGowan"
+date: 2017-06-03T20:47:20-05:00
+title: "#runconf17, an analysis of emoji use"
+categories: ["rOpenSci","rstats","conferences", "emojis"]
+tags: ["rOpenSci","rstats","conferences", "emojis"]
+comments: true
+draft: false
+image: ""
+menu: ""
+share: true
+excerpt: "I had such a delightful time at rOpenSci's unconference. Not only was it extremely productive (21 packages were produced!), but in between the crazy productivity was some epic community building."
+---
+
+
+<!-- BLOGDOWN-BODY-BEFORE
+
+/BLOGDOWN-BODY-BEFORE -->
+
+<p>I had <em>such</em> a delightful time at rOpenSci’s <a href="http://unconf17.ropensci.org">unconference</a> last week. Not only was it <a href="https://ropenscilabs.github.io/runconf17-projects/">extremely productive</a> (21 📦 were produced!), but in between the crazy productivity was some epic community building. <a href="https://twitter.com/StefanieButland">Stefanie</a> kicked the conference off with ice breakers, where explored topics ranging from #rcatladies &amp; #rdogfellas (for the record, I’m an #rchickenlady, <a href="https://twitter.com/search?q=%23RChickenLadies&amp;src=typd">IT’S HAPPENING</a>) to impostor syndrome.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+<em>50+ of the best R programmers in the world</em> ‘raise your hand if you have impostor syndrome!’ <a href="https://twitter.com/hashtag/runconf17?src=hash">#runconf17</a> <a href="https://t.co/aiRgHbVCtU">pic.twitter.com/aiRgHbVCtU</a>
+</p>
+— Oliver Keyes (<span class="citation">@kopshtik</span>) <a href="https://twitter.com/kopshtik/status/867786243911819264">May 25, 2017</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>It was an excellent way to get conversations starting!</p>
+<div id="work" class="section level2">
+<h2>work</h2>
+<p><a href="https://twitter.com/_inundata">Karthik</a> and I worked on two packages:</p>
+<ul>
+<li><p><a href="https://github.com/ropenscilabs/arresteddev">arresteddev</a>: a package for when your development is going awry! Includes functions such as <code>lmgtfy()</code>, that will seamlessly google your last error message, <a href="https://twitter.com/drob">David Robinson’s</a> <code>tracestack()</code> that will query your last error message on Stack Overflow, and <code>squirell()</code>, a function that will randomly send you to a distracting website - for when things are really going poorly 💁. Mostly, this was a good excuse to look up Arrested Development gifs, which, we established, is pronounced with a g like giraffe.</p></li>
+<li><p><a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress</a>: a package for automating speedy emails from R - copy and paste neigh more 🐴. This package allows you to send templated emails to a list of contacts. Great for conferences, birthday parties, or karaoke invitations.</p></li>
+</ul>
+</div>
+<div id="play" class="section level2">
+<h2>play</h2>
+<p>Between our package building, there were SO many opportunities to get to know some of the most talented people.</p>
+<div class="figure">
+<img src="/Users/lucymcgowan/Documents/wonderland/live-free-or-dichotomize/static/images/jenny_lucy.jpg" />
+
+</div>
+<p>Jenny &amp; I enthusiastically working on <a href="https://github.com/tidyverse/googledrive">googledrive</a>.</p>
+<p>a few highlights:</p>
+<ul>
+<li>🍨 ice cream outings<br />
+</li>
+<li>🎤 karaoke adventures<br />
+</li>
+<li>🍸 happy hours (complete with <a href="https://twitter.com/revodavid/status/867901254466506752">R-themed drinks</a>)</li>
+<li>💪 Karthik attempting to lick his elbow</li>
+</ul>
+<p>More than anything, this was an excellent opportunity to feel like a part of a community – and a community that certainly extends beyond the people that attended the unconference! There were so many people following along, tweeting along, and assisting along the way.</p>
+</div>
+<div id="analysis" class="section level2">
+<h2>analysis</h2>
+<p>In an effort to stay on brand, I decided to do a small analysis of the tweets that came out of #runconf17. I designed a small study:</p>
+<ul>
+<li>pulled all tweets (excluding retweets) using the hashtag #runconf17 between May 24th and May 30th</li>
+<li>also pulled all tweets (excluding retweets) using the hashtag #rstats during the same time period</li>
+</ul>
+<p><strong>Question</strong>: Are twitter users to used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period?</p>
+<p>I used the <strong>rtweet</strong> package to pull the tweets, <strong>dplyr</strong> and <strong>fuzzyjoin</strong> to wrangle the data a bit, and <strong>rms</strong> to analyze it.</p>
+<pre class="r"><code>library(&quot;rtweet&quot;)
+library(&quot;dplyr&quot;)
+library(&quot;fuzzyjoin&quot;)
+library(&quot;rms&quot;)</code></pre>
+<pre class="r"><code>runconf &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;, n = 1e4, include_rts = FALSE)
+
+rstats &lt;- search_tweets(q = &quot;#rstats AND since:2017-05-23 AND until:2017-05-31&quot;, n = 1e4, include_rts = FALSE)</code></pre>
+<p>After pulling in the tweets, I categorized tweeters as either using the #runconf17 hashtag during the week or not. I then merged the tweets with an emoji dictionary (discoved through the lovely <a href="https://twitter.com/ma_salmon">Maëlle</a>), and grouped by tweeter. If the tweeter used an emoji at any point during the week, they were categorized as an emoji-user, if not, they were sad (jk, theres room for all here!).</p>
+<pre class="r"><code>## create variable for whether tweeted about runconf
+runconf$runconf &lt;- &quot;yes&quot;
+
+rstats &lt;- rstats %&gt;%
+  mutate(runconf = ifelse(screen_name %in% runconf$screen_name, &quot;yes&quot;, &quot;no&quot;))
+
+## load in the emoji dictionary
+dico &lt;- readr::read_csv2(&quot;https://raw.githubusercontent.com/today-is-a-good-day/emojis/master/emDict.csv&quot;)
+
+## combine datasets, keep only unique tweets
+data &lt;- bind_rows(runconf, rstats) %&gt;%
+  distinct(text, .keep_all = TRUE)
+
+## summarize by user, did they tweet about runconf in the past week 
+## &amp; did they use an emoji in the past week?
+used_emoji &lt;- regex_left_join(data, dico, by = c(text = &quot;Native&quot;)) %&gt;%
+  select(screen_name, 
+         text,
+         runconf,
+         emoji = Native) %&gt;%
+  group_by(screen_name) %&gt;%
+  mutate(tot_emoji = sum(!is.na(emoji)),
+         used_emoji = ifelse(tot_emoji &gt; 0, &quot;yes&quot;, &quot;no&quot;),
+         tot_tweets = n_distinct(text)) %&gt;%
+  distinct(screen_name, .keep_all = TRUE)</code></pre>
+<p>We had 575 tweeters that just used the #rstats hashtag, and 58 that tweeted with the #runconf17 hashtag. Among the #rstats tweets, 13.9% used at least one emoji in their tweets, whereas among #runconf17 tweeters, 46.5% used emojis! THESE ARE MY PEOPLE 🙌</p>
+<pre class="r"><code>used_emoji %&gt;%
+  group_by(used_emoji, runconf) %&gt;%
+  tally() %&gt;%
+  mutate(`%` = 100*prop.table(n)) %&gt;%
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">used_emoji</th>
+<th align="left">runconf</th>
+<th align="right">n</th>
+<th align="right">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">no</td>
+<td align="left">no</td>
+<td align="right">495</td>
+<td align="right">86.08696</td>
+</tr>
+<tr class="even">
+<td align="left">no</td>
+<td align="left">yes</td>
+<td align="right">80</td>
+<td align="right">13.91304</td>
+</tr>
+<tr class="odd">
+<td align="left">yes</td>
+<td align="left">no</td>
+<td align="right">31</td>
+<td align="right">53.44828</td>
+</tr>
+<tr class="even">
+<td align="left">yes</td>
+<td align="left">yes</td>
+<td align="right">27</td>
+<td align="right">46.55172</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s model it! 💃</p>
+<pre class="r"><code>## modeling time!
+dd &lt;- datadist(used_emoji)
+options(datadist = &quot;dd&quot;)
+
+lrm(used_emoji~runconf, data = used_emoji) %&gt;%
+  summary() %&gt;%
+  html()</code></pre>
+<table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' >
+<thead>
+<tr><td colspan='8' style='text-align: left;'>
+Effects          &emsp;&emsp;Response: <code>used_emoji</code></td></tr>
+<tr>
+<th style='font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'></th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Low</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>High</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>&Delta;</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Effect</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>S.E.</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Lower 0.95</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Upper 0.95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='text-align: left;'>runconf --- yes:no</td>
+<td style='padding-left:4ex; text-align: right;'>1</td>
+<td style='padding-left:4ex; text-align: right;'>2</td>
+<td style='padding-left:4ex; text-align: right;'></td>
+<td style='padding-left:4ex; text-align: right;'>1.684</td>
+<td style='padding-left:4ex; text-align: right;'>0.2895</td>
+<td style='padding-left:4ex; text-align: right;'>1.117</td>
+<td style='padding-left:4ex; text-align: right;'>2.252</td>
+</tr>
+<tr>
+<td style='border-bottom: 2px solid grey; text-align: left;'>&emsp;<em>Odds Ratio</em></td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>1</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>2</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'></td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>5.389</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'></td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>3.056</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>9.505</td>
+</tr>
+</tbody>
+</table>
+
+<p>Tweeting the #runconf17 hashtag seems undeniably associated with a higher odds of emoji use (OR: 5.4, 95% CI: 3.1, 9.5).</p>
+</div>
+<div id="most-popular-emojis" class="section level2">
+<h2>most popular emojis</h2>
+<p>Now let’s checkout which emojis were most popular among #runconf17 tweeters. This time I’ll allow for retweets 👯</p>
+<pre class="r"><code>runconf_emojis &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;, n = 1e4)</code></pre>
+<pre class="r"><code>emojis &lt;- regex_left_join(runconf_emojis, dico, by = c(text = &quot;Native&quot;)) %&gt;%
+  group_by(Native) %&gt;%
+  filter(!is.na(Native)) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n)) %&gt;%
+  head(10)</code></pre>
+<p>The purple heart seems to be the most popular emoji, which makes sense given 25% of us were #RLadies!</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+R ladies in the house <a href="https://twitter.com/hashtag/runconf17?src=hash">#runconf17</a> <a href="https://twitter.com/hashtag/Rladies?src=hash">#Rladies</a> <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> <a href="https://t.co/7fHdyIMJC8">pic.twitter.com/7fHdyIMJC8</a>
+</p>
+— Nistara Randhawa (<span class="citation">@nistara_r</span>) <a href="https://twitter.com/nistara_r/status/867974699044687872">May 26, 2017</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<pre class="r"><code>pretty &lt;- function(x, y) cat(y, &quot;:&quot;, rep(x, y), &quot;\n\n&quot;)
+purrr::walk2(emojis$Native, emojis$n, pretty)</code></pre>
+<p>57 : 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜 💜</p>
+<p>51 : 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻 💻</p>
+<p>44 : 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦 📦</p>
+<p>40 : 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉</p>
+<p>38 : ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐</p>
+<p>18 : 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯 💯</p>
+<p>13 : 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎 🌎</p>
+<p>11 : 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏 🌏</p>
+<p>10 : 😍 😍 😍 😍 😍 😍 😍 😍 😍 😍</p>
+<p>8 : 😎 😎 😎 😎 😎 😎 😎 😎</p>
+</div>
+
+
+
+<!-- BLOGDOWN-HEAD
+
+
+
+
+
+
+/BLOGDOWN-HEAD -->

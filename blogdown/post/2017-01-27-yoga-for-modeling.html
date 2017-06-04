@@ -13,10 +13,6 @@ excerpt: "A New Year's resolution for all of our models: get more flexible! By f
 ---
 
 
-<!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE -->
-
 <p>A New Year’s resolution for all of our models: get more flexible!</p>
 <p><em>As an aside, I’m better at implementing yoga for my models than yoga for myself, most of the time I end up like this:</em></p>
 <div class="figure">
@@ -94,7 +90,7 @@ ols(y~rcs(x, k))</code></pre>
 getHdata(support2)
 f &lt;- lrm(hospdead ~ rcs(age,5) + rcs(temp, 5) + rcs(hrt, 5) + rcs(pafi, 5) + edu + sex, data = support2)
 plot(anova(f))</code></pre>
-<p><img src="#####../content/post/2017-01-27-yoga-for-modeling_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="/post/2017-01-27-yoga-for-modeling_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>And there you have it.</p>
 <p><img src = "https://raw.githubusercontent.com/LucyMcGowan/lucymcgowan.github.io/master/figs/df_meme.png" width = 60%> <em>meme cred: Nick Strayer</em></p>
 </div>
@@ -106,25 +102,3 @@ plot(anova(f))</code></pre>
 <li>If necessary be choosy about where to spend degrees of freedom</li>
 </ul>
 </div>
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-<!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD -->

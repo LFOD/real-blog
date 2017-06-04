@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
-    <lastmod>2017-05-03T17:37:37-05:00</lastmod>
+    <loc>/2017/06/03/runconf17-an-analysis-of-emoji-use/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/05/03/seminar-survival/</loc>
-    <lastmod>2017-05-03T17:37:37-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/03/17/nsf-bigdata-and-bdhubs-joint-pi-meeting-a-students-perspective/</loc>
-    <lastmod>2017-03-17T11:34:19-04:00</lastmod>
+    <loc>/2017/05/23/testing-the-new-theme/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -24,11 +20,6 @@
   <url>
     <loc>/2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/</loc>
     <lastmod>2017-03-12T10:54:24+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2017/03/04/xkcd-thank-you-note/</loc>
-    <lastmod>2017-03-04T19:23:45-06:00</lastmod>
   </url>
   
   <url>
@@ -84,6 +75,197 @@
   <url>
     <loc>/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/collaboration/</loc>
+    <lastmod>2017-02-24T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/conferences/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/conferences/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/data-science/</loc>
+    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/emojis/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/emojis/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/enar/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/epidemiology/</loc>
+    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/google-docs/</loc>
+    <lastmod>2017-02-24T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/javascript/</loc>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/modeling/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/modeling/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/nonlinearity/</loc>
+    <lastmod>2017-02-18T09:03:06-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/nssd/</loc>
+    <lastmod>2017-02-09T12:56:22-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/regression/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rms/</loc>
+    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/rms/</loc>
+    <lastmod>2017-02-18T09:03:06-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ropensci/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/ropensci/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rstats/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/rstats/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/thankyou/</loc>
+    <lastmod>2017-01-25T12:18:31-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tidytext/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/type-1-error/</loc>
+    <lastmod>2017-02-18T09:03:06-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/visualization/</loc>
+    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/xkcd/</loc>
+    <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
   </url>
   
 </urlset>

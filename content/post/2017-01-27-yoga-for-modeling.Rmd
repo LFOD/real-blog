@@ -8,6 +8,7 @@ menu: ""
 share: true
 tags:
 - rms
+- rstats
 title: "Yoga for modeling"
 excerpt: "A New Year's resolution for all of our models: get more flexible! By flexible, we mean let's be more intential about fitting nonlinear parametric models."
 ---

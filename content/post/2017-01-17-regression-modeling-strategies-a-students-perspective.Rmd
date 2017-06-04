@@ -6,7 +6,9 @@ draft: false
 image: ""
 menu: ""
 share: true
-tags: ["rms"]
+categories:
+- rms
+- rstats
 excerpt: "Nick and I are starting a series following Frank Harrell's Regression Modeling Strategies course. Get ready for some crazy fun."
 title: "Regression modeling strategies: a student's perspective"
 ---

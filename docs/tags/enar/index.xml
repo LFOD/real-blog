@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
-    <link>/tags/enar/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <title>Enar on Live Free or Dichotomize</title>
+    <link>/tags/enar/</link>
+    <description>Recent content in Enar on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/enar/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Mar 2017 14:56:30 -0400</lastBuildDate>
+    
+	<atom:link href="/tags/enar/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>ENAR in words</title>
@@ -14,129 +17,9 @@
       <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
       
       <guid>/2017/03/16/enar-in-words/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;I had an absolutely delightful time at &lt;a href=&#34;http://www.enar.org&#34;&gt;ENAR&lt;/a&gt; this year. Lots of talk about the intersection between data science &amp;amp; statistics, diversity, and &lt;strong&gt;exceptional&lt;/strong&gt; advancements in statistical methods.&lt;/p&gt;
-&lt;!-- My conference began with the [diversity workshop](https://www.enar.org/meetings/FosteringDiversity/) where we heard from my former adviser, [Dr. Melody Goodman](http://twitter.com/goodmanthebrain), about her journey to biostatistics &amp; her work in community advocacy and health disparities, a career panel, and a graduate student panel. [Dr. Emma Benn](https://twitter.com/EKTBenn) pointed out that Miguel de Cervantes (author of Don Quixote) would have been a biostatistian in another life: --&gt;
-&lt;!-- &lt;span style=&#34;color:#EB6864; font-size: 20pt&#34;&gt;&#34;By a small sample we may judge of the whole piece&#34; --&gt;
-&lt;!-- &lt;/span&gt; --&gt;
-&lt;p&gt;I &lt;strong&gt;loved&lt;/strong&gt; it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-16-enar-in-words_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;This certainly sums up my experience. Some of my favorites that make a big appearance:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;methods&lt;/li&gt;
-&lt;li&gt;causal inference&lt;/li&gt;
-&lt;li&gt;resources&lt;/li&gt;
-&lt;li&gt;diversity&lt;/li&gt;
-&lt;li&gt;data&lt;/li&gt;
-&lt;li&gt;learning&lt;/li&gt;
-&lt;li&gt;loving&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Since there was quite a bit of twitter action, I thought I’d do a quick tutorial in scraping twitter data in &lt;code&gt;R&lt;/code&gt;.&lt;/p&gt;
-&lt;div id=&#34;get-twitter-credentials&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Get twitter credentials&lt;/h2&gt;
-&lt;p&gt;Go &lt;a href=&#34;https://apps.twitter.com&#34;&gt;here&lt;/a&gt; and create an app - this will give you a &lt;strong&gt;Consumer key&lt;/strong&gt;, &lt;strong&gt;Consumer secret&lt;/strong&gt;.&lt;/p&gt;
-&lt;p style=&#34;text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;&#34;&gt;
-Pro Tip: be sure to enter &lt;code&gt;http://127.0.0.1:1410&lt;/code&gt; &lt;br/&gt; as your &lt;code&gt;Callback URL&lt;/code&gt;. If you get lost, there is a &lt;br/&gt; great tutorial on this process &lt;a href=&#34;https://mkearney.github.io/rtweet/articles/auth.html&#34;&gt;here&lt;/a&gt;
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;scrape-tweets&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Scrape tweets&lt;/h2&gt;
-&lt;p&gt;We will use the &lt;code&gt;rtweet&lt;/code&gt; package to scrape the tweets using the &lt;code&gt;search_tweets&lt;/code&gt; function.&lt;/p&gt;
-&lt;p style=&#34;text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;&#34;&gt;
-My original tutorial used &lt;code&gt;twitteR&lt;/code&gt;, but &lt;a href=&#34;https://twitter.com/ma_salmon&#34;&gt;Maëlle&lt;/a&gt; &lt;br/&gt; kindly pointed out that it is on the way out and &lt;/br&gt; &lt;code&gt;rtweet&lt;/code&gt; is the better option, so it’s been updated!
-&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;rtweet&amp;#39;)
-
-twitter_token &amp;lt;- create_token(
-  app = &amp;quot;PASTE_YOUR_APP_NAME_HERE&amp;quot;,
-  consumer_key = &amp;quot;PASTE_YOUR_CONSUMER_KEY_HERE&amp;quot;,
-  consumer_secret = &amp;quot;PASTE_YOUR_CONSUMER_SECRET_HERE&amp;quot;)
-
-dat &amp;lt;- search_tweets(&amp;#39;#ENAR2017&amp;#39;, n = 1e4, since = &amp;#39;2017-03-10&amp;#39;, token = twitter_token)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you would like to practice with the ENAR tweet data, you can load mine in with the following code &amp;amp; continue with the example.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/static/data/enar_data.rda&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;wrangle-tweets&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Wrangle tweets&lt;/h2&gt;
-&lt;p&gt;Now we need to corral these tweets into something we can analyze. We are going to use some data-wrangling packages (&lt;code&gt;dplyr&lt;/code&gt;, &lt;code&gt;purrr&lt;/code&gt;😺, and &lt;code&gt;stringr&lt;/code&gt;) as well as Julia &amp;amp; David’s &lt;code&gt;tidytext&lt;/code&gt;.&lt;/p&gt;
-&lt;p style=&#34;text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:15px;&#34;&gt;
-For more details on how to analyze text, &lt;br/&gt; check out their book &lt;a href=&#34;http://tidytextmining.com&#34;&gt;Text Mining with R&lt;/a&gt;, &lt;br/&gt; the code below is modified from one of &lt;br/&gt; their examples.
-&lt;/p&gt;
-&lt;p&gt;We will then use the &lt;code&gt;wordcloud&lt;/code&gt; package to display our results.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#load packages
-library(&amp;#39;dplyr&amp;#39;)
-library(&amp;#39;purrr&amp;#39;)
-library(&amp;#39;stringr&amp;#39;)
-library(&amp;#39;tidytext&amp;#39;)
-library(&amp;#39;wordcloud&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We are going to get rid of unwanted symbols and links, split the tweets into individual words, and filter out some stop words.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#this will drop links &amp;amp; symbols
-drop_pattern &amp;lt;- &amp;quot;https://t.co/[A-Za-z\\d]+|http://[A-Za-z\\d]+|&amp;amp;amp;|&amp;amp;lt;|&amp;amp;gt;|RT|https|ht&amp;quot;
-#this pattern is great for twitter, includes # and @ symbols
-unnest_pattern &amp;lt;- &amp;quot;([^A-Za-z_\\d#@&amp;#39;]|&amp;#39;(?![A-Za-z_\\d#@]))&amp;quot;
-
-tweets &amp;lt;- dat %&amp;gt;% 
-  filter( !grepl(&amp;quot;#OTORRINO&amp;quot;, text)) %&amp;gt;% # we have one tweeter with our hashtag that wasn&amp;#39;t at our conference
-  mutate(text = str_replace_all(text, drop_pattern, &amp;quot;&amp;quot;)) %&amp;gt;%
-  unnest_tokens(word, 
-                text, 
-                token = &amp;quot;regex&amp;quot;, 
-                pattern = unnest_pattern) %&amp;gt;%
-  filter(!(word %in% stop_words$word),
-         str_detect(word, &amp;quot;[a-z]&amp;quot;),
-         !grepl(&amp;quot;@&amp;quot;, word )) &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now it’s plotting time!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cols &amp;lt;- c(brewer.pal(8,&amp;quot;Dark2&amp;quot;), rep(brewer.pal(8,&amp;quot;Dark2&amp;quot;), each = 5) ) #make some colors for our plot
-
-tweets %&amp;gt;%
-  count(word) %&amp;gt;%
-  with(wordcloud(word, 
-                 n,
-                 min.freq = 5,
-                 random.order = FALSE,
-                 colors = cols))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You did it! Easy as &lt;a href=&#34;https://potpieshop.files.wordpress.com/2016/03/pi-day.jpg?w=665&#34;&gt;π&lt;/a&gt;.&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;https://media.giphy.com/media/fBZXu9v0qjjTq/giphy.gif&#34; /&gt;
-
-&lt;/div&gt;
-&lt;p&gt;For giggles, let’s try another word cloud package &lt;a href=&#34;https://github.com/lchiffon/wordcloud2&#34;&gt;&lt;code&gt;wordcloud2&lt;/code&gt;&lt;/a&gt;. This one is interactive (but not on CRAN, you can install using &lt;code&gt;devtools::install_github(&amp;quot;lchiffon/wordcloud2&amp;quot;)&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;For a word cloud similar to the one above, we can use the &lt;code&gt;wordcloud2&lt;/code&gt; function.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;wordcloud2&amp;#39;)
-
-tweets %&amp;gt;%
-  count(word) %&amp;gt;%
-  filter(n &amp;gt; 2) %&amp;gt;%
-  wordcloud2(size = 3, minRotation = -pi/2, maxRotation = -pi/2)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-92e7900e1a54fdb6149d&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;wordcloud2 html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-92e7900e1a54fdb6149d&#34;&gt;{&#34;x&#34;:{&#34;word&#34;:[&#34;&#39;get&#34;,&#34;#biostat&#34;,&#34;#biostatistics&#34;,&#34;#causalinference&#34;,&#34;#datascience&#34;,&#34;#diversity&#34;,&#34;#drscarlettbellamy&#34;,&#34;#enar2017&#34;,&#34;#personalizedmedicine&#34;,&#34;#rlady&#34;,&#34;#rstats&#34;,&#34;45pm&#34;,&#34;abt&#34;,&#34;academic&#34;,&#34;accuracy&#34;,&#34;adaptive&#34;,&#34;adding&#34;,&#34;address&#34;,&#34;adherence&#34;,&#34;advice&#34;,&#34;afternoon&#34;,&#34;alzheimer&#39;s&#34;,&#34;amazing&#34;,&#34;analysis&#34;,&#34;assays&#34;,&#34;association&#34;,&#34;award&#34;,&#34;awards&#34;,&#34;ba&#34;,&#34;ballroom&#34;,&#34;basket&#34;,&#34;bayesian&#34;,&#34;bellamy&#34;,&#34;bingo&#34;,&#34;biomarkers&#34;,&#34;biostat&#34;,&#34;biostatistician&#34;,&#34;biostatisticians&#34;,&#34;biostatistics&#34;,&#34;books&#34;,&#34;bottom&#34;,&#34;brilliant&#34;,&#34;browse&#34;,&#34;calc&#34;,&#34;career&#34;,&#34;chairs&#34;,&#34;change&#34;,&#34;chen&#34;,&#34;choice&#34;,&#34;cited&#34;,&#34;classic&#34;,&#34;clinical&#34;,&#34;colleage&#34;,&#34;colleague&#34;,&#34;coming&#34;,&#34;communities&#34;,&#34;comparative&#34;,&#34;competition&#34;,&#34;conference&#34;,&#34;confidence&#34;,&#34;congrats&#34;,&#34;constant&#34;,&#34;contribute&#34;,&#34;contributions&#34;,&#34;cool&#34;,&#34;create&#34;,&#34;cunanan&#34;,&#34;cv&#34;,&#34;dance&#34;,&#34;data&#34;,&#34;day&#34;,&#34;dc&#34;,&#34;decision&#34;,&#34;dependent&#34;,&#34;designs&#34;,&#34;diff&#34;,&#34;discusses&#34;,&#34;discussing&#34;,&#34;discussion&#34;,&#34;discussions&#34;,&#34;distinguised&#34;,&#34;diverse&#34;,&#34;diversify&#34;,&#34;doctoral&#34;,&#34;doug&#34;,&#34;dr&#34;,&#34;driven&#34;,&#34;east&#34;,&#34;editor&#34;,&#34;effectiveness&#34;,&#34;ehr&#34;,&#34;emrs&#34;,&#34;enar&#34;,&#34;engaging&#34;,&#34;enjoyed&#34;,&#34;error&#34;,&#34;estimation&#34;,&#34;evaluating&#34;,&#34;evidence&#34;,&#34;expect&#34;,&#34;expensive&#34;,&#34;experts&#34;,&#34;favorite&#34;,&#34;fay&#34;,&#34;fei&#34;,&#34;fellow&#34;,&#34;field&#34;,&#34;filling&#34;,&#34;final&#34;,&#34;flexible&#34;,&#34;folks&#34;,&#34;forward&#34;,&#34;found&#34;,&#34;framework&#34;,&#34;free&#34;,&#34;friends&#34;,&#34;fun&#34;,&#34;funding&#34;,&#34;future&#34;,&#34;gao&#34;,&#34;generation&#34;,&#34;github&#34;,&#34;giving&#34;,&#34;glickman&#34;,&#34;graduate&#34;,&#34;gurstelle&#34;,&#34;happening&#34;,&#34;hard&#34;,&#34;harnessing&#34;,&#34;health&#34;,&#34;hear&#34;,&#34;heterogeneous&#34;,&#34;history&#34;,&#34;hope&#34;,&#34;huge&#34;,&#34;hypothesis&#34;,&#34;impact&#34;,&#34;imposteriors&#34;,&#34;including&#34;,&#34;index&#34;,&#34;inference&#34;,&#34;info&#34;,&#34;innovative&#34;,&#34;inspiring&#34;,&#34;integrating&#34;,&#34;international&#34;,&#34;intl&#34;,&#34;introducing&#34;,&#34;involved&#34;,&#34;james&#34;,&#34;jiang&#34;,&#34;jin&#34;,&#34;jon&#34;,&#34;journals&#34;,&#34;junior&#34;,&#34;keynote&#34;,&#34;kids&#34;,&#34;kristen&#34;,&#34;leaders&#34;,&#34;leading&#34;,&#34;learning&#34;,&#34;list&#34;,&#34;louise&#34;,&#34;love&#34;,&#34;loving&#34;,&#34;machine&#34;,&#34;marvin&#34;,&#34;materials&#34;,&#34;meeting&#34;,&#34;methodological&#34;,&#34;methods&#34;,&#34;microbial&#34;,&#34;mig&#34;,&#34;minute&#34;,&#34;missed&#34;,&#34;model&#34;,&#34;modeling&#34;,&#34;models&#34;,&#34;morn&#34;,&#34;morning&#34;,&#34;multi&#34;,&#34;multiple&#34;,&#34;nig&#34;,&#34;nonparametric&#34;,&#34;o&#39;malley&#34;,&#34;office&#34;,&#34;official&#34;,&#34;opportunities&#34;,&#34;options&#34;,&#34;outcome&#34;,&#34;outstanding&#34;,&#34;page&#34;,&#34;paired&#34;,&#34;panel&#34;,&#34;paper&#34;,&#34;participants&#34;,&#34;party&#34;,&#34;patient&#34;,&#34;people&#34;,&#34;phd&#34;,&#34;pioneering&#34;,&#34;poe&#34;,&#34;policy&#34;,&#34;poster&#34;,&#34;power&#34;,&#34;powerhouse&#34;,&#34;ppl&#34;,&#34;precision&#34;,&#34;presentation&#34;,&#34;president&#34;,&#34;presidential&#34;,&#34;prez&#34;,&#34;program&#34;,&#34;promotion&#34;,&#34;puzzled&#34;,&#34;question&#34;,&#34;questions&#34;,&#34;quick&#34;,&#34;rab&#34;,&#34;real&#34;,&#34;recommended&#34;,&#34;relevant&#34;,&#34;research&#34;,&#34;researcher&#34;,&#34;resources&#34;,&#34;rig&#34;,&#34;rna&#34;,&#34;robots&#34;,&#34;rocks&#34;,&#34;ryan&#34;,&#34;sample&#34;,&#34;scarlett&#34;,&#34;science&#34;,&#34;score&#34;,&#34;scraping&#34;,&#34;sd&#34;,&#34;seq&#34;,&#34;session&#34;,&#34;sessions&#34;,&#34;shaping&#34;,&#34;shiny&#34;,&#34;shout&#34;,&#34;shrinkage&#34;,&#34;similar&#34;,&#34;single&#34;,&#34;skills&#34;,&#34;smart&#34;,&#34;smartphon&#34;,&#34;start&#34;,&#34;statistics&#34;,&#34;stats&#34;,&#34;stoked&#34;,&#34;story&#34;,&#34;student&#34;,&#34;students&#34;,&#34;study&#34;,&#34;talk&#34;,&#34;talking&#34;,&#34;talks&#34;,&#34;tang&#34;,&#34;test&#34;,&#34;testing&#34;,&#34;time&#34;,&#34;tomorrow&#34;,&#34;trial&#34;,&#34;trials&#34;,&#34;tue&#34;,&#34;tutorial&#34;,&#34;twitter&#34;,&#34;variety&#34;,&#34;voic&#34;,&#34;walked&#34;,&#34;wang&#34;,&#34;wasteful&#34;,&#34;watching&#34;,&#34;web&#34;,&#34;wed&#34;,&#34;week&#34;,&#34;wiley&#34;,&#34;wilson&#34;,&#34;winners&#34;,&#34;wins&#34;,&#34;won&#34;,&#34;wonderful&#34;,&#34;workshop&#34;,&#34;world&#34;,&#34;wrapping&#34;,&#34;wrong&#34;,&#34;yue&#34;,&#34;zelen&#34;],&#34;freq&#34;:[3,3,18,12,3,54,4,409,3,3,8,7,10,6,3,6,10,11,3,6,6,4,3,10,3,3,9,5,7,3,3,6,11,5,3,9,4,21,21,38,4,3,4,3,11,5,3,4,3,3,3,9,3,4,7,3,5,6,5,3,6,6,4,6,11,4,3,3,5,43,11,8,4,3,5,3,7,6,6,3,3,7,3,9,3,5,4,3,4,5,3,4,3,6,3,3,3,7,4,6,5,5,4,6,4,3,3,3,4,6,3,4,6,4,3,4,3,4,16,7,18,7,14,3,4,4,3,8,4,6,11,4,4,4,3,4,3,3,34,4,6,3,6,5,5,11,3,3,3,4,5,3,4,4,5,17,10,3,6,5,12,50,3,5,10,7,3,34,12,3,10,5,3,3,3,9,6,9,3,5,4,3,5,3,4,3,4,6,10,3,6,4,3,10,22,3,3,8,10,9,3,3,7,29,4,3,4,4,9,11,6,4,10,7,3,3,3,6,6,4,6,4,21,6,37,7,5,3,3,3,5,11,4,3,11,4,6,32,10,3,7,7,4,4,3,3,10,3,4,9,4,7,3,36,9,3,29,6,10,3,5,5,12,7,5,4,3,5,8,3,4,3,3,5,7,7,3,5,4,4,14,3,4,3,68,6,5,6,5,3],&#34;fontFamily&#34;:&#34;Segoe UI&#34;,&#34;fontWeight&#34;:&#34;bold&#34;,&#34;color&#34;:&#34;random-dark&#34;,&#34;minSize&#34;:0,&#34;weightFactor&#34;:1.32029339853301,&#34;backgroundColor&#34;:&#34;white&#34;,&#34;gridSize&#34;:0,&#34;minRotation&#34;:-1.5707963267949,&#34;maxRotation&#34;:-1.5707963267949,&#34;shuffle&#34;:true,&#34;rotateRatio&#34;:0.4,&#34;shape&#34;:&#34;circle&#34;,&#34;ellipticity&#34;:0.65,&#34;figBase64&#34;:null,&#34;hover&#34;:null},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Try the following to make an &lt;code&gt;R&lt;/code&gt; shaped cloud using the &lt;code&gt;letterCloud&lt;/code&gt; function!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tweets %&amp;gt;%
-  count(word) %&amp;gt;%
-  filter(n &amp;gt; 1) %&amp;gt;%
-  letterCloud(size = 3, word = &amp;quot;R&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Happy scraping!&lt;/p&gt;
-&lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-&lt;script src=&#34;#####../content/post/2017-03-16-enar-in-words_files/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;#####../content/post/2017-03-16-enar-in-words_files/wordcloud2/wordcloud.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;#####../content/post/2017-03-16-enar-in-words_files/wordcloud2/wordcloud2-all.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;#####../content/post/2017-03-16-enar-in-words_files/wordcloud2/hover.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;#####../content/post/2017-03-16-enar-in-words_files/wordcloud2-binding/wordcloud2.js&#34;&gt;&lt;/script&gt;
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
+      <description>I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science &amp;amp; statistics, diversity, and exceptional advancements in statistical methods.
+&#34;By a small sample we may judge of the whole piece&#34; -- -- I loved it, but let’s see what others were saying! Check out this word cloud of the most commonly tweeted words.
+This certainly sums up my experience.</description>
     </item>
     
   </channel>

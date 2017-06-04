@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
-    <link>/tags/nssd/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <title>Nssd on Live Free or Dichotomize</title>
+    <link>/tags/nssd/</link>
+    <description>Recent content in Nssd on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/nssd/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Feb 2017 12:56:22 -0600</lastBuildDate>
+    
+	<atom:link href="/tags/nssd/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>The prevalence of drunk podcasts</title>
@@ -14,192 +17,9 @@
       <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
       
       <guid>/2017/02/09/the-prevalence-of-drunk-podcasts/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;For today’s rendition of &lt;em&gt;I am curious about everything&lt;/em&gt;, in &lt;a href=&#34;https://twitter.com/hspter&#34;&gt;Hilary Parker&lt;/a&gt; &amp;amp; &lt;a href=&#34;https://twitter.com/rdpeng&#34;&gt;Roger Peng’s&lt;/a&gt; &lt;a href=&#34;https://soundcloud.com/nssd-podcast/episode-32-you-have-to-reinvent-the-wheel-a-few-times&#34;&gt;Not So Standard Deviations Episode 32&lt;/a&gt;, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I’d dig into it 🚧👷.&lt;/p&gt;
-&lt;p&gt;I pulled the iTunes API for the term &lt;code&gt;drunk&lt;/code&gt; in podcasts &amp;amp; plotted the results over time. I also finally found an excuse to use &lt;a href=&#34;https://github.com/dill/emoGG&#34;&gt;emoGG&lt;/a&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;dplyr&amp;#39;)
-library(&amp;#39;ggplot2&amp;#39;)
-
-
-req &amp;lt;- httr::GET(url = &amp;quot;https://itunes.apple.com/search&amp;quot;,
-          query = list(
-            term = &amp;quot;drunk&amp;quot;,
-            media = &amp;quot;podcast&amp;quot;,
-            limit = 200
-          ))
-
-itunes &amp;lt;- jsonlite::fromJSON(httr::content(req))$results&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This resulted in &lt;code&gt;170&lt;/code&gt; podcasts, which I grouped by month/year released.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;itunes %&amp;gt;%
-  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %&amp;gt;%
-  group_by(monyear) %&amp;gt;%
-  summarise(n = n()) %&amp;gt;%
-  mutate(date = zoo::as.Date(monyear)) %&amp;gt;%
-  ggplot(aes(x = date,y=n)) +
-    scale_x_date() +
-    emoGG::geom_emoji(emoji=&amp;quot;1f37a&amp;quot;) + 
-    ylab(&amp;quot;Number of &amp;#39;Drunk&amp;#39; podcasts released&amp;quot;) +
-    theme_minimal()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-02-09-the-prevalence-of-drunk-podcasts_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;It looks like Roger may be onto something.&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;I tried to find the number of podcasts on iTunes by month over the past couple of years to adjust for this, but to no avail. If you have that data, please &lt;a href=&#34;https://twitter.com/LucyStats&#34;&gt;send it my way&lt;/a&gt;, so I can complete this very crucial analysis. In the meantime, I’ll pretend it doesn’t matter: &lt;em&gt;While it is certainly true that the number of podcasts in general has absolutely increased over this time period, I would be surprised if the increase is as dramatic as the increase in the number of “drunk” podcasts.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Here is a little shout out to my favorite drunk podcast &lt;a href=&#34;https://soundcloud.com/drunkmonkpodcast&#34;&gt;Drunk Monk&lt;/a&gt;, with the lovely Keiko Agena (Gilmore Girls’ Lane herself!).&lt;/p&gt;
-&lt;p&gt;Cheers! 🍻&lt;/p&gt;
-&lt;div id=&#34;update&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Update!&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://twitter.com/esjewett&#34;&gt;Ethan&lt;/a&gt; pointed out the curve was looking a little drunk…&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34; data-cards=&#34;hidden&#34; data-lang=&#34;en&#34;&gt;
-&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
-&lt;a href=&#34;https://twitter.com/LucyStats&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@LucyStats&lt;/span&gt;&lt;/a&gt; &lt;a href=&#34;https://twitter.com/rdpeng&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@rdpeng&lt;/span&gt;&lt;/a&gt; &lt;a href=&#34;https://twitter.com/NSSDeviations&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@NSSDeviations&lt;/span&gt;&lt;/a&gt; Wait … that curve is starting to wrap around. Is it drunk? &lt;a href=&#34;https://t.co/YBAkAMLDM0&#34;&gt;pic.twitter.com/YBAkAMLDM0&lt;/a&gt;
-&lt;/p&gt;
-— Ethan Jewett (&lt;span class=&#34;citation&#34;&gt;@esjewett&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/esjewett/status/829785814347501569&#34;&gt;February 9, 2017&lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;p&gt;Indeed! We’ve left in February’s data (despite the fact that February is not even half way over 🙈).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;itunes %&amp;gt;%
-  mutate(date = as.Date(releaseDate),monyear = zoo::as.yearmon(date)) %&amp;gt;%
-  filter(date &amp;lt; as.Date(&amp;#39;2017-02-01&amp;#39;)) %&amp;gt;% #add a filter!
-  group_by(monyear) %&amp;gt;%
-  summarise(n = n()) %&amp;gt;%
-  mutate(date = zoo::as.Date(monyear)) %&amp;gt;%
-  ggplot(aes(x = date,y=n)) +
-    scale_x_date() +
-    emoGG::geom_emoji(emoji=&amp;quot;1f37a&amp;quot;) + 
-    ylab(&amp;quot;Number of &amp;#39;Drunk&amp;#39; podcasts released&amp;quot;) +
-    theme_minimal()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-02-09-the-prevalence-of-drunk-podcasts_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;If you are interested in other things NSSD has inspired me to do, check out &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;this&lt;/a&gt;, or &lt;a href=&#34;http://www.lucymcgowan.com/NHTSA-safety-analysis.html&#34;&gt;this&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hill for the data scientist: an xkcd story</title>
-      <link>/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/</link>
-      <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
-      
-      <guid>/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;This was inspired by Hilary Parker &amp;amp; Roger Peng’s Not So Standard Deviations Episode 28, which can be found &lt;a href=&#34;https://soundcloud.com/nssd-podcast/episode-28-writing-is-a-lot-harder-than-just-talking&#34;&gt;here&lt;/a&gt;. It was suggested that it would be useful to lay out Hill’s criterion for data scientists, I agree!&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span style=&#34;color:#EB6864; font-size: 20pt&#34;&gt;[&lt;strong&gt;causation&lt;/strong&gt;: An event or outcome B is influenced by a change in A]&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt; Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship.[1] He determined the following aspects of associations ought to be considered when assessing causality. When thinking about this problem, an &lt;a href=&#34;https://xkcd.com/&#34;&gt;xkcd&lt;/a&gt; comic I have seen in &lt;em&gt;every lecture&lt;/em&gt; on this topic came to mind:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/552/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/correlation.png&#34; alt=&#34;correlation&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;This inspired me to attempt to explain Hill’s criteria using xkcd comics, both because it seemed fun, and also to motivate causal inference instructures to have some variety in which xkcd comic they include in lectures (bear with me, some of these are a stretch 🙈💁🏻).&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;div id=&#34;strength&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Strength&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;How big is the effect you are seeing?&lt;/li&gt;
-&lt;li&gt;Note: Hill suggests that huge effects &lt;em&gt;can&lt;/em&gt; suggest causality, however this does not mean small effects &lt;em&gt;cannot&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/1592/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/overthinking.png&#34; alt=&#34;strength&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;consistency&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Consistency&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;This is essentially &lt;a href=&#34;http://kbroman.org/steps2rr/&#34;&gt;reproducibility&lt;/a&gt; &amp;amp; replicability&lt;/li&gt;
-&lt;li&gt;Can your analysis be reproduced?&lt;/li&gt;
-&lt;li&gt;Has anyone been able to replicate your findings?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/242/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/the_difference.png&#34; alt=&#34;consistency&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;specificity&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Specificity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Can the association be pinpointed to a specific cause with no other plausible explanation?&lt;/li&gt;
-&lt;li&gt;I appreciate Hill’s caveat here, &lt;em&gt;“if specificity exists we may be able to draw conclusions without hesitation; if it is not apparent, we are not thereby necessarily left sitting irresolutely on the fence.”&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/1217/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/cells.png&#34; alt=&#34;specificity&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;temporality&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Temporality&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Does the timeline make sense?&lt;/li&gt;
-&lt;li&gt;In general, the exposure ought to come before the outcome it is said to cause.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/925/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/cell_phones.png&#34; alt=&#34;temporality&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;biological-gradient&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Biological gradient&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;The wording of this point makes it a bit difficult to untangle from the medical application, but generally this refers to a dose effect&lt;/li&gt;
-&lt;li&gt;Does increasing an exposure yield a change in the outcome.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/323/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/ballmer_peak.png&#34; alt=&#34;biological-gradient&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plausibility&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Plausibility&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Does the causal relationship make sense?&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;This is also a tricky one since plausibility depends on knowledge at the time. If we found it perfectly plausible, we may not need statistics to show the relationship.&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/605/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/extrapolating.png&#34; alt=&#34;plausibility&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;coherence&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Coherence&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Similar to plausibility, is there a logical argument that can be made by/to experts in the field regarding causality.&lt;/li&gt;
-&lt;li&gt;Does it fit into the understanding of the field (&lt;em&gt;authors note&lt;/em&gt;: this should have caveats too…the field could be wrong).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/1170/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/bridge.png&#34; alt=&#34;coherence&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;experiment&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Experiment&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;If a controlled experiment can take place, this can strengthen the argument for causality&lt;/li&gt;
-&lt;li&gt;I view this as a general attempt to implement a counterfactual analysis.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/1462/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/blind_trials.png&#34; alt=&#34;experiment&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;analogy&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Analogy&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Have we seen a similar effect from a similar exposure?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com/882/&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;http://imgs.xkcd.com/comics/significant.png&#34; alt=&#34;analogy&#34;&gt; &lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;[1] Hill, A. B. (1965). The Environment and Disease: Association or Causation? Proceedings of the Royal Society of Medicine, 58(5), 295–300.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Think I’ve missed something? Submit a &lt;a href=&#34;https://github.com/LFOD/real-blog/pulls&#34;&gt;PR&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;/div&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
+      <description>For today’s rendition of I am curious about everything, in Hilary Parker &amp;amp; Roger Peng’s Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I’d dig into it 🚧👷.
+I pulled the iTunes API for the term drunk in podcasts &amp;amp; plotted the results over time. I also finally found an excuse to use emoGG.
+library(&amp;#39;dplyr&amp;#39;) library(&amp;#39;ggplot2&amp;#39;) req &amp;lt;- httr::GET(url = &amp;quot;https://itunes.</description>
     </item>
     
   </channel>

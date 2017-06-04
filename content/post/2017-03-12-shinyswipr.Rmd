@@ -3,7 +3,7 @@ author: "Nick Strayer"
 date: 2017-03-12T10:54:24+02:00
 title: "Introducing shinyswipr: swipe your way to a great Shiny UI"
 excerpt: "Recently we have been working on a shiny app that mimics tinder for preprints. One of the more exciting things we've done in this app is implimented a swiping input. Now you can to with the package shinyswipr." 
-tags: ["javascript","visualization"]
+categories: ["javascript","visualization"]
 comments: true
 ---
 

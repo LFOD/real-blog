@@ -6,9 +6,10 @@ draft: false
 image: ""
 menu: ""
 share: true
-tags:
+categories:
 - NSSD
-- R code
+- rstats
+- emojis
 title: "The prevalence of drunk podcasts"
 excerpt: "For today's rendition of I am curious about everything, in Hilary Parker & Roger Peng's Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I'd dig into it."
 ---

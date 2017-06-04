@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Live Free or Dichotomize</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Conferences</title>
+      <link>/tags/conferences/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/tags/conferences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Emojis</title>
+      <link>/tags/emojis/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/tags/emojis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Enar</title>
+      <link>/tags/enar/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/tags/enar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Modeling</title>
+      <link>/tags/modeling/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/modeling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Regression</title>
+      <link>/tags/regression/</link>
+      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rms</title>
+      <link>/tags/rms/</link>
+      <pubDate>Fri, 27 Jan 2017 14:30:26 -0600</pubDate>
+      
+      <guid>/tags/rms/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ropensci</title>
+      <link>/tags/ropensci/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/tags/ropensci/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rstats</title>
+      <link>/tags/rstats/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/tags/rstats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tidytext</title>
+      <link>/tags/tidytext/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/tags/tidytext/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

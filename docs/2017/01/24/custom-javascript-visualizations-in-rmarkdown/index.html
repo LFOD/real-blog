@@ -1,176 +1,97 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
 <head>
+<title>Live Free or Dichotomize - Custom JavaScript visualizations in RMarkdown</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.21" />
 
-    
-
-
-    
-        <meta name="twitter:card" content="summary"/>
-    
-
-
-
-<meta name="twitter:title" content="Custom JavaScript visualizations in RMarkdown"/>
-<meta name="twitter:description" content="I happened to stumble upon the preview release page for RStudio recently and noticed something that made me exorbitantly happy.
- A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes… Support for JavaScript and CSS chunks in R Notebooks…
- “Support for JavaScript and CSS chunks in R Notebooks”! As someone who loves using javascript for plotting (and secretly for manipulating) data this is massively exciting."/>
+  
+  
 
 
 
-  	<meta property="og:title" content=" Custom JavaScript visualizations in RMarkdown &middot;  Live Free or Dichotomize" />
-  	<meta property="og:site_name" content="Live Free or Dichotomize" />
-  	<meta property="og:url" content="/2017/01/24/custom-javascript-visualizations-in-rmarkdown/" />
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 
-    
-  	<meta property="og:type" content="article" />
 
-    <meta property="og:article:published_time" content="2017-01-24T10:54:24&#43;02:00" />
-
-    
-    <meta property="og:article:tag" content="javascript" />
-    
-    <meta property="og:article:tag" content="visualization" />
-    
-    
-
-    <title>
-       Custom JavaScript visualizations in RMarkdown &middot;  Live Free or Dichotomize
-    </title>
-
-    <meta name="description" content="A statistics blog from two goofy Phd students." />
-
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="shortcut icon" href="../../../../images/favicon.ico">
-	  <link rel="apple-touch-icon" href="../../../../images/apple-touch-icon.png" />
-
-    <link rel="stylesheet" type="text/css" href="../../../../css/screen.css" />
-    <link rel="stylesheet" type="text/css" href="../../../../css/nav.css" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400|Inconsolata" />
-
-    
-      
-          <link href="../../../../index.xml" rel="alternate" type="application/rss+xml" title="Live Free or Dichotomize" />
-      
-      
-    
-    <meta name="generator" content="Hugo 0.17" />
-
-    <link rel="canonical" href="../../../../2017/01/24/custom-javascript-visualizations-in-rmarkdown/" />
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-92165973-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-    
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 
 
 
 
 
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="../../../../css/custom_style.css">
 
 </head>
-<body class="nav-closed">
 
-  <div class="nav">
-    <h3 class="nav-title">Menu</h3>
-    <a href="#" class="nav-close">
-        <span class="hidden">Close</span>
+<link rel="stylesheet" href="../../../../css/tufte.css">
+<link rel="stylesheet" href="../../../../css/hugo-tufte.css">
+<link rel="stylesheet" href="../../../../css/hugo-tufte-override.css">
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
     </a>
-    <ul>
-        
-        
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="../../../../about/">About</a>
-            </li>
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="https://github.com/lfod/real-blog">GitHub</a>
-            </li>
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="https://twitter.com/LucyStats">Lucy&#39;s Twitter</a>
-            </li>
-        
-            
-            <li class="nav-opened" role="presentation">
-            	<a href="https://twitter.com/NicholasStrayer">Nick&#39;s Twitter</a>
-            </li>
-        
-    </ul>
-    
-    
-    <a class="subscribe-button icon-feed" href="../../../../index.xml">Subscribe</a>
-    
-</div>
-<span class="nav-cover"></span>
-
-
- <div class="site-wrapper">
-
-
-
-
-<header class="main-header post-head no-cover">
-  <nav class="main-nav clearfix">
-
-
-  
-      <a class="blog-logo" href="../../../../"><img src="../../../../images/logo.png" alt="Home" /></a>
-  
-  
-      <a class="menu-button" href="#"><span class="burger">&#9776;</span><span class="word">Menu</span></a>
-  
-  </nav>
+  </h1>
 </header>
 
+<section>
+<h1 class="content-title">
+  
+  <a href="../../../../2017/01/24/custom-javascript-visualizations-in-rmarkdown/">Custom JavaScript visualizations in RMarkdown</a>
+  
+</h1>
 
 
-<main class="content" role="main">
+
+  <span class="content-meta">
+    
+       <i class="fa fa-user">&nbsp;</i><span class="author">
+         &nbsp;Nick Strayer</span> <br>
+    
+
+
+    
+      <i class="fa fa-calendar"></i>
+      &nbsp;Jan 24, 2017
+    
+
+    
+      &nbsp;<i class="fa fa-clock-o"></i>
+      &nbsp;7 min read
+    
+
+    
+      <br>
+      <i class="fa fa-tags"> </i>
+      
+        <a  href="../../../../categories/javascript">javascript</a>
+      
+        <a  href="../../../../categories/visualization">visualization</a>
+      
+    
+  </span>
+
+
+</section>
 
 
 
-
-  <article class="post post">
-
-    <header class="post-header">
-        <h1 class="post-title">Custom JavaScript visualizations in RMarkdown</h1>
-        <small></small>
-
-        <section class="post-meta">
-        
-          <time class="post-date" datetime="2017-01-24T10:54:24&#43;02:00">
-            Jan 24, 2017
-          </time>
-        
-         
-          <span class="post-tag small"><a href="../../../../tags/javascript/">#javascript</a></span>
-         
-          <span class="post-tag small"><a href="../../../../tags/visualization/">#visualization</a></span>
-         
-        </section>
-    </header>
-
-    <section class="post-content">
-
-
-<p><br></p>
+<section><p><br></p>
 <p>I happened to stumble upon the <a href="https://www.rstudio.com/products/rstudio/download/preview/">preview release page</a> for RStudio recently and noticed something that made me exorbitantly happy.</p>
 <blockquote>
 <p>A preview release of RStudio v1.0.136 is now available for testing and feedback. This release includes… Support for JavaScript and CSS chunks in R Notebooks…</p>
@@ -212,13 +133,13 @@ random_data &lt;- data_frame(x = runif(n)*10) %&gt;%
   head() %&gt;% 
   send_df_to_js()</code></pre>
 <pre><code>## &lt;script&gt;
-##       var data = [{&quot;x&quot;:5.1162,&quot;y&quot;:-46.3068,&quot;group&quot;:&quot;group 3&quot;},{&quot;x&quot;:0.4562,&quot;y&quot;:31.2804,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:0.6782,&quot;y&quot;:-52.6119,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:5.2959,&quot;y&quot;:-52.3112,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:4.6645,&quot;y&quot;:-13.5448,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:7.4817,&quot;y&quot;:207.7494,&quot;group&quot;:&quot;group 2&quot;}];
+##       var data = [{&quot;x&quot;:4.7036,&quot;y&quot;:34.1201,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:6.5813,&quot;y&quot;:98.983,&quot;group&quot;:&quot;group 3&quot;},{&quot;x&quot;:6.7487,&quot;y&quot;:131.7106,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:8.3653,&quot;y&quot;:113.0092,&quot;group&quot;:&quot;group 2&quot;},{&quot;x&quot;:8.5488,&quot;y&quot;:350.2247,&quot;group&quot;:&quot;group 1&quot;},{&quot;x&quot;:8.9661,&quot;y&quot;:336.6802,&quot;group&quot;:&quot;group 3&quot;}];
 ##     &lt;/script&gt;</code></pre>
 <p>Beautiful, we have our data, in <code>json</code> format, wrapped in a script tag. Now we can send the whole dataframe through. This time I am using the <code>results = &quot;asis&quot;</code> option in the code chunk (<code>{r, results = &quot;asis&quot;}</code>), to write the results directly to the html document and not to the output like we did above.</p>
 <pre class="r"><code>#Initiate data transfer protocol one
 send_df_to_js(random_data)</code></pre>
 <script>
-      var data = [{"x":5.1162,"y":-46.3068,"group":"group 3"},{"x":0.4562,"y":31.2804,"group":"group 1"},{"x":0.6782,"y":-52.6119,"group":"group 1"},{"x":5.2959,"y":-52.3112,"group":"group 1"},{"x":4.6645,"y":-13.5448,"group":"group 2"},{"x":7.4817,"y":207.7494,"group":"group 2"},{"x":8.6461,"y":242.1554,"group":"group 1"},{"x":9.1827,"y":243.1479,"group":"group 3"},{"x":6.8721,"y":-25.7041,"group":"group 2"},{"x":6.0867,"y":54.8649,"group":"group 2"},{"x":5.2067,"y":-34.2949,"group":"group 2"},{"x":8.1715,"y":-5.4236,"group":"group 1"},{"x":4.4607,"y":-63.0038,"group":"group 1"},{"x":6.3942,"y":215.4326,"group":"group 2"},{"x":3.6244,"y":39.3995,"group":"group 1"},{"x":7.7061,"y":262.1096,"group":"group 2"},{"x":9.4833,"y":270.042,"group":"group 3"},{"x":3.6655,"y":-19.4778,"group":"group 2"},{"x":6.5462,"y":307.3679,"group":"group 2"},{"x":7.4608,"y":64.5969,"group":"group 3"},{"x":5.3925,"y":-108.9362,"group":"group 1"},{"x":6.7787,"y":100.5908,"group":"group 2"},{"x":6.6139,"y":75.6255,"group":"group 1"},{"x":3.163,"y":-41.5343,"group":"group 2"},{"x":3.5193,"y":-47.1199,"group":"group 1"},{"x":6.0488,"y":84.613,"group":"group 1"},{"x":7.4606,"y":247.5339,"group":"group 2"},{"x":6.6448,"y":117.4448,"group":"group 2"},{"x":8.4995,"y":85.4425,"group":"group 1"},{"x":4.3691,"y":70.055,"group":"group 3"},{"x":6.0521,"y":7.6063,"group":"group 1"},{"x":4.8037,"y":-43.927,"group":"group 3"},{"x":1.2511,"y":-42.2995,"group":"group 2"},{"x":5.1001,"y":-123.782,"group":"group 3"},{"x":0.9715,"y":22.3899,"group":"group 3"},{"x":6.7808,"y":138.0596,"group":"group 1"},{"x":5.3929,"y":-165.7388,"group":"group 3"},{"x":3.4279,"y":-19.5501,"group":"group 1"},{"x":2.1678,"y":48.3077,"group":"group 2"},{"x":4.4743,"y":22.5522,"group":"group 2"},{"x":8.2214,"y":290.4805,"group":"group 1"},{"x":3.9358,"y":-60.7383,"group":"group 2"},{"x":6.1277,"y":15.448,"group":"group 1"},{"x":3.9072,"y":-119.466,"group":"group 1"},{"x":3.4609,"y":-39.2849,"group":"group 2"},{"x":8.4668,"y":223.8005,"group":"group 3"},{"x":0.0533,"y":-77.297,"group":"group 2"},{"x":6.0043,"y":42.9101,"group":"group 1"},{"x":3.7075,"y":88.6548,"group":"group 3"},{"x":3.3836,"y":48.3493,"group":"group 2"},{"x":9.619,"y":430.2209,"group":"group 2"},{"x":0.6508,"y":28.3045,"group":"group 2"},{"x":3.0408,"y":79.8333,"group":"group 1"},{"x":2.5639,"y":-88.0993,"group":"group 1"},{"x":4.277,"y":-43.882,"group":"group 1"},{"x":3.4519,"y":-0.9631,"group":"group 3"},{"x":5.4183,"y":80.6461,"group":"group 3"},{"x":6.2418,"y":198.2431,"group":"group 1"},{"x":5.6723,"y":6.9054,"group":"group 1"},{"x":3.8555,"y":-117.3536,"group":"group 3"},{"x":4.7856,"y":70.3984,"group":"group 1"},{"x":5.1317,"y":28.0247,"group":"group 1"},{"x":7.6522,"y":135.6824,"group":"group 1"},{"x":4.2312,"y":-13.2611,"group":"group 1"},{"x":4.4467,"y":81.388,"group":"group 3"},{"x":0.175,"y":79.4935,"group":"group 2"},{"x":1.8265,"y":38.6366,"group":"group 1"},{"x":3.73,"y":-37.8971,"group":"group 1"},{"x":1.1404,"y":-113.5531,"group":"group 1"},{"x":5.6023,"y":125.4496,"group":"group 2"},{"x":4.9681,"y":-52.657,"group":"group 1"},{"x":5.4185,"y":-1.6513,"group":"group 1"},{"x":1.5906,"y":8.3293,"group":"group 1"},{"x":0.7664,"y":100.697,"group":"group 1"},{"x":8.3963,"y":340.5532,"group":"group 2"},{"x":2.2874,"y":-88.8015,"group":"group 2"},{"x":4.3116,"y":-84.1783,"group":"group 2"},{"x":5.6534,"y":-44.4034,"group":"group 3"},{"x":3.9826,"y":-11.0541,"group":"group 3"},{"x":7.1342,"y":158.1202,"group":"group 3"},{"x":8.5816,"y":189.6791,"group":"group 3"},{"x":6.0555,"y":-22.2403,"group":"group 3"},{"x":3.2757,"y":-89.3256,"group":"group 2"},{"x":0.819,"y":-108.622,"group":"group 1"},{"x":5.6151,"y":34.6804,"group":"group 2"},{"x":7.6469,"y":216.9807,"group":"group 3"},{"x":3.2184,"y":-42.1577,"group":"group 1"},{"x":5.623,"y":-2.7286,"group":"group 1"},{"x":4.1259,"y":12.6585,"group":"group 3"},{"x":6.3047,"y":40.8341,"group":"group 3"},{"x":2.2116,"y":73.0117,"group":"group 1"},{"x":2.1735,"y":-4.73,"group":"group 3"},{"x":9.844,"y":290.3496,"group":"group 2"},{"x":4.4461,"y":105.0511,"group":"group 1"},{"x":7.1733,"y":13.7035,"group":"group 1"},{"x":8.0801,"y":56.336,"group":"group 1"},{"x":9.8908,"y":409.3649,"group":"group 2"},{"x":8.5326,"y":353.097,"group":"group 1"},{"x":9.298,"y":181.4813,"group":"group 1"},{"x":7.4509,"y":-3.854,"group":"group 1"},{"x":7.005,"y":71.9695,"group":"group 1"},{"x":9.321,"y":298.4871,"group":"group 3"},{"x":3.0574,"y":-25.7501,"group":"group 3"},{"x":8.6681,"y":197.3545,"group":"group 2"},{"x":1.9095,"y":-161.4897,"group":"group 1"},{"x":2.4494,"y":-29.7089,"group":"group 2"},{"x":0.8618,"y":54.0216,"group":"group 2"},{"x":3.162,"y":-2.6952,"group":"group 3"},{"x":5.9464,"y":76.2577,"group":"group 2"},{"x":9.7455,"y":361.5106,"group":"group 2"},{"x":1.5727,"y":180.6104,"group":"group 2"},{"x":5.4232,"y":17.8789,"group":"group 2"},{"x":7.8534,"y":248.7398,"group":"group 1"},{"x":7.3088,"y":5.8947,"group":"group 3"},{"x":9.1125,"y":176.996,"group":"group 1"},{"x":5.1955,"y":37.0387,"group":"group 2"},{"x":7.7867,"y":34.7644,"group":"group 1"},{"x":6.5567,"y":214.0232,"group":"group 2"},{"x":8.6813,"y":183.4559,"group":"group 3"},{"x":9.9267,"y":330.7274,"group":"group 3"},{"x":5.0922,"y":56.6162,"group":"group 1"},{"x":9.5371,"y":424.1902,"group":"group 1"},{"x":6.5304,"y":59.2615,"group":"group 2"},{"x":4.6671,"y":-75.6146,"group":"group 3"},{"x":1.338,"y":54.2503,"group":"group 2"},{"x":2.8005,"y":-137.1593,"group":"group 1"},{"x":8.1021,"y":310.452,"group":"group 1"},{"x":4.0686,"y":-76.9085,"group":"group 1"},{"x":9.5069,"y":435.8052,"group":"group 3"},{"x":0.8981,"y":16.3915,"group":"group 2"},{"x":6.0089,"y":34.1392,"group":"group 2"},{"x":7.9857,"y":252.9129,"group":"group 3"},{"x":5.0834,"y":77.2913,"group":"group 2"},{"x":1.6487,"y":-24.7351,"group":"group 3"},{"x":0.2533,"y":-15.3762,"group":"group 1"},{"x":3.9755,"y":-158.7492,"group":"group 2"},{"x":2.9926,"y":-114.2788,"group":"group 3"},{"x":7.7759,"y":125.8929,"group":"group 3"},{"x":8.4738,"y":124.4414,"group":"group 2"},{"x":1.6926,"y":0.8088,"group":"group 1"},{"x":2.4047,"y":-2.56,"group":"group 2"},{"x":5.385,"y":10.1538,"group":"group 1"},{"x":7.7676,"y":187.7514,"group":"group 2"},{"x":7.1777,"y":277.6055,"group":"group 1"},{"x":4.6257,"y":25.57,"group":"group 2"},{"x":4.5831,"y":-60.5174,"group":"group 2"},{"x":6.6702,"y":58.2409,"group":"group 2"},{"x":0.9551,"y":-18.771,"group":"group 1"},{"x":9.9645,"y":302.4055,"group":"group 2"},{"x":8.8456,"y":238.569,"group":"group 1"},{"x":6.6115,"y":-17.5631,"group":"group 3"},{"x":1.2592,"y":187.7402,"group":"group 2"},{"x":6.4925,"y":-153.4486,"group":"group 2"},{"x":3.2816,"y":21.2522,"group":"group 1"},{"x":8.1324,"y":284.0352,"group":"group 2"},{"x":8.4689,"y":261.5842,"group":"group 3"},{"x":8.3122,"y":246.8091,"group":"group 2"},{"x":2.0068,"y":-19.1761,"group":"group 1"},{"x":2.3861,"y":-52.5402,"group":"group 2"},{"x":9.9627,"y":332.4352,"group":"group 2"},{"x":8.3271,"y":158.4162,"group":"group 2"},{"x":3.1072,"y":28.0859,"group":"group 1"},{"x":7.0125,"y":-136.2825,"group":"group 1"},{"x":3.3936,"y":8.7578,"group":"group 2"},{"x":0.1685,"y":236.8054,"group":"group 2"},{"x":2.5478,"y":-15.6752,"group":"group 3"},{"x":9.3417,"y":338.2967,"group":"group 2"},{"x":5.9278,"y":173.5791,"group":"group 2"},{"x":8.9561,"y":181.7342,"group":"group 3"},{"x":3.4852,"y":-11.613,"group":"group 1"},{"x":2.5761,"y":-39.7009,"group":"group 1"},{"x":9.0998,"y":290.8473,"group":"group 2"},{"x":3.4737,"y":-46.942,"group":"group 2"},{"x":5.8846,"y":-88.7312,"group":"group 3"},{"x":2.0962,"y":19.2221,"group":"group 1"},{"x":4.9694,"y":91.5125,"group":"group 3"},{"x":1.0158,"y":-43.6279,"group":"group 3"},{"x":5.6557,"y":82.7064,"group":"group 2"},{"x":6.6857,"y":107.8936,"group":"group 3"},{"x":8.1807,"y":110.2859,"group":"group 2"},{"x":9.2916,"y":134.9698,"group":"group 2"},{"x":5.269,"y":1.6042,"group":"group 3"},{"x":2.4251,"y":50.5526,"group":"group 2"},{"x":0.8172,"y":111.484,"group":"group 3"},{"x":3.8882,"y":12.1427,"group":"group 2"},{"x":0.6953,"y":-37.9491,"group":"group 1"},{"x":4.4698,"y":200.7334,"group":"group 2"},{"x":5.4303,"y":-67.8519,"group":"group 3"},{"x":2.2773,"y":-61.1436,"group":"group 2"},{"x":3.3088,"y":8.2836,"group":"group 1"},{"x":4.9867,"y":94.3682,"group":"group 1"},{"x":2.9492,"y":-99.8279,"group":"group 1"},{"x":3.0981,"y":-43.3068,"group":"group 3"},{"x":6.0925,"y":2.7935,"group":"group 3"},{"x":9.0441,"y":300.0693,"group":"group 3"},{"x":7.0643,"y":179.904,"group":"group 2"},{"x":5.8729,"y":36.5852,"group":"group 3"},{"x":1.3385,"y":-18.6535,"group":"group 2"},{"x":0.8392,"y":-15.9676,"group":"group 1"},{"x":0.6391,"y":-1.1855,"group":"group 1"},{"x":4.8355,"y":-106.5904,"group":"group 1"},{"x":6.5672,"y":60.2029,"group":"group 3"},{"x":5.1639,"y":105.3537,"group":"group 2"},{"x":4.587,"y":-96.2848,"group":"group 3"},{"x":4.575,"y":84.9284,"group":"group 3"},{"x":5.5465,"y":207.0343,"group":"group 3"},{"x":0.5345,"y":-41.4268,"group":"group 2"},{"x":7.5622,"y":41.7748,"group":"group 1"},{"x":4.7998,"y":102.5952,"group":"group 2"},{"x":8.4444,"y":215.2373,"group":"group 2"},{"x":0.8389,"y":115.4963,"group":"group 3"},{"x":1.3645,"y":75.7199,"group":"group 2"},{"x":3.2798,"y":-99.2148,"group":"group 2"},{"x":4.0578,"y":-85.4269,"group":"group 3"},{"x":0.2025,"y":60.7926,"group":"group 2"},{"x":7.9982,"y":191.9102,"group":"group 3"},{"x":0.7994,"y":-15.3195,"group":"group 2"},{"x":9.4463,"y":294.906,"group":"group 1"},{"x":4.482,"y":57.0404,"group":"group 3"},{"x":3.5669,"y":-16.7005,"group":"group 1"},{"x":6.053,"y":150.1485,"group":"group 3"},{"x":7.18,"y":99.9896,"group":"group 3"},{"x":7.248,"y":267.3202,"group":"group 2"},{"x":6.9703,"y":-3.3329,"group":"group 1"},{"x":4.3059,"y":-46.1672,"group":"group 2"},{"x":4.977,"y":107.5954,"group":"group 2"},{"x":5.9616,"y":42.6722,"group":"group 2"},{"x":6.9768,"y":86.6593,"group":"group 1"},{"x":6.7877,"y":45.1433,"group":"group 1"},{"x":8.2341,"y":248.3508,"group":"group 3"},{"x":9.655,"y":355.7473,"group":"group 3"},{"x":0.8401,"y":-40.6287,"group":"group 3"},{"x":7.4414,"y":-1.6852,"group":"group 3"},{"x":1.4789,"y":68.0579,"group":"group 1"},{"x":9.3778,"y":219.3952,"group":"group 1"},{"x":7.4767,"y":25.577,"group":"group 2"},{"x":6.1874,"y":13.1916,"group":"group 1"},{"x":3.2069,"y":-117.4434,"group":"group 2"},{"x":9.4813,"y":284.5667,"group":"group 2"},{"x":5.496,"y":-19.9106,"group":"group 1"},{"x":7.4412,"y":151.1317,"group":"group 3"},{"x":7.1619,"y":248.6018,"group":"group 3"},{"x":7.3996,"y":96.7037,"group":"group 3"},{"x":7.1906,"y":26.327,"group":"group 2"},{"x":9.5213,"y":426.974,"group":"group 3"},{"x":0.2784,"y":-148.9069,"group":"group 3"},{"x":6.0756,"y":127.5393,"group":"group 2"},{"x":3.8094,"y":-49.2222,"group":"group 2"},{"x":1.2864,"y":45.4004,"group":"group 3"},{"x":8.9881,"y":256.6767,"group":"group 1"},{"x":2.371,"y":23.0363,"group":"group 3"},{"x":0.0675,"y":66.9479,"group":"group 2"},{"x":1.0431,"y":46.0385,"group":"group 1"},{"x":6.6582,"y":40.6152,"group":"group 1"},{"x":3.6342,"y":9.5917,"group":"group 2"},{"x":7.9857,"y":111.0603,"group":"group 1"},{"x":9.6027,"y":223.5836,"group":"group 1"},{"x":5.3665,"y":-32.1991,"group":"group 2"},{"x":3.0935,"y":54.6191,"group":"group 3"},{"x":5.1721,"y":171.1735,"group":"group 1"},{"x":0.9189,"y":-138.8599,"group":"group 2"},{"x":8.9064,"y":236.1688,"group":"group 1"},{"x":1.2244,"y":-121.8523,"group":"group 2"},{"x":3.0991,"y":100.0224,"group":"group 1"},{"x":1.2248,"y":-102.065,"group":"group 1"},{"x":6.499,"y":188.8823,"group":"group 2"},{"x":8.8496,"y":285.9406,"group":"group 2"},{"x":3.3164,"y":93.656,"group":"group 2"},{"x":6.5484,"y":-21.9495,"group":"group 1"},{"x":4.9479,"y":-37.8048,"group":"group 2"},{"x":9.1348,"y":315.5999,"group":"group 1"},{"x":4.8901,"y":-15.1432,"group":"group 2"},{"x":4.75,"y":43.7644,"group":"group 3"},{"x":4.8735,"y":17.6255,"group":"group 3"},{"x":9.3625,"y":385.8708,"group":"group 2"},{"x":0.2733,"y":-159.5509,"group":"group 1"},{"x":7.706,"y":207.2522,"group":"group 3"},{"x":6.0377,"y":103.6348,"group":"group 3"},{"x":4.0187,"y":10.9424,"group":"group 2"},{"x":8.1629,"y":140.2559,"group":"group 1"},{"x":6.4605,"y":45.2021,"group":"group 3"},{"x":9.0196,"y":303.9195,"group":"group 2"},{"x":8.5343,"y":188.2329,"group":"group 2"},{"x":9.5614,"y":361.3083,"group":"group 3"},{"x":6.7327,"y":85.2436,"group":"group 3"},{"x":2.7065,"y":112.9137,"group":"group 3"},{"x":5.3808,"y":188.9325,"group":"group 1"},{"x":8.3647,"y":280.9988,"group":"group 2"},{"x":2.9377,"y":-146.9444,"group":"group 3"},{"x":1.7007,"y":-5.5273,"group":"group 3"},{"x":5.5078,"y":50.9962,"group":"group 1"},{"x":7.7318,"y":25.153,"group":"group 3"},{"x":8.4938,"y":154.9252,"group":"group 1"},{"x":6.8778,"y":93.6891,"group":"group 2"},{"x":8.385,"y":139.8333,"group":"group 1"},{"x":0.8777,"y":43.9984,"group":"group 2"},{"x":3.5575,"y":4.2029,"group":"group 3"},{"x":8.9721,"y":249.6153,"group":"group 1"},{"x":5.7529,"y":22.7479,"group":"group 2"},{"x":1.5744,"y":72.9238,"group":"group 2"}];
+      var data = [{"x":4.7036,"y":34.1201,"group":"group 2"},{"x":6.5813,"y":98.983,"group":"group 3"},{"x":6.7487,"y":131.7106,"group":"group 2"},{"x":8.3653,"y":113.0092,"group":"group 2"},{"x":8.5488,"y":350.2247,"group":"group 1"},{"x":8.9661,"y":336.6802,"group":"group 3"},{"x":7.2313,"y":63.2299,"group":"group 3"},{"x":4.2833,"y":-63.4008,"group":"group 2"},{"x":5.5677,"y":29.7405,"group":"group 1"},{"x":0.2525,"y":-30.1416,"group":"group 1"},{"x":8.8903,"y":350.37,"group":"group 2"},{"x":5.4478,"y":146.6663,"group":"group 2"},{"x":1.3187,"y":31.6384,"group":"group 1"},{"x":4.109,"y":50.1132,"group":"group 3"},{"x":9.777,"y":386.1118,"group":"group 2"},{"x":1.314,"y":-0.9779,"group":"group 1"},{"x":0.7528,"y":75.0033,"group":"group 3"},{"x":3.9678,"y":-27.5889,"group":"group 1"},{"x":3.0691,"y":1.1962,"group":"group 3"},{"x":8.4245,"y":292.4412,"group":"group 3"},{"x":0.6714,"y":46.6889,"group":"group 2"},{"x":6.3582,"y":75.9143,"group":"group 2"},{"x":3.5908,"y":105.0172,"group":"group 1"},{"x":3.6794,"y":97.8557,"group":"group 1"},{"x":9.874,"y":330.8778,"group":"group 1"},{"x":1.5495,"y":-37.5558,"group":"group 1"},{"x":4.81,"y":-12.6125,"group":"group 2"},{"x":2.9671,"y":-63.4694,"group":"group 2"},{"x":4.1212,"y":-5.9638,"group":"group 3"},{"x":4.3022,"y":1.8275,"group":"group 2"},{"x":9.5537,"y":324.9853,"group":"group 3"},{"x":6.3643,"y":12.7248,"group":"group 3"},{"x":2.5207,"y":107.5522,"group":"group 1"},{"x":6.9201,"y":305.8843,"group":"group 3"},{"x":1.5762,"y":-133.742,"group":"group 3"},{"x":5.8879,"y":-149.321,"group":"group 2"},{"x":6.1553,"y":97.8415,"group":"group 1"},{"x":5.109,"y":-72.1121,"group":"group 1"},{"x":4.4044,"y":65.4996,"group":"group 2"},{"x":1.453,"y":-21.2103,"group":"group 2"},{"x":7.8941,"y":121.6486,"group":"group 2"},{"x":3.548,"y":81.2084,"group":"group 2"},{"x":5.5678,"y":-38.3388,"group":"group 3"},{"x":0.7437,"y":-66.0464,"group":"group 2"},{"x":0.1615,"y":85.8177,"group":"group 1"},{"x":4.8221,"y":26.5821,"group":"group 1"},{"x":1.7476,"y":-73.892,"group":"group 2"},{"x":4.973,"y":37.715,"group":"group 3"},{"x":2.0627,"y":-137.5003,"group":"group 1"},{"x":9.1578,"y":195.2754,"group":"group 2"},{"x":0.7313,"y":86.66,"group":"group 3"},{"x":5.7825,"y":-18.3482,"group":"group 1"},{"x":2.4564,"y":94.2425,"group":"group 2"},{"x":9.3595,"y":343.7298,"group":"group 2"},{"x":9.9581,"y":268.8981,"group":"group 3"},{"x":7.9719,"y":199.9002,"group":"group 1"},{"x":9.3146,"y":185.2932,"group":"group 3"},{"x":3.8298,"y":-22.2282,"group":"group 1"},{"x":9.3747,"y":351.5171,"group":"group 1"},{"x":3.3693,"y":110.2218,"group":"group 3"},{"x":8.3014,"y":117.6112,"group":"group 2"},{"x":5.1,"y":80.0003,"group":"group 2"},{"x":7.7248,"y":289.7325,"group":"group 2"},{"x":3.7028,"y":27.6244,"group":"group 2"},{"x":3.2482,"y":73.2841,"group":"group 2"},{"x":2.9057,"y":-76.669,"group":"group 1"},{"x":6.3893,"y":163.5587,"group":"group 2"},{"x":8.7233,"y":36.7431,"group":"group 2"},{"x":9.6733,"y":321.1731,"group":"group 1"},{"x":4.2692,"y":76.5483,"group":"group 2"},{"x":7.9202,"y":170.4797,"group":"group 1"},{"x":6.2641,"y":154.0262,"group":"group 3"},{"x":1.7285,"y":-122.0975,"group":"group 3"},{"x":3.0449,"y":137.1377,"group":"group 3"},{"x":7.5291,"y":36.0951,"group":"group 1"},{"x":4.2541,"y":42.7347,"group":"group 2"},{"x":3.3789,"y":-27.341,"group":"group 3"},{"x":0.1257,"y":106.9995,"group":"group 1"},{"x":3.6542,"y":-69.7604,"group":"group 3"},{"x":5.8209,"y":125.279,"group":"group 2"},{"x":3.1277,"y":33.534,"group":"group 1"},{"x":5.8486,"y":-22.1652,"group":"group 1"},{"x":3.4443,"y":-1.4788,"group":"group 2"},{"x":1.6468,"y":155.8199,"group":"group 3"},{"x":9.9168,"y":317.7647,"group":"group 1"},{"x":8.1532,"y":67.3554,"group":"group 3"},{"x":6.5427,"y":58.7354,"group":"group 2"},{"x":5.2694,"y":67.6843,"group":"group 3"},{"x":5.2711,"y":-65.025,"group":"group 2"},{"x":0.6107,"y":-181.8009,"group":"group 3"},{"x":1.3346,"y":-75.516,"group":"group 2"},{"x":3.8881,"y":-50.9024,"group":"group 3"},{"x":8.6739,"y":171.3205,"group":"group 2"},{"x":2.3192,"y":-182.3005,"group":"group 3"},{"x":4.1875,"y":114.0489,"group":"group 1"},{"x":6.1802,"y":50.1919,"group":"group 1"},{"x":7.3982,"y":119.4625,"group":"group 1"},{"x":6.6944,"y":104.7894,"group":"group 3"},{"x":6.6379,"y":213.7551,"group":"group 2"},{"x":4.4223,"y":6.1407,"group":"group 1"},{"x":0.0245,"y":7.971,"group":"group 1"},{"x":7.3196,"y":-38.6558,"group":"group 3"},{"x":0.3582,"y":-86.7841,"group":"group 2"},{"x":4.828,"y":-10.5225,"group":"group 1"},{"x":6.8375,"y":98.5628,"group":"group 2"},{"x":6.0233,"y":80.5153,"group":"group 2"},{"x":8.5585,"y":196.0363,"group":"group 3"},{"x":0.2147,"y":-68.5034,"group":"group 3"},{"x":7.1434,"y":199.5319,"group":"group 1"},{"x":0.0321,"y":-30.6266,"group":"group 3"},{"x":8.8703,"y":249.2799,"group":"group 1"},{"x":8.1478,"y":112.7227,"group":"group 3"},{"x":0.5968,"y":11.7722,"group":"group 3"},{"x":5.2988,"y":89.83,"group":"group 2"},{"x":0.6416,"y":-104.2852,"group":"group 1"},{"x":3.7777,"y":25.186,"group":"group 3"},{"x":7.7176,"y":191.8492,"group":"group 3"},{"x":4.2761,"y":-21.105,"group":"group 3"},{"x":3.9248,"y":45.3806,"group":"group 1"},{"x":4.3779,"y":-41.4305,"group":"group 1"},{"x":0.2416,"y":14.6631,"group":"group 1"},{"x":0.5323,"y":-55.3026,"group":"group 2"},{"x":3.2761,"y":-94.8521,"group":"group 2"},{"x":2.6707,"y":0.1036,"group":"group 3"},{"x":1.6425,"y":-6.9211,"group":"group 1"},{"x":6.1299,"y":-65.7205,"group":"group 1"},{"x":5.6738,"y":60.5666,"group":"group 1"},{"x":0.4583,"y":-3.3357,"group":"group 3"},{"x":8.3096,"y":219.4457,"group":"group 3"},{"x":2.0508,"y":-25.2864,"group":"group 1"},{"x":9.8006,"y":363.3611,"group":"group 1"},{"x":2.766,"y":-121.2768,"group":"group 1"},{"x":7.9647,"y":100.2741,"group":"group 2"},{"x":9.3704,"y":224.2516,"group":"group 3"},{"x":5.5828,"y":167.5959,"group":"group 2"},{"x":8.7514,"y":245.1556,"group":"group 3"},{"x":2.1508,"y":-97.6058,"group":"group 2"},{"x":9.7562,"y":491.7392,"group":"group 2"},{"x":6.3293,"y":128.2182,"group":"group 3"},{"x":0.1561,"y":-166.3072,"group":"group 3"},{"x":1.8183,"y":1.3928,"group":"group 2"},{"x":0.2418,"y":24.7332,"group":"group 2"},{"x":2.7452,"y":-11.3899,"group":"group 1"},{"x":3.5991,"y":-204.5321,"group":"group 1"},{"x":8.828,"y":165.0788,"group":"group 1"},{"x":9.4952,"y":472.7222,"group":"group 1"},{"x":9.7255,"y":268.0753,"group":"group 2"},{"x":5.8239,"y":128.5817,"group":"group 2"},{"x":7.5782,"y":114.5363,"group":"group 1"},{"x":0.7311,"y":133.3126,"group":"group 2"},{"x":3.9004,"y":8.3014,"group":"group 2"},{"x":2.01,"y":-73.0995,"group":"group 3"},{"x":9.519,"y":366.2377,"group":"group 2"},{"x":9.8457,"y":448.8028,"group":"group 1"},{"x":8.9288,"y":164.8966,"group":"group 1"},{"x":3.5437,"y":96.4627,"group":"group 1"},{"x":5.029,"y":143.4133,"group":"group 3"},{"x":0.9502,"y":-85.6455,"group":"group 3"},{"x":4.5713,"y":105.4931,"group":"group 3"},{"x":7.3364,"y":182.5836,"group":"group 2"},{"x":1.3737,"y":-32.6948,"group":"group 3"},{"x":0.0447,"y":68.6539,"group":"group 2"},{"x":1.7762,"y":116.6245,"group":"group 1"},{"x":0.6632,"y":99.1327,"group":"group 3"},{"x":5.2736,"y":170.3705,"group":"group 2"},{"x":9.7425,"y":257.9084,"group":"group 1"},{"x":7.6827,"y":216.9074,"group":"group 2"},{"x":2.1922,"y":28.1294,"group":"group 3"},{"x":7.8295,"y":260.3974,"group":"group 3"},{"x":6.2317,"y":48.136,"group":"group 3"},{"x":8.1773,"y":254.5285,"group":"group 1"},{"x":5.01,"y":-92.6586,"group":"group 1"},{"x":0.4446,"y":5.5415,"group":"group 3"},{"x":8.7149,"y":274.6511,"group":"group 2"},{"x":7.7497,"y":120.2726,"group":"group 3"},{"x":5.7323,"y":65.5753,"group":"group 2"},{"x":5.6884,"y":123.3034,"group":"group 3"},{"x":2.0329,"y":11.431,"group":"group 3"},{"x":0.5497,"y":126.9706,"group":"group 3"},{"x":7.524,"y":128.2721,"group":"group 1"},{"x":8.225,"y":333.2879,"group":"group 2"},{"x":0.018,"y":-13.2057,"group":"group 3"},{"x":2.2332,"y":-84.8911,"group":"group 1"},{"x":7.4024,"y":64.3997,"group":"group 3"},{"x":4.4089,"y":45.8618,"group":"group 3"},{"x":9.5435,"y":496.1459,"group":"group 1"},{"x":8.4194,"y":139.2706,"group":"group 1"},{"x":2.6636,"y":-30.9543,"group":"group 1"},{"x":4.9257,"y":-84.7837,"group":"group 3"},{"x":9.105,"y":341.4824,"group":"group 3"},{"x":5.9843,"y":35.1124,"group":"group 1"},{"x":2.9799,"y":-8.3425,"group":"group 3"},{"x":9.4632,"y":256.0156,"group":"group 1"},{"x":4.2754,"y":84.7062,"group":"group 3"},{"x":0.7951,"y":100.2751,"group":"group 1"},{"x":7.003,"y":108.0471,"group":"group 2"},{"x":7.2231,"y":20.2371,"group":"group 3"},{"x":4.7301,"y":25.5528,"group":"group 1"},{"x":2.0748,"y":10.8503,"group":"group 1"},{"x":3.0092,"y":-56.4933,"group":"group 2"},{"x":3.7791,"y":42.8309,"group":"group 2"},{"x":1.9488,"y":-75.558,"group":"group 3"},{"x":8.9574,"y":176.3693,"group":"group 3"},{"x":8.2822,"y":248.17,"group":"group 3"},{"x":2.579,"y":18.7725,"group":"group 1"},{"x":0.905,"y":-159.2196,"group":"group 2"},{"x":2.9394,"y":31.3358,"group":"group 3"},{"x":0.3662,"y":-23.0061,"group":"group 2"},{"x":0.352,"y":210.2393,"group":"group 3"},{"x":3.212,"y":-20.3028,"group":"group 3"},{"x":0.8066,"y":2.6787,"group":"group 1"},{"x":3.2241,"y":45.1515,"group":"group 1"},{"x":6.9769,"y":25.9702,"group":"group 1"},{"x":2.7222,"y":3.4216,"group":"group 3"},{"x":8.605,"y":333.3539,"group":"group 1"},{"x":9.3359,"y":353.3408,"group":"group 3"},{"x":5.1592,"y":-88.2059,"group":"group 2"},{"x":8.5481,"y":323.5387,"group":"group 1"},{"x":9.2894,"y":185.1953,"group":"group 1"},{"x":5.3427,"y":49.6448,"group":"group 1"},{"x":6.2262,"y":181.0903,"group":"group 1"},{"x":4.653,"y":63.3593,"group":"group 1"},{"x":8.3431,"y":208.1946,"group":"group 2"},{"x":2.0998,"y":-2.5179,"group":"group 1"},{"x":7.5795,"y":176.483,"group":"group 1"},{"x":9.829,"y":358.4479,"group":"group 2"},{"x":4.6431,"y":130.3046,"group":"group 3"},{"x":6.8721,"y":176.1079,"group":"group 1"},{"x":0.6145,"y":-93.7312,"group":"group 3"},{"x":5.0542,"y":77.7652,"group":"group 2"},{"x":7.4339,"y":142.2463,"group":"group 1"},{"x":6.0936,"y":180.991,"group":"group 1"},{"x":7.0459,"y":34.3516,"group":"group 3"},{"x":5.8103,"y":-4.5033,"group":"group 3"},{"x":4.9646,"y":126.2192,"group":"group 3"},{"x":1.2726,"y":51.4314,"group":"group 1"},{"x":1.9187,"y":33.5018,"group":"group 2"},{"x":9.8679,"y":348.2252,"group":"group 3"},{"x":0.813,"y":15.0286,"group":"group 3"},{"x":8.9016,"y":264.5219,"group":"group 2"},{"x":3.8394,"y":-36.502,"group":"group 2"},{"x":7.0301,"y":239.4324,"group":"group 1"},{"x":1.8686,"y":-68.9927,"group":"group 1"},{"x":7.0281,"y":137.1577,"group":"group 1"},{"x":7.0044,"y":152.1427,"group":"group 1"},{"x":2.3282,"y":-29.978,"group":"group 1"},{"x":1.9513,"y":-61.101,"group":"group 2"},{"x":4.4388,"y":112.0713,"group":"group 1"},{"x":0.222,"y":42.2476,"group":"group 1"},{"x":9.5539,"y":293.7644,"group":"group 2"},{"x":3.7243,"y":78.6889,"group":"group 2"},{"x":2.9149,"y":98.8582,"group":"group 3"},{"x":3.5072,"y":113.1419,"group":"group 3"},{"x":7.8479,"y":138.2635,"group":"group 2"},{"x":7.6891,"y":197.1724,"group":"group 2"},{"x":7.1097,"y":80.2073,"group":"group 2"},{"x":1.3017,"y":-74.9544,"group":"group 1"},{"x":2.9934,"y":-57.7999,"group":"group 1"},{"x":5.4694,"y":156.784,"group":"group 2"},{"x":6.1883,"y":46.5542,"group":"group 2"},{"x":0.5343,"y":-82.6142,"group":"group 2"},{"x":1.8475,"y":-53.4642,"group":"group 1"},{"x":5.7726,"y":-93.1871,"group":"group 1"},{"x":1.2929,"y":-38.9841,"group":"group 2"},{"x":8.276,"y":164.711,"group":"group 1"},{"x":8.8408,"y":221.7368,"group":"group 3"},{"x":2.1532,"y":-184.8102,"group":"group 2"},{"x":8.5997,"y":425.6029,"group":"group 2"},{"x":5.2196,"y":35.5059,"group":"group 3"},{"x":0.8318,"y":-36.2718,"group":"group 1"},{"x":4.2349,"y":188.3387,"group":"group 3"},{"x":8.6412,"y":35.6233,"group":"group 3"},{"x":6.4466,"y":37.5538,"group":"group 1"},{"x":2.1092,"y":58.408,"group":"group 3"},{"x":7.8112,"y":151.3385,"group":"group 1"},{"x":4.4746,"y":127.1778,"group":"group 2"},{"x":5.9774,"y":-97.5988,"group":"group 3"},{"x":5.9519,"y":14.5982,"group":"group 1"},{"x":4.1381,"y":32.2346,"group":"group 1"},{"x":6.713,"y":17.6135,"group":"group 3"},{"x":6.8133,"y":73.9654,"group":"group 2"},{"x":3.3617,"y":100.4253,"group":"group 3"},{"x":0.2328,"y":9.3529,"group":"group 2"},{"x":4.1488,"y":77.7256,"group":"group 1"},{"x":3.9472,"y":59.493,"group":"group 1"},{"x":2.9055,"y":37.6852,"group":"group 1"},{"x":9.3734,"y":291.3793,"group":"group 3"},{"x":3.1589,"y":168.594,"group":"group 1"},{"x":2.1343,"y":-27.6586,"group":"group 3"},{"x":8.5163,"y":230.8809,"group":"group 1"},{"x":1.1592,"y":140.8587,"group":"group 1"},{"x":7.3401,"y":154.8659,"group":"group 2"},{"x":6.5979,"y":-18.9955,"group":"group 3"},{"x":5.1317,"y":63.5882,"group":"group 1"},{"x":1.7297,"y":95.3901,"group":"group 1"},{"x":2.5523,"y":119.0783,"group":"group 2"},{"x":4.0934,"y":65.4356,"group":"group 1"},{"x":0.5441,"y":-4.8083,"group":"group 3"},{"x":0.5089,"y":-28.4813,"group":"group 1"},{"x":6.6319,"y":45.5322,"group":"group 2"}];
     </script>
 <p>Now our data is inside our page’s javascript scope and ready to be played with!</p>
 </div>
@@ -382,105 +303,187 @@ svg.append(&quot;g&quot;)
 svg.append(&quot;g&quot;)
     .call(d3.axisLeft(y));</code></pre>
 </div>
-
-
-
-
-    </section>
-
-
-  <footer class="post-footer">
-
-
-    
-    <figure class="author-image">
-        <a class="img" href="../../../../" style="background-image: url(/images/logo.png)"><span class="hidden">'s Picture</span></a>
-    </figure>
-    
-
-    
-
-
-
-
-
-
-
-
-<div class="post-author">
-
-    <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
-    <br>
-    <span style="font-size: 1.02em;font-weight: bold;">
-        Nick Strayer
-    </span>
-    |
-    <a style = "text-decoration: none;" class = "post-author__text" href = http://nickstrayer.me >
-        <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
-    </a>
-
-    <a class="icon-twitter post-author__text" style="font-size: 1.4em; text-decoration: none;" href = https://twitter.com/NicholasStrayer onclick="window.open(this.href"></a>
-
-    <a style = "text-decoration: none;" class = "post-author__text" href = https://github.com/nstrayer >
-        <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
-    </a>
-
-
-    <br>
-
-    <p class="post-author__text">Randomly walking my way though a career in statistics</p>
-    
-
-
-    
-<section class="share">
-  <p style="font-size: 1em; font-weight:bold;">Share this post <a class="icon-twitter" style="font-size: 1.1em" href="https://twitter.com/share?text=Custom%20JavaScript%20visualizations%20in%20RMarkdown&nbsp;-&nbsp;Live%20Free%20or%20Dichotomize&amp;url=https://livefreeordichotomize.com%2f2017%2f01%2f24%2fcustom-javascript-visualizations-in-rmarkdown%2f"
-      onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
- </a></p>
 </section>
+<section>
+  
 
 
 
+
+
+
+
+
+
+<style>
+
+  .author_blurb {
+    display: flex;
+    flex-direction: row;    
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 150px;
+    text-decoration none;
+  }
+  
+  .author_photo {
+  }
+  
+  .photo{
+    width: 90px;
+  }
+  
+  .author_info{
+    display: flex;
+    flex-direction: column;    
+    padding-left: 15px;
+    justify-content: center;
+  }
+  
+  .name{
+    font-family: "Merriweather", serif;
+    letter-spacing: 0.01rem;
+    font-size: 1.7rem;
+  }
+  
+  .contact_info{
+    align-content: center;
+  }
+  
+  .contact_info a {
+    background-repeat: no-repeat, no-repeat, no-repeat !important;
+    text-decoration: none !important;
+  }
+  
+  .bio{
+    height: 100px;
+    padding-top: 0px;
+  }
+  
+  .bio_text{
+    padding-top: 5px;
+    margin-top: auto;
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    font-weight: 200;
+    color: #636363;
+    letter-spacing: 0;
+    text-indent: 0;
+  }
+  
+   
+  @media all and (max-width: 800px) {
+    .author_blurb {
+      
+    }
+  }
+  
+   
+  @media all and (max-width: 500px) {
+    .author_blurb {
+      flex-direction: column;    
+    }
+    .author_info{
+      padding-top: 40px;
+    }
+    .author_photo {
+      align-self: center;
+    }
+  }
+  
+</style>
+
+
+<div class="author_blurb">
+
+  <div class="author_photo">
+    <div class="photo">
+      <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
+    </div>
+        
+  </div>
+  <div class = "author_info">
     
+    <div class = "contact_info">
+        <span class = "name"> Nick Strayer |</span>
+        
+        <a class = "social_buttons" href = http://nickstrayer.me >
+            <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+        </a>
+        
+        <a class="social_buttons" href = https://twitter.com/NicholasStrayer>
+          <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+        </a>
+    
+        <a class = "social_buttons" href = https://github.com/nstrayer >
+          <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+        </a>
+    </div>
+    
+    
+    <div class = "bio">
+      <p class = "bio_text">Randomly walking my way though a career in statistics</p>
+    </div>
+    
+  </div>
+
+  
+</div>
 
 
+  
   <div id="disqus_thread"></div>
-    <script type="text/javascript">
-       
-      var disqus_shortname = 'livefreeordichotomize'; 
-      var disqus_identifier = '\/2017\/01\/24\/custom-javascript-visualizations-in-rmarkdown\/';
-       
-      (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
+  <script type="text/javascript">
+
+  (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+          return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = '';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
   </script>
   <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
-      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
 
-  </footer>
-</article>
+  
 
-</main>
-    <footer class="site-footer clearfix">
-        <section class="copyright"><a href="">Live Free or Dichotomize</a> </section>
-        
-        <section class="poweredby">Proudly generated by <a class="icon-hugo" href="http://gohugo.io">HUGO</a>, with <a class="icon-theme" href="https://github.com/vjeantet/hugo-theme-casper">Casper</a> theme</section>
-        
-    </footer>
-    </div>
-    <script type="text/javascript" src="../../../../js/jquery.js"></script>
-    <script type="text/javascript" src="../../../../js/jquery.fitvids.js"></script>
-    <script type="text/javascript" src="../../../../js/index.js"></script>
-        
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="../../../../js/header_lines.js"></script>
-
+	<div class="copyright">
+	<p>
     
+      &copy; 2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+
+
+</section>
+</article>
+</div>
 </body>
 </html>
-

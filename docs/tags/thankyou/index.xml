@@ -1,107 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
-    <link>/tags/thankyou/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <title>Thankyou on Live Free or Dichotomize</title>
+    <link>/tags/thankyou/</link>
+    <description>Recent content in Thankyou on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/thankyou/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 25 Jan 2017 12:18:31 -0600</lastBuildDate>
     
-    <item>
-      <title>xkcd thank you note</title>
-      <link>/2017/03/04/xkcd-thank-you-note/</link>
-      <pubDate>Sat, 04 Mar 2017 19:23:45 -0600</pubDate>
-      
-      <guid>/2017/03/04/xkcd-thank-you-note/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;I’ve been looking for a way to incorporate xkcd in my &lt;a href=&#34;http://livefreeordichotomize.com/tags/thankyou/&#34;&gt;#thankyou&lt;/a&gt; series &amp;amp; recently came across this gem:&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-cards=&#34;hidden&#34; data-lang=&#34;en&#34;&gt;
-&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
-Did you know that there is a package in R to make your graphs in the style of xkcd comics? &lt;a href=&#34;https://twitter.com/hashtag/Rstats?src=hash&#34;&gt;#Rstats&lt;/a&gt; &lt;a href=&#34;https://t.co/29Cnp9t20N&#34;&gt;https://t.co/29Cnp9t20N&lt;/a&gt; &lt;a href=&#34;https://t.co/iY1UsFdEfJ&#34;&gt;pic.twitter.com/iY1UsFdEfJ&lt;/a&gt;
-&lt;/p&gt;
-— Maria Gatta (&lt;span class=&#34;citation&#34;&gt;@M_Gatta&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/M_Gatta/status/832952195784044545&#34;&gt;February 18, 2017&lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;br&gt;
-&lt;center&gt;
-&lt;span style=&#34;color:#EB6864; font-size: 15pt&#34;&gt;[I’m not saying xkcd makes me a better statistician, but I’m not &lt;b&gt;not&lt;/b&gt; saying that either 💁🏻]&lt;/span&gt;
-&lt;/center&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://xkcd.com&#34;&gt;xkcd&lt;/a&gt; has been there during some of my &lt;a href=&#34;http://livefreeordichotomize.com/2016/12/15/hill-for-the-data-scientist-an-xkcd-story/&#34;&gt;&lt;em&gt;finest&lt;/em&gt;&lt;/a&gt; statistical moments, so they certainly deserve a proper thank you. I use the &lt;a href=&#34;https://cran.r-project.org/web/packages/xkcd/xkcd.pdf&#34;&gt;xkcd&lt;/a&gt; &lt;code&gt;R&lt;/code&gt; package to explore the relationship between the time I’ve spent on statistics and the time I’ve spent on xkcd (&lt;a href=&#34;https://xkcd.com/552/&#34;&gt;correlation &lt;span class=&#34;math inline&#34;&gt;\(\neq\)&lt;/span&gt; causation&lt;/a&gt;…but &lt;span class=&#34;math inline&#34;&gt;\(\rho\)&lt;/span&gt; = 0.84).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-03-04-xkcd-thank-you-note_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;You can make one too - run the code below with my data or input your own. Happy plotting!&lt;/p&gt;
-&lt;p style=&#34;text-align: right; color: #EB6864; font-size: 10pt; LINE-HEIGHT:9px;&#34;&gt;
-Pro tip: if you don’t have the &lt;br&gt;&lt;br /&gt;
-xkcd font installed, check out &lt;br&gt;&lt;br /&gt;
-page 4 of the vignette.
-&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;ggplot2&amp;#39;)
-library(&amp;#39;xkcd&amp;#39;)
-
-load(url(&amp;quot;https://github.com/LFOD/real-blog/raw/master/static/data/xkcd_data.rda&amp;quot;))
-
-#learn more about the xkcd package
-vignette(&amp;quot;xkcd-intro&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(916)
-xkcdlabel &amp;lt;-  function(text,x,y, above= FALSE) {
-  if (above == TRUE){
-    add = 4
-    beg = 3
-  } else {
-    add = -4
-    beg = -3
-  }
- ann &amp;lt;- annotate(&amp;quot;text&amp;quot;, x=x, y = y , label=text,family =&amp;quot;xkcd&amp;quot;)
-  list(ann,
-       xkcdline(aes(xbegin=xbegin, ybegin= ybegin, xend=xend,yend=yend),
-                data.frame(xbegin=x,ybegin= y+beg , xend=x,yend=y+add), xjitteramount = 0.5))
-}
-
-p &amp;lt;- ggplot(data) + 
-  geom_smooth(mapping=aes(x=time, y =spent, group = stat, linetype = stat), 
-              se = FALSE,
-              method=&amp;quot;loess&amp;quot;,
-              span = 0.25) +
-  xkcdaxis(c(2008,2018),c(0,44)) +
-  xkcdlabel(&amp;quot;BU\n SIBS&amp;quot;,x=2011.5,y = 12) +
-  xkcdlabel(&amp;quot;1st year comps\n closed book&amp;quot;,x=2015.3,y = 1.5, above = TRUE) +
-  xkcdlabel(&amp;quot;2nd year comps\n open book&amp;quot;,x=2016.7,y = 42) +
-  xkcdlabel(&amp;quot;Start \ncollege&amp;quot;,x = 2008.6,y = 8) +
-  scale_linetype_discrete(name = &amp;quot;Time spent on&amp;quot;) +
-  theme(axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        legend.position = c(.25,.75)) +
-  ggtitle(&amp;quot;Thank you, xkcd!&amp;quot;)
-p&lt;/code&gt;&lt;/pre&gt;
-
-
-&lt;!-- dynamically load mathjax for compatibility with self-contained --&gt;
-&lt;script&gt;
-  (function () {
-    var script = document.createElement(&#34;script&#34;);
-    script.type = &#34;text/javascript&#34;;
-    script.src  = &#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;;
-    if (location.protocol !== &#34;file:&#34; &amp;&amp; /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, &#39;&#39;);
-    document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);
-  })();
-&lt;/script&gt;
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
-    </item>
+	<atom:link href="/tags/thankyou/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>CatterPlot thank you note</title>
@@ -109,115 +17,9 @@ p&lt;/code&gt;&lt;/pre&gt;
       <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
       
       <guid>/2017/01/25/catterplot-thank-you-note/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://twitter.com/Amstat_Lara&#34;&gt;Lara Harmon&lt;/a&gt; has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
-&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
-On the off-chance you have not felt judged by a cat today, my cat can help you out. &lt;a href=&#34;https://t.co/sApgbyYztD&#34;&gt;pic.twitter.com/sApgbyYztD&lt;/a&gt;
-&lt;/p&gt;
-— Lara Harmon (&lt;span class=&#34;citation&#34;&gt;@Amstat_Lara&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/Amstat_Lara/status/813800278059339776&#34;&gt;December 27, 2016&lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;p&gt;and&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
-&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
-You&#39;ll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme. /life goals
-&lt;/p&gt;
-— Lara Harmon (&lt;span class=&#34;citation&#34;&gt;@Amstat_Lara&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/Amstat_Lara/status/824013270361264129&#34;&gt;January 24, 2017&lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;p&gt;and&lt;/p&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-lang=&#34;en&#34;&gt;
-&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
-Stats Cat&#39;s back from her first business trip. Looks about as jetlagged as I am! &lt;a href=&#34;https://twitter.com/hashtag/JMM17?src=hash&#34;&gt;#JMM17&lt;/a&gt; &lt;a href=&#34;https://t.co/JLzSbMKj3I&#34;&gt;pic.twitter.com/JLzSbMKj3I&lt;/a&gt;
-&lt;/p&gt;
-— Lara Harmon (&lt;span class=&#34;citation&#34;&gt;@Amstat_Lara&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/Amstat_Lara/status/818875591294337025&#34;&gt;January 10, 2017&lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script async src=&#34;//platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;p&gt;so we decided to write her an appropriate thank you note, using &lt;a href=&#34;https://github.com/Gibbsdavidl/CatterPlots&#34;&gt;&lt;code&gt;CatterPlots&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;If you haven’t installed this purrrrfect package, do the following:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;devtools::install_github(&amp;quot;Gibbsdavidl/CatterPlots&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;CatterPlots&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/8082429/plot-a-heart-in-r&#34;&gt;Stack Overflow&lt;/a&gt; taught me how to plot a heart in &lt;code&gt;R&lt;/code&gt; (perhaps they will be the subject of my next thank you note):&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t=seq(0, 2*pi, by=0.1)
-xhrt &amp;lt;- function(t) 16*sin(t)^3
-yhrt &amp;lt;- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
-y=yhrt(t)
-x=xhrt(t)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Thank you, Lara! We appreciate you!&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;meow &amp;lt;- multicat(xs=x, ys=y,
-                 cat=c(1,2,3,4,5,6,7,8,9,10),
-                 catcolor=list(c(.31,.81,0,.85)),
-                 canvas=c(-0.1,1.1, -0.1, 1.1),
-                 xlab = &amp;quot;some cats&amp;quot;,
-                 ylab = &amp;quot;more cats&amp;quot;,
-                 main=&amp;quot;Thank you, Lara!&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;#####../content/post/2017-01-25-catterplot-thank-you-note_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>dplyr thank you note</title>
-      <link>/2017/01/07/dplyr-thank-you-note/</link>
-      <pubDate>Sat, 07 Jan 2017 12:12:28 -0600</pubDate>
-      
-      <guid>/2017/01/07/dplyr-thank-you-note/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using &lt;code&gt;dplyr&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;require(dplyr)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dear &amp;lt;-function(input, you=&amp;quot;you&amp;quot;){
-  cat(input, &amp;quot;\nDear &amp;quot;, you,&amp;quot;,&amp;quot;, sep = &amp;quot;&amp;quot;)
-}
-thank_you &amp;lt;- function(input, for_the = &amp;quot;gift&amp;quot;){
-  cat(input, &amp;quot;\n Thank you for the&amp;quot;, for_the)
-}
-
-personal_touch &amp;lt;- function(input, from_the_heart = &amp;quot;I hope you have a lovely New Year!&amp;quot;){
-  cat(input, from_the_heart)
-}
-
-from &amp;lt;- function(input, us = &amp;quot;us&amp;quot;){
-  cat(input, &amp;quot;\n Cheers,\n&amp;quot;, us)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;&amp;quot;A dplyr Thank You Note&amp;quot; %&amp;gt;%
-  dear(you = &amp;quot;R Studio&amp;quot;) %&amp;gt;%
-  thank_you(for_the = &amp;quot;opportunity to attend rstudio::conf.&amp;quot;) %&amp;gt;%
-  personal_touch(from_the_heart = &amp;quot;We are SO looking forward to learning from and with you all.&amp;quot;) %&amp;gt;%
-  from(us = &amp;quot;Lucy, Jacquelyn, and Alli&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## A dplyr Thank You Note
-## Dear R Studio, 
-##  Thank you for the opportunity to attend rstudio::conf. We are SO looking forward to learning from and with you all. 
-##  Cheers,
-##  Lucy, Jacquelyn, and Alli&lt;/code&gt;&lt;/pre&gt;
-
-
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
+      <description>Lara Harmon has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by
+On the off-chance you have not felt judged by a cat today, my cat can help you out. pic.twitter.com/sApgbyYztD — Lara Harmon (@Amstat_Lara) December 27, 2016   and
+You&#39;ll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme.</description>
     </item>
     
   </channel>

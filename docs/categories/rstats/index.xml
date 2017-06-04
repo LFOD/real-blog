@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rstats on Live Free or Dichotomize</title>
+    <link>/categories/rstats/</link>
+    <description>Recent content in Rstats on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
+    
+	<atom:link href="/categories/rstats/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>runconf17, an analysis of emoji use</title>
+      <link>/2017/06/03/runconf17-an-analysis-of-emoji-use/</link>
+      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      
+      <guid>/2017/06/03/runconf17-an-analysis-of-emoji-use/</guid>
+      <description>I had such a delightful time at rOpenSci’s unconference last week. ⊕21 📦 were produced! Not only was it extremely productive, but in between the crazy productivity was some epic community building.
+Stefanie kicked the conference off with ice breakers, where we explored topics ranging from #rcatladies &amp;amp; #rdogfellas ⊕for the record, I’m an #rchickenlady, IT’S HAPPENING to impostor syndrome. It was an excellent way to get conversations starting!
+work Karthik and I worked on two packages:</description>
+    </item>
+    
+    <item>
+      <title>Intro to GMD</title>
+      <link>/2017/02/24/intro-to-gmd/</link>
+      <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
+      
+      <guid>/2017/02/24/intro-to-gmd/</guid>
+      <description>Why The Problem You are working in a collaborative situation working on some form of analysis. You want to produce a nice looking document of your work at the end and have easy contribution from all sources.
+ The Solutions Sit in one room and have one person write up all your work as you do it
+Problems:
+ source Use github with branches and pull requests.
+Problems:
+ Requires groupmates to all get second PhD in git.</description>
+    </item>
+    
+    <item>
+      <title>The dire consequences of tests for linearity</title>
+      <link>/2017/02/18/the-dire-consequences-of-tests-for-linearity/</link>
+      <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
+      
+      <guid>/2017/02/18/the-dire-consequences-of-tests-for-linearity/</guid>
+      <description>This is a tale of the dire type 1 error consequences that occur when you test for linearity.
+ Edvard Munch’s The Scream (1893), coincidentally also the face Frank Harrell makes when he sees students testing for linearity. First, my favorite explanation of type 1 error 🐺:
+ @jgschraiber @eagereyes Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error.</description>
+    </item>
+    
+    <item>
+      <title>The prevalence of drunk podcasts</title>
+      <link>/2017/02/09/the-prevalence-of-drunk-podcasts/</link>
+      <pubDate>Thu, 09 Feb 2017 12:56:22 -0600</pubDate>
+      
+      <guid>/2017/02/09/the-prevalence-of-drunk-podcasts/</guid>
+      <description>For today’s rendition of I am curious about everything, in Hilary Parker &amp;amp; Roger Peng’s Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I’d dig into it 🚧👷.
+I pulled the iTunes API for the term drunk in podcasts &amp;amp; plotted the results over time. I also finally found an excuse to use emoGG.
+library(&amp;#39;dplyr&amp;#39;) library(&amp;#39;ggplot2&amp;#39;) req &amp;lt;- httr::GET(url = &amp;quot;https://itunes.</description>
+    </item>
+    
+    <item>
+      <title>CatterPlot thank you note</title>
+      <link>/2017/01/25/catterplot-thank-you-note/</link>
+      <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
+      
+      <guid>/2017/01/25/catterplot-thank-you-note/</guid>
+      <description>Lara Harmon has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by
+On the off-chance you have not felt judged by a cat today, my cat can help you out. pic.twitter.com/sApgbyYztD — Lara Harmon (@Amstat_Lara) December 27, 2016   and
+You&#39;ll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme.</description>
+    </item>
+    
+    <item>
+      <title>Regression modeling strategies: a student&#39;s perspective</title>
+      <link>/2017/01/17/regression-modeling-strategies-a-students-perspective/</link>
+      <pubDate>Tue, 17 Jan 2017 22:15:13 -0600</pubDate>
+      
+      <guid>/2017/01/17/regression-modeling-strategies-a-students-perspective/</guid>
+      <description>Frank Harrell teaches an amazing course “Regression Modeling Strategies” based on his book each spring at Vanderbilt.
+This was one of my all time favorite courses. It has just the right amount of practical strategies, brilliant statistical insight, and zealous disdain for all things stepwise regression. In fact, Frank’s valiant fight against dichotomization inspired the name of this very blog.
+This semester, Nick is enrolled in the course, and I will be TAing it, so we thought it would be a perfect time to do what all good 21st century students do, blog about it.</description>
+    </item>
+    
+    <item>
+      <title>dplyr thank you note</title>
+      <link>/2017/01/07/dplyr-thank-you-note/</link>
+      <pubDate>Sat, 07 Jan 2017 12:12:28 -0600</pubDate>
+      
+      <guid>/2017/01/07/dplyr-thank-you-note/</guid>
+      <description>It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using dplyr.
+require(dplyr) dear &amp;lt;-function(input, you=&amp;quot;you&amp;quot;){ cat(input, &amp;quot;\nDear &amp;quot;, you,&amp;quot;,&amp;quot;, sep = &amp;quot;&amp;quot;) } thank_you &amp;lt;- function(input, for_the = &amp;quot;gift&amp;quot;){ cat(input, &amp;quot;\n Thank you for the&amp;quot;, for_the) } personal_touch &amp;lt;- function(input, from_the_heart = &amp;quot;I hope you have a lovely New Year!</description>
+    </item>
+    
+  </channel>
+</rss>

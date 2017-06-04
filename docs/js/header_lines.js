@@ -1,6 +1,3 @@
-
-
-
 $( document ).ready(() => {
 
     //javascript for intro loader
@@ -21,17 +18,18 @@ $( document ).ready(() => {
         return y;
     }
 
-    var width   = $(".no-cover.main-header").width() ,
-        height  = $(".no-cover.main-header").outerHeight(),
+    var width   = $(".main-header").width() ,
+        height  = $(".main-header").outerHeight(),
         padding = 10,
         numOfLines = 20,
         xs = seq(0.01, 5, .01),
         colors = ['rgb(165,0,38)', 'rgb(215,48,39)', 'rgb(244,109,67)', 'rgb(253,174,97)', 'rgb(254,224,144)',
             'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
         ];
-
+  
+    console.log("trying to run this shit.")
     //define the svg.
-    var svg = d3.select("#viz").append("svg")
+    var svg = d3.select("#header_viz").append("svg")
         .attr("width", width)
         .attr("height", height + 2 * padding)
         .append("g")

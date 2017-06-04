@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Live Free or Dichotomize</title>
-    <link>/tags/nonlinearity/index.xml</link>
-    <description>Recent content on Live Free or Dichotomize</description>
+    <title>Nonlinearity on Live Free or Dichotomize</title>
+    <link>/tags/nonlinearity/</link>
+    <description>Recent content in Nonlinearity on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <atom:link href="/tags/nonlinearity/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 18 Feb 2017 09:03:06 -0600</lastBuildDate>
+    
+	<atom:link href="/tags/nonlinearity/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>The dire consequences of tests for linearity</title>
@@ -14,94 +17,9 @@
       <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
       
       <guid>/2017/02/18/the-dire-consequences-of-tests-for-linearity/</guid>
-      <description>&lt;!-- BLOGDOWN-BODY-BEFORE
-
-/BLOGDOWN-BODY-BEFORE --&gt;
-
-&lt;p&gt;This is a tale of the dire &lt;strong&gt;type 1 error&lt;/strong&gt; consequences that occur when you test for linearity.&lt;/p&gt;
-&lt;a href=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Scream.jpg/603px-The_Scream.jpg&#34; target=&#34;_blank&#34;&gt; &lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/The_Scream.jpg/603px-The_Scream.jpg&#34; width=50% alt=&#34;the scream&#34;&gt; &lt;/a&gt;
-&lt;p style=&#34;color:#EB6864; font-size: 10pt;LINE-HEIGHT:15px;&#34;&gt;
-&lt;em&gt;Edvard Munch’s The Scream (1893), coincidentally also the face &lt;a href=&#34;https://twitter.com/f2harrell&#34;&gt;Frank Harrell&lt;/a&gt; makes when he sees students testing for linearity.&lt;/em&gt;
-&lt;/p&gt;
-&lt;p&gt;First, my favorite explanation of &lt;strong&gt;type 1 error&lt;/strong&gt; 🐺:&lt;/p&gt;
-&lt;center&gt;
-&lt;blockquote class=&#34;twitter-tweet&#34; data-conversation=&#34;none&#34; data-lang=&#34;en&#34;&gt;
-&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;
-&lt;a href=&#34;https://twitter.com/jgschraiber&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@jgschraiber&lt;/span&gt;&lt;/a&gt; &lt;a href=&#34;https://twitter.com/eagereyes&#34;&gt;&lt;span class=&#34;citation&#34;&gt;@eagereyes&lt;/span&gt;&lt;/a&gt; Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error.
-&lt;/p&gt;
-— Sam (&lt;span class=&#34;citation&#34;&gt;@geometrywarrior&lt;/span&gt;) &lt;a href=&#34;https://twitter.com/geometrywarrior/status/781162199540719616&#34;&gt;September 28, 2016&lt;/a&gt;
-&lt;/blockquote&gt;
-&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
-&lt;/center&gt;
-&lt;p&gt;We generally fix (or claim to fix) this &lt;strong&gt;type 1 error&lt;/strong&gt; at 0.05, but sometimes our procedures can make this go awry!&lt;/p&gt;
-&lt;p&gt;I’ve prepared a &lt;strong&gt;very&lt;/strong&gt; basic simulation.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;generate 100 data points from two independent random normal distributions, an outcome &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt; and a predictor &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;&lt;span style=&#34;color:#EB6864&#34;&gt; (Since these are generated randomly, we would &lt;strong&gt;not&lt;/strong&gt; expect there to be an association between &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;. If all goes as planned, our &lt;strong&gt;type 1 error&lt;/strong&gt; would be 0.05) &lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;fit simple linear model with a restricted cubic spline on the predictor &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;test whether the nonlinear terms are significant&lt;/li&gt;
-&lt;li&gt;if they are, leave them in and test the association between &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;&lt;/li&gt;
-&lt;li&gt;if they are not, remove them and refit the model with only a linear term for &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; &amp;amp; proceed to test the association between &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;.&lt;br /&gt;
-&lt;/li&gt;
-&lt;li&gt;calculate the &lt;strong&gt;type 1 error&lt;/strong&gt;, how many times we detected a spurious significant association between &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Here’s my simulation code (run it yourself!):&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;#39;rms&amp;#39;)
-
-sim &amp;lt;- function(wrong = TRUE){
-#generate completely random data
-y &amp;lt;- rnorm(100)
-x &amp;lt;- rnorm(100)
-#fit a model with a restricted cubic spline
-mod &amp;lt;- ols(y~rcs(x))
-
-if (wrong == TRUE &amp;amp; anova(mod)[3,5] &amp;gt; 0.05){
-  #if the test for non-linearity is not &amp;quot;significant&amp;quot;, remove nonlinear terms
-  mod &amp;lt;- ols(y~x)
-} 
- #save the p-value
- anova(mod)[1,5]
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;center&gt;
-&lt;p&gt;&lt;span style=&#34;color:#EB6864; font-size: 20pt&#34;&gt; [Type 1 error when removing non-significant nonlinear terms]&lt;/p&gt;
-&lt;p&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;/center&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test &amp;lt;- replicate(10000, sim()) 
-cat(&amp;quot;The type 1 error is&amp;quot;, mean(test &amp;lt;= 0.05)) &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The type 1 error is 0.0853&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Uh oh! That &lt;strong&gt;type 1 error&lt;/strong&gt; is certainly higher than the nominal 0.05 we claim!&lt;/p&gt;
-&lt;center&gt;
-&lt;p&gt;&lt;span style=&#34;color:#EB6864; font-size: 20pt&#34;&gt; [Type 1 error when not removing non-significant nonlinear terms]&lt;/span&gt;&lt;/p&gt;
-&lt;/center&gt;
-&lt;p&gt;We would expect the &lt;strong&gt;type 1 error&lt;/strong&gt; to be 0.05 – I perform the same simulation omitting the step of removing non-significant nonlinear terms and calculate the &lt;strong&gt;type 1 error&lt;/strong&gt; again.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test &amp;lt;- replicate(10000, sim(wrong = FALSE))
-cat(&amp;quot;The type 1 error is&amp;quot;, mean(test &amp;lt;= 0.05))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The type 1 error is 0.0501&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Much better 👯&lt;/p&gt;
-&lt;p&gt;The conclusion: &lt;a href=&#34;http://livefreeordichotomize.com/2017/01/27/yoga-for-modeling/&#34;&gt;fit flexible models&lt;/a&gt; - skip the tests for linearity!&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;This has been elegently demonstrated by others, check out &lt;a href=&#34;http://onlinelibrary.wiley.com/doi/10.1002/sim.4780100504/full&#34;&gt;Grambsch and O’Brien&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-
-
-&lt;!-- dynamically load mathjax for compatibility with self-contained --&gt;
-&lt;script&gt;
-  (function () {
-    var script = document.createElement(&#34;script&#34;);
-    script.type = &#34;text/javascript&#34;;
-    script.src  = &#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;;
-    if (location.protocol !== &#34;file:&#34; &amp;&amp; /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, &#39;&#39;);
-    document.getElementsByTagName(&#34;head&#34;)[0].appendChild(script);
-  })();
-&lt;/script&gt;
-
-&lt;!-- BLOGDOWN-HEAD
-
-
-
-
-
-
-/BLOGDOWN-HEAD --&gt;
-</description>
+      <description>This is a tale of the dire type 1 error consequences that occur when you test for linearity.
+ Edvard Munch’s The Scream (1893), coincidentally also the face Frank Harrell makes when he sees students testing for linearity. First, my favorite explanation of type 1 error 🐺:
+ @jgschraiber @eagereyes Pro-tip that changed my life: in The Boy Who Cried Wolf, the villagers first make a Type 1, and then a Type 2 error.</description>
     </item>
     
   </channel>

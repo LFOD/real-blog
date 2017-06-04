@@ -6,7 +6,8 @@ draft: false
 image: ""
 menu: ""
 share: true
-tags:
+categories:
+- rstats
 - rms
 - "type 1 error"
 - nonlinearity
