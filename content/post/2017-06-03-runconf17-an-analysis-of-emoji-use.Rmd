@@ -218,7 +218,7 @@ plot_emojis <- function(limit) {
 
 out_png <- purrr::map_chr(emojis$n, plot_emojis)
 
-purrr::map(rev(out_png), image_read) %>%
+purrr::map(unique(rev(out_png)), image_read) %>%
   image_join() %>%
   image_animate(fps=1) %>%
   image_write("../../static/images/runconf_emojis.gif")
