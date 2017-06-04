@@ -51,6 +51,7 @@ a few highlights:
 ## analysis 
 
 `r tufte::newthought("In an effort to stay on brand")`, I decided to do a small analysis of the tweets that came out of #runconf17. I designed a small study:
+`r tufte::margin_note("*Note: this is not particularly statistically rigorous, but it is VERY fun.*")`
 
 * pulled all tweets (excluding retweets) using the hashtag #runconf17 between May 24th and May 30th
 * also pulled all tweets (excluding retweets) using the hashtag #rstats during the same time period
@@ -271,7 +272,7 @@ purrr::map(unique(rev(out_png)), image_read) %>%
   image_write("runconf_emojis.gif")
 ```
 
-![](https://github.com/LFOD/real-blog/raw/master/static/images/runconf_emojis.gif)
+<img src = "https://github.com/LFOD/real-blog/raw/master/static/images/runconf_emojis.gif" width = "110%"> </img>
 
 `r tufte::margin_note(paste("Phew, the", emo::ji("chicken"), "just barely made the cut."))` The purple heart seems to be the most popular emoji, which makes sense given [25% of us were #RLadies](https://twitter.com/nistara_r/status/867974699044687872)! I think it's a credit to the awesome geographic diversity that we have two different globe emojis in our top 15!
 
