@@ -110,8 +110,8 @@
 <div id="work" class="section level2">
 <h2>work</h2>
 <p><span class="newthought"><a href="https://twitter.com/_inundata">Karthik</a> and I worked on</span> two packages:</p>
-<p><a href="https://github.com/ropenscilabs/arresteddev">arresteddev</a>: a package for when your development is going awry! <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Mostly, this was a good excuse to look up Arrested Development gifs, which, we established, is pronounced with a g like giraffe.</span> Includes functions such as <code>lmgtfy()</code>, that will seamlessly google your last error message, <a href="https://twitter.com/drob">David Robinson’s</a> <code>tracestack()</code> that will query your last error message on Stack Overflow, and <code>squirell()</code>, a function that will randomly send you to a distracting website - for when things are really going poorly 💁.</p>
-<p><a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress</a>: a package for automating speedy emails from R - copy and paste neigh more 🐴. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Great for conferences, birthday parties, or karaoke invitations.</span> This package allows you to send templated emails to a list of contacts.</p>
+<p><a href="https://github.com/ropenscilabs/arresteddev">arresteddev</a>: a package for when your development is going awry! <span class="marginnote"> Mostly, this was a good excuse to look up Arrested Development gifs, which, we established, is pronounced with a g like giraffe. <img src = "https://img.buzzfeed.com/buzzfeed-static/static/2016-11/17/13/asset/buzzfeed-prod-fastlane01/anigif_sub-buzz-29187-1479408030-4.gif"></img> </span> Includes functions such as <code>lmgtfy()</code>, that will seamlessly google your last error message, <a href="https://twitter.com/drob">David Robinson’s</a> <code>tracestack()</code> that will query your last error message on Stack Overflow, and <code>squirell()</code>, a function that will randomly send you to a distracting website - for when things are really going poorly 💁.</p>
+<p><a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress</a>: a package for automating speedy emails from R - copy and paste neigh more 🐴. This package allows you to send templated emails to a list of contacts. Great for conferences, birthday parties, or karaoke invitations.</p>
 </div>
 <div id="play" class="section level2">
 <h2>play</h2>
@@ -314,7 +314,7 @@ library(&quot;magick&quot;)</code></pre>
 <p>Now let’s make them into a gif!</p>
 <pre class="r"><code>out_png &lt;- purrr::map_chr(emojis$n, plot_emojis)
 
-purrr::map(rev(out_png), image_read) %&gt;%
+purrr::map(unique(rev(out_png)), image_read) %&gt;%
   image_join() %&gt;%
   image_animate(fps=1) %&gt;%
   image_write(&quot;runconf_emojis.gif&quot;)</code></pre>
@@ -322,7 +322,7 @@ purrr::map(rev(out_png), image_read) %&gt;%
 <img src="https://github.com/LFOD/real-blog/raw/master/static/images/runconf_emojis.gif" />
 
 </div>
-<p>The purple heart seems to be the most popular emoji, which makes sense given <a href="https://twitter.com/nistara_r/status/867974699044687872">25% of us were #RLadies</a>!</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Phew, the 🐔 just barely made the cut.</span> The purple heart seems to be the most popular emoji, which makes sense given <a href="https://twitter.com/nistara_r/status/867974699044687872">25% of us were #RLadies</a>!</p>
 <p>All in all, it was an epic experience. Thank you so much to the conference organizers, attendees, and #runconf17 tweeters for such a delightful week!</p>
 </div>
 </section>
