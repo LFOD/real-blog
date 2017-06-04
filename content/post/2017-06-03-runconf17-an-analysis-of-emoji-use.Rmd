@@ -28,7 +28,7 @@ Not only was it [extremely productive](https://ropenscilabs.github.io/runconf17-
 ## play
 `r tufte::newthought("Between our package building")`, there were SO many opportunities to get to know some of the most talented people.
 
-![](../../static/images/jenny_lucy.jpg) 
+![](https://github.com/LFOD/real-blog/raw/master/static/images/jenny_lucy.jpg) 
 
 Jenny & I enthusiastically working on [googledrive](https://github.com/tidyverse/googledrive).
 
