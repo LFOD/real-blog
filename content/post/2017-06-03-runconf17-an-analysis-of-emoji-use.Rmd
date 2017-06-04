@@ -117,17 +117,19 @@ used_emoji <- regex_left_join(data, dico, by = c(text = "Native")) %>%
 ```
 
 ## results
-`r tufte::newthought("We had 575 tweeters")` that just used the #rstats hashtag, and 58 that tweeted with the #runconf17 hashtag. Among the #rstats tweets, 13.9% used at least one emoji in their tweets, whereas among #runconf17 tweeters, 46.5% used emojis! THESE ARE MY PEOPLE `r emo::ji("raised_hands")`
+`r tufte::newthought("We had 526 tweeters")` that just used the #rstats hashtag, and 107 that tweeted with the #runconf17 hashtag. `r tufte::margin_note(paste("THESE ARE MY PEOPLE", emo::ji("raised_hands")))` Among the #rstats tweeters, 5.9% used at least one emoji in their tweets, whereas among #runconf17 tweeters, 25.2% used emojis! 
 
 ```{r}
 used_emoji %>%
-  group_by(used_emoji, runconf) %>%
+  group_by(`tweeted #runconf` = runconf, `used emoji` = used_emoji) %>%
   tally() %>%
   mutate(`%` = 100*prop.table(n)) %>%
-  knitr::kable()
+  knitr::kable(digits = 1, format = "pandoc")
 ```
 
-Let's model it! `r emo::ji("dancer")`
+
+`r tufte::newthought("Alright, that looks pretty promising")`, but let's get some confidence intervals. It's time to model it! `r emo::ji("dancer")`  
+
 
 ```{r}
 ## modeling time!

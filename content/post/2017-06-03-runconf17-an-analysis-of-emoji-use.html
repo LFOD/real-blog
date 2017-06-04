@@ -84,17 +84,17 @@ used_emoji &lt;- regex_left_join(data, dico, by = c(text = &quot;Native&quot;)) 
 </div>
 <div id="results" class="section level2">
 <h2>results</h2>
-<p><span class="newthought">We had 575 tweeters</span> that just used the #rstats hashtag, and 58 that tweeted with the #runconf17 hashtag. Among the #rstats tweets, 13.9% used at least one emoji in their tweets, whereas among #runconf17 tweeters, 46.5% used emojis! THESE ARE MY PEOPLE 🙌</p>
+<p><span class="newthought">We had 526 tweeters</span> that just used the #rstats hashtag, and 107 that tweeted with the #runconf17 hashtag. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">THESE ARE MY PEOPLE 🙌</span> Among the #rstats tweeters, 5.9% used at least one emoji in their tweets, whereas among #runconf17 tweeters, 25.2% used emojis!</p>
 <pre class="r"><code>used_emoji %&gt;%
-  group_by(used_emoji, runconf) %&gt;%
+  group_by(`tweeted #runconf` = runconf, `used emoji` = used_emoji) %&gt;%
   tally() %&gt;%
   mutate(`%` = 100*prop.table(n)) %&gt;%
-  knitr::kable()</code></pre>
+  knitr::kable(digits = 1, format = &quot;pandoc&quot;)</code></pre>
 <table>
 <thead>
 <tr class="header">
-<th align="left">used_emoji</th>
-<th align="left">runconf</th>
+<th align="left">tweeted #runconf</th>
+<th align="left">used emoji</th>
 <th align="right">n</th>
 <th align="right">%</th>
 </tr>
@@ -104,29 +104,29 @@ used_emoji &lt;- regex_left_join(data, dico, by = c(text = &quot;Native&quot;)) 
 <td align="left">no</td>
 <td align="left">no</td>
 <td align="right">495</td>
-<td align="right">86.08696</td>
+<td align="right">94.1</td>
 </tr>
 <tr class="even">
 <td align="left">no</td>
 <td align="left">yes</td>
-<td align="right">80</td>
-<td align="right">13.91304</td>
+<td align="right">31</td>
+<td align="right">5.9</td>
 </tr>
 <tr class="odd">
 <td align="left">yes</td>
 <td align="left">no</td>
-<td align="right">31</td>
-<td align="right">53.44828</td>
+<td align="right">80</td>
+<td align="right">74.8</td>
 </tr>
 <tr class="even">
 <td align="left">yes</td>
 <td align="left">yes</td>
 <td align="right">27</td>
-<td align="right">46.55172</td>
+<td align="right">25.2</td>
 </tr>
 </tbody>
 </table>
-<p>Let’s model it! 💃</p>
+<p><span class="newthought">Alright, that looks pretty promising</span>, but let’s get some confidence intervals. It’s time to model it! 💃</p>
 <pre class="r"><code>## modeling time!
 dd &lt;- datadist(used_emoji)
 options(datadist = &quot;dd&quot;)
