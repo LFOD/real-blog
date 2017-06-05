@@ -57,7 +57,7 @@ a few highlights:
 * also pulled all tweets (excluding retweets) using the hashtag #rstats during the same time period
 
 <span style="color:#EB6864">
-**Question**: Are twitter users to used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period?
+**Question**: Are twitter users who used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period?
 </span>
 
 
