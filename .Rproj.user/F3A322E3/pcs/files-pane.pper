@@ -1,9 +1,0 @@
-{
-    "path" : "~/new_blog/layouts/partials",
-    "sortOrder" : [
-        {
-            "ascending" : true,
-            "columnIndex" : 2
-        }
-    ]
-}
