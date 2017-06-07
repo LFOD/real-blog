@@ -26,7 +26,7 @@ Not only was it [extremely productive](https://ropenscilabs.github.io/runconf17-
 Mostly, this was a good excuse to look up Arrested Development gifs, which, we established, is pronounced with a g like giraffe.
 <img src = "https://img.buzzfeed.com/buzzfeed-static/static/2016-11/17/13/asset/buzzfeed-prod-fastlane01/anigif_sub-buzz-29187-1479408030-4.gif"></img>
 </span>
-Includes functions such as `lmgtfy()`, that will seamlessly google your last error message, [David Robinson's](https://twitter.com/drob) `tracestack()` that will query your last error message on Stack Overflow, and `squirell()`, a function that will randomly send you to a distracting website - for when things are really going poorly `r emo::ji("tipping_hand_woman")`. 
+Includes functions such as `lmgtfy()`, that will seamlessly google your last error message, [David Robinson's](https://twitter.com/drob) `tracestack()` that will query your last error message on Stack Overflow, and `squirrel()`, a function that will randomly send you to a distracting website - for when things are really going poorly `r emo::ji("tipping_hand_woman")`. 
 
 [ponyexpress](https://github.com/ropenscilabs/ponyexpress): a package for automating speedy emails from R - copy and paste neigh more `r emo::ji("horse")`. This package allows you to send templated emails to a list of contacts. Great for conferences, birthday parties, or karaoke invitations.
 
