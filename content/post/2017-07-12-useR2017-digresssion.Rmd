@@ -20,7 +20,7 @@ library(ggthemes)
 # theme_set(theme_hc())
 ```
 
-We both recently attended useR!2017 in Brussles. It was a blast to say the least. We're going to tag team to cover our favorite things & the lessons we learned while adventuring across the Atlantic.
+We both recently attended useR!2017 in Brussels. It was a blast to say the least. We're going to tag team to cover our favorite things & the lessons we learned while adventuring across the Atlantic.
 
 ## Location
 
@@ -28,7 +28,7 @@ _What it was like being in Brussles for a conference:_
 
 __Lucy__
 
-`r tufte::newthought("Brussels was *incredible*.")` The `r emo::ji("beer")` was delectable and the people were delightful. `r tufte::margin_note("This proved to be particularly useful when we temporarly misplaced our travel buddy Jacquelyn on our way from the ✈️ - we convinently followed the signs to wifi!")` It was quite simple to navigate, and as an added bonus the conference had set up lovely bread-crumb-esque signs from the train station to the main site at the Wild Gallary, making it even easier for the directionally challenged or GPS-less conference attendees.
+`r tufte::newthought("Brussels was *incredible*.")` The `r emo::ji("beer")` was delectable and the people were delightful. `r tufte::margin_note("This proved to be particularly useful when we temporarly misplaced our travel buddy Jacquelyn on our way from the ✈️ - we convinently followed the signs to wifi!")` It was quite simple to navigate, and as an added bonus the conference had set up lovely bread-crumb-esque signs from the train station to the main site at the Wild Gallery, making it even easier for the directionally challenged or GPS-less conference attendees.
 
 <span class = "marginnote">
 <a href="/images/mots_et_images.jpg">
@@ -81,11 +81,11 @@ The second you start working with other people on any project that involves sens
 
 __Lucy__
 
-`r tufte::newthought("Nick and I shared many favorites!")` A few others that warrent mentioning:
+`r tufte::newthought("Nick and I shared many favorites!")` A few others that warrant mentioning:
 
 [How we built a Shiny App for 700 users?](https://github.com/Appsilon/user2017/blob/master/user2017_How_we_built_a_Shiny_App_used_by_700_users.pdf) by [Olga Mierzwa-Sulima](https://twitter.com/olga_mie)
 
-Olga walked through a Shiny application she built for a client that has 700+ daily users! She highlighted that the prototype for this app was delievered in just one day, with a working demo deployed in 2 weeks - this is one of my *favorite* things about Shiny - the ability to get something in the `r emo::ji("open_hands")` of a collborator quickly! She demonstrated the [`shiny.semantic`](https://appsilon.github.io/shiny.semantic/) package - a semantic UI wrapper for Shiny. It creates simply beautiful output. Between this and [`shiny.connections`](https://appsilon.github.io/shiny.collections/), the Appsilon team are creating *awesome* Shiny resources.
+Olga walked through a Shiny application she built for a client that has 700+ daily users! She highlighted that the prototype for this app was delivered in just one day, with a working demo deployed in 2 weeks - this is one of my *favorite* things about Shiny - the ability to get something in the `r emo::ji("open_hands")` of a collaborator quickly! She demonstrated the [`shiny.semantic`](https://appsilon.github.io/shiny.semantic/) package - a semantic UI wrapper for Shiny. It creates simply beautiful output. Between this and [`shiny.connections`](https://appsilon.github.io/shiny.collections/), the Appsilon team are creating *awesome* Shiny resources.
 
 [R-Ladies Global Community](https://github.com/rladies/rladies_global_presentations/blob/master/20170706_useR2017_Brussels/R-Ladies_useR!2017_(withoutGIF).pdf) by [Alice Daish](https://twitter.com/alice_data) and [Hannah Frick](https://twitter.com/hfcfrick)
 
@@ -186,7 +186,7 @@ __Lucy__
 <a href="/images/glacier_selfie.png">
 <img class = "img-responsive" src="/images/glacier_selfie.png" alt="Nature" style="width:100%">
 <div class="caption">
-<p style: "width:100% !important">LA"</p>
+<p style: "width:100% !important">Glacier SELFIE!</p>
 </div>
 </a>
 </div>
