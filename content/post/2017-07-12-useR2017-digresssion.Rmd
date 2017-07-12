@@ -1,0 +1,34 @@
+---
+title: useR!2017 digressions 
+author: "Nick Strayer & Lucy D'Agostino McGowan"
+bio: nick
+date: '2017-07-12'
+slug: useR rundown
+categories:
+  - R
+  - conferences
+  - travel
+tags: [R, conferences, travel]
+draft: no
+excerpt: "We both recently attended useR!2017 in Brussles. It was a blast to say the least. Here we will conver our favorite things about things about the conference and the lessons we learned."
+---
+
+
+```{r include = FALSE}
+library(tidyverse)
+library(ggthemes)
+# theme_set(theme_hc())
+```
+
+
+## Location
+(What it was like being in Brussles for a conference)
+
+## Favorite Talks
+(Which talks stuck out to us the most)
+
+## Take-Away
+(Overall summary of our feelings)
+
+## Non-Conference Fun
+(Random fun Iceland etc)

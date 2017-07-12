@@ -22,7 +22,7 @@
     <item>
       <title>Conferences</title>
       <link>/categories/conferences/</link>
-      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/conferences/</guid>
       <description></description>
@@ -74,15 +74,6 @@
     </item>
     
     <item>
-      <title>Modeling</title>
-      <link>/categories/modeling/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/modeling/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Nonlinearity</title>
       <link>/categories/nonlinearity/</link>
       <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
@@ -103,7 +94,7 @@
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/r/</guid>
       <description></description>
@@ -146,6 +137,15 @@
     </item>
     
     <item>
+      <title>Travel</title>
+      <link>/categories/travel/</link>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/travel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Type 1 Error</title>
       <link>/categories/type-1-error/</link>
       <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
@@ -157,7 +157,7 @@
     <item>
       <title>Visualization</title>
       <link>/categories/visualization/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 12 Mar 2017 10:54:24 +0200</pubDate>
       
       <guid>/categories/visualization/</guid>
       <description></description>
