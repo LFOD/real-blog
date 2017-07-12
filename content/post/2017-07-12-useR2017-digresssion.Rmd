@@ -10,7 +10,7 @@ categories:
   - travel
 tags: [R, conferences, travel]
 draft: no
-excerpt: "We both recently attended useR!2017 in Brussles. It was a blast to say the least. Here we will conver our favorite things about things about the conference and the lessons we learned."
+excerpt: "We both recently attended useR!2017 in Brussles. It was a blast to say the least. Here we will cover our favorite things about things about the conference and the lessons we learned."
 ---
 
 
@@ -20,15 +20,29 @@ library(ggthemes)
 # theme_set(theme_hc())
 ```
 
+We both recently attended useR!2017 in Brussels. It was a blast to say the least. We're going to tag team to cover our favorite things & the lessons we learned while adventuring across the Atlantic.
 
 ## Location
 
 _What it was like being in Brussles for a conference:_
 
+__Lucy__
+
+`r tufte::newthought("Brussels was *incredible*.")` The `r emo::ji("beer")` was delectable and the people were delightful. `r tufte::margin_note("This proved to be particularly useful when we temporarly misplaced our travel buddy Jacquelyn on our way from the ✈️ - we convinently followed the signs to wifi!")` It was quite simple to navigate, and as an added bonus the conference had set up lovely bread-crumb-esque signs from the train station to the main site at the Wild Gallery, making it even easier for the directionally challenged or GPS-less conference attendees.
+
+<span class = "marginnote">
+<a href="/images/mots_et_images.jpg">
+<img class = "img-responsive" src="/images/mots_et_images.jpg" alt="Les mots et les images" style="width:100%">
+</img></a>
+Magritte, 1929, Les mots et les images, p. 32
+</span>
+
+`r tufte::newthought("As an added bonus")`, the [Magritte Museum](https://www.fine-arts-museum.be/en/museums/musee-magritte-museum) is in Brussels. After [Aussie Nick](https://twitter.com/nj_tierney) rocked the conference's closing remarks, we were able to pay homage to the original `%>%` master himself. Magritte created some of my favorite surrealism pieces, but here we were also able to see some beautiful works from his brief Impressionist phase - they were incredibly charming! 
+The Magritte Museum also houses *Les Mots et Les Images*, Magritte's article in the surrealist journal *La révolution surréaliste* on words and images, a piece that speaks straight to my `r emo::ji("heart")` given my present emoji-craze. `r emo::ji("construction")` *A potential blog post coming on this soon* `r emo::ji("construction")`.
 
 __Nick__
 
-Brussels and Belgium are located about as conveniently in Europe as one could hope. Bordered by the Netherlands, Germany, France, and Luxemburg and just short train ride from all of them, one couldn't ask for a better location. This centrality seemed to enable lots of people to attended that might not otherwise have. Dueo to this and the fact that all other countries seem to have realized Americans wont learn their languages and thus have learned English enabled me personally to interact with people from all over. Sitting at dinner having a chat with someone from the Netherlands on one side, France on another and across from an Aussie is a pretty nice experience. While this may be obvious, it is easy to get subsumed into your own little bubble at your institution. Hearing about the amazing work being done by others elsewhere, motivated by their own unique cultural or environmental issues, was great for my sheltered Tennessee mind and inspiring. 
+Brussels and Belgium are located about as conveniently in Europe as one could hope. Bordered by the Netherlands, Germany, France, and Luxembourg and just short train ride from all of them, one couldn't ask for a better location. This centrality seemed to enable lots of people to attended that might not otherwise have. Due to this and the fact that all other countries seem to have realized Americans won't learn their languages and thus have learned English enabled me personally to interact with people from all over. Sitting at dinner having a chat with someone from the Netherlands on one side, France on another and across from an Aussie is a pretty nice experience. While this may be obvious, it is easy to get subsumed into your own little bubble at your institution. Hearing about the amazing work being done by others elsewhere, motivated by their own unique cultural or environmental issues, was great for my sheltered Tennessee mind and inspiring. 
 
 Some may be annoyed by the fact that the conference won't be back in the US next year but I personally think this is beneficial. As Angela Merkel has similarly expressed recently, the US is slipping a bit in it's hold on the "go-to" place. Besides, [Nick Tierny](https://twitter.com/nj_tierney) _may_ have told me that conference transportation next year will be provided by Kangaroos and Ostriches, so like, that's worth it. 
 
@@ -38,12 +52,12 @@ Some may be annoyed by the fact that the conference won't be back in the US next
 <div class="thumbnail">
 <a href="/images/vandy_students.jpg">
 <img class = "img-responsive" src="/images/vandy_students.jpg" alt="Vandy Represent" style="width:100%">
+</img></a>
 <div class="caption">
-<p>This big network diagram had champaign at the bottom, so that was cool.</p>
+<p>This big network diagram had champagne at the bottom, so that was cool.</p>
 </div>
 </div>
 </div>
-
 
 ## Favorite Talks
 
@@ -55,7 +69,7 @@ I have never been to a conference where almost every single talk I went to was a
 
 [shiny.collections: Google Docs-like live collaboration in Shiny](https://appsilon.github.io/shiny.collections/) by [Marek Rogala](https://twitter.com/marekrog): 
 
-Shiny is fantastic for getting people with no web programming experience up and running with web-apps in minutes, but because of that often some of the more advanced features of web-apps such as reactive database connections can be nearly impossible to add (even for people like me with more web experience). The `shiny.connections` package addresses this by making it amazingly easy to spin up an app with an auto-updating database back-end. Believe me when I say this is not easy to do in a traditional web programming setup. This is fantastically exciting because the tool is easy enough to use for beginners but legitimately very helpful for all skill ranges. The number of applications I have dreamed up to use with this is vast. In addition, in a testament to his bravery and also the crazy ease of using the package Marek did a live coding demo while on stage in front of more than 100 people! Having just spoken on that stage prior I can say he is much braver than I. 
+Shiny is fantastic for getting people with no web programming experience up and running with web-apps in minutes, but because of that often some of the more advanced features of web-apps such as reactive database connections can be nearly impossible to add (even for people like me with more web experience). The [`shiny.collections`](https://appsilon.github.io/shiny.collections/) package addresses this by making it amazingly easy to spin up an app with an auto-updating database back-end. Believe me when I say this is not easy to do in a traditional web programming setup. This is fantastically exciting because the tool is easy enough to use for beginners but legitimately very helpful for all skill ranges. The number of applications I have dreamed up to use with this is vast. In addition, in a testament to his bravery and also the crazy ease of using the package Marek did a live coding demo while on stage in front of more than 100 people! Having just spoken on that stage prior I can say he is much braver than I. 
 
 [Can you keep a secret?](https://github.com/gaborcsardi/secret) by [Andrie de Vries](https://twitter.com/revoandrie?lang=en): 
 
@@ -63,13 +77,46 @@ The second you start working with other people on any project that involves sens
 
 [bsplus: Using Twitter Bootstrap to extend your Shiny app](http://ijlyttle.github.io/bsplus/) by [Ian Lyttle](https://twitter.com/ijlyttle): 
 
-"The user benefits from me doing as little as possible" was a quote Ian emphasized in his talk, but I think this is incorrect. Perhaps a more accurate statement would be "the user benefits from me knowing how to take the best parts of bootstrap and port them in an easy-to-use and efficient way to R". `bsplus` is a series of lightweight wrappers around the firmly established web-styling framework [bootstrap](http://getbootstrap.com/) by Twitter. A great UI for shiny or rmarkdown reports are not only a way to look professional but also important in encouraging new users to the platform. If you can make a shiny app in twenty minutes that takes an experienced web-developer a week to implement you're making a pretty darn strong case for the adoption of shiny into your workflow. `bsplus` is a fantastic contribution to continuoing shiny's charge forward as the go-to way to make professional quality apps fast and easy. 
+"The user benefits from me doing as little as possible" was a quote Ian emphasized in his talk, but I think this is incorrect. Perhaps a more accurate statement would be "the user benefits from me knowing how to take the best parts of bootstrap and port them in an easy-to-use and efficient way to R". `bsplus` is a series of lightweight wrappers around the firmly established web-styling framework [bootstrap](http://getbootstrap.com/) by Twitter. A great UI for shiny or rmarkdown reports are not only a way to look professional but also important in encouraging new users to the platform. If you can make a shiny app in twenty minutes that takes an experienced web-developer a week to implement you're making a pretty darn strong case for the adoption of shiny into your workflow. `bsplus` is a fantastic contribution to continuing shiny's charge forward as the go-to way to make professional quality apps fast and easy. 
 
+__Lucy__
+
+`r tufte::newthought("Nick and I shared many favorites!")` A few others that warrant mentioning:
+
+[How we built a Shiny App for 700 users?](https://github.com/Appsilon/user2017/blob/master/user2017_How_we_built_a_Shiny_App_used_by_700_users.pdf) by [Olga Mierzwa-Sulima](https://twitter.com/olga_mie)
+
+Olga walked through a Shiny application she built for a client that has 700+ daily users! She highlighted that the prototype for this app was delivered in just one day, with a working demo deployed in 2 weeks - this is one of my *favorite* things about Shiny - the ability to get something in the `r emo::ji("open_hands")` of a collaborator quickly! She demonstrated the [`shiny.semantic`](https://appsilon.github.io/shiny.semantic/) package - a semantic UI wrapper for Shiny. It creates simply beautiful output. Between this and [`shiny.connections`](https://appsilon.github.io/shiny.collections/), the Appsilon team are creating *awesome* Shiny resources.
+
+[R-Ladies Global Community](https://github.com/rladies/rladies_global_presentations/blob/master/20170706_useR2017_Brussels/R-Ladies_useR!2017_(withoutGIF).pdf) by [Alice Daish](https://twitter.com/alice_data) and [Hannah Frick](https://twitter.com/hfcfrick)
+
+<span class = "marginnote">
+<a href="/images/rchickenladies.jpg">
+<img class = "img-responsive" src="/images/rchickenladies.jpg" alt="Les mots et les images" style="width:100%">
+</img></a>
+VERY pleased that #rchickenladies is out in the wild.
+</span>
+
+The R-Ladies Global team did an excellent job presenting the current state of this organization. 
+
+Beginning in 2012 in San Francisco with [Gabby](https://twitter.com/gdequeiroz), we've grown to:
+
+`r emo::ji("globe")` 20+ countries  
+`r emo::ji("cityscape")` 45+ cities  
+`r emo::ji("dancing_women")` 6000+ members  
+`r emo::ji("globe_with_meridians")` a website [rladies.org](https://rladies.org)  
+`r emo::ji("speaking_head")` a repository for [#RLadies speakers](https://rladies.org/r-speakers/)
+
+It was such a delight to be able to meet so many women I've collaborated online with!
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">AMAZING <a href="https://twitter.com/hashtag/RLadies?src=hash">#RLadies</a> at <a href="https://twitter.com/hashtag/useR2017?src=hash">#useR2017</a> 💜🌍 inspiring <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> work around the world <a href="https://t.co/pIPEorlkyl">pic.twitter.com/pIPEorlkyl</a></p>&mdash; R-Ladies Global (@RLadiesGlobal) <a href="https://twitter.com/RLadiesGlobal/status/882561056752754689">July 5, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Take-Away
 
 _Overall summary of our feelings_
 
+__Lucy__
+
+`r tufte::newthought("It is always so fun")` to to get together in person with the visionaries of this language I love! Not only is it an incredible opportunity to learn through the presentations, but also through the small conversations over drinks in the evenings, or over `r emo::ji("coffee")` during the breaks, or on the `r emo::ji("train")` to a fun destination. Aside from the planned content, I learned about things such as [Mile's](https://twitter.com/MilesMcBain) initiative to start a [community-wide discussion about interactive visualizations](https://github.com/ropenscilabs/rivis), [Jim's](https://twitter.com/jimhester_) suggestions on some better [git aliases](https://twitter.com/jimhester_/status/883217542810042368), and that [Ian](https://twitter.com/ijlyttle) knows every word to R.E.M's *It's the End of the World as We Know It*. It is seriously such a special experience to all be in the same place, even if just for a few days.
 
 __Nick__
 
@@ -87,7 +134,9 @@ This was my first R related conference and I can with 100% certainty say it will
 
 _Random fun_
 
-As we found out quickly, one does not simply go to Brussels without taking a trip to Bruges. While at the train station Lucy, Jacqueline, Nick Tierney and I were surprised by Ian Lyttle randomly gracing out presence having (lucky for us) just missed the earlier train. We all loaded into the clean smooth train and set off to Bruges. While there I set aside all desire to remain "cool" and went full tourist mode and it was fantastic.  
+__Nick__
+
+As we found out quickly, one does not simply go to Brussels without taking a trip to Bruges. While at the train station Lucy, Jacquelyn, Nick Tierney and I were surprised by Ian Lyttle randomly gracing our presence having (lucky for us) just missed the earlier train. We all loaded into the clean smooth train and set off to Bruges. While there I set aside all desire to remain "cool" and went full tourist mode and it was fantastic.  
 
 
 <div class="row">
@@ -117,6 +166,43 @@ As we found out quickly, one does not simply go to Brussels without taking a tri
 <img  src="/images/bruges_beer.jpg" alt="Fjords" style="width:100%">
 <div class="caption">
 <p>I mean, it's Belgium.</p>
+</div>
+</a>
+</div>
+</div>
+</div>
+
+__Lucy__
+
+`r tufte::newthought("After Bruges, we ventured off to Iceland")` for a few days. It was absolutely magical. Icelandair has a great stopover program where you can book a flight with an extended stopover for the same cost as an ordinary layover -- it was *marvelous* -- this may become a new tradition for my European travel.
+
+<div class="row">
+<div class="col-md-4">
+<div class="thumbnail">
+<a href="/images/waterfall1.jpg">
+<img class = "img-responsive" src="/images/waterfall1.jpg" alt="Waterfall" style="width:100%">
+<div class="caption">
+<p>Waterfall</p>
+</div>
+</a>
+</div>
+</div>
+<div class="col-md-4">
+<div class="thumbnail">
+<a href="/images/glacier_selfie.png">
+<img class = "img-responsive" src="/images/glacier_selfie.png" alt="Nature" style="width:100%">
+<div class="caption">
+<p style: "width:100% !important">Glacier SELFIE!</p>
+</div>
+</a>
+</div>
+</div>
+<div class="col-md-4">
+<div class="thumbnail">
+<a href="/images/waterfall2.jpg">
+<img  src="/images/waterfall2.jpg" alt="Waterfall" style="width:100%">
+<div class="caption">
+<p>Waterfall</p>
 </div>
 </a>
 </div>
