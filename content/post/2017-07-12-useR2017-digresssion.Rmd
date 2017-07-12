@@ -5,9 +5,9 @@ bio: nick
 date: '2017-07-12'
 slug: useR rundown
 categories:
-  - R
-  - conferences
-  - travel
+- R
+- conferences
+- travel
 tags: [R, conferences, travel]
 draft: no
 excerpt: "We both recently attended useR!2017 in Brussels. It was a blast to say the least. Here we will cover our favorite things about things about the conference and the lessons we learned."
@@ -63,7 +63,7 @@ Some may be annoyed by the fact that the conference won't be back in the US next
 
 ## Favorite Talks
 
-__Nick:__ I have never been to a conference where almost every single talk I went to was as high-quality and fantastic as useR. I truly learned something at every single one and can't wait to apply the concepts to my own R and statistics related projects. Obviously I can't write up a thing on 30 different talks so I'll include a randomly selected few that stuck out to me. 
+__Nick:__ `r tufte::margin_note("We both gave talks, Lucy spoke about a shiny app we created called [papr](http://rpubs.com/lucymcgowan/papr) and Nick spoke about a new package for shiny development called [shinysense](http://nickstrayer.me/shinysense_useR2017/).")` I have never been to a conference where almost every single talk I went to was as high-quality and fantastic as useR. I truly learned something at every single one and can't wait to apply the concepts to my own R and statistics related projects. Obviously I can't write up a thing on 30 different talks so I'll include a randomly selected few that stuck out to me. 
 
 ---
 
@@ -110,17 +110,17 @@ by [Alice Daish](https://twitter.com/alice_data) and [Hannah Frick](https://twit
 <span class = "marginnote">
 <a href="/images/rchickenladies.jpg">
 <img class = "img-responsive" src="/images/rchickenladies.jpg" alt="Les mots et les images" style="width:100%">
-</img></a>s
+</img></a>
 VERY pleased that #rchickenladies is out in the wild.
 </span>
 
 The R-Ladies Global team did an excellent job presenting the current state of this organization. 
 Beginning in 2012 in San Francisco with [Gabby](https://twitter.com/gdequeiroz), we've grown to:
 
-`r emo::ji("globe")` 20+ countries  
-`r emo::ji("cityscape")` 45+ cities  
-`r emo::ji("dancing_women")` 6000+ members  
-`r emo::ji("globe_with_meridians")` a website [rladies.org](https://rladies.org)  
+`r emo::ji("globe")` 20+ countries
+`r emo::ji("cityscape")` 45+ cities
+`r emo::ji("dancing_women")` 6000+ members
+`r emo::ji("globe_with_meridians")` a website [rladies.org](https://rladies.org)
 `r emo::ji("speaking_head")` a repository for [#RLadies speakers](https://rladies.org/r-speakers/)
 
 It was such a delight to be able to meet so many women I've collaborated online with!
@@ -133,16 +133,6 @@ It was such a delight to be able to meet so many women I've collaborated online 
 
 __Lucy:__ It is always so fun to to get together in person with the visionaries of this language I love! Not only is it an incredible opportunity to learn through the presentations, but also through the small conversations over drinks in the evenings, or over `r emo::ji("coffee")` during the breaks, or on the `r emo::ji("train")` to a fun destination. Aside from the planned content, I learned about things such as [Mile's](https://twitter.com/MilesMcBain) initiative to start a [community-wide discussion about interactive visualizations](https://github.com/ropenscilabs/rivis), [Jim's](https://twitter.com/jimhester_) suggestions on some better [git aliases](https://twitter.com/jimhester_/status/883217542810042368), and that [Ian](https://twitter.com/ijlyttle) knows every word to R.E.M's *It's the End of the World as We Know It*. It is seriously such a special experience to all be in the same place, even if just for a few days.
 
-
-<div class="row">
- <div class="col-md-8">
-  <div class="thumbnail "col-md-8">
-   <a href="/images/double_rainbow.jpg"> <img class = "img-responsive" src="/images/double_rainbow.jpg" alt="Vandy Represent" style="width:100%" /> </a>
-   <div class="caption"> <p>Iceland, where the (double) rainbow starts and ends.</p> </div>
-  </div>
- </div>
-</div>
-
 ---
 
 __Nick:__ This was my first R related conference and I can with 100% certainty say it will not be my last. I have had my feet dipped in both the R and Javascript communities for a while now, while never fully diving into either and now I feel much more comfortable diving full on into the R community. UseR helped humanize all of the people I follow on twitter and in doing so was an overwhelmingly positive experience. I have never seen a community more uniformly kind, thoughtful and humble. No one blew off the obscure graduate student coming up to talk to them about their work, they were all willing to provide advice or just have philosophical talks about statistics and R's role in the world. This certainly is partially due to the opensource nature of the language, but adjusting for this in my mental leaves a good proportion of variation to be explained by whatever latent variable I have not yet thought of. Seeing the selfless work that these people do and the impacts it has had on the world of data-science, statistics and scientific communication is inspiring and I believe endows R with a non-tangible but powerful advantage over many other languages. 
@@ -154,7 +144,7 @@ __Nick:__ This was my first R related conference and I can with 100% certainty s
 ## Non-Conference Fun
 
 
-__Nick:__ As we found out quickly, one does not simply go to Brussels without taking a trip to Bruges. While at the train station Lucy, Jacquelyn, Nick Tierney and I were surprised by Ian Lyttle randomly gracing our presence having (lucky for us) just missed the earlier train. We all loaded into the clean smooth train and set off to Bruges. While there I set aside all desire to remain "cool" and went full tourist mode and it was fantastic.  
+__Nick:__ As we found out quickly, one does not simply go to Brussels without taking a trip to Bruges. While at the train station Lucy, Jacquelyn, Nick Tierney and I were surprised by Ian Lyttle randomly gracing our presence having (lucky for us) just missed the earlier train. We all loaded into the clean smooth train and set off to Bruges. While there I set aside all desire to remain "cool" and went full tourist mode and it was fantastic.
 
 
 <div class="row">
@@ -181,7 +171,7 @@ __Nick:__ As we found out quickly, one does not simply go to Brussels without ta
 <div class="col-md-4">
 <div class="thumbnail">
 <a href="/images/bruges_beer.jpg">
-<img  src="/images/bruges_beer.jpg" alt="Fjords" style="width:100%">
+<img src="/images/bruges_beer.jpg" alt="Fjords" style="width:100%">
 <div class="caption">
 <p>I mean, it's Belgium.</p>
 </div>
@@ -192,37 +182,29 @@ __Nick:__ As we found out quickly, one does not simply go to Brussels without ta
 
 ---
 
-__Lucy:__ After Bruges, we ventured off to Iceland for a few days. It was absolutely magical. Icelandair has a great stopover program where you can book a flight with an extended stopover for the same cost as an ordinary layover -- it was *marvelous* -- this may become a new tradition for my European travel.
+__Lucy:__ After Bruges, we ventured off to Iceland `r emo::ji("iceland")` for a few days. It was absolutely magical. Icelandair has a great stopover program where you can book a flight with an extended stopover for the same cost as an ordinary layover -- it was *marvelous* -- this may become a new tradition for my European travel.
+
+
 
 <div class="row">
 <div class="col-md-4">
-<div class="thumbnail">
-<a href="/images/waterfall1.jpg">
-<img class = "img-responsive" src="/images/waterfall1.jpg" alt="Waterfall" style="width:100%">
-<div class="caption">
-<p>Waterfall</p>
-</div>
-</a>
-</div>
-</div>
-<div class="col-md-4">
-<div class="thumbnail">
+<div class="thumbnail">  
 <a href="/images/glacier_selfie.png">
 <img class = "img-responsive" src="/images/glacier_selfie.png" alt="Nature" style="width:100%">
-<div class="caption">
-<p style: "width:100% !important">Glacier SELFIE!</p>
-</div>
+<div class="caption"> 
+<p>Glacier SELFIE!</p>
 </a>
 </div>
+</div> 
 </div>
-<div class="col-md-4">
+<div class="col-md-6">
 <div class="thumbnail">
-<a href="/images/waterfall2.jpg">
-<img  src="/images/waterfall2.jpg" alt="Waterfall" style="width:100%">
-<div class="caption">
-<p>Waterfall</p>
-</div>
+<a href="/images/double_rainbow.jpg"> 
+<img class = "img-responsive" src="/images/double_rainbow.jpg" alt="Vandy Represent" style="width:100%" ></img> 
+<div class="caption"> 
+<p style = "width:100% !important"> Iceland, where the (double) rainbow starts and ends.</p> 
 </a>
 </div>
 </div>
 </div>
+</div> 
