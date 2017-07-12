@@ -2,7 +2,6 @@
 title: useR!2017 digressions 
 author: "Nick Strayer & Lucy D'Agostino McGowan"
 bothofus: "yes"
-bio: nick
 date: '2017-07-12'
 slug: useR rundown
 categories:
@@ -118,11 +117,11 @@ VERY pleased that #rchickenladies is out in the wild.
 The R-Ladies Global team did an excellent job presenting the current state of this organization. 
 Beginning in 2012 in San Francisco with [Gabby](https://twitter.com/gdequeiroz), we've grown to:
 
-`r emo::ji("globe")` 20+ countries
-`r emo::ji("cityscape")` 45+ cities
-`r emo::ji("dancing_women")` 6000+ members
-`r emo::ji("globe_with_meridians")` a website [rladies.org](https://rladies.org)
-`r emo::ji("speaking_head")` a repository for [#RLadies speakers](https://rladies.org/r-speakers/)
+`r emo::ji("globe")` 20+ countries  
+`r emo::ji("cityscape")` 45+ cities  
+`r emo::ji("dancing_women")` 6000+ members  
+`r emo::ji("globe_with_meridians")` a website [rladies.org](https://rladies.org)  
+`r emo::ji("speaking_head")` a repository for [#RLadies speakers](https://rladies.org/r-speakers/)  
 
 It was such a delight to be able to meet so many women I've collaborated online with!
 
