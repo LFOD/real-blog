@@ -1,6 +1,7 @@
 ---
 title: useR!2017 digressions 
 author: "Nick Strayer & Lucy D'Agostino McGowan"
+bothofus: "yes"
 date: '2017-07-12'
 slug: useR rundown
 categories:
