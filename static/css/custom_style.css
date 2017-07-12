@@ -7,6 +7,10 @@ code {
   font-size: 0.85em !important;
 }
 
+pre {
+  width: 55%;
+}
+
 .main-header {
   height: 30vh;
   width: 100%;
@@ -69,13 +73,18 @@ span.content-meta {
   #homepage{
     width: 75%;
   }
-
+  pre {
+    width: 85%;
+  }
 }
 
 /* Small screens */
 @media all and (max-width: 500px) {
    #homepage{
     width: 95%;
+  }
+  pre {
+    width: 85%;
   }
 
 }
