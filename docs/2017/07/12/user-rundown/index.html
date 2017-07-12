@@ -31,6 +31,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
 <link rel="stylesheet" href="../../../../css/custom_style.css">
 
 <script>
@@ -82,7 +86,7 @@
 
     
       &nbsp;<i class="fa fa-clock-o"></i>
-      &nbsp;1 min read
+      &nbsp;6 min read
     
 
     
@@ -110,19 +114,67 @@
 <!-- /BLOGDOWN-BODY-BEFORE -->
 <div id="location" class="section level2">
 <h2>Location</h2>
-<p>(What it was like being in Brussles for a conference)</p>
+<p><em>What it was like being in Brussles for a conference:</em></p>
+<p><strong>Nick</strong></p>
+<p>Brussels and Belgium are located about as centrally in Europe as one could hope. Bordered by the Netherlands, Germany and France and just short train ride from all of them one couldn’t ask for much of a better location. This centrality seemed to enable lots of researchers to attended that might not otherwise have. Luckily all other countries seem to have realized Americans wont learn their languages so they all speak better English than a certain prominent political figure in our country. Sitting at dinner having a chat with someone from the Netherlands on one side, France on another and across from an Aussie is a pretty nice experience. While this may need not be said, it is easy to get subsumed into your own little bubble at your institution and hearing about the amazing work being done by others motivated by cultural or environmental issues that my sheltered Tennessee mind doesn’t even contemplate was eye opening and inspiring. Some have been angered by the fact that the conference won’t be back in the US next year but I personally think this is beneficial, as Angela Merkel has similarly expressed recently, the US is slipping a bit in it’s hold on the “go-to” place. Besides, <a href="https://twitter.com/nj_tierney">Nick Tierny</a> may have told me that conference transportation next year will be provided by Kangaroos and Ostriches, so like that’s worth it.</p>
 </div>
 <div id="favorite-talks" class="section level2">
 <h2>Favorite Talks</h2>
-<p>(Which talks stuck out to us the most)</p>
+<p><em>Which talks stuck out to us the most:</em></p>
+<p><strong>Nick</strong></p>
+<p>I have never been to a conference where almost every single talk I went to was as high quality and fantastic as useR. I truly learned something at every single one and can’t wait to apply the concepts to my own R and statistics related projects. Obviously I can’t write up a thing on 30 different talks so I’ll include just a few that stuck out to me.</p>
+<p><a href="https://appsilon.github.io/shiny.collections/">Shiny Collections</a> by <a href="https://twitter.com/marekrog">Marek Rogala</a>:</p>
+<p>Shiny is fantastic for getting people with no web programming experience up and running with web-apps in minutes, but because of that often some of the more advanced features of web-apps such as reactive database connections can be nearly impossible to add for them (or even people like me with more web experience). The <code>shiny.connections</code> package addresses this by making it amazingly easy to spin up an app with an auto-updating database back-end. Believe me when I say this is not easy to do in a traditional web programming setup. This is fantastically exciting because the tool is easy enough to use for beginners but legitimately very helpful for all skill ranges. The number of applications I have dreamed up to use with this is very large. Also, as a testament to bravery and also the crazy ease of using the package Marek did a live coding demo while on stage in front of more than 100 people! Having just spoken on that stage prior I can say he is much braver than I.</p>
+<p><a href="https://github.com/gaborcsardi/secret">Secret</a> by <a href="https://twitter.com/revoandrie?lang=en">Andrie de Vries</a>:</p>
+<p>The second you start working with other people on any project that involves sensitive information (api-keys etc) you realize the limitations of the git based workflow. You can’t commit <code>all_my_sensitive_info.txt</code> to the repo (although that certainly hasn’t stopped me) so you end up having to engage in an intricate and delicate dance of figuring out how to <code>.gitignore</code> the right files and also share their format between all your collaborators. Essentially it’s miserable and I don’t recommend it. <code>secret</code> is another mind-blowingly easy to use R package for committing this info straight to your public repo while keeping is secure via encryption. You just need to gather public ssh keys from your collaborators. Then once the collaborator clones the repo they just need to run the code like normal and it works, no dangerous <code>.gitignore</code> dance to be performed, especially if you do something like change a secret. It can not be stressed helpful this will be in my future workflow. Also, again a live coding demo was performed showing just how easy it is to use. Apparently useRs are abnormally brave people.</p>
+<p><a href="http://ijlyttle.github.io/bsplus/">bsplus: Using Twitter Bootstrap to extend your Shiny app</a> by <a href="https://twitter.com/ijlyttle">Ian Lyttle</a>:</p>
+<p>“The user benefits from me doing as little as possible” was a quote Ian emphasized in his talk, but I think this is incorrect. Perhaps a more accurate statement would be “the user benefits from me knowing how to take the best parts of bootstrap and port them in an easy-to-use and efficient way to R”. <code>bsplus</code> is a series of lightweight wrappers around the firmly established web-styling framework <a href="http://getbootstrap.com/">bootstrap</a> by Twitter. A great UI for shiny or rmarkdown reports are not only a way to look professional but also important in encouraging new users to the platform. If you can make a shiny app in twenty minutes that takes an experienced web-developer a week to implement you’re making a pretty darn strong case for the adoption of shiny into your workflow.</p>
 </div>
 <div id="take-away" class="section level2">
 <h2>Take-Away</h2>
-<p>(Overall summary of our feelings)</p>
+<p><em>Overall summary of our feelings</em></p>
+<p><strong>Nick</strong></p>
+<p>This was my first R related conference and I can with 100% certainty say it will not be my last. I have from a programming point of view had my feet dipped in both the R and Javascript communities for a while now, while never fully diving into either. UseR helped humanize all of the people I follow on twitter and in doing so was an overwhelmingly positive experience. I have never seen a community more uniformly kind, thoughtful and humble. No one blew off the obscure graduate student coming up to talk to them about their work, they were all willing to provide advice or just have philosophical talks about statistics and R’s role in the world. This certainly is partially due to the opensource nature of the language, but adjusting for this in my mental leaves a good proportion of variation to be explained by whatever latent variable I have not yet thought of. Seeing the selfless work that these people do and the impacts it has had on the world of data-science, statistics and scientific communication is inspiring and I believe endows R with a non-tangible but powerful advantage over many other languages.</p>
 </div>
 <div id="non-conference-fun" class="section level2">
 <h2>Non-Conference Fun</h2>
-<p>(Random fun Iceland etc)</p>
+<p><em>Random fun</em></p>
+<p>As I found out quickly, one does not simply go to Brussels without taking a trip to Bruges. While at the train station Lucy, Jacqueline, Nick Tierney and I were surprised by Ian Lyttle randomly gracing out presence having (lucky for us) just missed the earlier train. We all loaded into the clean smooth train and set off to Bruges. While there I set aside all desire to remain “cool” and went full tourist mode and it was fantastic.</p>
+<div class="row">
+<div class="col-md-4">
+<div class="thumbnail">
+<a href="../../../../images/bruges_street.jpg"> <img class = "img-responsive" src="../../../../images/bruges_street.jpg" alt="Street" style="width:100%">
+<div class="caption">
+<p>
+A typical view down the street in Bruges.
+</p>
+</div>
+<p></a></p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="thumbnail">
+<a href="../../../../images/bruges_band_photo.jpg"> <img class = "img-responsive" src="../../../../images/bruges_band_photo.jpg" alt="Nature" style="width:100%">
+<div class="caption">
+<p style: "width:100% !important">
+Cover photo for our upcoming album “Last Train to Brussels”
+</p>
+</div>
+<p></a></p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="thumbnail">
+<a href="../../../../images/bruges_beer.jpg"> <img  src="../../../../images/bruges_beer.jpg" alt="Fjords" style="width:100%">
+<div class="caption">
+<p>
+I mean, it’s Belgium.
+</p>
+</div>
+<p></a></p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section>

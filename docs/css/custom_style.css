@@ -54,6 +54,10 @@ p {
   text-rendering: geometricPrecision;
 }
 
+.thumbnail p {
+  width: 100%;
+}
+
 span.content-meta {
   color: #64696e;
 }
@@ -78,3 +82,4 @@ span.content-meta {
         padding: 0 !important;
     }
  }
+ 
