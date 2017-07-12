@@ -6,18 +6,19 @@
     <description>Recent content in R on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Visualizing Regression Results</title>
-      <link>/2017/05/23/testing-the-new-theme/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      <title>useR!2017 digressions</title>
+      <link>/2017/07/12/user-rundown/</link>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/05/23/testing-the-new-theme/</guid>
-      <description>Motivation Recently I was pointed in the direction of a post titled Visualizing Regression on the blog of the popular data-visualization practitioner Stephanie Evergreen (although it is a guest post and not written by Stephanie). In it the authors point out the fact that common regression tables are an all around bad way of reporting the results of a regression. While I whole heartedly agree with the premise there were a few rather large mistakes in the interpretations behind the regression output.</description>
+      <guid>/2017/07/12/user-rundown/</guid>
+      <description>We both recently attended useR!2017 in Brussels. It was a blast to say the least. We’re going to tag team to cover our favorite things &amp;amp; the lessons we learned while adventuring across the Atlantic.
+Location Lucy: Brussels was incredible. The 🍺 was delectable and the people were delightful. ⊕This proved to be particularly useful when we temporarly misplaced our travel buddy Jacquelyn on our way from the ✈️ - we convinently followed the signs to wifi!</description>
     </item>
     
   </channel>

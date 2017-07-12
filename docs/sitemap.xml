@@ -3,13 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/2017/06/03/runconf17-an-analysis-of-emoji-use/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <loc>/2017/07/12/user-rundown/</loc>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/05/23/testing-the-new-theme/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <loc>/2017/06/03/runconf17-an-analysis-of-emoji-use/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
   </url>
   
   <url>
@@ -90,13 +90,13 @@
   
   <url>
     <loc>/tags/conferences/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/conferences/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -144,19 +144,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/modeling/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/modeling/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -174,25 +162,19 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/r/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/regression/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -234,7 +216,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -251,6 +233,18 @@
   </url>
   
   <url>
+    <loc>/tags/travel/</loc>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/travel/</loc>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/type-1-error/</loc>
     <lastmod>2017-02-18T09:03:06-06:00</lastmod>
     <priority>0</priority>
@@ -258,7 +252,7 @@
   
   <url>
     <loc>/categories/visualization/</loc>
-    <lastmod>2017-05-23T00:00:00+00:00</lastmod>
+    <lastmod>2017-03-12T10:54:24+02:00</lastmod>
     <priority>0</priority>
   </url>
   

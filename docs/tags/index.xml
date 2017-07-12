@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 12 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Conferences</title>
       <link>/tags/conferences/</link>
-      <pubDate>Sat, 03 Jun 2017 20:47:20 -0500</pubDate>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/conferences/</guid>
       <description></description>
@@ -39,29 +39,11 @@
     </item>
     
     <item>
-      <title>Modeling</title>
-      <link>/tags/modeling/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/modeling/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Regression</title>
-      <link>/tags/regression/</link>
-      <pubDate>Tue, 23 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/regression/</guid>
       <description></description>
     </item>
     
@@ -98,6 +80,15 @@
       <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
       
       <guid>/tags/tidytext/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Travel</title>
+      <link>/tags/travel/</link>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/travel/</guid>
       <description></description>
     </item>
     

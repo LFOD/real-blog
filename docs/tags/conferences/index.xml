@@ -6,10 +6,20 @@
     <description>Recent content in Conferences on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 03 Jun 2017 20:47:20 -0500</lastBuildDate>
+    <lastBuildDate>Wed, 12 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/conferences/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>useR!2017 digressions</title>
+      <link>/2017/07/12/user-rundown/</link>
+      <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/12/user-rundown/</guid>
+      <description>We both recently attended useR!2017 in Brussels. It was a blast to say the least. We’re going to tag team to cover our favorite things &amp;amp; the lessons we learned while adventuring across the Atlantic.
+Location Lucy: Brussels was incredible. The 🍺 was delectable and the people were delightful. ⊕This proved to be particularly useful when we temporarly misplaced our travel buddy Jacquelyn on our way from the ✈️ - we convinently followed the signs to wifi!</description>
+    </item>
     
     <item>
       <title>runconf17, an analysis of emoji use</title>
