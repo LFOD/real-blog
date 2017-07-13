@@ -3,8 +3,8 @@ title: "Introducing the tuftesque blogdown theme"
 author: "Nick Strayer"
 date: '2017-07-13'
 categories: ["R"]
-tags: ["Blogdown", "regression"]
-excerpt: "If you like the way our blog looks, you too can have your own blogdown driven site just like it! In this post I walk through how to set up an RMarkdown driven blog  from scratch using blogdown and the tuftesque theme constructed for Live Free Or Dichotomize."
+tags: ["Blogdown", "R"]
+excerpt: "If you like the way our blog looks, you too can have your own blogdown driven site just like it! In this post I walk through how to set up an RMarkdown driven blog from scratch using blogdown and the tuftesque theme constructed for Live Free Or Dichotomize."
 ---
 
 
@@ -56,7 +56,7 @@ Boom, now you have your very own blog! Wouldn't it be nice if everything in life
 
 ## Adding tuftesque
 
-Now that you have your blogdown blog up and running switch back to your R onsole (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github. 
+Now that you have your blogdown blog up and running switch back to your R console (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github. 
 
 `r tufte::margin_note("__R Console__")`
 
