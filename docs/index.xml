@@ -6,10 +6,20 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introducing the tuftesque blogdown theme</title>
+      <link>/2017/07/13/introducing-the-tuftesque-blogdown-theme/</link>
+      <pubDate>Thu, 13 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/13/introducing-the-tuftesque-blogdown-theme/</guid>
+      <description>This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: tuftesque. It doesn’t cover the more standard details such as writing new posts as I feel those have been covered much better than I could here.
+Getting Blogdown If you already have a blogdown site than you can skip to the next step. If you do not, open R in a new fresh directory and run the following commands:</description>
+    </item>
     
     <item>
       <title>useR!2017 digressions</title>

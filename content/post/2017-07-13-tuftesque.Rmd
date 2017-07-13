@@ -1,0 +1,217 @@
+---
+title: "Introducing the tuftesque blogdown theme"
+author: "Nick Strayer"
+date: '2017-07-13'
+categories: ["R"]
+tags: ["Blogdown", "regression"]
+excerpt: "Our blog's theme started as the theme hugo-tufte but has sense been modified a lot. I've been asked to put it up as a theme for other to use, here it is!"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tufte)
+```
+
+This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog:  [tuftesque](www.github.com/nstrayer/tuftesque). It doesn't cover the more standard details such as writing new posts as I feel those have been covered much better than I could [here](https://bookdown.org/yihui/blogdown/). 
+
+## Getting Blogdown
+
+If you already have a blogdown site than you can skip to the next step. If you do not, open R in a new fresh directory and run the following commands: 
+
+```{r, eval = F}
+#downloads the blogdown package
+devtools::install_github("rstudio/blogdown")
+
+#initialize a new blog
+blogdown::new_site()
+```
+
+Boom, now you have your very own blog! Wouldn't it be nice if everything in life was this easy?
+
+
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/new_site.png">
+<img class = "img-responsive" src="/images/new_site.png" alt="Base Site" style="width:100%">
+</img></a>
+<div class="caption">
+<p>This is what your site should look like at this point.</p>
+</div>
+</div>
+</div>
+
+## Adding tuftesque
+
+Now that you have your blogdown blog up and running switch back into your R terminal (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github. 
+
+```{r, eval = F}
+blogdown::install_theme('nstrayer/tuftesque')
+```
+
+Assuming this successfully worked (if it didn't file an issue [here](www.github.com/nstrayer/tuftesque)) now simply run the command `blogdown::serve_site()` to restart the blogdown server and you should have your fancy new blog working!
+
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/tuftesqueified.png">
+<img class = "img-responsive" src="/images/tuftesqueified.png" alt="now with tuftesque" style="width:100%">
+</img></a>
+<div class="caption">
+<p>After installing the tuftesque theme your blog should now look like this.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+# Customizing
+
+## Side Notes: 
+
+We all know why you're here: the sidenotes. This is rather easy. Just make sure you have the `tufte` package installed and then, in an inline r chunk, wherever you want to put a side note call the following. 
+
+```
+tufte::margin_note("This is a margin note")
+```
+
+The above produces the following: `r tufte::margin_note("This is a margin note")`
+
+You can place just about anything in this that you would normally put in markdown so go crazy. 
+
+## Summary Text: 
+
+You can place a small snippet of text on the home page to give your readers a little bit more info on what a post is about. To do this just add the field `excerpt` to your posts header: 
+
+
+`r tufte::margin_note("This is the header of this article. The except shows up on the home page.")`
+```
+title: "Introducing the tuftesque blogdown theme"
+author: "Nick Strayer"
+date: '2017-07-13'
+categories: ["R"]
+tags: ["Blogdown", "regression"]
+excerpt: "Our blog's theme started as the theme hugo-tufte but has sense been modified a lot. I've been asked to put it up as a theme for other to use, here it is!"
+```
+
+## Logo
+
+You're not a giant Tintin fan? Well lucky for you changes can be made to the theme to make it more "you". 
+
+
+You will notice in the directory set up for you by blogdown there is a file called `config.toml`. Open this up real quick and locate the where it says `[params.logo]` (line 35 if a fresh blogdown install). 
+
+Under this you will see the parameter `url`. You can set this to be whatever your heart desires. Say your more of a parrot person, no problem. 
+
+`r tufte::margin_note("__config.toml__")`
+
+```
+[params]
+...
+  [params.logo]
+    url = "http://bit.ly/2tNSEG4"
+    width = 50
+    height = 50
+    alt = "Logo"
+```
+
+
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/parrotlogo.png">
+<img class = "img-responsive" src="/images/parrotlogo.png" alt="New Logo" style="width:100%">
+</img></a>
+<div class="caption">
+  <p>That's a pretty cool new logo.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+## Banner
+
+Again, go into your `config.toml`, but this time you need to add a new key called `[params.banner]` and under that add a field `url` just like for the logo. 
+
+`r tufte::margin_note("__config.toml__")`
+
+```
+[params.logo]
+  url = "http://bit.ly/2tNSEG4"
+  width = 50
+  height = 50
+  alt = "Logo"
+  
+[params.banner]
+  url = "http://bit.ly/2sV7B6p"
+```
+
+
+`r tufte::margin_note("__Banner Size:__ The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.")`
+
+
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/newpannel.png">
+<img class = "img-responsive" src="/images/newpannel.png" alt="New Banner" style="width:100%">
+</img></a>
+<div class="caption">
+  <p>A network diagram?! I like your style.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+__Fancy Banners:__
+If you want to have a custom html banner like the one on [livefreeordichotomize](http://livefreeordichotomize.com) this can be done by creating the file `layouts/partials/banner.html` and filling it with whatever you would desire. `r tufte::margin_note("By placing this file here hugo/blogdown will automatically use it instead of the default photo. Try and stay in your base directory when you do this as opposed to going to __themes/tuftesque/layouts/partials/__ because Hugo/blogdown will automatically see you have your own and use it over the themes.")` [Here's an example](https://github.com/LFOD/real-blog/blob/master/layouts/partials/intro_viz.html) of the one from the blog above. 
+
+
+
+
+## Adding authors
+
+If you want to have your very own custom bio at the bottom of your articles go into your blogs `data/` directory add a file titled `authors.toml`. Inside this file you can fill in some information about authors to show up automatically at the end of any article they write.
+
+In this include the following info (replacing in the obvious places).
+
+`r tufte::margin_note("__data/authors.toml__")`
+
+```
+["Party Parrot"]
+  name =  "Mr. Parrot"
+  bio = "This is my super awesome bio and stuff."
+  location =  "Normal, Il"
+  website =  "http:/www.example.com"
+  thumbnail = "http://bit.ly/2sV7B6p"
+  twitter = "https://twitter.com/"
+  github = "https://github.com/nstrayer/tuftesque/"
+```
+
+Make sure that the key `["Author Name"]` is exactly as the name appears in the `author` field in your post. 
+
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="/images/partyparrotbio.png">
+<img class = "img-responsive" src="/images/partyparrotbio.png" alt="with a bio" style="width:100%">
+</img></a>
+<div class="caption">
+<p>Author bios automatically show up if the author's info is in `/data/authors.toml`</p>
+</div>
+</div>
+</div>
+</div>
+
+
+# Summary
+
+The tuftesque theme gives your blog a ...tufte-esque... style that eschues some of the choices of the original and has added a dash of my personal style. The main title page is a single column and has an easily customizable banner where as the article view is the two panel view (for large screens) to allow for sidenotes. In addition you can add little author bios at the end which is especially useful if you have more than one author on your blog. 
+
+That's pretty much it. The theme is rather minimal now but has the basics of what I look for in a theme. If any of the above was confusing to you or you have a suggestion for how I should improve the theme please don't hesitate to submit an issue on [the github](www.github.com/nstrayer/tuftesque) or ping me on [twitter](www.twitter.com/nicholasstrayer).

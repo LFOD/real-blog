@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - How to use Tuftesque</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.20.2" />
+
+  
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../../../css/custom_style.css">
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<link rel="stylesheet" href="../../../../css/tufte.css">
+<link rel="stylesheet" href="../../../../css/hugo-tufte.css">
+<link rel="stylesheet" href="../../../../css/hugo-tufte-override.css">
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="../../../../2015/07/23/how-to-use-tuftesque/">How to use Tuftesque</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 23, 2015
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="../../../../categories/r">R</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
+
+<!-- BLOGDOWN-BODY-BEFORE -->
+<!-- /BLOGDOWN-BODY-BEFORE -->
+<div id="the-begining" class="section level1">
+<h1>The Begining</h1>
+<p>If you already have a blogdown site than you can skip to the next step. If you do not, open R in a new fresh directory and run the following commands:</p>
+<pre class="r"><code>#downloads the blogdown package
+devtools::install_github(&quot;rstudio/blogdown&quot;)
+
+#initialize a new blog
+blogdown::new_site()</code></pre>
+<p>Boom, now you have your very own blog! Wouldn’t it be nice if everything in life was this easy?</p>
+</div>
+<div id="adding-tuftesque" class="section level1">
+<h1>Adding tuftesque</h1>
+<p>Now that you have your blogdown blog up and running switch back into your R terminal (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github.</p>
+<pre class="r"><code>blogdown::install_theme(&#39;nstrayer/tuftesque&#39;)</code></pre>
+<p>Assuming this successfully worked (if it didn’t file an issue <a href="www.github.com/nstrayer/tuftesque">here</a>) now simply run the command <code>blogdown::serve_site()</code> to restart the blogdown server and you should have your fancy new blog working!</p>
+</div>
+<div id="banner-and-logo" class="section level1">
+<h1>Banner and Logo</h1>
+<p>In the <code>config.toml</code> for your site set both <code>params.logo</code> and <code>params.banner</code> with a key of <code>url</code> and point it to whatever you desire your logo to be. This can also be a local file in the <code>static</code> directory, as is the case below for the banner.</p>
+<p>E.g.</p>
+<pre><code>[params]
+  description = &quot;A website built through Hugo and blogdown.&quot;
+ 
+  [params.logo]
+    url = &quot;https://pbs.twimg.com/profile_images/781518772259749888/lmEHgoQP_400x400.jpg&quot;
+  
+  [params.banner]
+    url = &quot;/images/banner.png&quot;</code></pre>
+<p><strong>Banner Size:</strong> The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.</p>
+<p>If you want to have a custom html banner like the one on <a href="http://livefreeordichotomize.com">livefreeordichotomize</a> this can be done by creating the file <code>layouts/partials/banner.html</code> and filling it with whatever you would desire. <a href="https://github.com/LFOD/real-blog/blob/master/layouts/partials/intro_viz.html">Here’s an example</a> of the one from the blog above. By placing this file here hugo/blogdown will automatically use it instead of the default photo.</p>
+</div>
+<div id="side-notes" class="section level1">
+<h1>Side Notes:</h1>
+<p>We all know why you’re here: the sidenotes. This is rather easy. Just make sure you have the <code>tufte</code> package installed and then, in an inline r chunk, wherever you want to put a side note call the following.</p>
+<pre><code>tufte::margin_note(&quot;This is a margin note&quot;)</code></pre>
+<p>The above produces the following: <label for="tufte-mn-erqvmbqxbm" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-erqvmbqxbm" class="margin-toggle"><span class="marginnote">This is a margin note</span></p>
+<p>You can place just about anything in this that you would normally put in markdown so go crazy.</p>
+</div>
+<div id="authors" class="section level1">
+<h1>Authors</h1>
+<p>In <code>data/</code> add a file titled <code>authors.toml</code> and in this place entries as follows:</p>
+<p>In this include the following info (replacing in the obvious places).</p>
+<pre><code>[Edward]
+  name =  &quot;Edward&quot;
+  bio = &quot;This is my super awesome bio and stuff.&quot;
+  location =  &quot;Normal, Il&quot;
+  website =  &quot;http:/www.example.com&quot;
+  thumbnail = &quot;http://img11.hostingpics.net/pics/337670Tintin.jpg&quot;
+  twitter = &quot;https://twitter.com/&quot;
+  github = &quot;https://github.com/nstrayer/tuftesque/&quot;
+  
+[Other Edward]
+  name =  &quot;Not the best edward&quot;
+  ...</code></pre>
+<p>Make sure that the key <code>[Author Name]</code> is exactly as the name appears in the <code>author</code> field in your post. <label for="tufte-mn-wqaaclrzeu" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-wqaaclrzeu" class="margin-toggle"><span class="marginnote">No need for quotes in the key field in the .toml</span> E.g. <code>author = &quot;Jane Doe&quot;</code> would correspond to <code>[Jane Doe]</code> in <code>authors.toml</code>.</p>
+</div>
+</section>
+<section>
+  
+
+
+
+
+
+
+
+
+
+<style>
+
+  .author_blurb {
+    display: flex;
+    flex-direction: row;    
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 150px;
+    text-decoration none;
+  }
+  
+  .author_photo {
+  }
+  
+  .photo{
+    width: 90px;
+  }
+  
+  .author_info{
+    display: flex;
+    flex-direction: column;    
+    padding-left: 15px;
+    justify-content: center;
+  }
+  
+  .name{
+    font-family: "Merriweather", serif;
+    letter-spacing: 0.01rem;
+    font-size: 1.7rem;
+  }
+  
+  .contact_info{
+    align-content: center;
+  }
+  
+  .contact_info a {
+    background-repeat: no-repeat, no-repeat, no-repeat !important;
+    text-decoration: none !important;
+  }
+  
+  .bio{
+    height: 100px;
+    padding-top: 0px;
+  }
+  
+  .bio_text{
+    padding-top: 5px;
+    margin-top: auto;
+    font-size: 1.2rem;
+    line-height: 1.5em;
+    font-weight: 200;
+    color: #636363;
+    letter-spacing: 0;
+    text-indent: 0;
+  }
+  
+   
+  @media all and (max-width: 800px) {
+    .author_blurb {
+      
+    }
+  }
+  
+   
+  @media all and (max-width: 500px) {
+    .author_blurb {
+      flex-direction: column;    
+    }
+    .author_info{
+      padding-top: 40px;
+    }
+    .author_photo {
+      align-self: center;
+    }
+  }
+  
+</style>
+
+
+
+
+
+<div class="author_blurb">
+    <div class="author_photo">
+      <div class="photo">
+        <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
+      </div>
+    </div>
+    <div class = "author_info">
+      <div class = "contact_info">
+          <span class = "name"> Nick Strayer |</span>
+          <a class = "social_buttons" href = http://nickstrayer.me >
+              <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+          </a>
+          <a class="social_buttons" href = https://twitter.com/NicholasStrayer>
+            <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+          </a>
+          <a class = "social_buttons" href = https://github.com/nstrayer >
+            <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+          </a>
+      </div>
+      <div class = "bio">
+        <p class = "bio_text">Randomly walking my way though a career in statistics</p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2015\/07\/23\/how-to-use-tuftesque\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy; 2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+
+
+</section>
+</article>
+</div>
+</body>
+</html>
