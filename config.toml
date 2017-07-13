@@ -3,7 +3,7 @@ publishDir = "docs"
 relativeurls = true
 languageCode = "en-us"
 title = "Live Free or Dichotomize"
-theme = "hugo-tufte"
+theme = "tuftesque"
 googleAnalytics = "UA-92165973-1"
 disqusShortname = "livefreeordichotomize"
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
@@ -36,9 +36,10 @@ author = "Nick Strayer & Lucy D'Agostino McGowan"
 
     MathJaxCDN = "//cdn.bootcss.com"
     MathJaxVersion = "2.7.1"
-
+    
+    showtitle = false
     [params.logo]
-    url = "logo.png"
+    url = "/images/logo.png"
     width = 50
     height = 50
     alt = "Logo"
