@@ -17,7 +17,8 @@
       <pubDate>Thu, 13 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/07/13/introducing-the-tuftesque-blogdown-theme/</guid>
-      <description>It’s grown slowly into its own overOur blog’s theme started as ‘hugo-tufte’ but has overtime been customized to the point it’s distinctly different. I’ve been asked to put it up as a standalone theme for other to use, here it is! This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: tuftesque. It doesn’t cover the more standard details such as writing new posts as I feel those have been covered much better than I could here.</description>
+      <description>This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: tuftesque.
+The tuftesque theme gives your blog a …tufte-esque… style that eschues some of the choices of the original and which I’ve added a few splashes of my personal style. The main title page is a single column and has an easily customizable banner where as the article view is the two panel view (for large screens) to allow for sidenotes.</description>
     </item>
     
   </channel>

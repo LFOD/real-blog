@@ -12,12 +12,15 @@ excerpt: "If you like the way our blog looks, you too can have your own blogdown
 
 <!-- BLOGDOWN-BODY-BEFORE -->
 <!-- /BLOGDOWN-BODY-BEFORE -->
-<p>It’s grown slowly into its own overOur blog’s theme started as ‘hugo-tufte’ but has overtime been customized to the point it’s distinctly different. I’ve been asked to put it up as a standalone theme for other to use, here it is! This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: <a href="www.github.com/nstrayer/tuftesque">tuftesque</a>. It doesn’t cover the more standard details such as writing new posts as I feel those have been covered much better than I could <a href="https://bookdown.org/yihui/blogdown/">here</a>.</p>
+<p>This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: <a href="www.github.com/nstrayer/tuftesque">tuftesque</a>.</p>
+<p>The tuftesque theme gives your blog a …tufte-esque… style that eschues some of the choices of the original and which I’ve added a few splashes of my personal style. The main title page is a single column and has an easily customizable banner where as the article view is the two panel view (for large screens) to allow for sidenotes. In addition you can add little author bios at the end which is especially useful if you have more than one author on your blog.</p>
+<p>It doesn’t cover the more standard details such as writing new posts as I feel those have been covered much better than I could <a href="https://bookdown.org/yihui/blogdown/">here</a>.</p>
 <div id="the-basics" class="section level1">
 <h1>The Basics</h1>
 <div id="getting-blogdown" class="section level2">
 <h2>Getting Blogdown</h2>
-<p>If you already have a blogdown site than you can skip to the next step. If you do not, open R in a new fresh directory and run the following commands:</p>
+<p>If you already have a blogdown site than you can skip to the next step. If you do not, open R inside a new fresh directory and run the following commands:</p>
+<p><label for="tufte-mn-amfcpheokv" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-amfcpheokv" class="margin-toggle"><span class="marginnote"><strong>R Console</strong></span></p>
 <pre class="r"><code>#downloads the blogdown package
 devtools::install_github(&quot;rstudio/blogdown&quot;)
 
@@ -38,9 +41,10 @@ This is what your site should look like at this point.
 </div>
 <div id="adding-tuftesque" class="section level2">
 <h2>Adding tuftesque</h2>
-<p>Now that you have your blogdown blog up and running switch back into your R terminal (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github.</p>
+<p>Now that you have your blogdown blog up and running switch back to your R onsole (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github.</p>
+<p><label for="tufte-mn-qditjpkzzz" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-qditjpkzzz" class="margin-toggle"><span class="marginnote"><strong>R Console</strong></span></p>
 <pre class="r"><code>blogdown::install_theme(&#39;nstrayer/tuftesque&#39;)</code></pre>
-<p>Assuming this successfully worked (if it didn’t file an issue <a href="www.github.com/nstrayer/tuftesque">here</a>) now simply run the command <code>blogdown::serve_site()</code> to restart the blogdown server and you should have your fancy new blog working!</p>
+<p>Assuming this successfully worked (if it didn’t file an issue <a href="www.github.com/nstrayer/tuftesque">here</a>) now run the command <code>blogdown::serve_site()</code> to restart the blogdown server and you should have your fancy new blog working!</p>
 <div class="row">
 <div class="col-md-6">
 <div class="thumbnail">
@@ -57,17 +61,18 @@ After installing the tuftesque theme your blog should now look like this.
 </div>
 <div id="customizing" class="section level1">
 <h1>Customizing</h1>
+<p>It would be pretty lame if that was it, wouldn’t it? Fear not, you can tinker with it to make it your own.</p>
 <div id="side-notes" class="section level2">
 <h2>Side Notes:</h2>
 <p>We all know why you’re here: the sidenotes. This is rather easy. Just make sure you have the <code>tufte</code> package installed and then, in an inline r chunk, wherever you want to put a side note call the following.</p>
 <pre><code>tufte::margin_note(&quot;This is a margin note&quot;)</code></pre>
-<p>The above produces the following: <label for="tufte-mn-nerbgjbwwl" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-nerbgjbwwl" class="margin-toggle"><span class="marginnote">This is a margin note</span></p>
+<p>The above produces the following: <label for="tufte-mn-aqgmhwsrro" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-aqgmhwsrro" class="margin-toggle"><span class="marginnote">This is a margin note</span></p>
 <p>You can place just about anything in this that you would normally put in markdown so go crazy.</p>
 </div>
 <div id="summary-text" class="section level2">
 <h2>Summary Text:</h2>
-<p>You can place a small snippet of text on the home page to give your readers a little bit more info on what a post is about. To do this just add the field <code>excerpt</code> to your posts header:</p>
-<p><label for="tufte-mn-gjytrvmtkh" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-gjytrvmtkh" class="margin-toggle"><span class="marginnote">This is the header of this article. The except shows up on the home page.</span></p>
+<p>You can place a description of a post on the home page to give your readers a little bit more info on what a post is about. To do this just add the field <code>excerpt</code> to your posts header:</p>
+<p><label for="tufte-mn-cuxegiendt" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-cuxegiendt" class="margin-toggle"><span class="marginnote">This is the header of this article. The except shows up on the home page.</span></p>
 <pre><code>title: &quot;Introducing the tuftesque blogdown theme&quot;
 author: &quot;Nick Strayer&quot;
 date: &#39;2017-07-13&#39;
@@ -79,8 +84,8 @@ excerpt: &quot;Our blog&#39;s theme started as the theme hugo-tufte but has sens
 <h2>Logo</h2>
 <p>You’re not a giant Tintin fan? Well lucky for you changes can be made to the theme to make it more “you”.</p>
 <p>You will notice in the directory set up for you by blogdown there is a file called <code>config.toml</code>. Open this up real quick and locate the where it says <code>[params.logo]</code> (line 35 if a fresh blogdown install).</p>
-<p>Under this you will see the parameter <code>url</code>. You can set this to be whatever your heart desires. Say your more of a parrot person, no problem.</p>
-<p><label for="tufte-mn-qkdyafflvv" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-qkdyafflvv" class="margin-toggle"><span class="marginnote"><strong>config.toml</strong></span></p>
+<p>Under this you will see the parameter <code>url</code>. You can set this to be whatever your heart desires. Say you’re more of a parrot person, no problem.</p>
+<p><label for="tufte-mn-szrfbvqwiw" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-szrfbvqwiw" class="margin-toggle"><span class="marginnote"><strong>/config.toml</strong></span></p>
 <pre><code>[params]
 ...
   [params.logo]
@@ -104,7 +109,7 @@ That’s a pretty cool new logo.
 <div id="banner" class="section level2">
 <h2>Banner</h2>
 <p>Again, go into your <code>config.toml</code>, but this time you need to add a new key called <code>[params.banner]</code> and under that add a field <code>url</code> just like for the logo.</p>
-<p><label for="tufte-mn-pujplwzzyb" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-pujplwzzyb" class="margin-toggle"><span class="marginnote"><strong>config.toml</strong></span></p>
+<p><label for="tufte-mn-lywcqmigrl" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-lywcqmigrl" class="margin-toggle"><span class="marginnote"><strong>/config.toml</strong></span></p>
 <pre><code>[params.logo]
   url = &quot;http://bit.ly/2tNSEG4&quot;
   width = 50
@@ -113,7 +118,7 @@ That’s a pretty cool new logo.
   
 [params.banner]
   url = &quot;http://bit.ly/2sV7B6p&quot;</code></pre>
-<p><label for="tufte-mn-hkyuoeslis" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-hkyuoeslis" class="margin-toggle"><span class="marginnote"><strong>Banner Size:</strong> The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.</span></p>
+<p><label for="tufte-mn-yrnnywdmdw" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-yrnnywdmdw" class="margin-toggle"><span class="marginnote"><strong>Banner Size:</strong> The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.</span></p>
 <div class="row">
 <div class="col-md-6">
 <div class="thumbnail">
@@ -126,18 +131,16 @@ A network diagram?! I like your style.
 </div>
 </div>
 </div>
-<p><strong>Fancy Banners:</strong> If you want to have a custom html banner like the one on <a href="http://livefreeordichotomize.com">livefreeordichotomize</a> this can be done by creating the file <code>layouts/partials/banner.html</code> and filling it with whatever you would desire. <label for="tufte-mn-rcnatdrurg" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-rcnatdrurg" class="margin-toggle"><span class="marginnote">By placing this file here hugo/blogdown will automatically use it instead of the default photo. Try and stay in your base directory when you do this as opposed to going to <strong>themes/tuftesque/layouts/partials/</strong> because Hugo/blogdown will automatically see you have your own and use it over the themes.</span> <a href="https://github.com/LFOD/real-blog/blob/master/layouts/partials/intro_viz.html">Here’s an example</a> of the one from the blog above.</p>
 </div>
 <div id="adding-authors" class="section level2">
 <h2>Adding authors</h2>
-<p>If you want to have your very own custom bio at the bottom of your articles go into your blogs <code>data/</code> directory add a file titled <code>authors.toml</code>. Inside this file you can fill in some information about authors to show up automatically at the end of any article they write.</p>
+<p>If you want to have your very own custom bio at the bottom of your articles, go into your blog’s <code>data/</code> directory and add a file titled <code>authors.toml</code>. Inside this file you can fill in some information about the authors on your blog. This info will then show up automatically at the end of any article they write.</p>
 <p>In this include the following info (replacing in the obvious places).</p>
-<p><label for="tufte-mn-ulcdyrvtwr" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-ulcdyrvtwr" class="margin-toggle"><span class="marginnote"><strong>data/authors.toml</strong></span></p>
-<p><label for="tufte-mn-ceaffcpzrj" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-ceaffcpzrj" class="margin-toggle"><span class="marginnote">If you don’t have all of the fields no worries, just don’t enter them and they will automatically be hidden from the bio. </span></p>
+<p><label for="tufte-mn-vicyzxxqaj" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-vicyzxxqaj" class="margin-toggle"><span class="marginnote"><strong>/data/authors.toml</strong></span></p>
+<p><label for="tufte-mn-egxkozoogw" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-egxkozoogw" class="margin-toggle"><span class="marginnote">If you don’t have all of the fields no worries, just don’t enter them and they will automatically be hidden from the bio. </span></p>
 <pre><code>[&quot;Party Parrot&quot;]
   name =  &quot;Mr. Parrot&quot;
   bio = &quot;This is my super awesome bio and stuff.&quot;
-  location =  &quot;Normal, Il&quot;
   website =  &quot;http:/www.example.com&quot;
   thumbnail = &quot;http://bit.ly/2sV7B6p&quot;
   twitter = &quot;https://twitter.com/&quot;
@@ -156,9 +159,13 @@ Author bios automatically show up if the author’s info is in <code>/data/autho
 </div>
 </div>
 </div>
+<div id="beyond-the-basics" class="section level2">
+<h2>Beyond the basics</h2>
+<p>If the limited options included in the theme are not flexible enough for you and you feel comfortable with html and css you can easily extend any part of this theme. For instance, you may notice on our blog we have an interactive animation that plays instead of a banner image. This is accomplished by simply adding a file called <code>banner.html</code> (<a href="https://github.com/LFOD/real-blog/blob/master/layouts/partials/banner.html">this is what it looks like</a>) into the <code>/layouts/partials/</code> directory of our blog. This works because the tuftesque theme has a file in its own directory structure with the same name (<code>/themes/tuftesque/layouts/partials/banner.html</code>). Hugo uses that file to draw the header section of the page, but not before checking in our blog’s own <code>layouts/</code> directory for the file first. Since we have our own version of this file, that one gets used instead of the default banner image.</p>
+<p>So if you want to extend tuftesque (or any other Hugo theme) you never have to muck around in the <code>themes/</code> directory, you simply need to investigate what part of the theme is responsible for the view you want to change by looking at its structure (poke around the <a href="www.github.com/nstrayer/tuftesque">github page</a> to see how tuftesque is laid out) and then replicating that file’s path in your blogs personal <code>layouts/</code> directory and make changes to your hearts desire! This is how tuftesque was slowly built out.</p>
 </div>
-<div id="summary" class="section level1">
-<h1>Summary</h1>
-<p>The tuftesque theme gives your blog a …tufte-esque… style that eschues some of the choices of the original and has added a dash of my personal style. The main title page is a single column and has an easily customizable banner where as the article view is the two panel view (for large screens) to allow for sidenotes. In addition you can add little author bios at the end which is especially useful if you have more than one author on your blog.</p>
+</div>
+<div id="wrap-up" class="section level1">
+<h1>Wrap-Up</h1>
 <p>That’s pretty much it. The theme is rather minimal now but has the basics of what I look for in a theme. If any of the above was confusing to you or you have a suggestion for how I should improve the theme please don’t hesitate to submit an issue on <a href="www.github.com/nstrayer/tuftesque">the github</a> or ping me on <a href="www.twitter.com/nicholasstrayer">twitter</a>.</p>
 </div>

@@ -99,13 +99,13 @@
   </url>
   
   <url>
-    <loc>/tags/conferences/</loc>
+    <loc>/categories/conferences/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/conferences/</loc>
+    <loc>/tags/conferences/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -117,13 +117,13 @@
   </url>
   
   <url>
-    <loc>/tags/emojis/</loc>
+    <loc>/categories/emojis/</loc>
     <lastmod>2017-06-03T20:47:20-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/emojis/</loc>
+    <loc>/tags/emojis/</loc>
     <lastmod>2017-06-03T20:47:20-05:00</lastmod>
     <priority>0</priority>
   </url>
@@ -177,14 +177,14 @@
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
+    <loc>/categories/r/</loc>
+    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -195,20 +195,14 @@
   </url>
   
   <url>
-    <loc>/tags/rms/</loc>
-    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/rms/</loc>
     <lastmod>2017-02-18T09:03:06-06:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/ropensci/</loc>
-    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <loc>/tags/rms/</loc>
+    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -219,13 +213,19 @@
   </url>
   
   <url>
-    <loc>/tags/rstats/</loc>
+    <loc>/tags/ropensci/</loc>
     <lastmod>2017-06-03T20:47:20-05:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/rstats/</loc>
+    <lastmod>2017-06-03T20:47:20-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rstats/</loc>
     <lastmod>2017-06-03T20:47:20-05:00</lastmod>
     <priority>0</priority>
   </url>
@@ -249,13 +249,13 @@
   </url>
   
   <url>
-    <loc>/tags/travel/</loc>
+    <loc>/categories/travel/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/travel/</loc>
+    <loc>/tags/travel/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

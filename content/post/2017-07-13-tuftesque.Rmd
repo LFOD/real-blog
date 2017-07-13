@@ -15,8 +15,12 @@ library(tufte)
 ```
 
 
-It's grown slowly into its own overOur blog's theme started as 'hugo-tufte' but has overtime been customized to the point it's distinctly different. I've been asked to put it up as a standalone theme for other to use, here it is!
-This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog:  [tuftesque](www.github.com/nstrayer/tuftesque). It doesn't cover the more standard details such as writing new posts as I feel those have been covered much better than I could [here](https://bookdown.org/yihui/blogdown/). 
+This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog:  [tuftesque](www.github.com/nstrayer/tuftesque). 
+
+The tuftesque theme gives your blog a ...tufte-esque... style that eschues some of the choices of the original and which I've added a few splashes of my personal style. The main title page is a single column and has an easily customizable banner where as the article view is the two panel view (for large screens) to allow for sidenotes. In addition you can add little author bios at the end which is especially useful if you have more than one author on your blog. 
+
+
+It doesn't cover the more standard details such as writing new posts as I feel those have been covered much better than I could [here](https://bookdown.org/yihui/blogdown/). 
 
 
 
@@ -24,8 +28,9 @@ This post will serve as a quick tutorial getting you from nothing to a customize
 
 ## Getting Blogdown
 
-If you already have a blogdown site than you can skip to the next step. If you do not, open R in a new fresh directory and run the following commands: 
+If you already have a blogdown site than you can skip to the next step. If you do not, open R inside a new fresh directory and run the following commands: 
 
+`r tufte::margin_note("__R Console__")`
 ```{r, eval = F}
 #downloads the blogdown package
 devtools::install_github("rstudio/blogdown")
@@ -51,13 +56,15 @@ Boom, now you have your very own blog! Wouldn't it be nice if everything in life
 
 ## Adding tuftesque
 
-Now that you have your blogdown blog up and running switch back into your R terminal (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github. 
+Now that you have your blogdown blog up and running switch back to your R onsole (you may have to press escape to kill the running blogdown server) and run the following command to download the tuftesque theme from github. 
+
+`r tufte::margin_note("__R Console__")`
 
 ```{r, eval = F}
 blogdown::install_theme('nstrayer/tuftesque')
 ```
 
-Assuming this successfully worked (if it didn't file an issue [here](www.github.com/nstrayer/tuftesque)) now simply run the command `blogdown::serve_site()` to restart the blogdown server and you should have your fancy new blog working!
+Assuming this successfully worked (if it didn't file an issue [here](www.github.com/nstrayer/tuftesque)) now run the command `blogdown::serve_site()` to restart the blogdown server and you should have your fancy new blog working!
 
 <div class="row">
 <div class="col-md-6">
@@ -75,6 +82,8 @@ Assuming this successfully worked (if it didn't file an issue [here](www.github.
 
 # Customizing
 
+It would be pretty lame if that was it, wouldn't it? Fear not, you can tinker with it to make it your own. 
+
 ## Side Notes: 
 
 We all know why you're here: the sidenotes. This is rather easy. Just make sure you have the `tufte` package installed and then, in an inline r chunk, wherever you want to put a side note call the following. 
@@ -89,7 +98,7 @@ You can place just about anything in this that you would normally put in markdow
 
 ## Summary Text: 
 
-You can place a small snippet of text on the home page to give your readers a little bit more info on what a post is about. To do this just add the field `excerpt` to your posts header: 
+You can place a description of a post on the home page to give your readers a little bit more info on what a post is about. To do this just add the field `excerpt` to your posts header: 
 
 
 `r tufte::margin_note("This is the header of this article. The except shows up on the home page.")`
@@ -109,9 +118,9 @@ You're not a giant Tintin fan? Well lucky for you changes can be made to the the
 
 You will notice in the directory set up for you by blogdown there is a file called `config.toml`. Open this up real quick and locate the where it says `[params.logo]` (line 35 if a fresh blogdown install). 
 
-Under this you will see the parameter `url`. You can set this to be whatever your heart desires. Say your more of a parrot person, no problem. 
+Under this you will see the parameter `url`. You can set this to be whatever your heart desires. Say you're more of a parrot person, no problem. 
 
-`r tufte::margin_note("__config.toml__")`
+`r tufte::margin_note("__/config.toml__")`
 
 ```
 [params]
@@ -143,7 +152,7 @@ Under this you will see the parameter `url`. You can set this to be whatever you
 
 Again, go into your `config.toml`, but this time you need to add a new key called `[params.banner]` and under that add a field `url` just like for the logo. 
 
-`r tufte::margin_note("__config.toml__")`
+`r tufte::margin_note("__/config.toml__")`
 
 ```
 [params.logo]
@@ -175,20 +184,14 @@ Again, go into your `config.toml`, but this time you need to add a new key calle
 
 
 
-__Fancy Banners:__
-If you want to have a custom html banner like the one on [livefreeordichotomize](http://livefreeordichotomize.com) this can be done by creating the file `layouts/partials/banner.html` and filling it with whatever you would desire. `r tufte::margin_note("By placing this file here hugo/blogdown will automatically use it instead of the default photo. Try and stay in your base directory when you do this as opposed to going to __themes/tuftesque/layouts/partials/__ because Hugo/blogdown will automatically see you have your own and use it over the themes.")` [Here's an example](https://github.com/LFOD/real-blog/blob/master/layouts/partials/intro_viz.html) of the one from the blog above. 
-
-
-
-
 ## Adding authors
 
-If you want to have your very own custom bio at the bottom of your articles go into your blogs `data/` directory add a file titled `authors.toml`. Inside this file you can fill in some information about authors to show up automatically at the end of any article they write.
+If you want to have your very own custom bio at the bottom of your articles, go into your blog's `data/` directory and add a file titled `authors.toml`. Inside this file you can fill in some information about the authors on your blog. This info will then show up automatically at the end of any article they write.
 
 In this include the following info (replacing in the obvious places).
 
 
-`r tufte::margin_note("__data/authors.toml__")`
+`r tufte::margin_note("__/data/authors.toml__")`
 
 `r tufte::margin_note("If you don't have all of the fields no worries, just don't enter them and they will automatically be hidden from the bio. ")`
 
@@ -196,7 +199,6 @@ In this include the following info (replacing in the obvious places).
 ["Party Parrot"]
   name =  "Mr. Parrot"
   bio = "This is my super awesome bio and stuff."
-  location =  "Normal, Il"
   website =  "http:/www.example.com"
   thumbnail = "http://bit.ly/2sV7B6p"
   twitter = "https://twitter.com/"
@@ -218,9 +220,14 @@ Make sure that the key `["Author Name"]` is exactly as the name appears in the `
 </div>
 </div>
 
+## Beyond the basics
 
-# Summary
+If the limited options included in the theme are not flexible enough for you and you feel comfortable with html and css you can easily extend any part of this theme. For instance, you may notice on our blog we have an interactive animation that plays instead of a banner image. This is accomplished by simply adding a file called `banner.html` ([this is what it looks like](https://github.com/LFOD/real-blog/blob/master/layouts/partials/banner.html)) into the `/layouts/partials/` directory of our blog. This works because the tuftesque theme has a file in its own directory structure with the same name (`/themes/tuftesque/layouts/partials/banner.html`). Hugo uses that file to draw the header section of the page, but not before checking in our blog's own `layouts/` directory for the file first. Since we have our own version of this file, that one gets used instead of the default banner image.
 
-The tuftesque theme gives your blog a ...tufte-esque... style that eschues some of the choices of the original and has added a dash of my personal style. The main title page is a single column and has an easily customizable banner where as the article view is the two panel view (for large screens) to allow for sidenotes. In addition you can add little author bios at the end which is especially useful if you have more than one author on your blog. 
+So if you want to extend tuftesque (or any other Hugo theme) you never have to muck around in the `themes/` directory, you simply need to investigate what part of the theme is responsible for the view you want to change by looking at its structure (poke around the [github page](www.github.com/nstrayer/tuftesque) to see how tuftesque is laid out) and then replicating that file's path in your blogs personal `layouts/` directory and make changes to your hearts desire! This is how tuftesque was slowly built out. 
+
+
+
+# Wrap-Up
 
 That's pretty much it. The theme is rather minimal now but has the basics of what I look for in a theme. If any of the above was confusing to you or you have a suggestion for how I should improve the theme please don't hesitate to submit an issue on [the github](www.github.com/nstrayer/tuftesque) or ping me on [twitter](www.twitter.com/nicholasstrayer).
