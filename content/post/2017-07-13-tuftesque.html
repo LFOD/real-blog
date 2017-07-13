@@ -4,7 +4,7 @@ author: "Nick Strayer"
 date: '2017-07-13'
 categories: ["R"]
 tags: ["Blogdown", "regression"]
-excerpt: "Our blog's theme started as the theme hugo-tufte but has sense been modified a lot. I've been asked to put it up as a theme for other to use, here it is!"
+excerpt: "If you like the way our blog looks, you too can have your own blogdown driven site just like it! In this post I walk through how to set up an RMarkdown driven blog  from scratch using blogdown and the tuftesque theme constructed for Live Free Or Dichotomize."
 ---
 
 <!-- BLOGDOWN-HEAD -->
@@ -12,7 +12,7 @@ excerpt: "Our blog's theme started as the theme hugo-tufte but has sense been mo
 
 <!-- BLOGDOWN-BODY-BEFORE -->
 <!-- /BLOGDOWN-BODY-BEFORE -->
-<p>This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: <a href="www.github.com/nstrayer/tuftesque">tuftesque</a>. It doesn’t cover the more standard details such as writing new posts as I feel those have been covered much better than I could <a href="https://bookdown.org/yihui/blogdown/">here</a>.</p>
+<p>It’s grown slowly into its own overOur blog’s theme started as ‘hugo-tufte’ but has overtime been customized to the point it’s distinctly different. I’ve been asked to put it up as a standalone theme for other to use, here it is! This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog: <a href="www.github.com/nstrayer/tuftesque">tuftesque</a>. It doesn’t cover the more standard details such as writing new posts as I feel those have been covered much better than I could <a href="https://bookdown.org/yihui/blogdown/">here</a>.</p>
 <div id="the-basics" class="section level1">
 <h1>The Basics</h1>
 <div id="getting-blogdown" class="section level2">
@@ -61,13 +61,13 @@ After installing the tuftesque theme your blog should now look like this.
 <h2>Side Notes:</h2>
 <p>We all know why you’re here: the sidenotes. This is rather easy. Just make sure you have the <code>tufte</code> package installed and then, in an inline r chunk, wherever you want to put a side note call the following.</p>
 <pre><code>tufte::margin_note(&quot;This is a margin note&quot;)</code></pre>
-<p>The above produces the following: <label for="tufte-mn-tcuxwuwowe" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-tcuxwuwowe" class="margin-toggle"><span class="marginnote">This is a margin note</span></p>
+<p>The above produces the following: <label for="tufte-mn-nerbgjbwwl" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-nerbgjbwwl" class="margin-toggle"><span class="marginnote">This is a margin note</span></p>
 <p>You can place just about anything in this that you would normally put in markdown so go crazy.</p>
 </div>
 <div id="summary-text" class="section level2">
 <h2>Summary Text:</h2>
 <p>You can place a small snippet of text on the home page to give your readers a little bit more info on what a post is about. To do this just add the field <code>excerpt</code> to your posts header:</p>
-<p><label for="tufte-mn-wvtfwygoba" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-wvtfwygoba" class="margin-toggle"><span class="marginnote">This is the header of this article. The except shows up on the home page.</span></p>
+<p><label for="tufte-mn-gjytrvmtkh" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-gjytrvmtkh" class="margin-toggle"><span class="marginnote">This is the header of this article. The except shows up on the home page.</span></p>
 <pre><code>title: &quot;Introducing the tuftesque blogdown theme&quot;
 author: &quot;Nick Strayer&quot;
 date: &#39;2017-07-13&#39;
@@ -80,7 +80,7 @@ excerpt: &quot;Our blog&#39;s theme started as the theme hugo-tufte but has sens
 <p>You’re not a giant Tintin fan? Well lucky for you changes can be made to the theme to make it more “you”.</p>
 <p>You will notice in the directory set up for you by blogdown there is a file called <code>config.toml</code>. Open this up real quick and locate the where it says <code>[params.logo]</code> (line 35 if a fresh blogdown install).</p>
 <p>Under this you will see the parameter <code>url</code>. You can set this to be whatever your heart desires. Say your more of a parrot person, no problem.</p>
-<p><label for="tufte-mn-zwnkaovpil" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-zwnkaovpil" class="margin-toggle"><span class="marginnote"><strong>config.toml</strong></span></p>
+<p><label for="tufte-mn-qkdyafflvv" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-qkdyafflvv" class="margin-toggle"><span class="marginnote"><strong>config.toml</strong></span></p>
 <pre><code>[params]
 ...
   [params.logo]
@@ -104,7 +104,7 @@ That’s a pretty cool new logo.
 <div id="banner" class="section level2">
 <h2>Banner</h2>
 <p>Again, go into your <code>config.toml</code>, but this time you need to add a new key called <code>[params.banner]</code> and under that add a field <code>url</code> just like for the logo.</p>
-<p><label for="tufte-mn-lhutvrhmup" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-lhutvrhmup" class="margin-toggle"><span class="marginnote"><strong>config.toml</strong></span></p>
+<p><label for="tufte-mn-pujplwzzyb" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-pujplwzzyb" class="margin-toggle"><span class="marginnote"><strong>config.toml</strong></span></p>
 <pre><code>[params.logo]
   url = &quot;http://bit.ly/2tNSEG4&quot;
   width = 50
@@ -113,7 +113,7 @@ That’s a pretty cool new logo.
   
 [params.banner]
   url = &quot;http://bit.ly/2sV7B6p&quot;</code></pre>
-<p><label for="tufte-mn-ruwbmkurrs" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-ruwbmkurrs" class="margin-toggle"><span class="marginnote"><strong>Banner Size:</strong> The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.</span></p>
+<p><label for="tufte-mn-hkyuoeslis" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-hkyuoeslis" class="margin-toggle"><span class="marginnote"><strong>Banner Size:</strong> The banner image defaults to being a 3:1 ratio of width to height, so if your image is that size it will be fully shown. Otherwise some will get cut off.</span></p>
 <div class="row">
 <div class="col-md-6">
 <div class="thumbnail">
@@ -126,13 +126,14 @@ A network diagram?! I like your style.
 </div>
 </div>
 </div>
-<p><strong>Fancy Banners:</strong> If you want to have a custom html banner like the one on <a href="http://livefreeordichotomize.com">livefreeordichotomize</a> this can be done by creating the file <code>layouts/partials/banner.html</code> and filling it with whatever you would desire. <label for="tufte-mn-noeqhjgzrz" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-noeqhjgzrz" class="margin-toggle"><span class="marginnote">By placing this file here hugo/blogdown will automatically use it instead of the default photo. Try and stay in your base directory when you do this as opposed to going to <strong>themes/tuftesque/layouts/partials/</strong> because Hugo/blogdown will automatically see you have your own and use it over the themes.</span> <a href="https://github.com/LFOD/real-blog/blob/master/layouts/partials/intro_viz.html">Here’s an example</a> of the one from the blog above.</p>
+<p><strong>Fancy Banners:</strong> If you want to have a custom html banner like the one on <a href="http://livefreeordichotomize.com">livefreeordichotomize</a> this can be done by creating the file <code>layouts/partials/banner.html</code> and filling it with whatever you would desire. <label for="tufte-mn-rcnatdrurg" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-rcnatdrurg" class="margin-toggle"><span class="marginnote">By placing this file here hugo/blogdown will automatically use it instead of the default photo. Try and stay in your base directory when you do this as opposed to going to <strong>themes/tuftesque/layouts/partials/</strong> because Hugo/blogdown will automatically see you have your own and use it over the themes.</span> <a href="https://github.com/LFOD/real-blog/blob/master/layouts/partials/intro_viz.html">Here’s an example</a> of the one from the blog above.</p>
 </div>
 <div id="adding-authors" class="section level2">
 <h2>Adding authors</h2>
 <p>If you want to have your very own custom bio at the bottom of your articles go into your blogs <code>data/</code> directory add a file titled <code>authors.toml</code>. Inside this file you can fill in some information about authors to show up automatically at the end of any article they write.</p>
 <p>In this include the following info (replacing in the obvious places).</p>
-<p><label for="tufte-mn-zclrsjhrcm" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-zclrsjhrcm" class="margin-toggle"><span class="marginnote"><strong>data/authors.toml</strong></span></p>
+<p><label for="tufte-mn-ulcdyrvtwr" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-ulcdyrvtwr" class="margin-toggle"><span class="marginnote"><strong>data/authors.toml</strong></span></p>
+<p><label for="tufte-mn-ceaffcpzrj" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-ceaffcpzrj" class="margin-toggle"><span class="marginnote">If you don’t have all of the fields no worries, just don’t enter them and they will automatically be hidden from the bio. </span></p>
 <pre><code>[&quot;Party Parrot&quot;]
   name =  &quot;Mr. Parrot&quot;
   bio = &quot;This is my super awesome bio and stuff.&quot;
@@ -141,7 +142,7 @@ A network diagram?! I like your style.
   thumbnail = &quot;http://bit.ly/2sV7B6p&quot;
   twitter = &quot;https://twitter.com/&quot;
   github = &quot;https://github.com/nstrayer/tuftesque/&quot;</code></pre>
-<p>Make sure that the key <code>[&quot;Author Name&quot;]</code> is exactly as the name appears in the <code>author</code> field in your post.</p>
+<p>Make sure that the key <code>[&quot;Author Name&quot;]</code> is exactly as the name appears in the <code>author</code> field of your post’s header.</p>
 <div class="row">
 <div class="col-md-6">
 <div class="thumbnail">

@@ -4,7 +4,7 @@ author: "Nick Strayer"
 date: '2017-07-13'
 categories: ["R"]
 tags: ["Blogdown", "regression"]
-excerpt: "Our blog's theme started as the theme hugo-tufte but has sense been modified a lot. I've been asked to put it up as a theme for other to use, here it is!"
+excerpt: "If you like the way our blog looks, you too can have your own blogdown driven site just like it! In this post I walk through how to set up an RMarkdown driven blog  from scratch using blogdown and the tuftesque theme constructed for Live Free Or Dichotomize."
 ---
 
 
@@ -14,6 +14,8 @@ knitr::opts_chunk$set(collapse = TRUE)
 library(tufte)
 ```
 
+
+It's grown slowly into its own overOur blog's theme started as 'hugo-tufte' but has overtime been customized to the point it's distinctly different. I've been asked to put it up as a standalone theme for other to use, here it is!
 This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog:  [tuftesque](www.github.com/nstrayer/tuftesque). It doesn't cover the more standard details such as writing new posts as I feel those have been covered much better than I could [here](https://bookdown.org/yihui/blogdown/). 
 
 
@@ -185,7 +187,10 @@ If you want to have your very own custom bio at the bottom of your articles go i
 
 In this include the following info (replacing in the obvious places).
 
+
 `r tufte::margin_note("__data/authors.toml__")`
+
+`r tufte::margin_note("If you don't have all of the fields no worries, just don't enter them and they will automatically be hidden from the bio. ")`
 
 ```
 ["Party Parrot"]
@@ -198,7 +203,7 @@ In this include the following info (replacing in the obvious places).
   github = "https://github.com/nstrayer/tuftesque/"
 ```
 
-Make sure that the key `["Author Name"]` is exactly as the name appears in the `author` field in your post. 
+Make sure that the key `["Author Name"]` is exactly as the name appears in the `author` field of your post's header. 
 
 <div class="row">
 <div class="col-md-6">
