@@ -16,6 +16,10 @@ library(tufte)
 
 This post will serve as a quick tutorial getting you from nothing to a customized blogdown blog using the theme built for this blog:  [tuftesque](www.github.com/nstrayer/tuftesque). It doesn't cover the more standard details such as writing new posts as I feel those have been covered much better than I could [here](https://bookdown.org/yihui/blogdown/). 
 
+
+
+# The Basics
+
 ## Getting Blogdown
 
 If you already have a blogdown site than you can skip to the next step. If you do not, open R in a new fresh directory and run the following commands: 
