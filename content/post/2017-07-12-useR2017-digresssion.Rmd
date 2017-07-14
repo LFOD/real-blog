@@ -43,7 +43,7 @@ The Magritte Museum also houses *Les Mots et Les Images*, Magritte's article in 
 
 ---
 
-__Nick:__ Brussels and Belgium are located about as conveniently in Europe as one could hope. Bordered by the Netherlands, Germany, France, and Luxembourg and just short train ride from all of them, one couldn't ask for a better location. This centrality seemed to enable lots of people to attended that might not otherwise have. Due to this and the fact that all other countries seem to have realized Americans won't learn their languages and thus have learned English enabled me personally to interact with people from all over. Sitting at dinner having a chat with someone from the Netherlands on one side, France on another and across from an Aussie is a pretty nice experience. While this may be obvious, it is easy to get subsumed into your own little bubble at your institution. Hearing about the amazing work being done by others elsewhere, motivated by their own unique cultural or environmental issues, was great for my sheltered Tennessee mind and inspiring. 
+__Nick:__ Brussels and Belgium are located about as conveniently in Europe as one could hope. Bordered by the Netherlands, Germany, France, and Luxembourg and just short train ride from all of them, one couldn't ask for a better location. This centrality seemed to enable lots of people to attended that might not otherwise have. Due to this, and the fact that all other countries seem to have realized Americans won't learn their languages and thus have learned English, I was able to interact with people from all over the globe. Sitting at dinner having a chat with someone from the Netherlands on one side, France on another and across from an Aussie is a pretty nice experience. While this may be obvious, it is easy to get subsumed into your own little bubble at your institution. Hearing about the amazing work being done by others elsewhere, motivated by their own unique cultural or environmental issues, was great for my sheltered Tennessee mind and inspiring. 
 
 Some may be annoyed by the fact that the conference won't be back in the US next year but I personally think this is beneficial. `r tufte::margin_note("Besides, [Nick Tierney](https://twitter.com/nj_tierney) _may_ have told me that conference transportation next year will be provided by Kangaroos and Ostriches, so like, that's worth it. ")` As Angela Merkel has similarly expressed recently, the US is slipping a bit in its hold on the "go-to" place. 
 
@@ -59,6 +59,8 @@ Some may be annoyed by the fact that the conference won't be back in the US next
 </div>
 </div>
 </div>
+</div>
+
 
 ---
 
@@ -72,7 +74,7 @@ __Nick:__ `r tufte::margin_note("We both gave talks, Lucy spoke about a shiny ap
 
 by [Marek Rogala](https://twitter.com/marekrog): 
 
-Shiny is fantastic for getting people with no web programming experience up and running with web-apps in minutes, but because of that often some of the more advanced features of web-apps such as reactive database connections can be nearly impossible to add (even for people like me with more web experience). The [`shiny.collections`](https://appsilon.github.io/shiny.collections/) package addresses this by making it amazingly easy to spin up an app with an auto-updating database back-end. Believe me when I say this is not easy to do in a traditional web programming setup. This is fantastically exciting because the tool is easy enough to use for beginners but legitimately very helpful for all skill ranges. The number of applications I have dreamed up to use with this is vast. In addition, in a testament to his bravery and also the crazy ease of using the package Marek did a live coding demo while on stage in front of more than 100 people! Having just spoken on that stage prior I can say he is much braver than I. 
+Shiny is fantastic for getting people with no web programming experience up and running with web-apps in minutes, but because of that often some of the more advanced features of web-apps such as reactive database connections can be nearly impossible to add (even for people like me with more web experience). The [`shiny.collections`](https://appsilon.github.io/shiny.collections/) package addresses this by making it amazingly easy to spin up an app with an auto-updating database back-end. Believe me when I say this is not easy to do in a traditional web programming setup. This is fantastically exciting because the tool is easy enough to use for beginners but legitimately very helpful for all skill ranges. The number of applications I have dreamed up to use with this is vast. In addition, in a testament to his bravery and also the crazy ease of using the package, Marek did a live coding demo while on stage in front of more than 100 people! Having just spoken on that stage prior I can say he is much braver than I. 
 
 
 ---
@@ -89,7 +91,7 @@ The second you start working with other people on any project that involves sens
 
 by [Ian Lyttle](https://twitter.com/ijlyttle): 
 
-"The user benefits from me doing as little as possible" was a quote Ian emphasized in his talk, but I think this is incorrect. Perhaps a more accurate statement would be "the user benefits from me knowing how to take the best parts of bootstrap and port them in an easy-to-use and efficient way to R". `bsplus` is a series of lightweight wrappers around the firmly established web-styling framework [bootstrap](http://getbootstrap.com/) by Twitter. A great UI for shiny or rmarkdown reports are not only a way to look professional but also important in encouraging new users to the platform. If you can make a shiny app in twenty minutes that takes an experienced web-developer a week to implement you're making a pretty darn strong case for the adoption of shiny into your workflow. `bsplus` is a fantastic contribution to continuing shiny's charge forward as the go-to way to make professional quality apps fast and easy. 
+"The user benefits from me doing as little as possible" was a quote Ian emphasized in his talk, but I think this is incorrect. Perhaps a more accurate statement would be "the user benefits from me knowing how to take the best parts of bootstrap and port them in an easy-to-use and efficient way to R". `bsplus` is a series of lightweight wrappers around the firmly established web-styling framework [bootstrap](http://getbootstrap.com/) by Twitter. A great UI for shiny or rmarkdown reports is not only a way to look professional but also important in encouraging new users to the platform. If you can make a shiny app in twenty minutes that takes an experienced web-developer a week to implement you're making a pretty darn strong case for the adoption of shiny into your workflow. `bsplus` is a fantastic contribution to continuing shiny's charge forward as the go-to way to make professional quality apps fast and easy. 
 
 --- 
 
@@ -136,7 +138,7 @@ __Lucy:__ It is always so fun to to get together in person with the visionaries 
 
 ---
 
-__Nick:__ This was my first R related conference and I can with 100% certainty say it will not be my last. I have had my feet dipped in both the R and Javascript communities for a while now, while never fully diving into either and now I feel much more comfortable diving full on into the R community. UseR helped humanize all of the people I follow on twitter and in doing so was an overwhelmingly positive experience. I have never seen a community more uniformly kind, thoughtful and humble. No one blew off the obscure graduate student coming up to talk to them about their work, they were all willing to provide advice or just have philosophical talks about statistics and R's role in the world. This certainly is partially due to the opensource nature of the language, but adjusting for this in my mental leaves a good proportion of variation to be explained by whatever latent variable I have not yet thought of. Seeing the selfless work that these people do and the impacts it has had on the world of data-science, statistics and scientific communication is inspiring and I believe endows R with a non-tangible but powerful advantage over many other languages. 
+__Nick:__ This was my first R related conference and I can with 100% certainty say it will not be my last. I have had my feet dipped in both the R and Javascript communities for a while now, while never fully diving into either. Now I feel much more comfortable diving full on into the R community. UseR helped humanize all of the people I follow on twitter/ other places and in doing so was an overwhelmingly positive experience. I have never seen a community more uniformly kind, thoughtful and humble. No one blew off the obscure graduate student coming up to talk to them about their work, they were all willing to provide advice or just have philosophical talks about statistics and R's role in the world. This certainly is correlated with the opensource nature of the language, but adjusting for this in my mental model still leaves a good proportion of variation to be explained by whatever latent variable I have not yet thought of. Seeing the selfless work that these people do and the impacts it has had on the world of data-science, statistics and scientific communication is inspiring and I believe endows R with a non-tangible but powerful advantage over many other languages. 
 
 
 
@@ -181,7 +183,9 @@ __Nick:__ As we found out quickly, one does not simply go to Brussels without ta
 </div>
 </div>
 
+
 ---
+
 
 __Lucy:__ After Bruges, we ventured off to Iceland `r emo::ji("iceland")` for a few days. It was absolutely magical. Icelandair has a great stopover program where you can book a flight with an extended stopover for the same cost as an ordinary layover -- it was *marvelous* -- this may become a new tradition for my European travel.
 

@@ -9,9 +9,8 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="author" content="Live Free or Dichotomize">
-<meta name="generator" content="Hugo 0.21" />
+<meta name="generator" content="Hugo 0.20.2" />
 
-  
   
 
 
@@ -35,7 +34,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 
-<link rel="stylesheet" href="./css/custom_style.css">
+<link rel="stylesheet" href="./css/tuftesque.css">
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -50,11 +49,26 @@
 </head>
 
 <body>
+<style>
+  body {
+    padding-left: 0 !important;
+  }
+  p {
+    width: 100%;
+  }
+</style>
 <div id="homepage">
 <header class="brand">
   <h1>
     <a href="./">
-      <img src="./images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+      <span id = "blog_logo">
+        
+          <img src=/images/logo.png alt="Blog Logo" style="height: 40px; width:40px">
+        
+      </span>
+      
+        
+      
     </a>
   </h1>
 </header>
@@ -64,12 +78,238 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
-<script src="./js/header_lines.js"></script>
 
-<header class = "main-header">
+<style>
+  #custom-header {
+    height: 30vh;
+    width: 100%;
+    position:relative;
+    z-index:1;
+    margin:0 auto;
+  }
+</style>
+
+
+<header id = "custom-header">
   <div id = "header_viz"></div>
 </header>
 
+<script>
+  $( document ).ready(() => {
+
+    
+
+    
+    function seq(start, end, increment) {
+      var length = Math.round((end - start)/increment);
+      return Array(length).fill().map((_, idx) => start + idx*increment)
+    }
+
+
+    
+    var logistic = function(x, theta, i) {
+        var mu = 0.1;
+        sign = 1
+        var y = sign * (1 / (Math.sqrt(2 * Math.PI) * theta)) * (1 / x) *
+            Math.exp(-Math.pow((Math.log(x) - mu), 2) / (2 * Math.pow(theta, 2)))
+        return y;
+    }
+
+    var width   = $("#custom-header").width() ,
+        height  = $("#custom-header").outerHeight(),
+        padding = 0,
+        numOfLines = 20,
+        xs = seq(0.01, 5, .01),
+        colors = ['rgb(165,0,38)', 'rgb(215,48,39)', 'rgb(244,109,67)', 'rgb(253,174,97)', 'rgb(254,224,144)',
+            'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
+        ];
+  
+    console.log("trying to run this shit.")
+    
+    var svg = d3.select("#header_viz").append("svg")
+        .attr("width", width)
+        .attr("height", height + 2 * padding)
+        .append("g")
+
+
+    var animatelines = function(whichline) {
+        d3.selectAll(".line").style("opacity","0.5");
+
+        
+        d3.selectAll(".line").each(function(d,i){
+            
+            var totalLength = d3.select("#line" + i).node().getTotalLength();
+
+            d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(5000)
+              .delay(100*i)
+              .attr("stroke-dashoffset", 0)
+              .style("stroke-width",2)
+        })
+
+        writeGreeting()
+    }
+
+
+
+    
+    var thetaMap = d3.scaleLinear() 
+        .domain([0, numOfLines])
+        .range([0.8, 0.085])
+
+    var yPos = d3.scaleLinear() 
+        .domain([0, numOfLines])
+        .range([0, 4])
+
+    var x = d3.scaleLinear()
+        .domain([0, 5])
+        .range([0, width]);
+
+    var y = d3.scaleLinear()
+        .domain([0, 4.5])
+        .range([height, 0]);
+
+    
+    var logistic = d3.range(numOfLines).map(function(i) {
+        var odd = true
+        var toReturn = xs.map(function(num) {
+            return {
+                "x": num,
+                "y": logistic(num, thetaMap(i), i)
+            }
+        })
+        return toReturn;
+    })
+
+    
+    function writeGreeting(){
+
+        var text_scale = width < 500 ? 1 : 0.65;
+        console.log(text_scale);
+        var intro_text = "Live Free or Dichotomize";
+
+        var title = svg.append("text")
+            .attr("font-size", 30)
+            .attr("font-family", "optima")
+            .attr("text-anchor", "end")
+            .attr("fill-opacity", 0.65)
+            .attr("x", width < 500 ? x(4.8) : x(4.2))
+            .attr("y", width < 500 ? y(3.12) : y(2.1) )
+            .attr("opacity", 0)
+            .text(intro_text)
+            .attr("font-size", function(d) { return ( text_scale*width - 8) / this.getComputedTextLength() * 24 + "px"; })
+            .text("")
+            .attr("opacity", 1);
+
+        (function drawGreeting (i, start, greeting) {
+            setTimeout(function () {
+
+                
+                start += greeting[i];
+
+                title.html(start) 
+
+                if (start.length < greeting.length) { 
+                    drawGreeting(i+1,start,greeting);      
+                };
+            }, 100)
+        })(0, "", intro_text);
+    }
+
+
+    
+    var line = d3.line()
+        
+        .x(function(d) { return x(d.x); })
+        .y(function(d) { return y(d.y); });
+
+
+    svg.selectAll(".line")
+        .data(logistic)
+        .enter().append("path")
+        .attr("class", "line")
+        .attr("id" , function(d, i){ return "line" + i;})
+        .attr("d", line)
+        .style("stroke-width", 2)
+        .style("stroke", function(d, i) { return colors[i % 10] })
+        .style("opacity", 0)
+        .style("fill", "none")
+        .on("mouseover", function(d){
+            d3.select(this).style("stroke", "black")
+        })
+        .on("mouseout", function(d,i){
+            d3.select(this).style("stroke", colors[i % 10])
+        })
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    animatelines(2)
+    
+
+})
+
+</script>
+
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/13/introducing-the-tuftesque-blogdown-theme/">Introducing the tuftesque blogdown theme</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 13, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/r">R</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>If you like the way our blog looks, you too can have your own blogdown driven site just like it! In this post I walk through how to set up an RMarkdown driven blog from scratch using blogdown and the tuftesque theme constructed for Live Free Or Dichotomize.</p>
+      <p><a href="./2017/07/13/introducing-the-tuftesque-blogdown-theme/">Read On &rarr;</a></p>
+      <hr>
+    
+  
 
   
     
@@ -798,6 +1038,8 @@
   
 
   
+
+  
     
       <h2><a href="./post/">See all posts</a></h2>
     
@@ -863,8 +1105,6 @@
       src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
 </footer>
-
-
 
 </div>
 </body>

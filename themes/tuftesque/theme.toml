@@ -1,21 +1,16 @@
-# theme.toml template for a Hugo theme
-# See https://github.com/gohugoio/hugoThemes#themetoml for an example
-
-name = "Tuftesque"
+name = "tuftesque"
 license = "MIT"
-licenselink = "https://github.com/yourname/yourtheme/blob/master/LICENSE.md"
-description = "Like the name suggests, this is a tufte inspired theme. Uses Tufte css but abandones it in the page list for semi obvious reasons."
-homepage = "http://github.com/LFOD/real-blog/"
-tags = []
-features = ["author bios"]
-min_version = "0.25.1"
+licenselink = "https://github.com/nstrayer/tuftesque/"
+description = "Hugo/Blogdown theme heavily inspired by Tufte but customized."
+homepage = "http://livefreeordichotomize.com/"
+tags = ["blogdown", "tufte", "minimal"]
+features = ["math", "tufte-css", "tufte"]
+min_version = 0.15
 
 [author]
   name = "Nick Strayer"
-  homepage = "nickstrayer.me"
+  homepage = "http://nickstrayer.me"
 
-# If porting an existing theme
-[original]
-  name = "hugo-tufte"
-  homepage = ""
-  repo = "https://github.com/shawnohare/hugo-tufte"
+[params]
+   [params.logo]
+      url = "/images/banner.png"
