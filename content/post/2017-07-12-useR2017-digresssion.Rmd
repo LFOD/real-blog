@@ -132,6 +132,45 @@ It was such a delight to be able to meet so many women I've collaborated online 
 
 ---
 
+**Okay, I had to do an update after the [recordings were released](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference) to briefly highlight a few more exquisite talks we missed!**
+
+### [The R6 Class System](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/The-R6-Class-System)
+
+by [Winston Chang](https://twitter.com/winston_chang)
+
+`r tufte::margin_note("only 508 lines of code!")` Winston gave a fantastic talk on **R6**, a lightweight package that allows for encapsulated/classical object-oriented programming in R. This is something I am quite interested in learning more about, so it was delightful to hear him explain it!
+
+---
+
+### [FFTrees: An R package to create, visualise and use fast and frugal decision trees](https://channel9.msdn.com/Events/useR-international-R-User-conferences/useR-International-R-User-2017-Conference/FFTrees-An-R-package-to-create-visualise-and-use-fast-and-frugal-decision-trees)
+
+by Nathaniel Phillips
+
+This talk goes a bit against the name of our blog, but I am quite interested in decision theory and this talk was very well delivered! My favorite part was the final slide - a tree that describes how you should decide whether a fast and frugal tree is good for your problem domain.
+
+<div class="row">
+<div class="col-md-6">
+<div class="thumbnail">
+<a href="https://ndphillips.github.io/useR2017_pres/#35">
+<img class = "img-responsive" src="/images/fft.png" alt="FFT" style="width:100%">
+</img></a>
+<div class="caption">
+<p>v meta - a decision tree about when to use a decision tree.</p>
+</div>
+</div>
+</div>
+</div>
+
+---
+
+### [R in Minecraft](http://blog.revolutionanalytics.com/2017/07/r-in-minecraft-lightning.html)
+
+by [David Smith](https://twitter.com/revodavid)
+
+I would be remiss not to mention the Minecraft talk - complete with slides built in Minecraft! David & crew spent the [rOpenSci unconf](http://unconf17.ropensci.org) building this awesome package and associated book to help teach kids how to use R.
+
+---
+
 ##Take Away
 
 __Lucy:__ It is always so fun to to get together in person with the visionaries of this language I love! Not only is it an incredible opportunity to learn through the presentations, but also through the small conversations over drinks in the evenings, or over `r emo::ji("coffee")` during the breaks, or on the `r emo::ji("train")` to a fun destination. Aside from the planned content, I learned about things such as [Miles'](https://twitter.com/MilesMcBain) initiative to start a [community-wide discussion about interactive visualizations](https://github.com/ropenscilabs/rivis), [Jim's](https://twitter.com/jimhester_) suggestions on some better [git aliases](https://twitter.com/jimhester_/status/883217542810042368), and that [Ian](https://twitter.com/ijlyttle) knows every word to R.E.M's *It's the End of the World as We Know It*. It is seriously such a special experience to all be in the same place, even if just for a few days.
