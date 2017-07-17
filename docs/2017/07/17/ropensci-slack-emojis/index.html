@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - rOpenSci Slack emojis</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.21" />
+
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../../../css/tuftesque.css">
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <span id = "blog_logo">
+        
+          <img src=/images/logo.png alt="Blog Logo" style="height: 40px; width:40px">
+        
+      </span>
+      
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="../../../../2017/07/17/ropensci-slack-emojis/">rOpenSci Slack emojis</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 17, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="../../../../categories/ropensci">rOpenSci</a>
+    
+    <a  href="../../../../categories/rstats">rstats</a>
+    
+    <a  href="../../../../categories/emojis">emojis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><p>HAPPY world emoji day! 🌏 🐔 📆</p>
+<p>In honor of this momentous occasion, I have decided to analyze the emojis used on <a href="https://ropensci.org">rOpenSci</a>’s Slack.</p>
+<pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you’d like to follow along, go fetch yourself a <a href="https://api.slack.com/tokens">Slack token</a>.</span></p>
+<pre class="r"><code>token &lt;- &quot;MY_SLACK_API_TOKEN&quot; ## stick your token here</code></pre>
+<p>We will first use Slack’s <a href="https://api.slack.com/methods/reactions.list"><code>reactions.list</code></a> method.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Notice here I am pulling the items from the response and then from each item I am interested in the message reactions. This ignores the reactions on files and comments.</span></p>
+<pre class="r"><code>req_lst &lt;- httr::POST(
+  &quot;https://slack.com/api/reactions.list&quot;,
+  body = list(
+   token = token,
+   count = 500
+   )) %&gt;%
+  httr::content() %&gt;%
+  .$items %&gt;%
+  purrr::map(~.[[&quot;message&quot;]][[&quot;reactions&quot;]])
+  </code></pre>
+<p>Let’s pull out the <code>name</code> and <code>count</code> of each emoji used and stick it in a <code>tibble</code> 🎉.</p>
+<pre class="r"><code>tbl &lt;- tibble::tibble(
+  name = purrr::map_chr(purrr::flatten(req_lst), &quot;name&quot;),
+  count = purrr::map_int(purrr::flatten(req_lst), &quot;count&quot;)
+)</code></pre>
+<p>One of the most delightful features in Slack is the ability to create custom emojis! In order to be able to display both ordinary and custom emojis, I can pull in a list of all emojis we have customized in the rOpenSci Slack team using the <a href="https://api.slack.com/methods/emoji.list"><code>emoji.list</code></a> method.</p>
+<p><span class="marginnote"> Notice here I am using the <code>tibble::enframe()</code> function. This is an awesome way to convert a vector or list to a two-column data frame. </span></p>
+<pre class="r"><code>emojis_tbl &lt;- httr::POST(
+  &quot;https://slack.com/api/emoji.list&quot;,
+  body = list(token = token)
+  ) %&gt;%
+  httr::content() %&gt;%
+  .$emoji %&gt;%
+  tibble::enframe() %&gt;%
+  mutate(value = unlist(value))</code></pre>
+<p>The <code>emoji_tbl</code> data frame contains the name of each custom emoji and a link to their associated image. Here I create a small function that will either read that image using the <a href="https://github.com/ropensci/magick"><code>magick</code></a> package or, if it is an ordinary emoji, use the <a href="https://github.com/hadley/emo"><code>emo</code></a> package to look it up.</p>
+<pre class="r"><code>read_emoji &lt;- function(x, y) {
+  if (!is.na(x)) {
+    y &lt;- which(x == x)
+    magick::image_read(x)
+  } else {
+    emo::ji(y)
+  }
+}</code></pre>
+<p>Let’s do a wee bit of data wrangling 🚜 to sort out which emojis are used the most.</p>
+<pre class="r"><code>emoji_tbl &lt;- tbl %&gt;%
+  group_by(name) %&gt;%
+  mutate(count = sum(count)) %&gt;%
+  distinct() %&gt;%
+  arrange(desc(count)) %&gt;%
+  head(10) %&gt;%
+  left_join(emojis_tbl, by = &quot;name&quot;) %&gt;%
+  mutate(emoji = purrr::map2(value, name, read_emoji))</code></pre>
+<p>I have written another small function to make sure the custom emojis print properly when I render my output.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Note, if you are doing this for your blog, rather than saving a temporary file as I have demonstrated here, you should save this as a relative file path in your blog 🌳 .</span></p>
+<pre class="r"><code>render_emoji &lt;- function(x, y) {
+  if (inherits(x, &quot;magick-image&quot;)) {
+    tmp &lt;- tempfile(fileext = paste0(&quot;.gif&quot;))
+    x &lt;- magick::image_scale(x, &quot;20x20&quot;)
+    magick::image_write(x, path = tmp)
+    emoji &lt;- rep(glue::glue(&quot;![]({tmp})&quot;), as.integer(y/7))
+    print(glue::glue(&quot;{glue::collapse(emoji)}: {y}\n\n&quot;))
+  } else {
+    print(glue::glue(
+      &quot;{glue::collapse(rep(x, as.integer(y/7)))}: {y}\n\n&quot;
+      ))
+  }
+}</code></pre>
+<p>Now let’s walk it out 💃.</p>
+<pre class="r"><code>purrr::walk2(emoji_tbl$emoji, emoji_tbl$count, render_emoji)</code></pre>
+<p>👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋: 130</p>
+<p>👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍: 129</p>
+<p>❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️: 83</p>
+<p><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" /><img src="../../../../images/ropensci_custom_emoji75.gif" />: 75</p>
+<p>🎉🎉🎉🎉🎉🎉🎉🎉🎉: 65</p>
+<p>🐓🐓🐓🐓🐓: 36</p>
+<p>😂😂😂😂: 34</p>
+<p>➕➕➕➕: 29</p>
+<p>🍻🍻🍻🍻: 28</p>
+<p><img src="../../../../images/ropensci_custom_emoji27.gif" /><img src="../../../../images/ropensci_custom_emoji27.gif" /><img src="../../../../images/ropensci_custom_emoji27.gif" />: 27</p>
+<p>How delightful! It is no surprise that the 👋 is the most popular emoji used, since rOpenSci is an extraordinarily welcoming crew! In fact the community organizer, <a href="https://twitter.com/StefanieButland">Stefanie</a>, just wrote a blog post about our Slack <a href="https://blog.trelliscience.com/the-value-of-welcome/">#welcome channel</a>. I am (obviously) very proud to see that 🐓 makes a strong appearance (<a href="https://twitter.com/search?src=typd&amp;q=%23rchickenladies">#rchickenladies</a>), and of course delighted to see our Aussie friends getting represented by the Aussie party parrot.</p>
+</section>
+<section>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <hr/>
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/8431897?v=3&amp;s=460" alt="Lucy D&#39;Agostino McGowan image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> Lucy D&#39;Agostino McGowan 
+                
+                
+                <a class = "social_buttons" href = http://lucymcgowan.com >
+                    <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+                </a>
+                
+                
+                <a class="social_buttons" href = https://twitter.com/lucyStats>
+                  <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+                </a>
+                
+                
+                <a class = "social_buttons" href = https://github.com/LucyMcGowan >
+                  <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+                </a>
+                
+              </span>
+              
+              
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">Currently excited about: observational study methods, translational research, BB-8</p>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2017\/07\/17\/ropensci-slack-emojis\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy; 2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>

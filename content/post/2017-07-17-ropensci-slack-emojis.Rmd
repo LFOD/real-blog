@@ -1,0 +1,139 @@
+---
+title: rOpenSci Slack emojis
+author: "Lucy D'Agostino McGowan"
+date: '2017-07-17'
+slug: ropensci-slack-emojis
+categories: ["rOpenSci", "rstats", "emojis"]
+tags: ["rOpenSci", "rstats", "emojis"]
+excerpt: HAPPY world emoji day! In honor of this momentous occasion, I have decided to analyze the emojis used on rOpenSci's Slack.
+---
+
+HAPPY world emoji day! `r emo::ji("globe")` `r emo::ji("chicken")` `r emo::ji("calendar")`
+
+In honor of this momentous occasion, I have decided to analyze the emojis used on [rOpenSci](https://ropensci.org)'s Slack. 
+
+```{r, message = FALSE, warning = FALSE}
+library("dplyr")
+```
+
+`r tufte::margin_note("If you'd like to follow along, go fetch yourself a [Slack token](https://api.slack.com/tokens).")`
+
+```r
+token <- "MY_SLACK_API_TOKEN" ## stick your token here
+```
+
+We will first use Slack's [`reactions.list`](https://api.slack.com/methods/reactions.list) method.
+
+`r tufte::margin_note("Notice here I am pulling the items from the response and then from each item I am interested in the message reactions. This ignores the reactions on files and comments.")`
+
+```r
+req_lst <- httr::POST(
+  "https://slack.com/api/reactions.list",
+  body = list(
+   token = token,
+   count = 500
+   )) %>%
+  httr::content() %>%
+  .$items %>%
+  purrr::map(~.[["message"]][["reactions"]])
+  
+```
+
+Let's pull out the `name` and `count` of each emoji used and stick it in a `tibble` `r emo::ji("tada")`. 
+```r
+tbl <- tibble::tibble(
+  name = purrr::map_chr(purrr::flatten(req_lst), "name"),
+  count = purrr::map_int(purrr::flatten(req_lst), "count")
+)
+```
+
+One of the most delightful features in Slack is the ability to create custom emojis! In order to be able to display both ordinary and custom emojis, I can pull in a list of all emojis we have customized in the rOpenSci Slack team using the [`emoji.list`](https://api.slack.com/methods/emoji.list) method.
+
+<span class = "marginnote">
+Notice here I am using the `tibble::enframe()` function. This is an awesome way to convert a vector or list to a two-column data frame.
+</span>
+```r
+emojis_tbl <- httr::POST(
+  "https://slack.com/api/emoji.list",
+  body = list(token = token)
+  ) %>%
+  httr::content() %>%
+  .$emoji %>%
+  tibble::enframe() %>%
+  mutate(value = unlist(value))
+```
+
+```{r, echo = FALSE}
+load("../../static/data/ropensci_emojis.rda")
+load("../../static/data/ropensci_tbl.rda")
+```
+
+The `emoji_tbl` data frame contains the name of each custom emoji and a link to their associated image. Here I create a small function that will either read that image using the [`magick`](https://github.com/ropensci/magick) package or, if it is an ordinary emoji, use the [`emo`](https://github.com/hadley/emo) package to look it up.
+
+```{r}
+read_emoji <- function(x, y) {
+  if (!is.na(x)) {
+    y <- which(x == x)
+    magick::image_read(x)
+  } else {
+    emo::ji(y)
+  }
+}
+```
+
+Let's do a wee bit of data wrangling `r emo::ji("tractor")` to sort out which emojis are used the most.
+
+```{r}
+emoji_tbl <- tbl %>%
+  group_by(name) %>%
+  mutate(count = sum(count)) %>%
+  distinct() %>%
+  arrange(desc(count)) %>%
+  head(10) %>%
+  left_join(emojis_tbl, by = "name") %>%
+  mutate(emoji = purrr::map2(value, name, read_emoji))
+```
+
+I have written another small function to make sure the custom emojis print properly when I render my output.
+
+`r tufte::margin_note(paste("Note, if you are doing this for your blog, rather than saving a temporary file as I have demonstrated here, you should save this as a relative file path in your blog", emo::ji('deciduous_tree'), "."))`
+
+```{r, eval = FALSE}
+render_emoji <- function(x, y) {
+  if (inherits(x, "magick-image")) {
+    tmp <- tempfile(fileext = paste0(".gif"))
+    x <- magick::image_scale(x, "20x20")
+    magick::image_write(x, path = tmp)
+    emoji <- rep(glue::glue("![]({tmp})"), as.integer(y/7))
+    print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
+  } else {
+    print(glue::glue(
+      "{glue::collapse(rep(x, as.integer(y/7)))}: {y}\n\n"
+      ))
+  }
+}
+```
+
+```{r, echo = FALSE}
+render_emoji <- function(x, y) {
+  if (inherits(x, "magick-image")) {
+    tmp <- paste0("../../static/images/ropensci_custom_emoji", y, ".gif")
+    x <- magick::image_scale(x, "25x25")
+    magick::image_write(x, path = tmp)
+    tmp <- paste0("/images/ropensci_custom_emoji", y, ".gif")
+    emoji <- rep(glue::glue("![]({tmp})"), as.integer(y/7))
+    print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
+  } else {
+    print(glue::glue("{glue::collapse(rep(x, as.integer(y/7)))}: {y}\n\n"))
+  }
+}
+```
+
+Now let's walk it out `r emo::ji("dancer")`.
+
+```{r, results = "asis"}
+purrr::walk2(emoji_tbl$emoji, emoji_tbl$count, render_emoji)
+```
+
+How delightful! It is no surprise that the `r emo::ji("wave")` is the most popular emoji used, since rOpenSci is an extraordinarily welcoming crew! In fact the community organizer, [Stefanie](https://twitter.com/StefanieButland), just wrote a blog post about our Slack [#welcome channel](https://blog.trelliscience.com/the-value-of-welcome/). I am (obviously) very proud to see that `r emo::ji("rooster")` makes a strong appearance ([#rchickenladies](https://twitter.com/search?src=typd&q=%23rchickenladies)), and of course delighted to see our Aussie friends getting represented by the Aussie party parrot. 
+
