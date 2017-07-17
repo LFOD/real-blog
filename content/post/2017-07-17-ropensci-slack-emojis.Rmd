@@ -1,5 +1,5 @@
 ---
-title: rOpenSci Slack emojis
+title: "Happy World Emoji Day: an analysis of rOpenSci's Slack emojis"
 author: "Lucy D'Agostino McGowan"
 date: '2017-07-17'
 slug: ropensci-slack-emojis
