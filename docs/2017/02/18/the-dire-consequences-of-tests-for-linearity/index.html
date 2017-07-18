@@ -90,7 +90,7 @@
   
   
   &nbsp;<i class="fa fa-clock-o"></i>
-    &nbsp;2 min read
+    &nbsp;3 min read
   
   
   
@@ -146,14 +146,14 @@ sim &lt;- function(wrong = TRUE){
 y &lt;- rnorm(100)
 x &lt;- rnorm(100)
 #fit a model with a restricted cubic spline
-mod &lt;- ols(y~rcs(x))
+mod &lt;- ols(y ~ rcs(x))
 
-if (wrong == TRUE &amp; anova(mod)[3,5] &gt; 0.05){
+if (wrong == TRUE &amp; anova(mod)[3, 5] &gt; 0.05){
   #if the test for non-linearity is not &quot;significant&quot;, remove nonlinear terms
-  mod &lt;- ols(y~x)
+  mod &lt;- ols(y ~ x)
 } 
  #save the p-value
- anova(mod)[1,5]
+ anova(mod)[1, 5]
 }</code></pre>
 <center>
 <p><span style="color:#EB6864; font-size: 20pt"> [Type 1 error when removing non-significant nonlinear terms]</p>

@@ -52,14 +52,14 @@ sim <- function(wrong = TRUE){
 y <- rnorm(100)
 x <- rnorm(100)
 #fit a model with a restricted cubic spline
-mod <- ols(y~rcs(x))
+mod <- ols(y ~ rcs(x))
 
-if (wrong == TRUE & anova(mod)[3,5] > 0.05){
+if (wrong == TRUE & anova(mod)[3, 5] > 0.05){
   #if the test for non-linearity is not "significant", remove nonlinear terms
-  mod <- ols(y~x)
+  mod <- ols(y ~ x)
 } 
  #save the p-value
- anova(mod)[1,5]
+ anova(mod)[1, 5]
 }
 ```
 

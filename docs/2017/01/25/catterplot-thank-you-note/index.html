@@ -90,7 +90,7 @@
   
   
   &nbsp;<i class="fa fa-clock-o"></i>
-    &nbsp;1 min read
+    &nbsp;2 min read
   
   
   
@@ -111,21 +111,22 @@
 
 
 <section><p><a href="https://twitter.com/Amstat_Lara">Lara Harmon</a> has put in countless hours to build and uplift the ASA Student community. We are SO grateful. We know she loves cats, as evidenced by</p>
-<blockquote class="twitter-tweet" data-lang="en">
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://pbs.twimg.com/media/C0sy6CKWQAE4l_L.jpg" /></span></p>
+<blockquote class="twitter-tweet" data-cards="hidden" data-lang="en">
 <p lang="en" dir="ltr">
 On the off-chance you have not felt judged by a cat today, my cat can help you out. <a href="https://t.co/sApgbyYztD">pic.twitter.com/sApgbyYztD</a>
 </p>
 — Lara Harmon (<span class="citation">@Amstat_Lara</span>) <a href="https://twitter.com/Amstat_Lara/status/813800278059339776">December 27, 2016</a>
 </blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>and</p>
 <blockquote class="twitter-tweet" data-lang="en">
 <p lang="en" dir="ltr">
 You'll notice that we have yet to be in a city where I can convince our design team cats would be 100% on-theme. /life goals
 </p>
-— Lara Harmon (<span class="citation">@Amstat_Lara</span>) <a href="https://twitter.com/Amstat_Lara/status/824013270361264129">January 24, 2017</a>
+— Lara Harmon (<span class="citation">@Amstat_Lara</span>) <a href='https://twitter.com/Amstat_Lara/status/824013270361264129'>January 24, 2017</a>
 </blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>
 <p>and</p>
 <blockquote class="twitter-tweet" data-lang="en">
 <p lang="en" dir="ltr">
@@ -135,23 +136,27 @@ Stats Cat's back from her first business trip. Looks about as jetlagged as I am!
 </blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>so we decided to write her an appropriate thank you note, using <a href="https://github.com/Gibbsdavidl/CatterPlots"><code>CatterPlots</code></a>.</p>
-<p>If you haven’t installed this purrrrfect package, do the following:</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you haven’t installed this purrrrfect package, you can install it from GitHub.</span></p>
 <pre class="r"><code>devtools::install_github(&quot;Gibbsdavidl/CatterPlots&quot;)</code></pre>
-<pre class="r"><code>library(&#39;CatterPlots&#39;)</code></pre>
-<p><a href="http://stackoverflow.com/questions/8082429/plot-a-heart-in-r">Stack Overflow</a> taught me how to plot a heart in <code>R</code> (perhaps they will be the subject of my next thank you note):</p>
-<pre class="r"><code>t=seq(0, 2*pi, by=0.1)
-xhrt &lt;- function(t) 16*sin(t)^3
-yhrt &lt;- function(t) 13*cos(t)-5*cos(2*t)-2*cos(3*t)-cos(4*t)
-y=yhrt(t)
-x=xhrt(t)</code></pre>
+<pre class="r"><code>library(&quot;CatterPlots&quot;)</code></pre>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><a href="http://stackoverflow.com/questions/8082429/plot-a-heart-in-r">Stack Overflow</a> taught me how to plot a heart in R (perhaps they will be the subject of my next thank you note)</span></p>
+<pre class="r"><code>t &lt;- seq(0, 2 * pi, by = 0.1)
+xhrt &lt;- function(t) {
+  16 * sin(t) ^ 3
+}
+yhrt &lt;- function(t) {
+  13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)
+}
+y &lt;- yhrt(t)
+x &lt;- xhrt(t)</code></pre>
 <p>Thank you, Lara! We appreciate you!</p>
-<pre class="r"><code>meow &lt;- multicat(xs=x, ys=y,
-                 cat=c(1,2,3,4,5,6,7,8,9,10),
-                 catcolor=list(c(.31,.81,0,.85)),
-                 canvas=c(-0.1,1.1, -0.1, 1.1),
+<pre class="r"><code>meow &lt;- multicat(xs = x, ys = y,
+                 cat = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+                 catcolor = list(c(.31, .81, 0,.85)),
+                 canvas = c(-0.1, 1.1, -0.1, 1.1),
                  xlab = &quot;some cats&quot;,
                  ylab = &quot;more cats&quot;,
-                 main=&quot;Thank you, Lara!&quot;)</code></pre>
+                 main = &quot;Thank you, Lara!&quot;)</code></pre>
 <p><img src="../../../../post/2017-01-25-catterplot-thank-you-note_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </section>
 <section>
