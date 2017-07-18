@@ -67,7 +67,7 @@ load("../../static/data/ropensci_emojis.rda")
 load("../../static/data/ropensci_tbl.rda")
 ```
 
-The `emoji_tbl` data frame contains the name of each custom emoji and a link to their associated image. Here I create a small function that will either read that image using the [`magick`](https://github.com/ropensci/magick) package or, if it is an ordinary emoji, use the [`emo`](https://github.com/hadley/emo) package to look it up.
+The `emojis_tbl` data frame contains the name of each custom emoji and a link to their associated image. Here I create a small function that will either read that image using the [`magick`](https://github.com/ropensci/magick) package or, if it is an ordinary emoji, use the [`emo`](https://github.com/hadley/emo) package to look it up.
 
 ```{r}
 read_emoji <- function(x, y) {
@@ -82,7 +82,7 @@ read_emoji <- function(x, y) {
 Let's do a wee bit of data wrangling `r emo::ji("tractor")` to sort out which emojis are used the most.
 
 ```{r}
-emoji_tbl <- tbl %>%
+top_emojis <- tbl %>%
   group_by(name) %>%
   summarise(count = sum(count)) %>%
   arrange(desc(count)) %>%
@@ -129,7 +129,7 @@ render_emoji <- function(x, y) {
 Now let's walk it out `r emo::ji("dancer")`.
 
 ```{r, results = "asis"}
-purrr::walk2(emoji_tbl$emoji, emoji_tbl$count, render_emoji)
+purrr::walk2(top_emojis$emoji, top_emojis$count, render_emoji)
 ```
 
 How delightful! It is no surprise that the `r emo::ji("wave")` is the most popular emoji used, since rOpenSci is an extraordinarily welcoming crew! In fact the community organizer, [Stefanie](https://twitter.com/StefanieButland), just wrote a blog post about our Slack [#welcome channel](https://blog.trelliscience.com/the-value-of-welcome/). I am (obviously) very proud to see that `r emo::ji("rooster")` makes a strong appearance ([#rchickenladies](https://twitter.com/search?src=typd&q=%23rchickenladies)), and of course delighted to see our Aussie friends getting represented by the Aussie party parrot. 

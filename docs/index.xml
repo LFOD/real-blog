@@ -17,7 +17,7 @@
       <pubDate>Mon, 17 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/07/17/ropensci-slack-emojis/</guid>
-      <description>HAPPY world emoji day! 🌏 🐔 📆
+      <description>HAPPY world emoji day! 🌍 🐔 📆
 In honor of this momentous occasion, I have decided to analyze the emojis used on rOpenSci’s Slack.
 library(&amp;quot;dplyr&amp;quot;) ⊕If you’d like to follow along, go fetch yourself a Slack token.
 token &amp;lt;- &amp;quot;MY_SLACK_API_TOKEN&amp;quot; ## stick your token here We will first use Slack’s reactions.list method.

@@ -110,7 +110,7 @@
     </section>
 
 
-<section><p>HAPPY world emoji day! 🌏 🐔 📆</p>
+<section><p>HAPPY world emoji day! 🌍 🐔 📆</p>
 <p>In honor of this momentous occasion, I have decided to analyze the emojis used on <a href="https://ropensci.org">rOpenSci</a>’s Slack.</p>
 <pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you’d like to follow along, go fetch yourself a <a href="https://api.slack.com/tokens">Slack token</a>.</span></p>
@@ -141,7 +141,7 @@
   .$emoji %&gt;%
   tibble::enframe() %&gt;%
   mutate(value = unlist(value))</code></pre>
-<p>The <code>emoji_tbl</code> data frame contains the name of each custom emoji and a link to their associated image. Here I create a small function that will either read that image using the <a href="https://github.com/ropensci/magick"><code>magick</code></a> package or, if it is an ordinary emoji, use the <a href="https://github.com/hadley/emo"><code>emo</code></a> package to look it up.</p>
+<p>The <code>emojis_tbl</code> data frame contains the name of each custom emoji and a link to their associated image. Here I create a small function that will either read that image using the <a href="https://github.com/ropensci/magick"><code>magick</code></a> package or, if it is an ordinary emoji, use the <a href="https://github.com/hadley/emo"><code>emo</code></a> package to look it up.</p>
 <pre class="r"><code>read_emoji &lt;- function(x, y) {
   if (!is.na(x)) {
     magick::image_read(x)
@@ -150,7 +150,7 @@
   }
 }</code></pre>
 <p>Let’s do a wee bit of data wrangling 🚜 to sort out which emojis are used the most.</p>
-<pre class="r"><code>emoji_tbl &lt;- tbl %&gt;%
+<pre class="r"><code>top_emojis &lt;- tbl %&gt;%
   group_by(name) %&gt;%
   summarise(count = sum(count)) %&gt;%
   arrange(desc(count)) %&gt;%
@@ -172,7 +172,7 @@
   }
 }</code></pre>
 <p>Now let’s walk it out 💃.</p>
-<pre class="r"><code>purrr::walk2(emoji_tbl$emoji, emoji_tbl$count, render_emoji)</code></pre>
+<pre class="r"><code>purrr::walk2(top_emojis$emoji, top_emojis$count, render_emoji)</code></pre>
 <p>👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋👋: 130</p>
 <p>👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍👍: 129</p>
 <p>❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️: 83</p>
