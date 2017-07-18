@@ -6,6 +6,7 @@ draft: false
 image: ""
 menu: ""
 share: true
+categories: ["ENAR", "tidytext", "conferences", "rstats"]
 tags:
 - ENAR
 - tidytext

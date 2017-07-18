@@ -6,10 +6,10 @@ bothofus: "yes"
 date: '2017-07-12'
 slug: useR rundown
 categories:
-- R
+- rstats
 - conferences
 - travel
-tags: [R, conferences, travel]
+tags: [rstats, conferences, travel]
 draft: no
 excerpt: "We both recently attended useR!2017 in Brussels. It was a blast to say the least. Here we will cover our favorite things about things about the conference and the lessons we learned."
 ---

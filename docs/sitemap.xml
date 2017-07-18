@@ -141,6 +141,12 @@
   </url>
   
   <url>
+    <loc>/categories/enar/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/epidemiology/</loc>
     <lastmod>2016-12-15T15:41:30-06:00</lastmod>
     <priority>0</priority>
@@ -179,18 +185,6 @@
   <url>
     <loc>/post/</loc>
     <lastmod>2017-07-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -244,6 +238,12 @@
   
   <url>
     <loc>/tags/tidytext/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/tidytext/</loc>
     <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>

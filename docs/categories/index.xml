@@ -47,6 +47,15 @@
     </item>
     
     <item>
+      <title>Enar</title>
+      <link>/categories/enar/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/categories/enar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Epidemiology</title>
       <link>/categories/epidemiology/</link>
       <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
@@ -92,15 +101,6 @@
     </item>
     
     <item>
-      <title>R</title>
-      <link>/categories/r/</link>
-      <pubDate>Thu, 13 Jul 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Rms</title>
       <link>/categories/rms/</link>
       <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
@@ -133,6 +133,15 @@
       <pubDate>Wed, 25 Jan 2017 12:18:31 -0600</pubDate>
       
       <guid>/categories/thankyou/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tidytext</title>
+      <link>/categories/tidytext/</link>
+      <pubDate>Thu, 16 Mar 2017 14:56:30 -0400</pubDate>
+      
+      <guid>/categories/tidytext/</guid>
       <description></description>
     </item>
     
