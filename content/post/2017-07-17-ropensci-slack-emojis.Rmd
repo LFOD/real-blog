@@ -73,7 +73,6 @@ The `emoji_tbl` data frame contains the name of each custom emoji and a link to 
 ```{r}
 read_emoji <- function(x, y) {
   if (!is.na(x)) {
-    y <- which(x == x)
     magick::image_read(x)
   } else {
     emo::ji(y)
@@ -86,10 +85,9 @@ Let's do a wee bit of data wrangling `r emo::ji("tractor")` to sort out which em
 ```{r}
 emoji_tbl <- tbl %>%
   group_by(name) %>%
-  mutate(count = sum(count)) %>%
-  distinct() %>%
+  summarise(count = sum(count)) %>%
   arrange(desc(count)) %>%
-  head(10) %>%
+  slice(1:10) %>%
   left_join(emojis_tbl, by = "name") %>%
   mutate(emoji = purrr::map2(value, name, read_emoji))
 ```
@@ -101,8 +99,8 @@ I have written another small function to make sure the custom emojis print prope
 ```{r, eval = FALSE}
 render_emoji <- function(x, y) {
   if (inherits(x, "magick-image")) {
-    tmp <- tempfile(fileext = paste0(".gif"))
-    x <- magick::image_scale(x, "20x20")
+    tmp <- tempfile(fileext = ".gif")
+    x <- magick::image_scale(x, "25x25")
     magick::image_write(x, path = tmp)
     emoji <- rep(glue::glue("![]({tmp})"), as.integer(y/7))
     print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
