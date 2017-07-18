@@ -36,7 +36,6 @@ req_lst <- httr::POST(
   httr::content() %>%
   .$items %>%
   purrr::map(~.[["message"]][["reactions"]])
-  
 ```
 
 Let's pull out the `name` and `count` of each emoji used and stick it in a `tibble` `r emo::ji("tada")`. 
@@ -105,9 +104,8 @@ render_emoji <- function(x, y) {
     emoji <- rep(glue::glue("![]({tmp})"), as.integer(y/7))
     print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
   } else {
-    print(glue::glue(
-      "{glue::collapse(rep(x, as.integer(y/7)))}: {y}\n\n"
-      ))
+    emoji <- rep(x, as.integer(y/7))
+    print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
   }
 }
 ```
@@ -122,7 +120,8 @@ render_emoji <- function(x, y) {
     emoji <- rep(glue::glue("![]({tmp})"), as.integer(y/7))
     print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
   } else {
-    print(glue::glue("{glue::collapse(rep(x, as.integer(y/7)))}: {y}\n\n"))
+    emoji <- rep(x, as.integer(y/7))
+    print(glue::glue("{glue::collapse(emoji)}: {y}\n\n"))
   }
 }
 ```

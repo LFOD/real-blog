@@ -25,8 +25,7 @@ excerpt: HAPPY world emoji day! In honor of this momentous occasion, I have deci
    )) %&gt;%
   httr::content() %&gt;%
   .$items %&gt;%
-  purrr::map(~.[[&quot;message&quot;]][[&quot;reactions&quot;]])
-  </code></pre>
+  purrr::map(~.[[&quot;message&quot;]][[&quot;reactions&quot;]])</code></pre>
 <p>Let’s pull out the <code>name</code> and <code>count</code> of each emoji used and stick it in a <code>tibble</code> 🎉.</p>
 <pre class="r"><code>tbl &lt;- tibble::tibble(
   name = purrr::map_chr(purrr::flatten(req_lst), &quot;name&quot;),
@@ -68,9 +67,8 @@ excerpt: HAPPY world emoji day! In honor of this momentous occasion, I have deci
     emoji &lt;- rep(glue::glue(&quot;![]({tmp})&quot;), as.integer(y/7))
     print(glue::glue(&quot;{glue::collapse(emoji)}: {y}\n\n&quot;))
   } else {
-    print(glue::glue(
-      &quot;{glue::collapse(rep(x, as.integer(y/7)))}: {y}\n\n&quot;
-      ))
+    emoji &lt;- rep(x, as.integer(y/7))
+    print(glue::glue(&quot;{glue::collapse(emoji)}: {y}\n\n&quot;))
   }
 }</code></pre>
 <p>Now let’s walk it out 💃.</p>
