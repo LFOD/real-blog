@@ -16,18 +16,19 @@ excerpt: "It's that post-holiday time of year to write some thank yous! I'm gett
 
 It's that post-holiday time of year to write some thank yous! I'm getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using `dplyr`.
 ```{r, message=FALSE, warning=FALSE}
-require(dplyr)
+library("dplyr")
 ```
 
 ```{r}
-dear <-function(input, you="you"){
-  cat(input, "\nDear ", you,",", sep = "")
+dear <-function(input, you = "you") {
+  cat(input, "\nDear ", you, ",", sep = "")
 }
-thank_you <- function(input, for_the = "gift"){
+
+thank_you <- function(input, for_the = "gift") {
   cat(input, "\n Thank you for the", for_the)
 }
 
-personal_touch <- function(input, from_the_heart = "I hope you have a lovely New Year!"){
+personal_touch <- function(input, from_the_heart = "I hope you have a lovely New Year!") {
   cat(input, from_the_heart)
 }
 

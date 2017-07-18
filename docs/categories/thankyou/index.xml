@@ -30,7 +30,7 @@ You&#39;ll notice that we have yet to be in a city where I can convince our desi
       
       <guid>/2017/01/07/dplyr-thank-you-note/</guid>
       <description>It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using dplyr.
-require(dplyr) dear &amp;lt;-function(input, you=&amp;quot;you&amp;quot;){ cat(input, &amp;quot;\nDear &amp;quot;, you,&amp;quot;,&amp;quot;, sep = &amp;quot;&amp;quot;) } thank_you &amp;lt;- function(input, for_the = &amp;quot;gift&amp;quot;){ cat(input, &amp;quot;\n Thank you for the&amp;quot;, for_the) } personal_touch &amp;lt;- function(input, from_the_heart = &amp;quot;I hope you have a lovely New Year!</description>
+library(&amp;quot;dplyr&amp;quot;) dear &amp;lt;-function(input, you = &amp;quot;you&amp;quot;) { cat(input, &amp;quot;\nDear &amp;quot;, you, &amp;quot;,&amp;quot;, sep = &amp;quot;&amp;quot;) } thank_you &amp;lt;- function(input, for_the = &amp;quot;gift&amp;quot;) { cat(input, &amp;quot;\n Thank you for the&amp;quot;, for_the) } personal_touch &amp;lt;- function(input, from_the_heart = &amp;quot;I hope you have a lovely New Year!</description>
     </item>
     
   </channel>

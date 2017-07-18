@@ -16,15 +16,16 @@ excerpt: "It's that post-holiday time of year to write some thank yous! I'm gett
 
 
 <p>It’s that post-holiday time of year to write some thank yous! I’m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using <code>dplyr</code>.</p>
-<pre class="r"><code>require(dplyr)</code></pre>
-<pre class="r"><code>dear &lt;-function(input, you=&quot;you&quot;){
-  cat(input, &quot;\nDear &quot;, you,&quot;,&quot;, sep = &quot;&quot;)
+<pre class="r"><code>library(&quot;dplyr&quot;)</code></pre>
+<pre class="r"><code>dear &lt;-function(input, you = &quot;you&quot;) {
+  cat(input, &quot;\nDear &quot;, you, &quot;,&quot;, sep = &quot;&quot;)
 }
-thank_you &lt;- function(input, for_the = &quot;gift&quot;){
+
+thank_you &lt;- function(input, for_the = &quot;gift&quot;) {
   cat(input, &quot;\n Thank you for the&quot;, for_the)
 }
 
-personal_touch &lt;- function(input, from_the_heart = &quot;I hope you have a lovely New Year!&quot;){
+personal_touch &lt;- function(input, from_the_heart = &quot;I hope you have a lovely New Year!&quot;) {
   cat(input, from_the_heart)
 }
 
