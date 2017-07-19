@@ -1,6 +1,6 @@
 ---
 title: The making of "We R-Ladies"
-author: "Maëlle Salmon and Lucy D'Agostino McGowan"
+author: "Lucy D'Agostino McGowan and Maëlle Salmon"
 date: '2017-07-18'
 slug: the-making-of-we-r-ladies
 categories: []
@@ -18,7 +18,11 @@ One of our early brainstorm ideas, as Maëlle pointed out, looks a bit more like
 
 We brainstormed different ways we could make this collage unique, but ultimilately landed on creating a mosaic with the R-Ladies logo.
 
-We decided early on that we would use meetup data, since the `meetupr` package was developed by our R-Ladies group.
+We first wanted to use Twitter profile pics but even after launching a small campaign we realized we'd identify too few R-Ladies to fill a collage. Therefore we mixed two information sources:
+
+* For the collage itself we decided on using Meetup data, which was made even cooler by the fact that the [`meetupr` package](https://github.com/rladies/meetupr) was developed by R-Ladies in the R-Ladies Github organization!
+
+* For the frame of the collage we chose to use the R-Ladies identified via Twitter.
 
 ```r
 library("dplyr")
@@ -28,9 +32,9 @@ library("magick")
 library("rtweet")
 ```
 
-## pull in meetup data
+## Pull in Meetup data
 
-To get all of our current meetups, scrape our [R-Ladies GitHub](https://github.com/rladies) data.
+To get all of our current meetups, we scrape our [R-Ladies GitHub](https://github.com/rladies) data.
 ```r
 doc.raw <- RCurl::getURL("https://raw.githubusercontent.com/rladies/starter-kit/master/Current-Chapters.md")
 meetups <- stringr::str_match_all(doc.raw, "www.meetup.com/(.*?)/")[[1]][,2]
@@ -48,6 +52,7 @@ api_key <- "YOUR_MEETUP_API_KEY"
 ```
 
 Here are a few small functions to get and save the Meetup photos.
+
 ```r
 get_photos <- function(i,meetup){
   members <- try(get_members(meetup[i], api_key), silent = TRUE)
@@ -92,7 +97,7 @@ Now walk it out `r emo::ji("dancer")`.
 purrr::walk(pics, save_image)
 ```
 
-## remove avatars
+## Remove the default avatars
 
 There are a few photos that are the default avatar. These have a grey color with a white center. To check if this is the case, test whether the first column of pixels is fully grey.
 
@@ -114,7 +119,7 @@ purrr::walk(dir, check_image)
 ```
 
 
-## make into a mosiac!
+## Make into a mosiac!
 
 We use [`RsimMosaic`](https://cran.r-project.org/web/packages/RsimMosaic/index.html), but had to tweak a few things (there were a few pictures causing errors making the whole thing break, so I added some error catching as well as the abilitity to specify the input tile size).
 
@@ -135,7 +140,7 @@ composeMosaicFromImageRandomOptim(originalImageFileName = file.path("RLadies_tof
 
 We used 9106 unique tiles to create the image using K-nearest neighbors to select the optimal match.
 
-## pull in the twitter data
+## Pull in the Twitter data
 
 ```r
 dat <- search_tweets(q = '#RLadies', n = 1000, include_rts = FALSE)
@@ -192,7 +197,7 @@ rladies_chapters <- which(grepl("RLadies", pics))
 pics <- pics[-rladies_chapters[1:2]]
 ```
 
-## create the frame
+## Create the frame
 
 Create the top of the frame `r emo::ji("tada")`.
 ```r
@@ -291,5 +296,7 @@ c("frame/good_left.jpg", "test_topbottom.jpg",
 <a href="/images/we-r-ladies.jpeg">
 <img class = "image-responsive" src = "/images/we-r-ladies.jpeg"> </img></a>
 
-Attending JSM? Come see our work on display at the [Data Art Show](https://ww2.amstat.org/meetings/jsm/2017/dataartshow.cfm)!
+Attending JSM? Come see our work on display at the [Data Art Show](https://ww2.amstat.org/meetings/jsm/2017/dataartshow.cfm)! And since participating makes us real _data artists_ now, find below the "artsy" description of our work!
+
+_R-Ladies is a global organization focused on improving gender diversity in the R community. R is an open-source statistics programming language. We used an R-Ladies developed package, meetupr to pull several thousand profile pictures from 33 R-Ladies meetups. We then used k-nearest neighbors to optimally match each image to a pixel of the R logo. The frame is comprised of Twitter profile pictures of individuals and local chapters who used the hashtag #RLadies in the days prior to our data collection. Pictures were assembled thanks to rOpenSci’s magick package. This work symbolizes how the global R-Ladies community is composed of diverse individuals attending events and communicating about the organization, whose strengths add up and create a strong grassroots organization. The whole creation process was carried out using R, showing the diversity of the language itself, and making the most of a tool, meetupr, created by members of the R-Ladies community, further underlining the synergy we want to convey. All in all, We R-Ladies is a tribute to diversity in the R community._
 
