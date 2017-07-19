@@ -119,7 +119,7 @@ purrr::walk(dir, check_image)
 ```
 
 
-## Make into a mosiac!
+## Make into a mosaic!
 
 We use [`RsimMosaic`](https://cran.r-project.org/web/packages/RsimMosaic/index.html), but had to tweak a few things (there were a few pictures causing errors making the whole thing break, so I added some error catching as well as the abilitity to specify the input tile size).
 
