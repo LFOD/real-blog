@@ -60,7 +60,7 @@ get_photos <- function(i,meetup){
   if(class(members)[1] != "try-error"){
     members %>%
       purrr::map(.,"photo", .null = NA) %>%
-      purrr::map_chr(.,"photo_link", .null = NA)
+      purrr::map_chr(., "photo_link", .null = NA)
   }
 }
 
@@ -131,12 +131,14 @@ library("RsimMosaicLDM")
 
 ```r
 set.seed(108)
-composeMosaicFromImageRandomOptim(originalImageFileName = file.path("RLadies_tofill.jpeg"),
-                                  outputImageFileName = file.path("art-ladies.jpg"),
-                                  inputTileSize = 100,
-                                  imagesToUseInMosaic = file.path("meetup-data"), 
-                                  removeTiles = TRUE, fracLibSizeThreshold = 0.01)
-
+composeMosaicFromImageRandomOptim(
+  originalImageFileName = "RLadies_tofill.jpeg",
+  outputImageFileName = "art-ladies.jpg",
+  inputTileSize = 100,
+  imagesToUseInMosaic = "meetup-data", 
+  removeTiles = TRUE,
+  fracLibSizeThreshold = 0.01
+  )
 ```
 
 We used 9106 unique tiles to create the image using K-nearest neighbors to select the optimal match.
@@ -150,7 +152,7 @@ tweets <- users_data(dat) %>%
 users <- search_users("#RLadies", n = 1000) %>%
   select(screen_name, profile_image_url)
 
-prof <- unique(rbind(tweets,users))
+prof <- unique(rbind(tweets, users))
 ```
 
 `r tufte::margin_note("We removed a few accounts that we know are not actually (our version of) R-Ladies accounts.")`
@@ -170,11 +172,11 @@ Here is a function to save the images. We are using the twitter images as the fr
 
 ```r
 save_image <- function(df){
-  image <- try(image_read(sub("_normal","",df$profile_image_url)), silent = TRUE)
+  image <- try(image_read(sub("_normal", "", df$profile_image_url)), silent = TRUE)
   if(class(image)[1] != "try-error"){
     image %>%
       image_scale("500x500") %>%
-      image_write(paste0("tweet-data/", df$screen_name,".jpg"), format = "jpeg")
+      image_write(paste0("tweet-data/", df$screen_name, ".jpg"), format = "jpeg")
   }
   
 }
@@ -188,13 +190,13 @@ Now let's randomly read them in!
 set.seed(525)
 pics <- dir("tweet-data", full.names = TRUE)
 pics <- sample(pics, length(pics))
-# we need a multiple of 4
-rladies_chapters <- which(grepl("RLadies", pics)) 
 ```
 
 `r tufte::margin_note("We removed a few of the chapter accounts to ensure an even number.")`
 
 ```r
+## we need a multiple of 4
+rladies_chapters <- which(grepl("RLadies", pics)) 
 pics <- pics[-rladies_chapters[1:2]]
 ```
 
@@ -211,7 +213,7 @@ pics[1:length_size] %>%
 
 Create the bottom of the frame `r emo::ji("point_down")`.
 ```r
-pics[(length_size+1):(length_size*2)] %>%
+pics[(length_size + 1):(length_size * 2)] %>%
   image_read() %>%
   image_append(stack = FALSE) %>%
   image_write("frame/bottom.jpg")
@@ -219,7 +221,7 @@ pics[(length_size+1):(length_size*2)] %>%
 
 Create the left side of the frame `r emo::ji("point_left")`.
 ```r
-pics[(length_size*2+1):(length_size*3)] %>%
+pics[(length_size * 2 + 1):(length_size * 3)] %>%
   image_read() %>%
   image_append(stack = TRUE) %>%
   image_write("frame/left.jpg")
@@ -227,7 +229,7 @@ pics[(length_size*2+1):(length_size*3)] %>%
 
 Create the right side of the frame `r emo::ji("point_right")`.
 ```r
-pics[(length_size*3+1):length(pics)] %>%
+pics[(length_size * 3 + 1):length(pics)] %>%
   image_read() %>%
   image_append(stack = TRUE) %>%
   image_write("frame/right.jpg")
@@ -245,7 +247,7 @@ ht <- image_read("art-ladies.jpg") %>%
   image_info %>% 
   select(height)
   
-dims <- paste0(ht,"x",ht,"+0+0")
+dims <- paste0(ht, "x", ht, "+0+0")
 ```
 
 Put it all together! `r emo::ji("art")`
@@ -272,7 +274,7 @@ ht <- image_read("test_topbottom.jpg") %>%
   image_info %>% 
   select(height)
   
-dims <- paste0(ht,"x",ht,"+0+0")
+dims <- paste0(ht, "x", ht, "+0+0")
 
 c("frame/logo_small.jpg", 
   "frame/left.jpg",
