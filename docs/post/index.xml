@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Jul 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The making of &#34;We R-Ladies&#34;</title>
+      <link>/2017/07/18/the-making-of-we-r-ladies/</link>
+      <pubDate>Tue, 18 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/18/the-making-of-we-r-ladies/</guid>
+      <description>Last March Maëlle wrote a blog post “Faces of #rstats Twitter”, a great tutorial on scraping twitter photos and compiling them in a collage. This inspired a similar adventure, but for #RLadies!
+ One of our early brainstorm ideas, as Maëlle pointed out, looks a bit more like a kniting pattern. 
+We brainstormed different ways we could make this collage unique, but ultimilately landed on creating a mosaic with the R-Ladies logo.</description>
+    </item>
     
     <item>
       <title>Happy World Emoji Day: an analysis of rOpenSci&#39;s Slack emojis</title>
