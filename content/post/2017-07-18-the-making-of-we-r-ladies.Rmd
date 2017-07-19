@@ -291,4 +291,5 @@ c("frame/good_left.jpg", "test_topbottom.jpg",
 <a href="/images/we-r-ladies.jpeg">
 <img class = "image-responsive" src = "/images/we-r-ladies.jpeg"> </img></a>
 
+Attending JSM? Come see our work on display at the [Data Art Show](https://ww2.amstat.org/meetings/jsm/2017/dataartshow.cfm)!
 
