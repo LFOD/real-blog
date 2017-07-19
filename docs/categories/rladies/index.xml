@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rladies on Live Free or Dichotomize</title>
+    <link>/categories/rladies/</link>
+    <description>Recent content in Rladies on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 18 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/rladies/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The making of &#34;We R-Ladies&#34;</title>
+      <link>/2017/07/18/the-making-of-we-r-ladies/</link>
+      <pubDate>Tue, 18 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/18/the-making-of-we-r-ladies/</guid>
+      <description>Last March Maëlle wrote a blog post “Faces of #rstats Twitter”, a great tutorial on scraping twitter photos and compiling them in a collage. This inspired a similar adventure, but for #RLadies!
+ One of our early brainstorm ideas, as Maëlle pointed out, looks a bit more like a kniting pattern. 
+We brainstormed different ways we could make this collage unique, but ultimilately landed on creating a mosaic with the R-Ladies logo.</description>
+    </item>
+    
+  </channel>
+</rss>

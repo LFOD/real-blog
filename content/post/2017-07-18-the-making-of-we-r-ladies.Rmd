@@ -3,8 +3,9 @@ title: The making of "We R-Ladies"
 author: "Lucy D'Agostino McGowan and Maëlle Salmon"
 date: '2017-07-18'
 slug: the-making-of-we-r-ladies
-categories: []
-tags: []
+categories: [rstats, rladies]
+tags: [rstats, rladies]
+excerpt: "Maëlle and I created a mosaic of R-Ladies for the JSM Data Art Show. Here is a quick tutorial if you are interested in trying something similar!"
 ---
 
 Last March [Maëlle](https://twitter.com/ma_salmon) wrote a blog post ["Faces of #rstats Twitter"](http://www.masalmon.eu/2017/03/19/facesofr/), a great tutorial on scraping twitter photos and compiling them in a collage. This inspired a similar adventure, but for #RLadies!
@@ -34,7 +35,7 @@ library("rtweet")
 
 ## Pull in Meetup data
 
-To get all of our current meetups, we scrape our [R-Ladies GitHub](https://github.com/rladies) data.
+To get all of our current Meetups, we scrape our [R-Ladies GitHub](https://github.com/rladies) data.
 ```r
 doc.raw <- RCurl::getURL("https://raw.githubusercontent.com/rladies/starter-kit/master/Current-Chapters.md")
 meetups <- stringr::str_match_all(doc.raw, "www.meetup.com/(.*?)/")[[1]][,2]
@@ -81,7 +82,7 @@ save_image <- function(photo){
 }
 ```
 
-Grab the photos for each meetup group.
+Grab the photos for each Meetup group.
 
 ```r
 pics <- purrr::map(1:length(meetups),
@@ -165,7 +166,7 @@ prof <- prof[!(prof$screen_name %in%
   ), ]
 ```
 
-Here is a function to save the images. We are using the twitter images as the frame, so they are larger than the meetup images.
+Here is a function to save the images. We are using the twitter images as the frame, so they are larger than the Meetup images.
 
 ```r
 save_image <- function(df){
@@ -208,7 +209,7 @@ pics[1:length_size] %>%
   image_write("frame/top.jpg")
 ```
 
-Create the bottom of the frame `r emo::ji("peach")`.
+Create the bottom of the frame `r emo::ji("point_down")`.
 ```r
 pics[(length_size+1):(length_size*2)] %>%
   image_read() %>%
@@ -234,7 +235,9 @@ pics[(length_size*3+1):length(pics)] %>%
 
 We add small R-Ladies logos to the sides of the frame!
 ```r
-image_read("Rladies.jpg") %>%
+logo_url <- "https://raw.githubusercontent.com/rladies/starter-kit/master/logo/R-LadiesGlobal_RBG_online_LogoOnly.png"
+
+image_read(logo_url) %>%
   image_scale("500x500+0+0") %>%
   image_write("frame/logo_small.jpg")
 

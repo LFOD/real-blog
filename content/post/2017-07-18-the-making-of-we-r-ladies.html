@@ -3,8 +3,9 @@ title: The making of "We R-Ladies"
 author: "Lucy D'Agostino McGowan and Maëlle Salmon"
 date: '2017-07-18'
 slug: the-making-of-we-r-ladies
-categories: []
-tags: []
+categories: [rstats, rladies]
+tags: [rstats, rladies]
+excerpt: "Maëlle and I created a mosaic of R-Ladies for the JSM Data Art Show. Here is a quick tutorial if you are interested in trying something similar!"
 ---
 
 
@@ -24,7 +25,7 @@ library(&quot;magick&quot;)
 library(&quot;rtweet&quot;)</code></pre>
 <div id="pull-in-meetup-data" class="section level2">
 <h2>Pull in Meetup data</h2>
-<p>To get all of our current meetups, we scrape our <a href="https://github.com/rladies">R-Ladies GitHub</a> data.</p>
+<p>To get all of our current Meetups, we scrape our <a href="https://github.com/rladies">R-Ladies GitHub</a> data.</p>
 <pre class="r"><code>doc.raw &lt;- RCurl::getURL(&quot;https://raw.githubusercontent.com/rladies/starter-kit/master/Current-Chapters.md&quot;)
 meetups &lt;- stringr::str_match_all(doc.raw, &quot;www.meetup.com/(.*?)/&quot;)[[1]][,2]
 meetups &lt;- unique(meetups)</code></pre>
@@ -57,7 +58,7 @@ save_image &lt;- function(photo){
   }
   
 }</code></pre>
-<p>Grab the photos for each meetup group.</p>
+<p>Grab the photos for each Meetup group.</p>
 <pre class="r"><code>pics &lt;- purrr::map(1:length(meetups),
                        get_photos,
                        meetup = meetups
@@ -115,7 +116,7 @@ prof &lt;- unique(rbind(tweets,users))</code></pre>
   &quot;RLadies&quot;,
   &quot;RnRladies&quot;)
   ), ]</code></pre>
-<p>Here is a function to save the images. We are using the twitter images as the frame, so they are larger than the meetup images.</p>
+<p>Here is a function to save the images. We are using the twitter images as the frame, so they are larger than the Meetup images.</p>
 <pre class="r"><code>save_image &lt;- function(df){
   image &lt;- try(image_read(sub(&quot;_normal&quot;,&quot;&quot;,df$profile_image_url)), silent = TRUE)
   if(class(image)[1] != &quot;try-error&quot;){
@@ -145,7 +146,7 @@ pics[1:length_size] %&gt;%
   image_read() %&gt;%
   image_append(stack = FALSE) %&gt;%
   image_write(&quot;frame/top.jpg&quot;)</code></pre>
-<p>Create the bottom of the frame 🍑.</p>
+<p>Create the bottom of the frame 👇.</p>
 <pre class="r"><code>pics[(length_size+1):(length_size*2)] %&gt;%
   image_read() %&gt;%
   image_append(stack = FALSE) %&gt;%
@@ -161,7 +162,9 @@ pics[1:length_size] %&gt;%
   image_append(stack = TRUE) %&gt;%
   image_write(&quot;frame/right.jpg&quot;)</code></pre>
 <p>We add small R-Ladies logos to the sides of the frame!</p>
-<pre class="r"><code>image_read(&quot;Rladies.jpg&quot;) %&gt;%
+<pre class="r"><code>logo_url &lt;- &quot;https://raw.githubusercontent.com/rladies/starter-kit/master/logo/R-LadiesGlobal_RBG_online_LogoOnly.png&quot;
+
+image_read(logo_url) %&gt;%
   image_scale(&quot;500x500+0+0&quot;) %&gt;%
   image_write(&quot;frame/logo_small.jpg&quot;)
 
