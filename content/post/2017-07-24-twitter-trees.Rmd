@@ -70,7 +70,7 @@ all_replies <- tweets %>%
   filter(in_reply_to_status_status_id %in% id)
 ```
 
-`r tufte::margin_note("I spent 5 minutes TOO LONG trying to decided how to spell replie, by which I mean \"one who is replied to\".")`
+`r tufte::margin_note("I spent 5 minutes TOO LONG trying to decide how to spell replie, by which I mean \"one who is replied to\".")`
 
 ## Pull the replie and replier text
 
