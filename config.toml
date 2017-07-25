@@ -4,7 +4,6 @@ relativeurls = true
 languageCode = "en-us"
 title = "Live Free or Dichotomize"
 theme = "tuftesque"
-googleAnalytics = "UA-92165973-1"
 disqusShortname = "livefreeordichotomize"
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 author = "Nick Strayer & Lucy D'Agostino McGowan"
