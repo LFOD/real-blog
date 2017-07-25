@@ -115,13 +115,13 @@
   </url>
   
   <url>
-    <loc>/tags/conferences/</loc>
+    <loc>/categories/conferences/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/conferences/</loc>
+    <loc>/tags/conferences/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -133,25 +133,25 @@
   </url>
   
   <url>
-    <loc>/tags/emojis/</loc>
-    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/emojis/</loc>
     <lastmod>2017-07-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/enar/</loc>
-    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <loc>/tags/emojis/</loc>
+    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/enar/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/enar/</loc>
     <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -199,20 +199,14 @@
   </url>
   
   <url>
-    <loc>/tags/rladies/</loc>
-    <lastmod>2017-07-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/rladies/</loc>
     <lastmod>2017-07-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/rms/</loc>
-    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
+    <loc>/tags/rladies/</loc>
+    <lastmod>2017-07-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -223,8 +217,8 @@
   </url>
   
   <url>
-    <loc>/tags/ropensci/</loc>
-    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
+    <loc>/tags/rms/</loc>
+    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -235,13 +229,19 @@
   </url>
   
   <url>
-    <loc>/tags/rstats/</loc>
-    <lastmod>2017-07-24T00:00:00+00:00</lastmod>
+    <loc>/tags/ropensci/</loc>
+    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/rstats/</loc>
+    <lastmod>2017-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rstats/</loc>
     <lastmod>2017-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -259,20 +259,14 @@
   </url>
   
   <url>
-    <loc>/tags/tidytext/</loc>
-    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/tidytext/</loc>
     <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/travel/</loc>
-    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
+    <loc>/tags/tidytext/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -283,13 +277,19 @@
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
-    <lastmod>2017-07-24T00:00:00+00:00</lastmod>
+    <loc>/tags/travel/</loc>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/twitter/</loc>
+    <lastmod>2017-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/twitter/</loc>
     <lastmod>2017-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

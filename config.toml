@@ -27,6 +27,7 @@ author = "Nick Strayer & Lucy D'Agostino McGowan"
 
 [params]
     description = "A statistics blog from two goofy Phd students."
+    googleAnalytics = "UA-92165973-1"
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.11.0"
