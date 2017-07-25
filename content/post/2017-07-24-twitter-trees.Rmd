@@ -127,7 +127,7 @@ ggiraph(code = print(p),
         zoom_max = 4)
 ```
 
-Isn't that easier to navigate? It must admit I kind of love that it quite resembles a barely budding Cherry Blossom `r emo::ji("dancer")`.
+Isn't that easier to navigate? I must admit I kind of love that it quite resembles a barely budding Cherry Blossom `r emo::ji("dancer")`.
 
 ## P.S. A little text analysis
 
