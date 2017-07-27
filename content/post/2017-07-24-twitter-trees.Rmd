@@ -59,8 +59,7 @@ diff <- 1
 while (diff != 0) {
 id_next <- tweets %>%
   filter(in_reply_to_status_status_id %in% id) %>%
-  select(status_id) %>%
-  pull()
+  pull(status_id)
 id_new <- unique(c(id, id_next))
 diff <- length(id_new) - length(id)
 id <- id_new
