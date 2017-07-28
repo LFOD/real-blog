@@ -17,7 +17,7 @@
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/07/27/new-and-improved-draw-charts-in-shinysense/</guid>
-      <description>Background I didn’t expect many people to use the you-draw-it charts (henceforth refered to as ‘drawrs’) I put into my shiny modules package shinysense but a decent number did, and with that usage came… bugs.
+      <description>Background I didn’t expect many people to use the you-draw-it charts (henceforth referred to as ‘drawrs’) I put into my shiny modules package shinysense but a decent number did, and with that usage came… bugs.
 In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time I utilized the javascript and R development knowledge I gained from building it the first time ’round.</description>
     </item>
     

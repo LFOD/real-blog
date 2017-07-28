@@ -16,7 +16,7 @@ library(tidyverse)
 
 ## Background
 
-I didn't expect many people to use the you-draw-it charts (henceforth refered to as 'drawrs') I put into my shiny modules package  [`shinysense`](https://www.github.com/nstrayer/shinysense) but a decent number did, and with that usage came... bugs.  
+I didn't expect many people to use the you-draw-it charts (henceforth referred to as 'drawrs') I put into my shiny modules package [`shinysense`](https://www.github.com/nstrayer/shinysense) but a decent number did, and with that usage came... bugs.  
 
 In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time I utilized the javascript and R development knowledge I gained from building it the first time 'round. Most importantly, in the javascript portion of the code, `r tufte::margin_note("The javascript is actually it's own library on NPM.")` I implemented unit tests for every function. Something non-trivial due to needing to run the code in a headless browser to simulate dom manipulation. (Javascripty post on this coming soon). 
 
@@ -36,7 +36,7 @@ __Multiple drawrs:__ You should always expect people to use your functions in wa
 
 Turns out the way I originally coded `shinydrawr` `r tufte::margin_note("The reveal portion of the code used a css clipping filter that was tied to a fixed css id and thus every other drawr tried to use the filter from the first plot.")`assumed there would only ever be a single drawr on the screen at once but people wanted more. Now you can create as many drawrs as your heart desires.
 
-__Timeseries support:__ It is kind of silly that the function didn't support timeseries before, these visualizations are almost exclusively used with time on the x-axis so obviously that should be supported. `r tufte::margin_note("Stick around for a demo.")`
+__Time series support:__ It is kind of silly that the function didn't support time series before, these visualizations are almost exclusively used with time on the x-axis so obviously that should be supported. `r tufte::margin_note("Stick around for a demo.")`
 
 __Non-Shiny use:__ I took advantage of the wonderful work done by the creators and maintainers of the package [`htmlwidgets`](http://www.htmlwidgets.org/) and wrapped the javascript visualization in a widget. This means that you can now use the function `drawr_widget` right inside of RStudio, RMarkdown, or even a shiny app (if you don't care about the data the user draws). Here's an example of how to do that along with some demonstrations of the new features. 
 
@@ -63,9 +63,9 @@ drawr_widget(
 ```
 
 
-### Timeseries
+### Time Series
 
-Timeseries are supported and have intelligently labeled axes. (Thanks to `d3.scaleTime()`s wonderful defaults.) To make a drawr with a time axis you simply need to pass data in with the x column having the class `Date` (or at least inheriting properties of `Date`). The function will detect this and plot accordingly. 
+Time series are supported and have intelligently labeled axes. (Thanks to `d3.scaleTime()`s wonderful defaults.) To make a drawr with a time axis you simply need to pass data in with the x column having the class `Date` (or at least inheriting properties of `Date`). The function will detect this and plot accordingly. 
 
 ```{r}
 dates <- seq(as.Date("2017/1/1"), as.Date("2017/07/22"), "weeks")
@@ -127,4 +127,8 @@ drawr_widget(
 ## Next Steps
 
 Obviously I didn't fix all the bugs and most likely created more than I remedied. If you find any it would make me very happy if you'd [submit an issue](https://github.com/nstrayer/shinysense/issues) on the github page. In addition, if there is a feature that you'd like and isn't implemented, also submit an issue (or if you're feeling super adventurous a pull request). 
+
+## Acknowledgements
+
+I am incredibly lucky to be performing all of this package development while supported by the [Johns Hopkins Data Science Lab](http://jhudatascience.org/). In particular [John Muschelli](https://twitter.com/StrictlyStat) who has provided PRs and chats about what the package should do. 
 
