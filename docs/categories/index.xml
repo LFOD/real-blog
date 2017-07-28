@@ -110,6 +110,15 @@
     </item>
     
     <item>
+      <title>Rmarkdown</title>
+      <link>/categories/rmarkdown/</link>
+      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/rmarkdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Rms</title>
       <link>/categories/rms/</link>
       <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
@@ -133,6 +142,15 @@
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/rstats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shiny</title>
+      <link>/categories/shiny/</link>
+      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/shiny/</guid>
       <description></description>
     </item>
     

@@ -2,9 +2,9 @@
 title: "New and improved draw charts in shinysense"
 author: "Nick Strayer"
 date: '2017-07-27'
-categories: ["shinysense", "javascript", "rstats"]
-tags: ["shinysense", "javascript", "rstats"]
-excerpt: "I have recently overhauled the drawr function of my package shinysense. I have fixed some bugs and added support for time series. In addition, you can now use use the function outside of Shiny. This post covers what changed and how to use the new features."
+categories: ["shinysense", "shiny", "rmarkdown", "javascript", "rstats"]
+tags: ["shinysense", "shiny", "rmarkdown", "javascript", "rstats"]
+excerpt: "Recently I overhauled the drawr function of my package shinysense. Some bugs were fixed but potentially more interesting new features were added. Among these are support for time series and the ability to use the function outside of Shiny. This post covers what changed and how to use the new features."
 ---
 
 
@@ -18,24 +18,25 @@ library(tidyverse)
 
 I didn't expect many people to use the you-draw-it charts (henceforth refered to as 'drawrs') I put into my shiny modules package  [`shinysense`](https://www.github.com/nstrayer/shinysense) but a decent number did, and with that usage came... bugs.  
 
-In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time utilizing the new javascript and R development knowledge I gained from building it the first time. Most importantly in the javascript portion of the code (it's own library in fact) I implemented unit tests for every function. Something non-trivial due to needing to run the code in a headless browser to simulate dom manipulation. (Javascripty post on this coming soon). 
+In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time I utilized the javascript and R development knowledge I gained from building it the first time 'round. Most importantly, in the javascript portion of the code, `r tufte::margin_note("The javascript is actually it's own library on NPM.")` I implemented unit tests for every function. Something non-trivial due to needing to run the code in a headless browser to simulate dom manipulation. (Javascripty post on this coming soon). 
 
 
 ## Changes
 
-The main API for the shiny module `shinydrawr` and `shinydrawrUI` has remained unchanged. You can simply update to the newest version of the package and everything (should) work exactly the same. That being said, there are a few improvements that either improve previous results or add on to the previous syntax:
+The main API for the shiny module `shinydrawr` and `shinydrawrUI` has remained unchanged. You can simply update to the newest version of the package and everything (should) `r tufte::margin_note("[Submit an issue](https://github.com/nstrayer/shinysense/issues) if it doesnt")` work exactly the same. That being said, there are a few improvements that either improve previous results or add on new features:
 
 __Resizing:__ The visualization now will re-size as your window changes. Start your shiny app small and then full screen it? Now the plot will grow with it. 
 
+![](/images/resizing.gif)
 
 __Multiple drawrs:__ You should always expect people to use your functions in ways you yourself never envisioned. A perfect example of this was the awesome [Lousiville Crime Rates](https://rkahne.shinyapps.io/louisville_crime_rates/) project done by [Robert Kahne](https://twitter.com/rkahne). 
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sometimes the app loads with all the graphs already filled in, other times it doesn&#39;t.  It&#39;s okay though, I hope you find the data useful.</p>&mdash; Robert Kahne (@rkahne) <a href="https://twitter.com/rkahne/status/879717378027921408">June 27, 2017</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-`r tufte::margin_note("That's not good! I want my software to only alleviate headaches, not cause them.")` Turns out the way I coded it assumed there would only ever be a single drawr on the screen at once but people wanted more. Now you can create as many draw charts as your heart desires.
+Turns out the way I originally coded `shinydrawr` `r tufte::margin_note("The reveal portion of the code used a css clipping filter that was tied to a fixed css id and thus every other drawr tried to use the filter from the first plot.")`assumed there would only ever be a single drawr on the screen at once but people wanted more. Now you can create as many drawrs as your heart desires.
 
-__Timeseries support:__ It is kind of silly that the function didn't support time-series before, these visualizations are almost exclusively used with time on the x-axis so obviously that should be supported. `r tufte::margin_note("Stick around for a demo.")`
+__Timeseries support:__ It is kind of silly that the function didn't support timeseries before, these visualizations are almost exclusively used with time on the x-axis so obviously that should be supported. `r tufte::margin_note("Stick around for a demo.")`
 
 __Non-Shiny use:__ I took advantage of the wonderful work done by the creators and maintainers of the package [`htmlwidgets`](http://www.htmlwidgets.org/) and wrapped the javascript visualization in a widget. This means that you can now use the function `drawr_widget` right inside of RStudio, RMarkdown, or even a shiny app (if you don't care about the data the user draws). Here's an example of how to do that along with some demonstrations of the new features. 
 
@@ -88,7 +89,7 @@ drawr_widget(
 
 ### No Reveal
 
-Say you want to plot a drawr with some data that you desire the user to elaborate on. To do this you simply append to the end of the dataframe rows with `NA`s in the y column. The chart will then allow the user to draw pinning the drawn y values to the supplied corresponding x-values. This doesn't make much sense for the widget version we're showing here, but in a shiny app the drawn values still get returned to R. 
+Say you want to plot a drawr with some data that you desire the user to draw their predictions for, but not have the plot reveal the rest of the data (for instance, if it's not available). To do this you simply append to the end of the dataframe rows with `NA`s in the y column. The chart will then allow the user to draw, pinning the drawn results y value's to the supplied corresponding x-values. This doesn't make much sense for the widget version we're showing here, but in a shiny app with the drawn values returned to the app it can be used for any number of things. `r tufte::margin_note("Feature was developed to gather future predictions from domain experts.")`
 
 ```{r}
 timeDataNoReveal <- timeData %>% 
@@ -109,7 +110,7 @@ drawr_widget(
 
 ### Free Drawing
 
-While it's not a new feature and is almost pointless outside of shiny, you can still do draw on a canvas with no plotted line. `r tufte::margin_note("You could also do this by simply setting all your y-values to NA, your choice.")`
+While it's not a new feature and is almost pointless outside of shiny, you can still do draw on a canvas with no plotted line: simply set `raw_draw = TRUE` and go to town. `r tufte::margin_note("You could also do this by simply setting all your y-values to NA, your choice.")`
 
 ```{r}
 drawr_widget(
@@ -125,5 +126,5 @@ drawr_widget(
 
 ## Next Steps
 
-Obviously I didn't fix all the bugs and most likely created more than I remedied. If you find any it would make me very happy if you'd [submit an issue](https://github.com/nstrayer/shinysense/issues) on the github page. In addition, if there is a feature that you'd like and isn't implemented also submit an issue (or if you're feeling super adventurous a pull request). 
+Obviously I didn't fix all the bugs and most likely created more than I remedied. If you find any it would make me very happy if you'd [submit an issue](https://github.com/nstrayer/shinysense/issues) on the github page. In addition, if there is a feature that you'd like and isn't implemented, also submit an issue (or if you're feeling super adventurous a pull request). 
 
