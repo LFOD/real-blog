@@ -1,0 +1,129 @@
+---
+title: "New and improved draw charts in shinysense"
+author: "Nick Strayer"
+date: '2017-07-27'
+categories: ["shinysense", "javascript", "rstats"]
+tags: ["shinysense", "javascript", "rstats"]
+excerpt: "I have recently overhauled the drawr function of my package shinysense. I have fixed some bugs and added support for time series. In addition, you can now use use the function outside of Shiny. This post covers what changed and how to use the new features."
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tufte)
+library(tidyverse)
+```
+
+## Background
+
+I didn't expect many people to use the you-draw-it charts (henceforth refered to as 'drawrs') I put into my shiny modules package  [`shinysense`](https://www.github.com/nstrayer/shinysense) but a decent number did, and with that usage came... bugs.  
+
+In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time utilizing the new javascript and R development knowledge I gained from building it the first time. Most importantly in the javascript portion of the code (it's own library in fact) I implemented unit tests for every function. Something non-trivial due to needing to run the code in a headless browser to simulate dom manipulation. (Javascripty post on this coming soon). 
+
+
+## Changes
+
+The main API for the shiny module `shinydrawr` and `shinydrawrUI` has remained unchanged. You can simply update to the newest version of the package and everything (should) work exactly the same. That being said, there are a few improvements that either improve previous results or add on to the previous syntax:
+
+__Resizing:__ The visualization now will re-size as your window changes. Start your shiny app small and then full screen it? Now the plot will grow with it. 
+
+
+__Multiple drawrs:__ You should always expect people to use your functions in ways you yourself never envisioned. A perfect example of this was the awesome [Lousiville Crime Rates](https://rkahne.shinyapps.io/louisville_crime_rates/) project done by [Robert Kahne](https://twitter.com/rkahne). 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Sometimes the app loads with all the graphs already filled in, other times it doesn&#39;t.  It&#39;s okay though, I hope you find the data useful.</p>&mdash; Robert Kahne (@rkahne) <a href="https://twitter.com/rkahne/status/879717378027921408">June 27, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+`r tufte::margin_note("That's not good! I want my software to only alleviate headaches, not cause them.")` Turns out the way I coded it assumed there would only ever be a single drawr on the screen at once but people wanted more. Now you can create as many draw charts as your heart desires.
+
+__Timeseries support:__ It is kind of silly that the function didn't support time-series before, these visualizations are almost exclusively used with time on the x-axis so obviously that should be supported. `r tufte::margin_note("Stick around for a demo.")`
+
+__Non-Shiny use:__ I took advantage of the wonderful work done by the creators and maintainers of the package [`htmlwidgets`](http://www.htmlwidgets.org/) and wrapped the javascript visualization in a widget. This means that you can now use the function `drawr_widget` right inside of RStudio, RMarkdown, or even a shiny app (if you don't care about the data the user draws). Here's an example of how to do that along with some demonstrations of the new features. 
+
+## Widget
+
+### Basic Usage
+
+You can use the widget just like the old `shinydrawr` worked. Throw in your data, name a start point and you get a 'you draw it' style chart just like the now famous [article](https://www.nytimes.com/interactive/2017/01/15/us/politics/you-draw-obama-legacy.html) from the New York Times. 
+
+
+```{r}
+#install.github('nstrayer/shinysense') #run this line if you need to install the package. 
+library(shinysense) 
+
+random_data <- data_frame(time = 1:30,metric = time * sin(time / 6) + rnorm(30))
+  
+drawr_widget(
+  data = random_data,
+  draw_start = 15,
+  x_key = "time",
+  y_key = "metric",
+  width="100%"
+)
+```
+
+
+### Timeseries
+
+Timeseries are supported and have intelligently labeled axes. (Thanks to `d3.scaleTime()`s wonderful defaults.) To make a drawr with a time axis you simply need to pass data in with the x column having the class `Date` (or at least inheriting properties of `Date`). The function will detect this and plot accordingly. 
+
+```{r}
+dates <- seq(as.Date("2017/1/1"), as.Date("2017/07/22"), "weeks")
+numWeeks <- length(dates)
+endDate <- dates[15]
+
+timeData <- data_frame(
+  date = dates,
+  value = 50 + (1:numWeeks) * cos((1:numWeeks) / 6) + rnorm(numWeeks)
+)
+  
+drawr_widget(
+  data = timeData,
+  draw_start = endDate,
+  x_key = "date",
+  y_key = "value",
+  width="100%"
+)
+```
+
+
+### No Reveal
+
+Say you want to plot a drawr with some data that you desire the user to elaborate on. To do this you simply append to the end of the dataframe rows with `NA`s in the y column. The chart will then allow the user to draw pinning the drawn y values to the supplied corresponding x-values. This doesn't make much sense for the widget version we're showing here, but in a shiny app the drawn values still get returned to R. 
+
+```{r}
+timeDataNoReveal <- timeData %>% 
+  mutate(
+    value = ifelse(date > endDate, NA, value)
+  )
+  
+drawr_widget(
+  data = timeDataNoReveal,
+  draw_start = endDate,
+  x_key = "date",
+  y_key = "value",
+  y_min = 2,
+  width="100%"
+)
+```
+
+
+### Free Drawing
+
+While it's not a new feature and is almost pointless outside of shiny, you can still do draw on a canvas with no plotted line. `r tufte::margin_note("You could also do this by simply setting all your y-values to NA, your choice.")`
+
+```{r}
+drawr_widget(
+  data = timeDataNoReveal,
+  draw_start = endDate,
+  raw_draw = TRUE,
+  x_key = "date",
+  y_key = "value",
+  y_min = 2,
+  width="100%"
+)
+```
+
+## Next Steps
+
+Obviously I didn't fix all the bugs and most likely created more than I remedied. If you find any it would make me very happy if you'd [submit an issue](https://github.com/nstrayer/shinysense/issues) on the github page. In addition, if there is a feature that you'd like and isn't implemented also submit an issue (or if you're feeling super adventurous a pull request). 
+

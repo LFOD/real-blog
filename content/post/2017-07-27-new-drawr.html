@@ -1,0 +1,115 @@
+---
+title: "New and improved draw charts in shinysense"
+author: "Nick Strayer"
+date: '2017-07-27'
+categories: ["shinysense", "javascript", "rstats"]
+tags: ["shinysense", "javascript", "rstats"]
+excerpt: "I have recently overhauled the drawr function of my package shinysense. I have fixed some bugs and added support for time series. In addition, you can now use use the function outside of Shiny. This post covers what changed and how to use the new features."
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/drawr/drawr.js"></script>
+<script src="/rmarkdown-libs/drawr_widget-binding/drawr_widget.js"></script>
+
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>I didn’t expect many people to use the you-draw-it charts (henceforth refered to as ‘drawrs’) I put into my shiny modules package <a href="https://www.github.com/nstrayer/shinysense"><code>shinysense</code></a> but a decent number did, and with that usage came… bugs.</p>
+<p>In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time utilizing the new javascript and R development knowledge I gained from building it the first time. Most importantly in the javascript portion of the code (it’s own library in fact) I implemented unit tests for every function. Something non-trivial due to needing to run the code in a headless browser to simulate dom manipulation. (Javascripty post on this coming soon).</p>
+</div>
+<div id="changes" class="section level2">
+<h2>Changes</h2>
+<p>The main API for the shiny module <code>shinydrawr</code> and <code>shinydrawrUI</code> has remained unchanged. You can simply update to the newest version of the package and everything (should) work exactly the same. That being said, there are a few improvements that either improve previous results or add on to the previous syntax:</p>
+<p><strong>Resizing:</strong> The visualization now will re-size as your window changes. Start your shiny app small and then full screen it? Now the plot will grow with it.</p>
+<p><strong>Multiple drawrs:</strong> You should always expect people to use your functions in ways you yourself never envisioned. A perfect example of this was the awesome <a href="https://rkahne.shinyapps.io/louisville_crime_rates/">Lousiville Crime Rates</a> project done by <a href="https://twitter.com/rkahne">Robert Kahne</a>.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+Sometimes the app loads with all the graphs already filled in, other times it doesn't. It's okay though, I hope you find the data useful.
+</p>
+— Robert Kahne (<span class="citation">@rkahne</span>) <a href="https://twitter.com/rkahne/status/879717378027921408">June 27, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><label for="tufte-mn-vrjfirfiun" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-vrjfirfiun" class="margin-toggle"><span class="marginnote">That’s not good! I want my software to only alleviate headaches, not cause them.</span> Turns out the way I coded it assumed there would only ever be a single drawr on the screen at once but people wanted more. Now you can create as many draw charts as your heart desires.</p>
+<p><strong>Timeseries support:</strong> It is kind of silly that the function didn’t support time-series before, these visualizations are almost exclusively used with time on the x-axis so obviously that should be supported. <label for="tufte-mn-jzlbzocxzn" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-jzlbzocxzn" class="margin-toggle"><span class="marginnote">Stick around for a demo.</span></p>
+<p><strong>Non-Shiny use:</strong> I took advantage of the wonderful work done by the creators and maintainers of the package <a href="http://www.htmlwidgets.org/"><code>htmlwidgets</code></a> and wrapped the javascript visualization in a widget. This means that you can now use the function <code>drawr_widget</code> right inside of RStudio, RMarkdown, or even a shiny app (if you don’t care about the data the user draws). Here’s an example of how to do that along with some demonstrations of the new features.</p>
+</div>
+<div id="widget" class="section level2">
+<h2>Widget</h2>
+<div id="basic-usage" class="section level3">
+<h3>Basic Usage</h3>
+<p>You can use the widget just like the old <code>shinydrawr</code> worked. Throw in your data, name a start point and you get a ‘you draw it’ style chart just like the now famous <a href="https://www.nytimes.com/interactive/2017/01/15/us/politics/you-draw-obama-legacy.html">article</a> from the New York Times.</p>
+<pre class="r"><code>#install.github(&#39;nstrayer/shinysense&#39;) #run this line if you need to install the package. 
+library(shinysense) 
+
+random_data &lt;- data_frame(time = 1:30,metric = time * sin(time / 6) + rnorm(30))
+  
+drawr_widget(
+  data = random_data,
+  draw_start = 15,
+  x_key = &quot;time&quot;,
+  y_key = &quot;metric&quot;,
+  width=&quot;100%&quot;
+)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="drawr_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":{"time":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],"metric":[1.52419406451634,-0.432840639452783,0.939620290673985,2.50789029934569,3.53613976258311,6.96000753933008,8.36497241640896,8.34419429003287,9.89597378875909,10.3042467124005,11.0255148141997,11.8787953500072,11.1454150847511,9.93896790947147,9.11306392926845,6.44276835747682,4.52254165725732,3.38047673718272,-1.05681393816987,-5.05265082142952,-7.82702426921143,-12.7388730214853,-15.2528884582919,-17.1296773055572,-20.4205279841305,-23.6035861494019,-25.1684664727063,-29.546955135383,-27.8708286268423,-28.9287114529265]},"xKey":"time","yKey":"metric","yMin":null,"yMax":null,"timeX":false,"revealExtent":15,"freeDraw":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="timeseries" class="section level3">
+<h3>Timeseries</h3>
+<p>Timeseries are supported and have intelligently labeled axes. (Thanks to <code>d3.scaleTime()</code>s wonderful defaults.) To make a drawr with a time axis you simply need to pass data in with the x column having the class <code>Date</code> (or at least inheriting properties of <code>Date</code>). The function will detect this and plot accordingly.</p>
+<pre class="r"><code>dates &lt;- seq(as.Date(&quot;2017/1/1&quot;), as.Date(&quot;2017/07/22&quot;), &quot;weeks&quot;)
+numWeeks &lt;- length(dates)
+endDate &lt;- dates[15]
+
+timeData &lt;- data_frame(
+  date = dates,
+  value = 50 + (1:numWeeks) * cos((1:numWeeks) / 6) + rnorm(numWeeks)
+)
+  
+drawr_widget(
+  data = timeData,
+  draw_start = endDate,
+  x_key = &quot;date&quot;,
+  y_key = &quot;value&quot;,
+  width=&quot;100%&quot;
+)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:480px;" class="drawr_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"data":{"date":["2017-01-01","2017-01-08","2017-01-15","2017-01-22","2017-01-29","2017-02-05","2017-02-12","2017-02-19","2017-02-26","2017-03-05","2017-03-12","2017-03-19","2017-03-26","2017-04-02","2017-04-09","2017-04-16","2017-04-23","2017-04-30","2017-05-07","2017-05-14","2017-05-21","2017-05-28","2017-06-04","2017-06-11","2017-06-18","2017-06-25","2017-07-02","2017-07-09","2017-07-16"],"value":[49.5977250074997,52.1951074302156,51.9283983688603,52.6477896824602,54.205488407903,52.5655693456941,52.3107003083883,52.0292738379101,49.8904220466737,50.5236680833437,45.9505421102719,44.098170175253,41.879118782458,39.7856640201418,37.5571594970404,35.2156360856041,34.6859285884539,33.0925413657796,29.9099846422582,29.4083003704845,30.4160761150426,31.5406756240717,34.183244175254,32.5939623511306,36.7494599806796,39.2771460261368,43.5556510549791,49.077392796263,53.4509550215231]},"xKey":"date","yKey":"value","yMin":null,"yMax":null,"timeX":true,"revealExtent":"2017-04-09","freeDraw":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="no-reveal" class="section level3">
+<h3>No Reveal</h3>
+<p>Say you want to plot a drawr with some data that you desire the user to elaborate on. To do this you simply append to the end of the dataframe rows with <code>NA</code>s in the y column. The chart will then allow the user to draw pinning the drawn y values to the supplied corresponding x-values. This doesn’t make much sense for the widget version we’re showing here, but in a shiny app the drawn values still get returned to R.</p>
+<pre class="r"><code>timeDataNoReveal &lt;- timeData %&gt;% 
+  mutate(
+    value = ifelse(date &gt; endDate, NA, value)
+  )
+  
+drawr_widget(
+  data = timeDataNoReveal,
+  draw_start = endDate,
+  x_key = &quot;date&quot;,
+  y_key = &quot;value&quot;,
+  y_min = 2,
+  width=&quot;100%&quot;
+)</code></pre>
+<div id="htmlwidget-3" style="width:100%;height:480px;" class="drawr_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3">{"x":{"data":{"date":["2017-01-01","2017-01-08","2017-01-15","2017-01-22","2017-01-29","2017-02-05","2017-02-12","2017-02-19","2017-02-26","2017-03-05","2017-03-12","2017-03-19","2017-03-26","2017-04-02","2017-04-09","2017-04-16","2017-04-23","2017-04-30","2017-05-07","2017-05-14","2017-05-21","2017-05-28","2017-06-04","2017-06-11","2017-06-18","2017-06-25","2017-07-02","2017-07-09","2017-07-16"],"value":[49.5977250074997,52.1951074302156,51.9283983688603,52.6477896824602,54.205488407903,52.5655693456941,52.3107003083883,52.0292738379101,49.8904220466737,50.5236680833437,45.9505421102719,44.098170175253,41.879118782458,39.7856640201418,37.5571594970404,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"xKey":"date","yKey":"value","yMin":2,"yMax":null,"timeX":true,"revealExtent":"2017-04-09","freeDraw":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="free-drawing" class="section level3">
+<h3>Free Drawing</h3>
+<p>While it’s not a new feature and is almost pointless outside of shiny, you can still do draw on a canvas with no plotted line. <label for="tufte-mn-vfwtvgjpdr" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-vfwtvgjpdr" class="margin-toggle"><span class="marginnote">You could also do this by simply setting all your y-values to NA, your choice.</span></p>
+<pre class="r"><code>drawr_widget(
+  data = timeDataNoReveal,
+  draw_start = endDate,
+  raw_draw = TRUE,
+  x_key = &quot;date&quot;,
+  y_key = &quot;value&quot;,
+  y_min = 2,
+  width=&quot;100%&quot;
+)</code></pre>
+<div id="htmlwidget-4" style="width:100%;height:480px;" class="drawr_widget html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4">{"x":{"data":{"date":["2017-01-01","2017-01-08","2017-01-15","2017-01-22","2017-01-29","2017-02-05","2017-02-12","2017-02-19","2017-02-26","2017-03-05","2017-03-12","2017-03-19","2017-03-26","2017-04-02","2017-04-09","2017-04-16","2017-04-23","2017-04-30","2017-05-07","2017-05-14","2017-05-21","2017-05-28","2017-06-04","2017-06-11","2017-06-18","2017-06-25","2017-07-02","2017-07-09","2017-07-16"],"value":[49.5977250074997,52.1951074302156,51.9283983688603,52.6477896824602,54.205488407903,52.5655693456941,52.3107003083883,52.0292738379101,49.8904220466737,50.5236680833437,45.9505421102719,44.098170175253,41.879118782458,39.7856640201418,37.5571594970404,null,null,null,null,null,null,null,null,null,null,null,null,null,null]},"xKey":"date","yKey":"value","yMin":2,"yMax":null,"timeX":true,"revealExtent":"2017-04-09","freeDraw":true},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="next-steps" class="section level2">
+<h2>Next Steps</h2>
+<p>Obviously I didn’t fix all the bugs and most likely created more than I remedied If you find any it would make me very happy if you’d <a href="https://github.com/nstrayer/shinysense/issues">submit an issue</a> on the github page. In addition, if there is a feature that you’d like and isn’t implemented also submit an issue (or if you’re feeling super adventurous a pull request).</p>
+</div>
