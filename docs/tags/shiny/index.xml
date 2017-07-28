@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shiny on Live Free or Dichotomize</title>
+    <link>/tags/shiny/</link>
+    <description>Recent content in Shiny on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 27 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>New and improved draw charts in shinysense</title>
+      <link>/2017/07/27/new-and-improved-draw-charts-in-shinysense/</link>
+      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/07/27/new-and-improved-draw-charts-in-shinysense/</guid>
+      <description>Background I didn’t expect many people to use the you-draw-it charts (henceforth referred to as ‘drawrs’) I put into my shiny modules package shinysense but a decent number did, and with that usage came… bugs.
+In an effort to fix the bugs I went back and tore the function down and re-wrote it entirely. This time I utilized the javascript and R development knowledge I gained from building it the first time ’round.</description>
+    </item>
+    
+  </channel>
+</rss>
