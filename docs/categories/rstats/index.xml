@@ -6,10 +6,20 @@
     <description>Recent content in Rstats on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 08 Aug 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/rstats/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to make an R Markdown website (with RStudio!)</title>
+      <link>/2017/08/08/how-to-make-an-rmarkdown-website/</link>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/08/08/how-to-make-an-rmarkdown-website/</guid>
+      <description>We’ve updated our R Markdown website tutorial to depend on RStudio for simplicity. You can find our previous version if you would rather not depend on RStudio.
+Setup: Today, more than ever, a website is like a business card. As a graduate student or academic, by having a nice website you are not only providing a one-stop-shop for all of your necessary information, ⊕AND you are illustrating that you have the technical prowess to accomplish this!</description>
+    </item>
     
     <item>
       <title>New and improved draw charts in shinysense</title>

@@ -139,7 +139,7 @@
     <item>
       <title>Rstats</title>
       <link>/categories/rstats/</link>
-      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/rstats/</guid>
       <description></description>
@@ -191,6 +191,15 @@
     </item>
     
     <item>
+      <title>Tutorial</title>
+      <link>/categories/tutorial/</link>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Twitter</title>
       <link>/categories/twitter/</link>
       <pubDate>Mon, 24 Jul 2017 00:00:00 +0000</pubDate>
@@ -214,6 +223,15 @@
       <pubDate>Sun, 12 Mar 2017 10:54:24 +0200</pubDate>
       
       <guid>/categories/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Website</title>
+      <link>/categories/website/</link>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/website/</guid>
       <description></description>
     </item>
     

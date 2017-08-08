@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/2017/08/08/how-to-make-an-rmarkdown-website/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+  </url>
   
   <url>
     <loc>/2017/07/27/new-and-improved-draw-charts-in-shinysense/</loc>
@@ -186,7 +192,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -204,7 +210,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -258,13 +264,13 @@
   
   <url>
     <loc>/tags/rstats/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/rstats/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -329,6 +335,18 @@
   </url>
   
   <url>
+    <loc>/tags/tutorial/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/tutorial/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/twitter/</loc>
     <lastmod>2017-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -349,6 +367,18 @@
   <url>
     <loc>/categories/visualization/</loc>
     <lastmod>2017-03-12T10:54:24+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/website/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/website/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

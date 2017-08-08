@@ -21,8 +21,7 @@ We brainstormed different ways we could make this collage unique, but ultimilate
 
 We first wanted to use Twitter profile pics but even after launching a small campaign we realized we'd identify too few R-Ladies to fill a collage. Therefore we mixed two information sources:
 
-* For the collage itself we decided on using Meetup data, which was made even cooler by the fact that the [`meetupr` package](https://github.com/rladies/meetupr) was developed by R-Ladies in the R-Ladies Github organization!
-
+* For the collage itself we decided on using Meetup data, which was made even cooler by the fact that the [`meetupr` package](https://github.com/rladies/meetupr) was developed by R-Ladies in the R-Ladies Github organization!  
 * For the frame of the collage we chose to use the R-Ladies identified via Twitter.
 
 ```r
