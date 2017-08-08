@@ -95,7 +95,7 @@
     <item>
       <title>Rstats</title>
       <link>/tags/rstats/</link>
-      <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/rstats/</guid>
       <description></description>
@@ -138,11 +138,29 @@
     </item>
     
     <item>
+      <title>Tutorial</title>
+      <link>/tags/tutorial/</link>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Twitter</title>
       <link>/tags/twitter/</link>
       <pubDate>Mon, 24 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/twitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Website</title>
+      <link>/tags/website/</link>
+      <pubDate>Tue, 08 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/website/</guid>
       <description></description>
     </item>
     
