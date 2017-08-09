@@ -112,25 +112,25 @@
 
 <section><p>We’ve updated our R Markdown website tutorial to depend on RStudio for simplicity. You can find our <a href="http://nickstrayer.me/RMarkdown_Sites_tutorial/">previous version</a> if you would rather not depend on RStudio.</p>
 <div id="setup" class="section level2">
-<h2>Setup:</h2>
+<h2>Setup</h2>
 <p>Today, more than ever, a website is like a business card. As a graduate student or academic, by having a nice website you are not only providing a one-stop-shop for all of your necessary information, <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">AND you are illustrating that you have the technical prowess to accomplish this! 💪 👩‍💻</span> you are showing that you are savvy enough to know the importance of a high-quality web-presence.</p>
 </div>
 <div id="examples" class="section level2">
-<h2>Examples:</h2>
+<h2>Examples</h2>
 <ul>
 <li>Check out Lucy’s <em>entirely made in R Markdown</em> <a href="https://www.lucymcgowan.com">personal website</a>!</li>
 <li>The sample website made in this tutorial is available <a href="http://nickstrayer.me/personal_site/">here</a>.</li>
 </ul>
 </div>
 <div id="prerequisites" class="section level2">
-<h2>Prerequisites:</h2>
+<h2>Prerequisites</h2>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><a href="http://docs.railsbridge.org/installfest/create_a_github_account">Get a GitHub account!</a></span> 1. GitHub account<br />
 <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><a href="https://www.r-bloggers.com/r-markdown-and-knitr-tutorial-part-1/">What is R Markdown</a> you ask?</span> 2. Working knowledge of R Markdown.<br />
 <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><a href="https://www.rstudio.com/products/rstudio/#Desktop">Download RStudio!</a></span> 3. RStudio<br />
 4. Collection of all the reasons your awesome! <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Sometimes it feels a bit 😬 to list your accomplishments, but be loud and proud on your personal website!</span></p>
 </div>
 <div id="goals" class="section level2">
-<h2>Goals:</h2>
+<h2>Goals</h2>
 <p>By the end of this (hopefully) you will have,</p>
 <ul>
 <li>constructed a simple website with basic information about yourself,</li>
@@ -140,8 +140,8 @@
 <p>Okay, let’s get started.</p>
 <hr />
 </div>
-<div id="step-1-git-on-with-it." class="section level2">
-<h2>Step 1: Git on with it.</h2>
+<div id="step-1-git-on-with-it" class="section level2">
+<h2>Step 1: Git on with it</h2>
 <p>First things first, let’s set up our GitHub repository for hosting this site.</p>
 <p><strong>“Hosting this site”?</strong></p>
 <p>Whenever you go to a website, e.g. <a href="www.vanderbilt.edu" class="uri">www.vanderbilt.edu</a>, your computer is sending out a request across the series of tubes known as the internet to a server sitting on top of some cloud somewhere (aka Indiana) that it would like to look at Vanderbilt’s website. That server, which is simply another computer, receives the request, then goes into its hard drive and pulls up the file it has stored for vanderbilt.com and sends that file back to your computer. So when we say “host your site” we simply mean we need to find a server to put your website’s files on that will then deliver those sites to people who want to see them via their web browser of choice.</p>
@@ -154,7 +154,7 @@
 <p>Keep this on your clipboard, we are going to use it in just a minute!</p>
 </div>
 <div id="step-2-rstudio-magic" class="section level2">
-<h2>Step 2: RStudio Magic ✨</h2>
+<h2>Step 2: RStudio magic ✨</h2>
 <p>Open RStudio and select “New Project” under the “File” menu item. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you are having some trouble here, check out Jenny’s delightful <a href="http://happygitwithr.com/rstudio-git-github.html">Happy git with R</a> tutorial.</span> A New Project box should pop up - click “Version Control”.</p>
 <p><img class = "img-responsive" src="../../../../images/2017-08-08/version_control.png" style="width:100%"></p>
 <p>Now click “Git”.</p>
@@ -200,8 +200,8 @@ title: &quot;About Me&quot;
 Why I am awesome. </code></pre>
 <p><em>If you got lost at any point during this tutorial, you can download a template of these files from <a href="https://github.com/LucyMcGowan/personal_site">Lucy’s GitHub</a>.</em></p>
 </div>
-<div id="lets-build-it" class="section level2">
-<h2>Let’s build it!</h2>
+<div id="step-4-lets-build-it" class="section level2">
+<h2>Step 4: Let’s build it!</h2>
 <p>Okay, one last step to actually have a functioning website. We need to actually turn these separate files into a single cohesive website. Simply run the following within your RStudio project.</p>
 <pre class="r"><code>rmarkdown::render_site()</code></pre>
 <p>Now if everything has gone according to plan, you should get a bunch of unintelligible output followed by the message : <code>Output created: index.html</code>. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="http://www.reactiongifs.com/r/kbs.gif" /></span> If so, yay 🙌, if not, double check all the stuff above to make sure you followed it exactly. Or more likely I messed up and you should inform me.</p>
@@ -209,9 +209,9 @@ Why I am awesome. </code></pre>
 <p><img class = "img-responsive" src="../../../../images/2017-08-08/site_result.png" style="width:100%"></p>
 <p>Sweet. You have now created your own personal website. First let’s push it to GitHub and then we can get down to making it good for you.</p>
 </div>
-<div id="step-4-git-it-hosted" class="section level2">
-<h2>Step 4: Git it hosted</h2>
-<p>N<label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Emoji tip: You can include emoji in your git commit messages by keyword - checkout <a href="https://gist.github.com/rxaviers/7360908">this list</a> 🎉 🍻 🐓</span>ow we just have to add commit and push everything to GitHub. In the upper right corner of RStudio, you should see a “Git” tab. Click the “Commit” button. The following box should pop up.</p>
+<div id="step-5-git-it-hosted" class="section level2">
+<h2>Step 5: Git it hosted</h2>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Emoji tip: You can include emoji in your git commit messages by keyword - checkout <a href="https://gist.github.com/rxaviers/7360908">this list</a> 🎉 🍻 🐓</span>Now we just have to add commit and push everything to GitHub. In the upper right corner of RStudio, you should see a “Git” tab. Click the “Commit” button. The following box should pop up.</p>
 <p><img class = "img-responsive" src="../../../../images/2017-08-08/commit.png" style="width:100%"></p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you are having trouble with this step, take a 👀 at Jenny’s lovely <a href="http://happygitwithr.com/rstudio-git-github.html#confirm-the-local-change-propagated-to-the-github-remote-1">Happy git with R</a>.</span> Click all of the files to stage them, type a commit message, and then click “Commit”. The click the green up arrow to push the commit to GitHub.</p>
 <p>Return to your GitHub repository in the browser. Click on the “Settings” tab.</p>
@@ -222,8 +222,8 @@ Why I am awesome. </code></pre>
 <p><em>Note: GitHub has to build stuff on its end so it may take a minute or so for stuff to show up. Just keep impatiently refreshing the page and it will go faster.</em></p>
 <p>Yay, it works. Now we can make it better.</p>
 </div>
-<div id="show-the-world-who-you-are." class="section level2">
-<h2>Show the world who you are.</h2>
+<div id="show-the-world-who-you-are" class="section level2">
+<h2>Show the world who you are</h2>
 <p>You know how to use R Markdown. So basically everything that you know how to do you can do here.</p>
 <p>Like let’s say you want to make your about page more descriptive.</p>
 <p><strong>about.Rmd</strong></p>

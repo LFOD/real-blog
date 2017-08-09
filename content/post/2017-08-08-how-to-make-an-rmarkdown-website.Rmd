@@ -15,15 +15,15 @@ We've updated our R Markdown website tutorial to depend on RStudio for simplicit
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Setup: 
+## Setup
 
 Today, more than ever, a website is like a business card. As a graduate student or academic, by having a nice website you are not only providing a one-stop-shop for all of your necessary information, `r tufte::margin_note(paste("AND you are illustrating that you have the technical prowess to accomplish this!", emo::ji("muscle"), emo::ji("woman_technologist")))` you are showing that you are savvy enough to know the importance of a high-quality web-presence. 
 
-## Examples:
+## Examples
  - Check out Lucy’s _entirely made in R Markdown_ [personal website](https://www.lucymcgowan.com)!
  - The sample website made in this tutorial is available [here](http://nickstrayer.me/personal_site/).
  
-## Prerequisites: 
+## Prerequisites
 `r tufte::margin_note("[Get a GitHub account!](http://docs.railsbridge.org/installfest/create_a_github_account)")`
 1.  GitHub account  
 `r tufte::margin_note("[What is R Markdown](https://www.r-bloggers.com/r-markdown-and-knitr-tutorial-part-1/) you ask?")`
@@ -32,7 +32,7 @@ Today, more than ever, a website is like a business card. As a graduate student 
 3. RStudio   
 4. Collection of all the reasons your awesome! `r tufte::margin_note(paste("Sometimes it feels a bit", emo::ji("grimace"), "to list your accomplishments, but be loud and proud on your personal website!"))`
 
-## Goals: 
+## Goals
 
 By the end of this (hopefully) you will have,
 
@@ -44,7 +44,7 @@ Okay, let's get started.
 
 ---
 
-## Step 1: Git on with it. 
+## Step 1: Git on with it
 
 First things first, let's set up our GitHub repository for hosting this site. 
 
@@ -66,7 +66,7 @@ On the top, you should see a box with your Repository's URL. Hover over the clip
 
 Keep this on your clipboard, we are going to use it in just a minute!
 
-## Step 2: RStudio Magic `r emo::ji("sparkles")`
+## Step 2: RStudio magic `r emo::ji("sparkles")`
 
 Open RStudio and select "New Project" under the "File" menu item. `r tufte::margin_note("If you are having some trouble here, check out Jenny's delightful [Happy git with R](http://happygitwithr.com/rstudio-git-github.html) tutorial.")` A New Project box should pop up - click "Version Control". 
 
@@ -136,7 +136,7 @@ Why I am awesome.
 
 _If you got lost at any point during this tutorial, you can download a template of these files from [Lucy's GitHub](https://github.com/LucyMcGowan/personal_site)._
 
-## Let's build it!
+## Step 4: Let's build it!
 
 Okay, one last step to actually have a functioning website. We need to actually turn these separate files into a single cohesive website. Simply run the following within your RStudio project.
 
@@ -153,9 +153,9 @@ Now we can open it up. Open the repository with `finder` or whatever tool your c
 Sweet. You have now created your own personal website. First let's push it to GitHub and then we can get down to making it good for you. 
 
 
-## Step 4: Git it hosted
+## Step 5: Git it hosted
 
-N`r tufte::margin_note(paste("Emoji tip: You can include emoji in your git commit messages by keyword - checkout [this list](https://gist.github.com/rxaviers/7360908)", emo::ji("tada"), emo::ji("beers"), emo::ji("rooster")))`ow we just have to add commit and push everything to GitHub. In the upper right corner of RStudio, you should see a "Git" tab. Click the "Commit" button. The following box should pop up.
+`r tufte::margin_note(paste("Emoji tip: You can include emoji in your git commit messages by keyword - checkout [this list](https://gist.github.com/rxaviers/7360908)", emo::ji("tada"), emo::ji("beers"), emo::ji("rooster")))`Now we just have to add commit and push everything to GitHub. In the upper right corner of RStudio, you should see a "Git" tab. Click the "Commit" button. The following box should pop up.
 
 <img class = "img-responsive" src="/images/2017-08-08/commit.png" style="width:100%">
 
@@ -175,7 +175,7 @@ _Note: GitHub has to build stuff on its end so it may take a minute or so for st
 
 Yay, it works. Now we can make it better. 
 
-## Show the world who you are. 
+## Show the world who you are 
 
 You know how to use R Markdown. So basically everything that you know how to do you can do here. 
 
