@@ -161,6 +161,24 @@ Sweet. You have now created your own personal website. First let's push it to Gi
 
 `r tufte::margin_note(paste("If you are having trouble with this step, take a", emo::ji("eyes"), "at Jenny's lovely [Happy git with R](http://happygitwithr.com/rstudio-git-github.html#confirm-the-local-change-propagated-to-the-github-remote-1)."))` Click all of the files to stage them, type a commit message, and then click "Commit". The click the green up arrow to push the commit to GitHub.
 
+### Choose your own adventure
+
+_I am updating a bit based on Yihui's comment - it sounds like the [cool kids are using Netlify now](https://yihui.name/en/2017/06/netlify-instead-of-github-pages/) `r emo::ji("sunglasses")`!_
+
+Now that your site is on GitHub, you have some hosting options - you can either host it on GitHub, or another hosting site. 
+
+`r tufte::newthought("Host on Netlify")` 
+
+Hosting on Netlify is actually _quite_ simple! Just bop over to [https://www.netlify.com](https://www.netlify.com), sign in with GitHub, and choose the Repository you've just pushed your site to. You should see a dialogue box - just click "Deploy Site" and all will be well!
+
+<img src = "/images/2017-08-08/netlify.png">
+
+`r tufte::margin_note("For a more detailed explanation, Yihui has a [great section](https://bookdown.org/yihui/blogdown/netlify.html) in his book.")` You can update your site's name by clicking "Change site name" - if you are using the free plan, it will append `.netlify.com` to the end. For example, I have put this example site on [http://lucys-personal-site.netlify.com/](http://lucys-personal-site.netlify.com/).
+
+A clear added benefit of using Netlify is the HTTPS support - so be sure to enable that!
+
+`r tufte::newthought("Host on GitHub")`
+
 Return to your GitHub repository in the browser. Click on the "Settings" tab. 
 
 <img class = "img-responsive" src="/images/2017-08-08/settings.png" style="width:100%">

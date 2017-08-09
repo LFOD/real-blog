@@ -115,6 +115,16 @@ Why I am awesome. </code></pre>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Emoji tip: You can include emoji in your git commit messages by keyword - checkout <a href="https://gist.github.com/rxaviers/7360908">this list</a> 🎉 🍻 🐓</span>Now we just have to add commit and push everything to GitHub. In the upper right corner of RStudio, you should see a “Git” tab. Click the “Commit” button. The following box should pop up.</p>
 <p><img class = "img-responsive" src="/images/2017-08-08/commit.png" style="width:100%"></p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you are having trouble with this step, take a 👀 at Jenny’s lovely <a href="http://happygitwithr.com/rstudio-git-github.html#confirm-the-local-change-propagated-to-the-github-remote-1">Happy git with R</a>.</span> Click all of the files to stage them, type a commit message, and then click “Commit”. The click the green up arrow to push the commit to GitHub.</p>
+<div id="choose-your-own-adventure" class="section level3">
+<h3>Choose your own adventure</h3>
+<p><em>I am updating a bit based on Yihui’s comment - it sounds like the <a href="https://yihui.name/en/2017/06/netlify-instead-of-github-pages/">cool kids are using Netlify now</a> 😎!</em></p>
+<p>Now that your site is on GitHub, you have some hosting options - you can either host it on GitHub, or another hosting site.</p>
+<p><span class="newthought">Host on Netlify</span></p>
+<p>Hosting on Netlify is actually <em>quite</em> simple! Just bop over to <a href="https://www.netlify.com" class="uri">https://www.netlify.com</a>, sign in with GitHub, and choose the Repository you’ve just pushed your site to. You should see a dialogue box - just click “Deploy Site” and all will be well!</p>
+<p><img src = "/images/2017-08-08/netlify.png"></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">For a more detailed explanation, Yihui has a <a href="https://bookdown.org/yihui/blogdown/netlify.html">great section</a> in his book.</span> You can update your site’s name by clicking “Change site name” - if you are using the free plan, it will append <code>.netlify.com</code> to the end. For example, I have put this example site on <a href="http://lucys-personal-site.netlify.com/" class="uri">http://lucys-personal-site.netlify.com/</a>.</p>
+<p>A clear added benefit of using Netlify is the HTTPS support - so be sure to enable that!</p>
+<p><span class="newthought">Host on GitHub</span></p>
 <p>Return to your GitHub repository in the browser. Click on the “Settings” tab.</p>
 <p><img class = "img-responsive" src="/images/2017-08-08/settings.png" style="width:100%"></p>
 <p>Scroll down to the “GitHub Pages” header. Under “source” select “master branch” and then click “Save”.</p>
@@ -122,6 +132,7 @@ Why I am awesome. </code></pre>
 <p>Now we can navigate to our hosted site! Open your browser of choice and go to <code>www.&lt;your github name&gt;.github.io/&lt;your sites repo name&gt;</code>. (E.g. <code>www.lucymcgowan.github.io/personal_site</code>).</p>
 <p><em>Note: GitHub has to build stuff on its end so it may take a minute or so for stuff to show up. Just keep impatiently refreshing the page and it will go faster.</em></p>
 <p>Yay, it works. Now we can make it better.</p>
+</div>
 </div>
 <div id="show-the-world-who-you-are" class="section level2">
 <h2>Show the world who you are</h2>
