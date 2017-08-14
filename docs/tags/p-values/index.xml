@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>P Values on Live Free or Dichotomize</title>
+    <link>/tags/p-values/</link>
+    <description>Recent content in P Values on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Aug 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/p-values/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Why you maybe shouldn&#39;t care about that p-value.</title>
+      <link>/2017/08/14/why-you-maybe-shouldnt-care-about-that-p-value./</link>
+      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/08/14/why-you-maybe-shouldnt-care-about-that-p-value./</guid>
+      <description>Setup There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. As a statistician I think this is great. Anytime we can start to bring objectivity into our assessments of situations it’s fantastic. ⊕This is not to say all data/ stats are objective. Very frequently they can be very dangerously not so. However, I have also noticed some incorrect conclusions being drawn on the basis of these statistics.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -2,20 +2,20 @@
 title: "Why you maybe shouldn't care about that p-value."
 author: "Nick Strayer"
 date: '2017-08-14'
-categories: ["p-values", "statistics"]
-tags: ["shinysense", "shiny", "rmarkdown", "javascript", "rstats"]
-excerpt: "There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. Through a small contrived example I make the point that perhaps in some situations we should ignore the forest and focus on the trees."
+categories: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
+tags: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
+excerpt: "There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. Through a small contrived example I make the point that in some situations we may want to ignore the forest and focus on the trees."
 ---
 
 
 <div id="setup" class="section level2">
 <h2>Setup</h2>
-<p>There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. As a statistician I think this is great. Anytime we can start to bring objectivity into our assessments of situations it’s fantastic. <label for="tufte-mn-sebsblnwle" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-sebsblnwle" class="margin-toggle"><span class="marginnote">This is not to say all data/ stats are objective. Very frequently they can be very dangerously not so.</span> However, I have also noticed some incorrect conclusions being drawn on the basis of these statistics. The following is a small example of a situation where a p-value might not technically be wrong, but simply does not do justice to the question at hand.</p>
+<p>There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. As a statistician I think this is great. Anytime we can start to bring objectivity into our assessments of situations it’s fantastic. <label for="tufte-mn-xywptxrztg" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-xywptxrztg" class="margin-toggle"><span class="marginnote">This is not to say all data/ stats are objective. Very frequently they can be very dangerously not so.</span> However, I have also noticed some incorrect conclusions being drawn on the basis of these statistics. The following is a small example of a situation where a p-value might not technically be wrong, but simply does not do justice to the question at hand.</p>
 </div>
 <div id="scenario" class="section level2">
 <h2>Scenario</h2>
 <p>Say you’re hungry for lunch one day and there are two new restaurants that just opened up nearby, Tony’s Tacos and Sheela’s Sashimi. You want to go to one of them but can’t decide which one. You happen to like both foods exactly the same and are bad at making decisions so you decide to go onto the (fictional) restaurant rating site FishersRestaurantReviews.com.</p>
-<p><label for="tufte-mn-mcectehzbq" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-mcectehzbq" class="margin-toggle"><span class="marginnote">Taco Tuesday <img src="https://media.giphy.com/media/3o6ozsIxg5legYvggo/giphy.gif" /> or Sushi Cat? <img src="https://media.giphy.com/media/AwF74xIsyoiKQ/giphy.gif" /></span></p>
+<p><label for="tufte-mn-ozljzfwcfu" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-tufte-mn-ozljzfwcfu" class="margin-toggle"><span class="marginnote">Taco Tuesday <img src="https://media.giphy.com/media/3o6ozsIxg5legYvggo/giphy.gif" /> or Sushi Cat? <img src="https://media.giphy.com/media/AwF74xIsyoiKQ/giphy.gif" /></span></p>
 <p>This rating site lets users rate restaurants they went to on a scale from 0 (this restaurant makes me question humanity’s choice to eat food) to 1 (this makes me question my choice to ever <em>not</em> eat food). You plug in both Tony’s Tacos and Sheela’s Sashimi into the search system and out pops the result: “go to Sheela’s Sashimi, it’s better than Tony’s Tacos p &lt; 0.05”.</p>
 <p>Based on this concrete evidence, you decide to go to Sheela’s Sashimi and come back mildly satisfied. Soon, your coworker who didn’t look at the rating website comes back from Tony’s Tacos and raves about the food. You, disappointing and confused as to how this could be, decide to go back to the food rating service and pull all reviews for Tony’s Tacos and Sheelas Sashimi from their handy dandy reviews api…</p>
 <pre class="r"><code># Pull data from api
@@ -87,8 +87,7 @@ rating_dists +
 <div id="adendum" class="section level2">
 <h2>Adendum</h2>
 <p>Turns out our review data for the two restaurants happen to exactly follow a beta distribution! How weird.</p>
-<pre class="r"><code>set.seed(30)
-n &lt;- 2000
+<pre class="r"><code>n &lt;- 2000
 alpha &lt;- 8
 beta_s &lt;- 2
 beta_t &lt;- 2.15

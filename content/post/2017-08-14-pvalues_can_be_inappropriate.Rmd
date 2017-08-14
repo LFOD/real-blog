@@ -2,9 +2,9 @@
 title: "Why you maybe shouldn't care about that p-value."
 author: "Nick Strayer"
 date: '2017-08-14'
-categories: ["p-values", "statistics"]
-tags: ["shinysense", "shiny", "rmarkdown", "javascript", "rstats"]
-excerpt: "There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. Through a small contrived example I make the point that perhaps in some situations we should ignore the forest and focus on the trees."
+categories: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
+tags: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
+excerpt: "There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. Through a small contrived example I make the point that in some situations we may want to ignore the forest and focus on the trees."
 ---
   
   
