@@ -4,7 +4,7 @@ author: "Nick Strayer"
 date: '2017-08-14'
 categories: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
 tags: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
-excerpt: "There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. Through a small contrived example I make the point that in some situations we may want to ignore the forest and focus on the trees."
+excerpt: "Recently, there seems to have been an uptick in citations of studies or statistics about this or that in the news and on the internet. Often these studies claim validity on the basis of a p-value. Through a small contrived example I make the point that in some situations we may want to ignore the forest and focus on the trees."
 ---
   
   
@@ -17,20 +17,18 @@ library(tidyverse)
 
 ## Setup
 
-There seems to be an uptick of citations of different studies or statistics about this or that in the news and on the internet. As a statistician I think this is great. Anytime we can start to bring objectivity into our assessments of situations it's fantastic. `r tufte::margin_note("This is not to say all data/ stats are objective. Very frequently they can be very dangerously not so.")` However, I have also noticed some incorrect conclusions being drawn on the basis of these statistics. The following is a small example of a situation where a p-value might not technically be wrong, but simply does not do justice to the question at hand. 
+Recently, there seems to have been an uptick in citations of studies or statistics about this or that in the news and on the internet. As a statistician I think this is great. Anytime we can start to bring objectivity into our assessments of situations it's fantastic. `r tufte::margin_note("This is not to say all data/ stats are objective. Very frequently they can be very dangerously not so.")` However, I have also noticed some incorrect conclusions being drawn on the basis of these statistics. The following is a small example of a situation where a p-value might not technically be wrong, but simply does not do justice to the question at hand. 
 
 ## Scenario
 
-Say you're hungry for lunch one day and there are two new restaurants that just opened up nearby, Tony's Tacos and Sheela's Sashimi. You want to go to one of them but can't decide which one. You happen to like both foods exactly the same and are bad at making decisions so you decide to go onto the (fictional) restaurant rating site FishersRestaurantReviews.com. 
+Say you're hungry for lunch one day and there are two restaurants just opened up nearby, Tony's Tacos and Sheela's Sashimi. You want to go to one of them but can't decide which one. You happen to like both foods exactly the same and are bad at making decisions so you decide to go onto the (fictional) restaurant rating site FishersRestaurantReviews.com. 
 
 `r tufte::margin_note("Taco Tuesday ![](https://media.giphy.com/media/3o6ozsIxg5legYvggo/giphy.gif) or Sushi Cat? ![](https://media.giphy.com/media/AwF74xIsyoiKQ/giphy.gif)")`
 
 This rating site lets users rate restaurants they went to on a scale from 0 (this restaurant makes me question humanity's choice to eat food) to 1 (this makes me question my choice to ever _not_ eat food). You plug in both Tony's Tacos and Sheela's Sashimi into the search system and out pops the result: "go to Sheela's Sashimi, it's better than Tony's Tacos p < 0.05". 
 
 
-
-
-Based on this concrete evidence, you decide to go to Sheela's Sashimi and come back mildly satisfied. Soon, your coworker who didn't look at the rating website comes back from Tony's Tacos and raves about the food. You, disappointing and confused as to how this could be, decide to go back to the food rating service and pull all reviews for Tony's Tacos and Sheelas Sashimi from their handy dandy reviews api...
+Based on this concrete evidence, you decide to go to Sheela's Sashimi and come back mildly satisfied. Soon, your coworker who didn't look at the rating website comes back from Tony's Tacos and raves about the food. Disappointed and confused as to how this could be, you decide to go back to the food rating service and pull all reviews for Tony's and Sheela's from their handy dandy reviews api...
 
 ```{r, echo = F}
 set.seed(30)
@@ -117,7 +115,7 @@ Here in lies the problem with p-values. In this case our p-value for "Sheela's i
 
 The thing is, when you choose to eat at a restaurant you don't care about the asymptotic behaviors of the average review, you care about if you are going to enjoy your particular meal. In other words, you care about an individual realization of the distribution you are modeling. In the above scenario I don't think anyone would look at these data and say going to Sheela's will for sure result in a better experience. `r tufte::margin_note("P-values make statements about populations, very frequently we're not interested in the population.")`
 
-P-values and indeed much of common statistical methodology relies on summary statistics. This fact is very easy to forget, I do all the time and I'm literally payed to understand statistics. 
+P-values and indeed much of common statistical methodology relies on summary statistics. This fact is very easy to forget, I do all the time and I'm literally paid to understand statistics. 
 
 ![](http://www.wrsc.org/sites/default/files/news_stories/big-trees-undre-threat--o-007.jpg) `r tufte::margin_note("Perhaps we should stop looking at the forest and look at the trees. [Image source](http://www.wrsc.org/sites/default/files/news_stories/big-trees-undre-threat--o-007.jpg)")`
 
