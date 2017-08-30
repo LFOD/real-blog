@@ -134,7 +134,7 @@ The above is an example of this. If we just relied on the p-values to decide for
 Turns out our review data for the two restaurants happen to exactly follow a beta distribution! How weird. 
 
 ```{r, eval = F}
-n <- 2000
+n <- 2001
 alpha <- 8
 beta_s <- 2
 beta_t <- 2.15

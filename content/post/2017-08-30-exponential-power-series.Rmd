@@ -1,0 +1,43 @@
+---
+title: "The Exponential Power Series"
+author: "Nick Strayer"
+date: '2017-08-14'
+categories: ["statistics", "visualization", "interactive"]
+tags: ["statistics", "visualization", "interactive"]
+excerpt: "I find series expansions fascinating. I also find any math envolving e to be fascinating. Here I explain some of the facets of the exponential power series and its connection to my favorite distribution, the Poisson."
+---
+  
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tufte)
+library(tidyverse)
+```
+
+I am a big fan of the Poisson distribution, so much in fact I even have it tatooed on my arm. 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Finally did it. Guess im stuck with this statistics thing now. <a href="https://twitter.com/hashtag/poissonPmf?src=hash">#poissonPmf</a> <a href="https://t.co/DtTPzOiErd">pic.twitter.com/DtTPzOiErd</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/898908684637659136">August 19, 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Another thing I am a big fan of the book I am currently reading: [Surely You're Joking, Mr Feynman](https://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041/). In a recent chapter Dr. Feynman discusses his like of the power series expansion of $e^x$, and how efficient it is. Naturally I agreed with him, because this same power series expansion is the formula from which the poisson distribution is derived. Let's show this real quick: 
+
+First we start with the power series:
+
+$$e^{\lambda} = \sum_{n = 0}^{\infty} \frac{\lambda ^ n}{n!} = 1/1 + \lambda/1 + \lambda^2 / 2 + ...$$
+
+We see the first term is always 1 (which interestingly is a way to reason that something raised to the 0 power is 1) and then we get nice little terms that change in size by a nice pattern. To get the $i^{th}$ step we simply take the $(j - 1)^{th}$ step and multiply it by $\lambda$ and divide it by $j$. It's quite beautiful in its simplicity. By carrying out an infinite number of times our sum will converge to the true value of $e^{\lambda}$, and rather rapidly at that. 
+
+In order to demonstrate this I have put together a small little interactive that allows you to fiddle with the exponent for $e^{\lambda}$ and the number of times you carry out this sum operation and see how well the series approximates the true value. `r tufte::margin_note('Note that as you increase the exponent the number of steps you need to get a good estimate increases with it, why might this be?')`
+
+The bar plot shows the size of each step, aka how big is $\lambda^i/i!$, above this is the sum of all of the bars, aka the series estimate of $e^{\lambda}$ at the number of steps you have specified. 
+
+<div class = "fullwidth" id = "viz"></div>
+<script src="https://cdn.rawgit.com/gka/d3-jetpack/master/build/d3v4%2Bjetpack.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://rawgit.com/nstrayer/slid3r/master/dist/slid3r.js"></script>
+<script src="/js/bundle.js"></script>
+
+
+
+
+
