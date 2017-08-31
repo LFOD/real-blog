@@ -30,7 +30,7 @@ var showSteps = exports.showSteps = function showSteps(x, m) {
 };
 
 },{}],2:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -57,12 +57,34 @@ var drawSeries = exports.drawSeries = function drawSeries(steps, c) {
   xAxis.ticks(numberSteps);
   yAxis.ticks(5);
 
-  var xAxisSel = svg.selectAll('.x.axis').data([1]);
-  xAxisSel.enter().append('g').attr('class', 'x axis').attr("transform", "translate(0," + height + ")").merge(xAxisSel).transition(d3.transition('axisMove').duration(500)).call(xAxis);
+  var xAxisSel = svg.selectAppend('g.x.axis').attr("transform", "translate(0," + height + ")");
 
-  var yAxisSel = svg.selectAll('.y.axis').data([1]);
-  yAxisSel.enter().append('g').attr('class', 'y axis').merge(yAxisSel).transition(d3.transition('axisMove').duration(500)).call(yAxis);
+  xAxisSel.transition(d3.transition('axisMove').duration(500)).call(xAxis);
 
+  // add x axis label
+  xAxisSel.selectAppend('text.axisLabel').text('step number').at({
+    y: 25,
+    x: width / 2,
+    fontSize: 18,
+    fontWeight: 'bold',
+    fill: "#606060",
+    textAnchor: 'middle'
+  });
+
+  var yAxisSel = svg.selectAppend('g.y.axis').data([1]);
+
+  yAxisSel.transition(d3.transition('axisMove').duration(500)).call(yAxis);
+
+  // add x axis label
+  yAxisSel.selectAppend('text.axisLabel').text('step size').at({
+    transform: 'rotate(-90)',
+    y: -25,
+    x: -height / 2,
+    fontSize: 18,
+    fontWeight: 'bold',
+    fill: "#606060",
+    textAnchor: 'middle'
+  });
   // ------------------------------------------------------//
   // Draw bars for each step
   // ------------------------------------------------------//
@@ -76,7 +98,7 @@ var drawSeries = exports.drawSeries = function drawSeries(steps, c) {
   stepBars.exit().transition(d3.transition('barmove').duration(500)).at({ y: c.height, height: 0 });
 
   stepBars.enter().append('rect').attr('class', 'stepBars').at({ //constant attributes
-    fill: 'orangered',
+    fill: '#fc8d62',
     y: c.height,
     height: 1e-6,
     x: function x(d, i) {
@@ -121,7 +143,7 @@ function drawStacked(steps, expon, c) {
 
   var sumScale = d3.scaleLinear().range([0, width]).domain([0, trueValue]);
 
-  var colorScale = d3.scaleSequential(d3.interpolatePiYG).domain([0, 30]);
+  var colorScale = d3.scaleSequential(d3.interpolateOranges).domain([30, 0]);
 
   var stackData = steps.reduce(function (series, step, i) {
     var curSum = i > 0 ? series[i - 1].end : 0;
@@ -225,7 +247,7 @@ function powerSeriesViz() {
     parentSel: sel,
     totalWidth: sel.node().offsetWidth,
     height: 400,
-    margin: { left: 50, right: 50, top: 130, bottom: 30 }
+    margin: { left: 50, right: 50, top: 130, bottom: 50 }
   });
 
   function runViz(config) {
@@ -254,17 +276,25 @@ function powerSeriesViz() {
     var drawIt = function drawIt() {
       sel.select('svg').remove();
 
+      var selWidth = sel.node().offsetWidth;
+
+      var mobile = selWidth < 650;
+
       //update c
       c = d3.conventions({
         parentSel: sel,
-        totalWidth: sel.node().offsetWidth,
+        totalWidth: selWidth,
         height: 400,
-        margin: { left: 50, right: 50, top: 130, bottom: 30 }
+        margin: { left: 50, right: 50, top: mobile ? 200 : 130, bottom: 30 }
       });
 
-      exponSlider = exponSlider.loc([c.width * 0.4 - sliderWidth, -100]).startPos(expon);
+      var exLoc = mobile ? [0, -170] : [c.width * 0.4 - sliderWidth, -100];
+      var stepsLoc = mobile ? [0, -100] : [c.width * 0.6, -100];
+      var newWidth = mobile ? selWidth - 100 : sliderWidth;
 
-      stepsSlider = stepsSlider.loc([c.width * 0.6, -100]).startPos(numberSteps);
+      exponSlider = exponSlider.width(newWidth).loc(exLoc).startPos(expon);
+
+      stepsSlider = stepsSlider.width(newWidth).loc(stepsLoc).startPos(numberSteps);
 
       c.svg.append('g').attr('class', 'exponSlider').call(exponSlider);
       c.svg.append('g').attr('class', 'stepsSlider').call(stepsSlider);
