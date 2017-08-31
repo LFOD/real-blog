@@ -1,6 +1,7 @@
 baseurl = "/"
 publishDir = "docs"
 relativeurls = true
+canonifyURLs = false
 languageCode = "en-us"
 title = "Live Free or Dichotomize"
 theme = "tuftesque"
@@ -39,7 +40,7 @@ author = "Nick Strayer & Lucy D'Agostino McGowan"
     
     showtitle = false
     [params.logo]
-    url = "/images/logo.png"
+    url = "images/logo.png"
     width = 50
     height = 50
     alt = "Logo"

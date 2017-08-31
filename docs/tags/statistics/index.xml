@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>The Exponential Power Series</title>
+      <link>/2017/08/14/the-exponential-power-series/</link>
+      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/08/14/the-exponential-power-series/</guid>
+      <description>I am a big fan of the Poisson distribution, there’s something about its simplicity and elegance (I really like \(\lambda\)s) that makes it way easier to deal with than some monstrosity like the gamma or normal distribution.
+Another thing I am a big fan of is the book I am currently reading: Surely You’re Joking, Mr Feynman. In one of the chapters, Dr. Feynman discusses his interest in the power series expansion of \(e^x\), and how efficient it is.</description>
+    </item>
+    
+    <item>
       <title>Why you maybe shouldn&#39;t care about that p-value.</title>
       <link>/2017/08/14/why-you-maybe-shouldnt-care-about-that-p-value./</link>
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>

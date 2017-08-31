@@ -6,10 +6,20 @@
     <description>Recent content in Visualization on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Mar 2017 10:54:24 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 14 Aug 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/visualization/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Exponential Power Series</title>
+      <link>/2017/08/14/the-exponential-power-series/</link>
+      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/08/14/the-exponential-power-series/</guid>
+      <description>I am a big fan of the Poisson distribution, there’s something about its simplicity and elegance (I really like \(\lambda\)s) that makes it way easier to deal with than some monstrosity like the gamma or normal distribution.
+Another thing I am a big fan of is the book I am currently reading: Surely You’re Joking, Mr Feynman. In one of the chapters, Dr. Feynman discusses his interest in the power series expansion of \(e^x\), and how efficient it is.</description>
+    </item>
     
     <item>
       <title>Introducing shinyswipr: swipe your way to a great Shiny UI</title>

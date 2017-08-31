@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - The Exponential Power Series</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.26" />
+
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../../../css/tuftesque.css">
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <span id = "blog_logo">
+         <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+      </span>
+      
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="../../../../2017/08/14/the-exponential-power-series/">The Exponential Power Series</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Aug 14, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;4 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="../../../../categories/statistics">statistics</a>
+    
+    <a  href="../../../../categories/visualization">visualization</a>
+    
+    <a  href="../../../../categories/interactive">interactive</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><p>I am a big fan of the Poisson distribution, there’s something about its simplicity and elegance (I really like <span class="math inline">\(\lambda\)</span>s) that makes it way easier to deal with than some monstrosity like the gamma or normal distribution.</p>
+<p>Another thing I am a big fan of is the book I am currently reading: <a href="https://www.amazon.com/Surely-Feynman-Adventures-Curious-Character/dp/0393316041/">Surely You’re Joking, Mr Feynman</a>. In one of the chapters, Dr. Feynman discusses his interest in the power series expansion of <span class="math inline">\(e^x\)</span>, and how efficient it is. Naturally I agreed with him, because this same power series expansion is the formula from which the Poisson distribution is derived. Let’s show this real quick:</p>
+<div id="power-series-and-the-poisson" class="section level3">
+<h3>Power Series and the Poisson</h3>
+<p>First let’s start with the power series:</p>
+<p><span class="math display">\[\begin{aligned}
+e^{\lambda} = &amp; \sum_{n = 0}^{\infty} \frac{\lambda ^ n}{n!} &amp;&amp; \\
+e^{\lambda}/e^{\lambda} = &amp; \sum_{n = 0}^{\infty} \frac{\lambda ^ n}{n!} /e^{\lambda}&amp;&amp;  \text{divide by }e^{\lambda}\\
+1 = &amp; \sum_{n = 0}^{\infty} \frac{e^{-\lambda}\lambda ^ n}{n!}&amp;&amp; \text{simplify }\\
+\end{aligned}\]</span></p>
+<p>We can see that by simply dividing the power series representation by <span class="math inline">\(e^{\lambda}\)</span> (aka multiplying by <span class="math inline">\(e^{-\lambda}\)</span>) we get a series that sums to one, when we have a series (or integral) that comes out to one, that (usually) means we’re dealing with a distribution function. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">This idea of making a probability distribution out of basically any series that sums or integrates to one is a trick that will come in massively handy anytime you’re doing any sort of probability theory work. Simply find the constant and divide by it to switch back and forth between a series/ probability.</span> In this case it’s the Poisson. To get the probability mass function (since we are dealing with the nicer discrete case) we simply take a single step of this function, aka <span class="math inline">\(\frac{e^{-\lambda}\lambda ^ n}{n!}\)</span>.</p>
+<p>This means that any probability associated with a specific count for a poisson distributed variable is simply a scaled step in the power series expansion of <span class="math inline">\(e^{\lambda}\)</span>! This is the kind of stuff that gets me excited.</p>
+</div>
+<div id="investigating-the-power-series" class="section level3">
+<h3>Investigating the power series</h3>
+<p>Let’s go back to the power series and investigate its form:</p>
+<p><span class="math display">\[\begin{aligned}
+e^{\lambda} = &amp; \sum_{n = 0}^{\infty} \frac{\lambda ^ n}{n!} = 1/1 + \lambda/1 + \lambda^2 / 2 + ...
+\end{aligned}\]</span></p>
+<p>We see the first term is always 1 <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">You can use the fact that the first term in this power expansion is one to reason about why something raised to the zero power is one and not zero.</span> and then after that we get a series of terms that change in size following a nice pattern. To get the <span class="math inline">\(i^{th}\)</span> step we simply take the <span class="math inline">\((j - 1)^{th}\)</span> step and multiply it by <span class="math inline">\(\lambda\)</span> and divide it by <span class="math inline">\(j\)</span> (<span class="math inline">\(s_{j+ 1} = s_j\lambda/j.\)</span>) It’s quite beautiful in its simplicity. By carrying this process out an infinite number of times our sum will converge to the true value of <span class="math inline">\(e^{\lambda}\)</span>, and rather rapidly at that. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Recognizing patterns like this one can result in massively sped up algorithms. For instance the naive way to calculate this series would be to perform n factorial calculations, where as if you use the iterative pattern described you only ever have to multiply and divide at each step.</span></p>
+<p>In order to demonstrate this I have put together a little interactive that allows you to fiddle with the exponent for <span class="math inline">\(e^{\lambda}\)</span> and the number of times you carry out this sum operation and see how well the series approximates the true value.</p>
+<p>The bar plot shows the size of each step, aka how big is <span class="math inline">\(\lambda^i/i!\)</span>, above this is the sum of all of the bars, aka the series estimate of <span class="math inline">\(e^{\lambda}\)</span> at the number of steps you have specified.</p>
+<style>
+svg text {
+  font-family: garamond;
+}
+</style>
+<div id="viz" class="fullwidth">
+
+</div>
+<script src="https://cdn.rawgit.com/gka/d3-jetpack/master/build/d3v4%2Bjetpack.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://rawgit.com/nstrayer/slid3r/master/dist/slid3r.js"></script>
+<script src="../../../../js/bundle.js"></script>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Note that as you increase the exponent the number of steps you need to get a good estimate increases with it, why might this be?</span></p>
+<p>Do you have a favorite series or mathematical construct? Let me know!</p>
+</div>
+<div id="adendum" class="section level3">
+<h3>Adendum</h3>
+<p>I really am a large fan of the Poisson distribution, so much so I even have it permanently written on my body.</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+Finally did it. Guess im stuck with this statistics thing now. <a href="https://twitter.com/hashtag/poissonPmf?src=hash">#poissonPmf</a> <a href="https://t.co/DtTPzOiErd">pic.twitter.com/DtTPzOiErd</a>
+</p>
+— Nick Strayer (<span class="citation">@NicholasStrayer</span>) <a href="https://twitter.com/NicholasStrayer/status/898908684637659136">August 19, 2017</a>
+</blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</section>
+<section>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <hr/>
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/6764693?v=3&amp;u=c9c491a636605fe3d6122defb43eb367b3d9381f&amp;s=400" alt="Nick Strayer image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Nick Strayer 
+              </span>
+              
+              <span class = "social_links">
+                 
+                  <a class = "social_buttons" href = http://nickstrayer.me >
+                      <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+                  </a>
+                
+                
+                  <a class="social_buttons" href = https://twitter.com/NicholasStrayer>
+                    <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/nstrayer >
+                    <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+                  </a>
+                
+              </span>  
+              
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">Randomly walking my way though a career in statistics</p>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2017\/08\/14\/the-exponential-power-series\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy; 2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>
