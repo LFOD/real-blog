@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2017/09/03/a-simple-slack-bot-with-plumber/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/08/14/the-exponential-power-series/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
   </url>
@@ -118,6 +123,18 @@
   </url>
   
   <url>
+    <loc>/tags/apis/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/apis/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/blogdown/</loc>
     <lastmod>2017-07-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -125,6 +142,19 @@
   
   <url>
     <loc>/categories/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/cats/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/catslaps/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -149,6 +179,12 @@
   <url>
     <loc>/categories/data-science/</loc>
     <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/dogs/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -179,6 +215,18 @@
   <url>
     <loc>/categories/epidemiology/</loc>
     <lastmod>2016-12-15T15:41:30-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/gifs/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/gifs/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -214,7 +262,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -243,8 +291,20 @@
   </url>
   
   <url>
+    <loc>/tags/plumber/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/plumber/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -333,6 +393,18 @@
   </url>
   
   <url>
+    <loc>/tags/slack/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/slack/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/statistics/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -370,7 +442,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2017-07-13T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

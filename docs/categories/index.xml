@@ -6,9 +6,28 @@
     <description>Recent content in Categories on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 03 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Apis</title>
+      <link>/categories/apis/</link>
+      <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/apis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Catslaps</title>
+      <link>/categories/catslaps/</link>
+      <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/catslaps/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Collaboration</title>
@@ -65,6 +84,15 @@
     </item>
     
     <item>
+      <title>Gifs</title>
+      <link>/categories/gifs/</link>
+      <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/gifs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Google Docs</title>
       <link>/categories/google-docs/</link>
       <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
@@ -115,6 +143,15 @@
       <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/p-values/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Plumber</title>
+      <link>/categories/plumber/</link>
+      <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/plumber/</guid>
       <description></description>
     </item>
     
@@ -178,6 +215,15 @@
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/shinysense/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Slack</title>
+      <link>/categories/slack/</link>
+      <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/slack/</guid>
       <description></description>
     </item>
     

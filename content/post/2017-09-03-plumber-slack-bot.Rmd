@@ -1,0 +1,217 @@
+---
+title: "A Simple Slack Bot With Plumber"
+author: "Nick Strayer"
+date: '2017-09-03'
+categories: ["catslaps", "gifs", "slack", "plumber", "apis"]
+tags:  ["cats", "dogs", "gifs", "slack", "plumber", "apis"]
+excerpt: "I've been excited about the R package Plumber ever since hearing about it for the first time as useR2017. So when I finally found an application that would allow me to use it, sending cat and dog photos over slack, I jumped at the opportunity."
+---
+  
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tufte)
+library(tidyverse)
+library(jsonlite)
+```
+
+
+## Intro To Plumber
+
+[Plumber](https://www.rplumber.io/) is an R package that allows you to create web apis in R. This is fantastic because it allows you to take your R code (models, database access, etc) and make them easy to access from anything capable of making http requests. This means a data scientist working at a tech company who has developed a fancy model using all of the tools at R's disposal can make it available to their company's app without needing to have a team of engineers port the model to whatever language the company uses for their back-end.`r tufte::margin_note("Or you know, a graduate student could write an api for finding cat/dog photos on the internet and sending them to slack channels. Both equally valuable use cases.")` 
+
+## Intro To Slack Apps
+
+There are actually many ways to build apps for Slack, but the way we will be focusing on are called "slash commands". If you're a slack power user you most likely know what these are, if you're not (like me) this is what prevents you from ever starting a message with "/". Basically, you can wire up Slack to send out a simple `HTTP POST` request (don't worry, we'll get to these in two seconds) when a user types `/<your command>`. In this demo we will be wiring up our slash command to send a request to our `plumber` driven api. 
+
+## HTTP Requests
+
+HTTP requests are the lingua-franca of the web. Every time you access a website your web browser is engaging in a conversation with the server hosting the site conducted in these requests. For instance, when you decided to load this website your browser sent a `GET` request to the server hosting it, saying "hey, can I please get the files for the site?". In response the server sent the raw files to your browser which then assembled into what you're looking at now. If you decided to comment on this article, after you've typed in your comment and pressed send, your browser would send off a `POST` request to the discus servers that contains the text of your comment, upon receiving the payload the server would send back a message acknowledging successful delivery (or unsuccessful). `r tufte::margin_note("There are more than just GET and POST requests (see [here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) for a more thorough runthrough of them), but for the purposes of this tutorial you can stop at these.")`
+
+## Reddit API
+
+If one is developing an app to get photos of cute animals, a natural place to go to find photos is Reddit. Conveniently they also have a fantastically easy to use API for getting information about the posts on a given subreddit. Say you want to get the 'hot' posts for the subreddit 'r/catslaps'. To do this you simply put together a url as if you were going to visit the subreddit in your browser and append `.json` at the end of it. Really, it's that easy. So in the case of catslaps: `www.reddit.com/r/catslaps/hot/.json`. (We'll also limit the number of posts we get back to 20 with `?limit=20` to keep things speedy) Let's demo this really quick: 
+
+`r tufte::margin_note("You'll notice that we add the line User-Agent = woofbot 2000 in the GET request. This is because reddit gets suspicious whenever its api gets hit by a client not introducing itself and will only allow a request every minute or so. When we introduce our app with user-agent reddit will send us as many photo links as our heart desires.")`
+
+
+```{R}
+library(listviewer)
+library(httr)
+
+redditTopPosts <- function(subreddit){
+  query <- sprintf(
+    'https://www.reddit.com/r/%s/hot/.json?limit=20',
+    subreddit
+  )
+  
+  GET(url = query, add_headers(`User-agent` = 'woofbot 2000')) %>% 
+    content('text') %>% 
+    jsonlite::fromJSON() 
+}
+
+catslapsTop <- redditTopPosts(subreddit = 'catslaps')
+
+# View it
+jsonedit(catslapsTop)
+```
+
+We get back a big hairy list of data on the top posts. What we are after (the links to the images) is in the path `data -> children -> data`. So we can write a function to get that out of our api response and simplify our life in the future: 
+
+```{r, warning = FALSE}
+# Takes api response from redditTopPosts() and 
+# returns a dataframe with post urls and titles
+getURLS <- function(response){
+  response$data$children$data %>% 
+    select(url, title)
+}
+
+catslapsTop %>% 
+  getURLS() %>% 
+  head() %>% 
+  knitr::kable()
+```
+
+
+We also want to make sure we're exclusively getting images and not albums or whatnot, so let's filter these results to just images and then display one to make sure we're getting what we want. 
+```{r}
+# Use regular expressions to get the links that have the correct file extensions
+justImages <- function(links) {
+  links %>% filter(grepl("\\.jpg|\\.gif|\\.png", url))
+}
+
+
+imagePosts <- catslapsTop %>% 
+  getURLS() %>% 
+  justImages()
+
+imagePosts %>% 
+  head() %>% 
+  knitr::kable()
+```
+
+__Testing one out__ 
+
+
+<blockquote class="imgur-embed-pub" lang="en" data-id="pc2VHRn"><a href="//imgur.com/pc2VHRn">&quot;No! Can&#39;t you see I&#39;m busy?&quot;</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+`r tufte::margin_note("That's one angry gatito.")`
+
+Looks like we're all set with the image source, now let's just setup `plumber` to send off one of these images when called. 
+
+## Putting It Together
+
+Before we dive into actually implementing our bot logic, it's important to note that the Slack slash command api requires responses to be sent to it in a specific JSON form. Rather than dive deeply into the specifics of this I will just demonstrate how to send a single image with a caption, but know that you can do much more than this by investigating the [official docs](https://api.slack.com/docs/message-formatting). 
+
+First we start by assembling our response object, then we will wire it up to `plumber`. 
+
+In the same script (or a new one that sources the functions we have already written), add the function `sendToSlack`
+
+```{r}
+sendToSlack <- function(){
+
+  photoLink <- redditTopPosts(subreddit = 'catslaps') %>% 
+    getURLS() %>% 
+    justImages() %>% 
+    .$url %>% 
+    sample(1) # pick photo at random.
+  
+  # photos must be sent as "attachments" to slack
+  attachments <- data_frame(
+    fallback = "uh oh, the image didn't load, bad omen",
+    image_url = photoLink, 
+    thumb_url = photoLink
+  )
+  
+  return(
+    list(
+      response_type = unbox("in_channel"),
+      text = unbox("This cat likes to slap!"),
+      unfurl_media = unbox(TRUE),
+      attachments =  attachments 
+    )
+  )
+}
+```
+
+
+To break this down a tiny bit: first we are grabbing a random photo from reddit using our functions we wrote earlier, then we are putting that photo into a data frame called `attachments` and putting that in a list that contains a field `response_type = 'in_channel` which tells slack to show response to everyone and not just the sender, `text` which is self explanatory,`r tufte::margin_note("The unbox() that wrapping some fields is a function from jsonlite that lets plumber know how to properly format its response. Otherwise it will try and turn the single responses into vectors of length one, which Slack doesn't know how to handle.")` and `unfurl_media = true` which tells Slack to load the image immediately and not require the user to click `expand` to see it (sometimes if the image is really large they still will have to).
+
+
+We can test this really quick to see how it looks. 
+
+```{r}
+sendToSlack() %>% jsonedit()
+```
+
+Looks like it's formatting correctly! Now let's wire up `plumber`! Buckle in, this takes a while....
+
+```{r, eval = FALSE}
+#* @post /catslap
+function(){
+  sendToSlack()
+}
+```
+
+...and we're done. Yup, it's (almost) that simple. Plumber is much like `roxygen` in that it operates mainly through special comments that tell it what to do.`r tufte::margin_note("There are plenty of standard functions in plumber too, just we arent using them for our relatively simple app here.")` In this case it's saying, watch for `POST` requests coming through at our server's url slash `catslap`. All we need to do now is setup a process that actually runs this to see if it works. 
+
+Create a separate script in the same directory as the one with `sendToSlack` in it and put the following..S. 
+
+```{r, eval = FALSE}
+library(plumber)
+r <- plumb('<file with sendToSlack>.R')
+r$run(port = 4000)
+```
+
+That's it. After executing the script we just wrote, your computer will be actively watching for requests coming in and will respond with a photo of a cat. 
+
+You can test out that it's working by trying a `POST` request to `localhost:4000/catslap` using `httr` and you should get back the same thing you sent out.
+
+```{r, eval = FALSE}
+httr::POST(url = "localhost:4000/meow") %>% 
+  httr:content('text') %>% 
+  jsonlite::fromJSON()
+# > Returns the same thing that sendToSlack() does.
+```
+
+You're all good to go. The only problem is `localhost` (or it may be `127.0.0.1` or something along those lines) is not accessible outside of your computer, and even if it was, it would have to be continuously running for it to be of any use to your slack channel. 
+
+
+## Hosting It 
+
+What you need to do is get your app hosted. This is where this tutorial will invariably fall short, and I apologize for that. There are about a million ways to host something like this and it all depends on your situation. For instance, I do all of my R computing from RStudio Server which is running on a Digital Ocean droplet. For me, since the droplet is already accessable from the general internet, by running the last command I am already hosting my `plumber` app for the world and am ready to go, but most likely you wont be. 
+
+I will defer to the excellent plumber docs on this instance. [The hosting section](https://www.rplumber.io/docs/hosting.html) does a fantastic job at describing how to take a plumber app like we just built and get it onto the internet for anyone to see. `r margin_note("In terms of cloud providers I'm all for Digital Ocean because of ease of use and transparent pricing. I've used Amazon AWS before and had some unexplainably high bills.")` Plumber makes it super easy to roll out your app onto a Digital Ocean server using custom-built docker containers that can be deployed directly from the R command line. 
+
+I will describe what I did so users in a similar situation to me will at least skip the headaches I went through. My situation applies to anyone who has a server open to the internet on at least some ports and can be easily ssh'd into. To make my app run in the background I followed the instructions from the plumber docs on using the tool `pm2` to [integrate hosting in my environment.](https://www.rplumber.io/docs/hosting.html#pm2)
+
+After installing `pm2` as per the instructions I just run the command `pm2 start --interpreter="Rscript" plumbServer.R` and my app is instantly running in the background and I can forget about it. 
+
+## Setup the Slack app
+
+I promise it's almost all over. Just navigate to https://api.slack.com/apps and log in. From there click the button that says "Create New App". 
+
+Next fill in the form with your app's desired info:
+
+![](/images/slackbot/createAppScreen.png)
+
+After you've filled that info in, navigate to the "slash commands" section of the app page. 
+
+![](/images/slackbot/slashCommand.png)
+
+In the slash command creation screen you can name your command whatever you desire (here I'm calling it catslaps). 
+
+![](/images/slackbot/createCommand.png)
+
+After completing all this, in the app's main page, go the left hand menu bar and under settings click 'Install App' (you can see this setting in the upper left of the first two screenshots) and accept the terms given and boom, you have your very own slack bot/app. Let's test it out.
+
+
+
+![](/images/slackbot/catslap2.png)
+
+`r margin_note("Oh, she's got her face in the danger zone.")`
+
+Yay! All the world's problems are now solved! 
+
+## Wrap-up
+
+Like I said before, I wish I could provide a better section on hosting. Ultimately though everyone's situation will be a little bit different and the documentation provided with plumber is absolutely fantastic for getting your app hosted. If you have issues, please feel free to send me a tweet (see my profile card below) or leave a comment. The world needs more cat and dog images in it so anyway I can assist I will. 
