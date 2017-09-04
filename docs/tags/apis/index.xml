@@ -17,7 +17,7 @@
       <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/09/03/a-simple-slack-bot-with-plumber/</guid>
-      <description>Intro To Plumber Plumber is an R package that allows you to create web apis in R. This is fantastic because it allows you to take your R code (models, database access, etc) and make them easy to access from anything capable of making http requests. This could mean a data scientist working at a tech company developing a fancy model using all of the tools at R’s disposal and then being able to make it available to their company’s app without needing to have a team of engineers port the model to whatever language the company uses to host the back-end of their app.</description>
+      <description>Intro To Plumber Plumber is an R package that allows you to create web apis in R. This is fantastic because it allows you to take your R code (models, database access, etc) and make them easy to access from anything capable of making http requests. This means a data scientist working at a tech company who has developed a fancy model using all of the tools at R’s disposal can make it available to their company’s app without needing to have a team of engineers port the model to whatever language the company uses for their back-end.</description>
     </item>
     
   </channel>
