@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Slack on Live Free or Dichotomize</title>
+    <link>/tags/slack/</link>
+    <description>Recent content in Slack on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Sep 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/slack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Simple Slack Bot With Plumber</title>
+      <link>/2017/09/03/a-simple-slack-bot-with-plumber/</link>
+      <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/03/a-simple-slack-bot-with-plumber/</guid>
+      <description>Intro To Plumber Plumber is an R package that allows you to create web apis in R. This is fantastic because it allows you to take your R code (models, database access, etc) and make them easy to access from anything capable of making http requests. This could mean a data scientist working at a tech company developing a fancy model using all of the tools at R’s disposal and then being able to make it available to their company’s app without needing to have a team of engineers port the model to whatever language the company uses to host the back-end of their app.</description>
+    </item>
+    
+  </channel>
+</rss>
