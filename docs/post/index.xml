@@ -22,6 +22,16 @@ Currently I am taking a class titled “Advanced Statistical Computing” taught
     </item>
     
     <item>
+      <title>Commentary and follow up to p&lt;0.005 suggestion</title>
+      <link>/2017/09/25/commentary-and-follow-up-to-p-0-005-suggestion/</link>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/25/commentary-and-follow-up-to-p-0-005-suggestion/</guid>
+      <description>A recent paper, Redefine Statistical Significance by 72 (😱) co-authors, has caused quite a stir in the statistical community. Our student-run journal club at Vanderbilt will be discussing this contribution at our meeting led by Nathan James this week, so I’ve attempted to create a list of significant responses/commentary that have come out since this paper was posted on PsyArXiv.
+This was compiled mostly via a quick Twitter search - please let me know what we are missing!</description>
+    </item>
+    
+    <item>
       <title>A Simple Slack Bot With Plumber</title>
       <link>/2017/09/03/a-simple-slack-bot-with-plumber/</link>
       <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
