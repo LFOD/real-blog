@@ -1,0 +1,34 @@
+---
+title: Commentary and follow up to p<0.005 suggestion
+author: "Lucy D'Agostino McGowan"
+date: '2017-09-25'
+slug: commentary-and-follow-up-to-p-0-005-suggestion
+categories: []
+tags: []
+excerpt: "A recent paper, Redefine Statistical Significance by 72 co-authors, has caused quite a stir in the statistical community. Our student-run journal club at Vanderbilt will be discussing this contribution at our meeting led by Nathan James this week, so I've attempted to create a list of significant responses/commentary that have come out since this paper was posted on PsyArXiv."
+---
+
+A recent paper, [Redefine Statistical Significance](https://www.nature.com/articles/s41562-017-0189-z) by 72 (`r emo::ji("scream")`) co-authors, has caused quite a stir in the statistical community. Our student-run journal club at Vanderbilt will be discussing this contribution at our meeting led by [Nathan James](https://twitter.com/nalhsyjones) this week, so I've attempted to create a list of significant responses/commentary that have come out since this paper was posted on PsyArXiv.
+
+*This was compiled mostly via a quick Twitter search - please let me know what we are missing!*
+
+
+* [Justify Your Alpha: A Response to "Redefine Statistical Significance"](https://psyarxiv.com/9s3y6): Response posted to PsyArXiv by 88 (`r emo::ji("scream")``r emo::ji("scream")`) researchers suggesting that researchers ought to select and justify P-value thresholds prior to collecting any data.
+
+* ['One-size-fits-all’ threshold for P values under fire](http://www.nature.com/news/one-size-fits-all-threshold-for-p-values-under-fire-1.22625): Nature News article summarizing the original paper and the "Justify your Alpha" response; includes results from a poll of Nature readers "Should the P-value threshold be lowered."
+
+![](/images/2017-09-25/nature-pvalues-19-sept-17.png)
+
+*For what it's worth, others have found opposing results in a different population:*
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Should we lower the p-value for statistical significance from 0.05 to 0.005 ?<br><br>Vote &amp; discuss</p>&mdash; C. Michael Gibson MD (@CMichaelGibson) <a href="https://twitter.com/CMichaelGibson/status/890531500076261377">July 27, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+* [Abandon Statistical Significance](http://www.stat.columbia.edu/~gelman/research/unpublished/abandon.pdf): Response suggesting abandoning the null hypothesis significance testing paradigm entirely.
+
+* [What a nerdy debate about p-values shows about science — and how to fix it](https://www.vox.com/science-and-health/2017/7/31/16021654/p-values-statistical-significance-redefine-0005)
+
+* [Changing the default p-value threshold for statistical significance ought not be done, and is the least of our problems.](https://medium.com/@timothycbates/changing-the-default-p-value-threshold-for-statistical-significance-ought-not-be-done-in-isolation-3a7ab357b5c1): Medium post by psychologist Timothy Bates where he calls the proposal "a risky distraction" from the root causes of irreproducible results.
+
+* [The Effort Report, episode 55](http://effortreport.libsyn.com/55-p-value-thresholds-and-establishing-independence): The most recent episode of The Effort Report (a podcast by [Elizabeth Matsui](https://twitter.com/elizabethmatsui) and [Roger Peng](https://twitter.com/rdpeng)) discusses this topic.
+
+**Please comment/[let me know](https://twitter.com/LucyStats) if we have missed anything!**
