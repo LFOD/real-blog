@@ -43381,7 +43381,13 @@ var addLocation = function addLocation(_ref) {
       y = _ref2[1];
 
   locations.push({ x: c.x.invert(x), y: c.y.invert(y) });
-  (0, _drawLocations2.default)({ c: c, locations: locations, onAdd: addLocation, onRemove: removeLocation, controlWidthProp: controlWidthProp });
+  (0, _drawLocations2.default)({
+    c: c,
+    locations: locations,
+    onAdd: addLocation,
+    onRemove: removeLocation,
+    controlWidthProp: controlWidthProp
+  });
   numLocs = locations.length;
   route = (0, _algorithmFuncs.makeRoute)(numLocs);
   resetProgress();
@@ -43391,17 +43397,30 @@ var removeLocation = function removeLocation(d) {
   console.log(d);
   var index = locations.indexOf(d);
   locations.splice(index, 1);
-  (0, _drawLocations2.default)({ c: c, locations: locations, onAdd: addLocation, onRemove: removeLocation, controlWidthProp: controlWidthProp });
+  (0, _drawLocations2.default)({
+    c: c,
+    locations: locations,
+    onAdd: addLocation,
+    onRemove: removeLocation,
+    controlWidthProp: controlWidthProp
+  });
   numLocs = locations.length;
   route = (0, _algorithmFuncs.makeRoute)(numLocs);
   resetProgress();
 };
 
-(0, _drawLocations2.default)({ c: c, locations: locations, onAdd: addLocation, onRemove: removeLocation, controlWidthProp: controlWidthProp });
+(0, _drawLocations2.default)({
+  c: c,
+  locations: locations,
+  onAdd: addLocation,
+  onRemove: removeLocation,
+  controlWidthProp: controlWidthProp
+});
 (0, _resetButton2.default)(c, resetProgress);
 
 var makeUpdateViz = function makeUpdateViz(simSpeed) {
   return _.debounce(function () {
+    console.log('running a sim');
     var newRoute = (0, _algorithmFuncs.flipLocations)(route, numFlips);
     var lastDist = (0, _algorithmFuncs.calcDistance)(route, locations);
     var currentDist = (0, _algorithmFuncs.calcDistance)(newRoute, locations);
@@ -43444,6 +43463,7 @@ function resetProgress() {
   automatedTau = true;
   route = (0, _algorithmFuncs.makeRoute)(numLocs);
   i = 0;
+  window.requestAnimationFrame(updateViz);
 }
 
 },{"./algorithmFuncs":73,"./drawHistory":74,"./drawLocations":75,"./drawRoute":76,"./makeLocations":78,"./resetButton":79,"./sliderConfigs":82,"./subCharts":83,"d3":38,"d3-jetpack":22,"lodash":45}],78:[function(require,module,exports){
@@ -43452,6 +43472,8 @@ function resetProgress() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+//@ts-check
+
 var _ = require('lodash');
 
 exports.default = function (numLocs, controlWidthProp) {

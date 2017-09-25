@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
     <loc>/2017/09/29/the-traveling-metallurgist/</loc>
@@ -133,25 +132,25 @@
   </url>
   
   <url>
-    <loc>/tags/algorithms/</loc>
-    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/algorithms/</loc>
     <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/apis/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <loc>/tags/algorithms/</loc>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/apis/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/apis/</loc>
     <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -187,13 +186,13 @@
   </url>
   
   <url>
-    <loc>/tags/conferences/</loc>
+    <loc>/categories/conferences/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/conferences/</loc>
+    <loc>/tags/conferences/</loc>
     <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -211,25 +210,25 @@
   </url>
   
   <url>
-    <loc>/tags/emojis/</loc>
-    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/emojis/</loc>
     <lastmod>2017-07-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/enar/</loc>
-    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <loc>/tags/emojis/</loc>
+    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/enar/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/enar/</loc>
     <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -241,13 +240,13 @@
   </url>
   
   <url>
-    <loc>/tags/gifs/</loc>
+    <loc>/categories/gifs/</loc>
     <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/gifs/</loc>
+    <loc>/tags/gifs/</loc>
     <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -259,25 +258,25 @@
   </url>
   
   <url>
-    <loc>/tags/interactive/</loc>
-    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/interactive/</loc>
     <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/javascript/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <loc>/tags/interactive/</loc>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/javascript/</loc>
+    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/javascript/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -301,25 +300,25 @@
   </url>
   
   <url>
-    <loc>/tags/p-values/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/p-values/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/plumber/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <loc>/tags/p-values/</loc>
+    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/plumber/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/plumber/</loc>
     <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -331,20 +330,14 @@
   </url>
   
   <url>
-    <loc>/tags/rladies/</loc>
-    <lastmod>2017-07-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/rladies/</loc>
     <lastmod>2017-07-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/rmarkdown/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <loc>/tags/rladies/</loc>
+    <lastmod>2017-07-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -355,8 +348,8 @@
   </url>
   
   <url>
-    <loc>/tags/rms/</loc>
-    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
+    <loc>/tags/rmarkdown/</loc>
+    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -367,8 +360,8 @@
   </url>
   
   <url>
-    <loc>/tags/ropensci/</loc>
-    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
+    <loc>/tags/rms/</loc>
+    <lastmod>2017-01-27T14:30:26-06:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -379,8 +372,8 @@
   </url>
   
   <url>
-    <loc>/tags/rstats/</loc>
-    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <loc>/tags/ropensci/</loc>
+    <lastmod>2017-07-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -391,8 +384,8 @@
   </url>
   
   <url>
-    <loc>/tags/shiny/</loc>
-    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
+    <loc>/tags/rstats/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -403,7 +396,7 @@
   </url>
   
   <url>
-    <loc>/tags/shinysense/</loc>
+    <loc>/tags/shiny/</loc>
     <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -415,8 +408,8 @@
   </url>
   
   <url>
-    <loc>/tags/slack/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <loc>/tags/shinysense/</loc>
+    <lastmod>2017-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -427,8 +420,8 @@
   </url>
   
   <url>
-    <loc>/tags/statistics/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <loc>/tags/slack/</loc>
+    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -439,7 +432,7 @@
   </url>
   
   <url>
-    <loc>/tags/sushi-cat/</loc>
+    <loc>/tags/statistics/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -451,13 +444,19 @@
   </url>
   
   <url>
-    <loc>/tags/taco-tuesday/</loc>
+    <loc>/tags/sushi-cat/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/taco-tuesday/</loc>
+    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/taco-tuesday/</loc>
     <lastmod>2017-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -475,20 +474,14 @@
   </url>
   
   <url>
-    <loc>/tags/tidytext/</loc>
-    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/tidytext/</loc>
     <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/travel/</loc>
-    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
+    <loc>/tags/tidytext/</loc>
+    <lastmod>2017-03-16T14:56:30-04:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -499,8 +492,8 @@
   </url>
   
   <url>
-    <loc>/tags/tutorial/</loc>
-    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <loc>/tags/travel/</loc>
+    <lastmod>2017-07-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -511,13 +504,19 @@
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
-    <lastmod>2017-07-24T00:00:00+00:00</lastmod>
+    <loc>/tags/tutorial/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/twitter/</loc>
+    <lastmod>2017-07-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/twitter/</loc>
     <lastmod>2017-07-24T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -529,25 +528,25 @@
   </url>
   
   <url>
-    <loc>/tags/visualization/</loc>
-    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/visualization/</loc>
     <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/website/</loc>
-    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <loc>/tags/visualization/</loc>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/website/</loc>
+    <lastmod>2017-08-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/website/</loc>
     <lastmod>2017-08-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
