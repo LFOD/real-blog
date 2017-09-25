@@ -1,7 +1,7 @@
 ---
 title: "The traveling metallurgist"
 author: "Nick Strayer"
-date: '2017-09-29'
+date: '2017-09-25'
 categories: ["interactive", "algorithms", "visualization"]
 tags: ["interactive", "algorithms", "visualization"]
 excerpt: "Here I attempt to explain the concepts behind the optimization technique simulated annealing and the combinatorial optimization problem of the traveling salesman. First in words, and then more excitingly in an interactive visualization."
