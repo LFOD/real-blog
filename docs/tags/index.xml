@@ -6,10 +6,19 @@
     <description>Recent content in Tags on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 29 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Algorithms</title>
+      <link>/tags/algorithms/</link>
+      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/algorithms/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Apis</title>
@@ -86,7 +95,7 @@
     <item>
       <title>Interactive</title>
       <link>/tags/interactive/</link>
-      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/interactive/</guid>
       <description></description>
@@ -257,7 +266,7 @@
     <item>
       <title>Visualization</title>
       <link>/tags/visualization/</link>
-      <pubDate>Mon, 14 Aug 2017 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/visualization/</guid>
       <description></description>

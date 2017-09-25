@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>/2017/09/29/the-traveling-metallurgist/</loc>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
+  </url>
   
   <url>
     <loc>/2017/09/03/a-simple-slack-bot-with-plumber/</loc>
@@ -123,6 +127,18 @@
   </url>
   
   <url>
+    <loc>/tags/algorithms/</loc>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/algorithms/</loc>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/apis/</loc>
     <lastmod>2017-09-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -142,7 +158,7 @@
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -238,13 +254,13 @@
   
   <url>
     <loc>/tags/interactive/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/interactive/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -262,7 +278,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -304,7 +320,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -442,7 +458,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2017-09-03T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -508,13 +524,13 @@
   
   <url>
     <loc>/tags/visualization/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/visualization/</loc>
-    <lastmod>2017-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-09-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
