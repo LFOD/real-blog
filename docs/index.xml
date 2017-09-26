@@ -6,20 +6,10 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>The traveling metallurgist</title>
-      <link>/2017/09/29/the-traveling-metallurgist/</link>
-      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/09/29/the-traveling-metallurgist/</guid>
-      <description>TLDR: I made a thing that moves and has sliders and stuff. It’s down here.
-Currently I am taking a class titled “Advanced Statistical Computing” taught here at Vanderbilt by Chris Fonnesbeck. The class is a fantastic whirlwind tour so far of some common optimization algorithms used in statistical computing. One of the algorithms I have found particularly fascinating is the “simulated annealing” algorithm. ⊕The whole algorithm is explained much better than I can do in the freely available Jupyter notebook for the lecture.</description>
-    </item>
     
     <item>
       <title>Commentary and follow up to p&lt;0.005 suggestion</title>
@@ -29,6 +19,16 @@ Currently I am taking a class titled “Advanced Statistical Computing” taught
       <guid>/2017/09/25/commentary-and-follow-up-to-p-0-005-suggestion/</guid>
       <description>A recent paper, Redefine Statistical Significance by 72 (😱) co-authors, has caused quite a stir in the statistical community. Our student-run journal club at Vanderbilt will be discussing this contribution at our meeting led by Nathan James this week, so I’ve attempted to create a list of significant responses/commentary that have come out since this paper was posted on PsyArXiv.
 This was compiled mostly via a quick Twitter search - please let me know what we are missing!</description>
+    </item>
+    
+    <item>
+      <title>The traveling metallurgist</title>
+      <link>/2017/09/25/the-traveling-metallurgist/</link>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/25/the-traveling-metallurgist/</guid>
+      <description>TLDR: I made a thing that moves and has sliders and stuff. It’s down here.
+Currently I am taking a class titled “Advanced Statistical Computing” taught here at Vanderbilt by Chris Fonnesbeck. The class is a fantastic whirlwind tour so far of some common optimization algorithms used in statistical computing. One of the algorithms I have found particularly fascinating is the “simulated annealing” algorithm. ⊕The whole algorithm is explained much better than I can do in the freely available Jupyter notebook for the lecture.</description>
     </item>
     
     <item>

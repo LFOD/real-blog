@@ -6,17 +6,17 @@
     <description>Recent content in Algorithms on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/algorithms/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The traveling metallurgist</title>
-      <link>/2017/09/29/the-traveling-metallurgist/</link>
-      <pubDate>Fri, 29 Sep 2017 00:00:00 +0000</pubDate>
+      <link>/2017/09/25/the-traveling-metallurgist/</link>
+      <pubDate>Mon, 25 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/29/the-traveling-metallurgist/</guid>
+      <guid>/2017/09/25/the-traveling-metallurgist/</guid>
       <description>TLDR: I made a thing that moves and has sliders and stuff. It’s down here.
 Currently I am taking a class titled “Advanced Statistical Computing” taught here at Vanderbilt by Chris Fonnesbeck. The class is a fantastic whirlwind tour so far of some common optimization algorithms used in statistical computing. One of the algorithms I have found particularly fascinating is the “simulated annealing” algorithm. ⊕The whole algorithm is explained much better than I can do in the freely available Jupyter notebook for the lecture.</description>
     </item>
