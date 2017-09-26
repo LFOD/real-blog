@@ -1,0 +1,3 @@
+[submodule "themes/tuftesqueGit"]
+	path = themes/tuftesqueGit
+	url = git@github.com:nstrayer/tuftesque.git
