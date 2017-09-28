@@ -31,9 +31,14 @@ All of the release names are references to Peanuts strips/films. I think this is
 ## 2.14.2 (2012-02-29) Gift-Getting Season
 **Reference**: This is a line Lucy says in the short film [*It's the Easter Beagle, Charlie Brown!*](http://peanuts.wikia.com/wiki/It%27s_the_Easter_Beagle,_Charlie_Brown) -- referring to Easter as the "gift-getting season".
 
+<span class = "marginnote">
+<iframe src="https://www.youtube.com/embed/TbRi1hflGvM" frameborder="0" allowfullscreen></iframe>
+</span>
+
 ## 2.15.0 (2012-03-30) Easter Beagle
-`r tufte::margin_note("This also likely references the [*It's the Easter Beagle, Charlie Brown!*](http://peanuts.wikia.com/wiki/It%27s_the_Easter_Beagle,_Charlie_Brown).")`
 **Reference**: [Peanuts April 11, 1971](http://www.gocomics.com/peanuts/1971/04/11)
+
+*This also likely references the [It's the Easter Beagle, Charlie Brown!](http://peanuts.wikia.com/wiki/It%27s_the_Easter_Beagle,_Charlie_Brown).*
 
 ## 2.15.1 (2012-06-22) Roasted Marshmallows
 **Reference**: [Peanuts June 6, 1987](http://www.gocomics.com/peanuts/1987/06/06)
@@ -55,7 +60,7 @@ All of the release names are references to Peanuts strips/films. I think this is
 **Edit**: Got some insider info from the source himself that this is from [*Charlie Brown and Snoopy Show*](http://peanuts.wikia.com/wiki/The_Charlie_Brown_and_Snoopy_Show)!
 
 <span class = "marginnote">
-<iframe frameborder="0" src="//www.dailymotion.com/embed/video/x4imafq?start=1" allowfullscreen></iframe><br /><a href="http://www.dailymotion.com/video/x4imafq?start=1" target="_blank">You&#039;re a Good Sport, Charlie Brown (1975)</a> <i>by <a href="http://www.dailymotion.com/MoviesAfterMidnight" target="_blank">MoviesAfterMidnight</a></i>
+<iframe frameborder="0" src="//www.dailymotion.com/embed/video/x4imafq?start=1" allowfullscreen></iframe><br /><a href="http://www.dailymotion.com/video/x4imafq?start=1" target="_blank"></a> <i>Source <a href="http://www.dailymotion.com/MoviesAfterMidnight" target="_blank">MoviesAfterMidnight</a></i>
 </span>
 
 ## 3.0.1 (2013-05-16) Good Sport
@@ -73,14 +78,19 @@ All of the release names are references to Peanuts strips/films. I think this is
 ## 3.1.0 (2014-04-10) Spring Dance
 **Reference**: [Peanuts March 22, 1971](http://www.gocomics.com/peanuts/1971/03/22)
 
-`r tufte::margin_note('<img src = "/images/2017-09-28/sock-it-to-me.jpg" width = 100></img> <br>Source [ebay](http://www.ebay.com/itm/Snoopy-Puzzle-Peanuts-Mini-Jigsaw-New-Sock-It-To-Me-70-Plus-Pieces-/282512908108)')`
+<span class = "marginnote">
+<a href="/images/2017-09-28/sock-it-to-me.jpg">
+<img class = "img-responsive" src="/images/2017-09-28/sock-it-to-me.jpg" alt="Sock it to me" width = 100>
+</img></a>
+*Source* [ebay](http://www.ebay.com/itm/Snoopy-Puzzle-Peanuts-Mini-Jigsaw-New-Sock-It-To-Me-70-Plus-Pieces-/282512908108)
+</span>
 
 ## 3.1.1 (2014-07-10) Sock it to Me
 **Reference**: This seems to be referring to a mini jigsaw puzzle, available on [ebay](http://www.ebay.com/itm/Snoopy-Puzzle-Peanuts-Mini-Jigsaw-New-Sock-It-To-Me-70-Plus-Pieces-/282512908108)!
 
 
 <span class = "marginnote">
-<iframe frameborder="0" src="//www.dailymotion.com/embed/video/x4imafq?start=995" allowfullscreen></iframe><br /><a href="http://www.dailymotion.com/video/x4imafq?start=995" target="_blank"></a> <i>by <a href="http://www.dailymotion.com/MoviesAfterMidnight" target="_blank">MoviesAfterMidnight</a></i>
+<iframe frameborder="0" src="//www.dailymotion.com/embed/video/x4imafq?start=995" allowfullscreen></iframe><br /><a href="http://www.dailymotion.com/video/x4imafq?start=995" target="_blank"></a> <i>Source <a href="http://www.dailymotion.com/MoviesAfterMidnight" target="_blank">MoviesAfterMidnight</a></i>
 </span>
 
 ## 3.1.2 (2014-10-31) Pumpkin Helmet
@@ -88,7 +98,7 @@ All of the release names are references to Peanuts strips/films. I think this is
 
 *It's a bit later in the clip, around 16:45.*
 
-`r tufte::margin_note('<img src = "/images/2017-09-28/happiness-sidewalk.jpg" width = 200></img><br> Source [Something to be Found](http://www.somethingtobefound.com/2013/04/somethings-books-desk-papers-and-pottery.html)')`
+`r tufte::margin_note('<a href = "/images/2017-09-28/happiness-sidewalk.jpg"> <img src = "/images/2017-09-28/happiness-sidewalk.jpg" width = 200></img></a><br> *Source* [Something to be Found](http://www.somethingtobefound.com/2013/04/somethings-books-desk-papers-and-pottery.html)')`
 
 ## 3.1.3 (2015-03-09) Smooth Sidewalk
 **Reference**: This is a page from the [*Happiness is a Warm Puppy*](https://www.goodreads.com/book/show/82191.Happiness_is_a_Warm_Puppy) book.
@@ -99,7 +109,7 @@ All of the release names are references to Peanuts strips/films. I think this is
 ## 3.2.1 (2015-06-18) World-Famous Astronaut
 **Reference**: [Peanuts March 10, 1969](http://www.gocomics.com/peanuts/1969/03/10)
 
-`r tufte::margin_note('<img src = "/images/2017-09-28/fire-saftey.jpg" width = 200></img><br> Source [Business Wire](http://www.businesswire.com/news/home/20041006005405/en/Brush-Fire-Safety-Basics-MetLife-Auto-Home)')`  
+`r tufte::margin_note('<a href = "/images/2017-09-28/fire-saftey.jpg"><img src = "/images/2017-09-28/fire-saftey.jpg" width = 200></img></a><br> *Source* [Business Wire](http://www.businesswire.com/news/home/20041006005405/en/Brush-Fire-Safety-Basics-MetLife-Auto-Home)')`  
 
 ## 3.2.2 (2015-08-14) Fire Safety
 **Reference**: *It seems that MetLife created a Peanuts themed [Fire Saftey Brochure](http://www.businesswire.com/news/home/20041006005405/en/Brush-Fire-Safety-Basics-MetLife-Auto-Home) coloring and activity book.*
