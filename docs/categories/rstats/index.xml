@@ -6,10 +6,20 @@
     <description>Recent content in Rstats on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Aug 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/rstats/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R release names</title>
+      <link>/2017/09/28/r-release-names/</link>
+      <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/09/28/r-release-names/</guid>
+      <description>I always love discussions about R release names and their origin. I have been working on this list for a while – with the source release of “Short Summer” yesterday, I thought it’d be a good time to post!
+All of the release names are references to Peanuts strips/films. I think this is just so delighful! A few months ago, I attempted to get permission to embed the strips on our blog, but unfortunately it was denied (unless with had a limited audience with password protection 🤷‍♀️), so I’ve just linked to the comics – Enjoy!</description>
+    </item>
     
     <item>
       <title>How to make an R Markdown website (with RStudio!)</title>
