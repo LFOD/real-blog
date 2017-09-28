@@ -5,10 +5,10 @@ date: '2017-09-28'
 slug: r-release-names
 categories: [rstats]
 tags: [rstats]
-excerpt: "I always love discussions about R release names and their origin. I have been working on this list for a while -- with the source release of \"Short Summer\" yesterday, I thought it'd be a good time to post!"
+excerpt: "I always love discussions about R release names and their origin. I have been working on this list for a while -- with the release of \"Short Summer\" today, I thought it'd be a good time to post!"
 ---
 
-I always love [discussions](https://stackoverflow.com/questions/13478375/is-there-any-authoritative-documentation-on-r-release-nicknames) about R release names and their origin. I have been working on this list for a while -- with the source release of "Short Summer" today, I thought it'd be a good time to post!
+I always love [discussions](https://stackoverflow.com/questions/13478375/is-there-any-authoritative-documentation-on-r-release-nicknames) about R release names and their origin. I have been working on this list for a while -- with the release of "Short Summer" today, I thought it'd be a good time to post!
 
 All of the release names are references to Peanuts strips/films. I think this is just so delightful! A few months ago, I attempted to get permission to embed the strips on our blog, but unfortunately it was denied (unless with had a limited audience with password protection `r emo::ji("woman_shrugging")`), so I've just linked to the comics -- Enjoy!
 
