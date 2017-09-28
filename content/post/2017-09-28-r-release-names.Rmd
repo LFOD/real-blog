@@ -47,7 +47,7 @@ All of the release names are references to Peanuts strips/films. I think this is
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">Mostly on target. A few are from films/badges rather than strips. Notably Masked Marvel from the unforgettable arm-wrestling w/Lucy.</p>&mdash; Peter Dalgaard (@pdalgd) <a href="https://twitter.com/pdalgd/status/913459973304279040?ref_src=twsrc%5Etfw">September 28, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-So here it is, from [*Charlie Brown and Snoopy Show*](http://peanuts.wikia.com/wiki/The_Charlie_Brown_and_Snoopy_Show)!
+So here it is, from [*Charlie Brown and Snoopy Show*](http://peanuts.wikia.com/wiki/The_Charlie_Brown_and_Snoopy_Show)!<br>
 <iframe src="https://www.youtube.com/embed/BYQF2H2W6Go" frameborder="0" allowfullscreen></iframe>
 
 ### 3.0.1 (2013-05-16) Good Sport
