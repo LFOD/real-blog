@@ -10,7 +10,7 @@ excerpt: "I always love discussions about R release names and their origin. I ha
 
 I always love [discussions](https://stackoverflow.com/questions/13478375/is-there-any-authoritative-documentation-on-r-release-nicknames) about R release names and their origin. I have been working on this list for a while -- with the source release of "Short Summer" yesterday, I thought it'd be a good time to post!
 
-All of the release names are references to Peanuts strips/films. I think this is just so delighful! A few months ago, I attempted to get permission to embed the strips on our blog, but unfortunately it was denied (unless with had a limited audience with password protection `r emo::ji("woman_shrugging")`), so I've just linked to the comics -- Enjoy!
+All of the release names are references to Peanuts strips/films. I think this is just so delightful! A few months ago, I attempted to get permission to embed the strips on our blog, but unfortunately it was denied (unless with had a limited audience with password protection `r emo::ji("woman_shrugging")`), so I've just linked to the comics -- Enjoy!
 
 ### r-devel (unreleased development version) Unsuffered Consequences
 **Reference**: [Peanuts August 17, 1967](http://www.gocomics.com/peanuts/1967/08/17)  
@@ -86,7 +86,7 @@ All of the release names are references to Peanuts strips/films. I think this is
 <img src = "/images/2017-09-28/fire-saftey.jpg" height = 500></img><br> Source [Business Wire](http://www.businesswire.com/news/home/20041006005405/en/Brush-Fire-Safety-Basics-MetLife-Auto-Home)
 
 ### 3.2.3 (2015-12-10) Wooden Christmas-Tree
-**Reference**: This is a line from [*A Charlie Brown Christmas*](http://peanuts.wikia.com/wiki/A_Charlie_Brown_Christmas) -- Linus says "Gee, I didn’t know they still made wooden Christmas trees".
+**Reference**: This is a line from [*A Charlie Brown Christmas*](http://peanuts.wikia.com/wiki/A_Charlie_Brown_Christmas) -- Linus says "Gee, I didn't know they still made wooden Christmas trees".
 
 ### 3.2.4 (2016-03-11) Very Secure Dishes
 **Reference**: [Peanuts February 20, 1964](http://www.gocomics.com/peanuts/1964/02/20)
