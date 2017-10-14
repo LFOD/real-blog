@@ -38,8 +38,6 @@ author = "Nick Strayer & Lucy D'Agostino McGowan"
     MathJaxCDN = "//cdn.bootcss.com"
     MathJaxVersion = "2.7.1"
     
-    #backgroundcolor = "steelblue"
-    
     showtitle = false
     [params.logo]
     url = "images/logo.png"
