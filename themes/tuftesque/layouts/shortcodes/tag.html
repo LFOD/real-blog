@@ -1,5 +1,0 @@
-{{ if .IsNamedParams }}
-  <{{ .Get "name" }}{{with .Get "class"}} class="{{.}}"{{end}}{{with .Get "id"}} id="{{.}}"{{end}}>
-{{ else }}
-  <{{ .Get 0 }}>
-{{ end }}
