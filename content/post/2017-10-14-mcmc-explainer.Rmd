@@ -1,10 +1,10 @@
 ---
-title: "Investigating Metropolis-Hastings"
+title: "MCMC and the case of the spilled seeds"
 author: "Nick Strayer"
 date: '2017-10-14'
 categories: ["interactive", "algorithms", "visualization"]
 tags: ["interactive", "algorithms", "visualization"]
-excerpt: "For a long time I was confused by MCMC. I didn't understand how it worked, I didn't understand why we needed to do it, and mostly I didn't understand how to know if it was working. In this post I attempt to clear up those questions and allow you to watch the metroplis haystings algorithm attempt to find a posterior to help solve a problem of two birds eating seeds."
+excerpt: "For a long time I was confused by MCMC. I didn't understand what it was, how it worked, and why we needed to do it. In this post I attempt to clear up those questions and allow you to play with the Metroplis Haystings algorithm as it attempts to find a posterior to help solve a mistery of two messy birds."
 ---
   
   
@@ -15,11 +15,11 @@ library(tidyverse)
 library(jsonlite)
 ```
 
-Earlier this month I did a post on simulated annealing, an algorithm that I learned in the class I'm currently taken [Advanced Statistical Computing](http://stronginference.com/Bios8366/) taught by [Chris Fonnesbeck](https://twitter.com/fonnesbeck) here at Vanderbilt. Recently we have moved on to more traditionally "statistics" algorithms, and one that Dr. Fonnesbeck is particularly well versed in, Markov-Chain Monte-Carlo (or MCMC) `r margin_note("Dr. Fonnesbeck is the creator of the very popular python library [pymc](http://docs.pymc.io/).")` In this post I hope to elucidate what MCMC is, why we need it, and show how one particular way of doing it (the metropolis hastings sampler) works. 
+Earlier this month I did a post on simulated annealing, an algorithm that I learned in the class I'm currently taking: [Advanced Statistical Computing](http://stronginference.com/Bios8366/) taught by [Chris Fonnesbeck](https://twitter.com/fonnesbeck) here at Vanderbilt. Recently we have moved on to more traditionally "statistics" algorithms, and one that Dr. Fonnesbeck is particularly well versed in, Markov-Chain Monte-Carlo (or MCMC). `r margin_note("Dr. Fonnesbeck is the creator of the very popular python library [pymc](http://docs.pymc.io/).")` In this post I hope to elucidate what MCMC is, why we need it, and show how one particular way of doing it (the metropolis hastings sampler) works. 
 
 ## What is MCMC?
 
-If you want to sound smart, next time someone asks you what you like thinking about, say "Markov-Chain Monte-Carlo", `r margin_note("![](http://nbwsblog.com/wp-content/uploads/2017/08/Marco-Polo.gif) I always think of Marco Polo when I think of Monte-Carlo.")` it's a nice long mouthful of sciency soundings words that cause most people to zone out after about two syllables. What does it mean in normal language? __Markov-Chain__ `r margin_note("![](https://cdn-images-1.medium.com/max/2000/1*my_udGVBPa4U5L6U_9m81Q.png) Markov Chains are used in lots of cool places, for instance, in [generating fake text.](https://chatbotslife.com/notes-on-remixing-noon-generative-text-and-markov-chains-84ff4ec23937)")`refers to the idea of a sequence of draws such that the only thing that all you need to know about what the next value will be is the one just prior to it. Think of it like the mathematical equivalent to Dory from Finding Nome, once she's in a place she has no memory of where she was before and her next action is based only upon her current situation. __Monte-Carlo__ refers to the act of estimating something by simulation. Basically the concept of, if you want to understand a process, repeat it a bunch of times and look at the aggregate behavior. `r margin_note("An example of this can be seen in my previous post [Wait, what are P-values?](http://livefreeordichotomize.com/2016/12/24/wait-what-are-p-values/) ")`
+If you want to sound smart, next time someone asks you what you like thinking about, say "Markov-Chain Monte-Carlo", `r margin_note("![](http://nbwsblog.com/wp-content/uploads/2017/08/Marco-Polo.gif) I always think of Marco Polo when I think of Monte-Carlo.")` it's a nice long mouthful of sciency soundings words that cause most people to zone out after about two syllables. What does it mean in normal language? __Markov-Chain__ `r margin_note("![](https://cdn-images-1.medium.com/max/2000/1*my_udGVBPa4U5L6U_9m81Q.png) Markov Chains are used in lots of cool places. For instance, [generating fake text.](https://chatbotslife.com/notes-on-remixing-noon-generative-text-and-markov-chains-84ff4ec23937)")`refers to the idea of a sequence of draws such that the only thing that all you need to know about what the next value will be is the one just prior to it. Think of it like the mathematical equivalent to Dory from Finding Nome, once she's in a place she has no memory of where she was before and her next action is based only upon her current situation. __Monte-Carlo__ refers to the act of estimating something by simulation. Basically the concept of, if you want to understand a process, repeat it a bunch of times and look at the aggregate behavior. `r margin_note("Another example of monte carlo methods in statistics can be seen in my previous post [Wait, what are P-values?](http://livefreeordichotomize.com/2016/12/24/wait-what-are-p-values/) ")`
 
 ## Why do we need MCMC?
 
@@ -28,7 +28,7 @@ When I say 'we' in this context I mean Bayesian statisticians (which, while read
 A huge reason why Bayesian statistics was so unpopular up until very recently is because when calculating the "posterior" distribution a large portion of the time the math simply wasn't tractable. To see what I mean it helps to think about the form of a posterior distribution. 
 
 $$\begin{aligned}
-\text{Posterior of parameter} &= \frac{\text{data likelihood} \cdot \text{prior dist of parameter}}{\int\text{data likelihood} \cdot \text{prior dist of parameter}}
+\text{Posterior of parameter} &= \frac{P(\text{data given parameter}) \cdot P(\text{parameter})}{\int P(\text{data given parameter}) \cdot P(\text{parameter})}
 \end{aligned}$$
 
 The top of this equation is rather straightforward, you simply multiply the distribution you believe your data is derived from by the distribution you believe the true parameter of interest follows. E.g. the density function of the normal distribution multiplied by the density function of another normal representing the distribution of the mean of the data's distribution. The problem comes with the integral below. Since it's integrating over the entire possible space of the parameter of interest it is simply a constant, but finding what constant it is is tricky. Even if you did some optimization method to find it, you still have the problem that most of the math you would want to do with the posterior distribution involves taking an integral over the same values again so just having the normalizing constant is not of much help. 
