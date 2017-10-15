@@ -6,10 +6,20 @@
     <description>Recent content in Interactive on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/interactive/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Investigating Metropolis-Hastings</title>
+      <link>/2017/10/14/investigating-metropolis-hastings/</link>
+      <pubDate>Sat, 14 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/10/14/investigating-metropolis-hastings/</guid>
+      <description>Hi there. This is some text and stuff.
+        </description>
+    </item>
     
     <item>
       <title>The traveling metallurgist</title>

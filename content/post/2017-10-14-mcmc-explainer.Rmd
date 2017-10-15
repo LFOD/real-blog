@@ -1,0 +1,33 @@
+---
+title: "Investigating Metropolis-Hastings"
+author: "Nick Strayer"
+date: '2017-10-14'
+categories: ["interactive", "algorithms", "visualization"]
+tags: ["interactive", "algorithms", "visualization"]
+excerpt: "For a long time I was confused by MCMC. I didn't understand how it worked, I didn't understand why we needed to do it, and mostly I didn't understand how to know if it was working. In this post I attempt to clear up those questions and allow you to watch the metroplis haystings algorithm attempt to find a posterior to help solve a problem of two birds eating seeds."
+---
+  
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tufte)
+library(tidyverse)
+library(jsonlite)
+```
+
+
+# Hi there.
+
+Let's say you have a bird feeder on your porch and you have two bird species that visit it: a Cardnal and a Carolina Wren. You have noticed that there tend to be a lot of seeds spilled on the ground around the feeder. This annoys you because you spent a lot of money on those seeds and those ungrateful birds are wasting a lot of them. You decide to google the problem and find a handy website that lays out the seed spilling habits of both the Cardinal and the Carolina Wren. This site says that the Cardinal's seed spillage amount per feeding follows a normal distribution with a mean of 65 and a standard deviation of 10, and the Carolina Wren's happen to follow a normal distibution with a mean of 85 seeds and a standard deviation of 10 as well. `r margin_note('Sometimes the birds cary seeds with them and thus can possibly spill negative seeds, so this truly is normal...')` 
+
+The thing is, you want to know what the makeup of your bird spillers are so you can know which bird species to be more mad at. You put a scale beneath the feeder that can automatically measure the spillage from a single feeding. `r margin_note('It's a single bird feeder so only one bird feeds at a time.')` So you have info on how much seed was spilled at each feeding, and you know the distribution of spillage for each bird species, but you have a job so you can't actually sit there and watch the birds feed, plus you understand that the real distribution of birds feeding probably is just that, a distribution. What can you do? You can do bayesian stati
+
+<link rel="stylesheet" href="/js/mcmcExplainer/style.css">
+<div class = 'fullwidth'>
+<div id = 'data_plot'></div>
+<div id = 'data_histogram'></div>    
+<div id = 'sample_trace'></div>
+<div id = 'sample_histogram'></div>
+<div id = 'trace_viz'></div>
+</div>
+<script src="/js/mcmcExplainer/bundle.js"></script>

@@ -1,0 +1,9 @@
+svg text {
+  cursor: default;
+  user-select: none;
+  font-family: optima;
+}
+
+.label {
+  font-size: 100%;
+}
