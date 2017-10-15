@@ -44884,19 +44884,19 @@ exports.default = function (_ref) {
   var sliderWidth = c.x(meanRange[1]) - sliderStarts;
 
   // slider for bird one's mean
-  c.svg.selectAppend('g.birdOne').call((0, _main2.default)().width(sliderWidth).range(meanRange).startPos(birdOneMean).loc([sliderStarts, c.height - 4 * sliderGap]).numTicks(0).label('Bird 1 mean seeds').onDone(function (newMean) {
+  c.svg.selectAppend('g.birdOne').call((0, _main2.default)().width(sliderWidth).range(meanRange).startPos(birdOneMean).loc([sliderStarts, c.height - 4 * sliderGap]).numTicks(0).label('Cardinal mean seeds').onDone(function (newMean) {
     birdOneMean = newMean;
     sampleAndRender(birdOneMean, birdTwoMean, delta, n);
   }));
 
   // slider for birdtwo's mean
-  c.svg.selectAppend('g.birdTwo').call((0, _main2.default)().width(sliderWidth).range(meanRange).startPos(birdTwoMean).loc([sliderStarts, c.height - 3 * sliderGap]).numTicks(0).label('Bird 2 mean seeds').onDone(function (newMean) {
+  c.svg.selectAppend('g.birdTwo').call((0, _main2.default)().width(sliderWidth).range(meanRange).startPos(birdTwoMean).loc([sliderStarts, c.height - 3 * sliderGap]).numTicks(0).label('Carolina Wren mean seeds').onDone(function (newMean) {
     birdTwoMean = newMean;
     sampleAndRender(birdOneMean, birdTwoMean, delta, n);
   }));
 
   // slider for delta
-  c.svg.selectAppend('g.delta').call((0, _main2.default)().width(sliderWidth).range([0, 100]).startPos(50).loc([sliderStarts, c.height - 2 * sliderGap]).numTicks(10).label('True percentage of time Bird 1 is at the feeder').onDone(function (newPercent) {
+  c.svg.selectAppend('g.delta').call((0, _main2.default)().width(sliderWidth).range([0, 100]).startPos(50).loc([sliderStarts, c.height - 2 * sliderGap]).numTicks(10).label('True percentage of time a Cardinal is at the feeder').onDone(function (newPercent) {
     delta = newPercent / 100;
     sampleAndRender(birdOneMean, birdTwoMean, delta, n);
   }));
