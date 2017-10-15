@@ -84,3 +84,4 @@ Here are a few experiments you may want to run to explore the algorithm's behavi
 - See how increasing the number of observations results in a skinnier posterior.
 - If you're really adventurous, try forking the code for this simulation from [github](https://github.com/nstrayer/mcmcDemo) and switching the prior to a beta distribution in [this file](https://github.com/nstrayer/mcmcDemo/blob/master/src/main.js#L27-L28). The beta will allow you to give opinionated priors about the distribution of the parameter of interest, but sometimes at a cost of accuracy. 
 
+__Still confused?__ MCMC is non-trivial to say the least, so don't feel bad if you don't get it. Please let me know in the comments or on [twitter](https://www.twitter.com/NicholasStrayer) what is confusing so I can try and make this explanation better!
