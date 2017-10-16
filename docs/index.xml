@@ -6,10 +6,19 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MCMC and the case of the spilled seeds</title>
+      <link>/2017/10/14/mcmc-and-the-case-of-the-spilled-seeds/</link>
+      <pubDate>Sat, 14 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/10/14/mcmc-and-the-case-of-the-spilled-seeds/</guid>
+      <description>Earlier this month I did a post on simulated annealing, an algorithm that I learned in the class I’m currently taking: Advanced Statistical Computing taught by Chris Fonnesbeck here at Vanderbilt. Recently we have moved on to more traditionally “statistics” algorithms, and one that Dr. Fonnesbeck is particularly well versed in, Markov-Chain Monte-Carlo (or MCMC). ⊕Dr. Fonnesbeck is the creator of the very popular python library pymc. In this post I hope to elucidate what MCMC is, why we need it, and show how one particular way of doing it (the metropolis hastings sampler) works.</description>
+    </item>
     
     <item>
       <title>R release names</title>
