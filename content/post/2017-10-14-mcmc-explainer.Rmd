@@ -4,7 +4,7 @@ author: "Nick Strayer"
 date: '2017-10-14'
 categories: ["interactive", "algorithms", "visualization"]
 tags: ["interactive", "algorithms", "visualization"]
-excerpt: "For a long time I was confused by MCMC. I didn't understand what it was, how it worked, and why we needed to do it. In this post I attempt to clear up those questions and allow you to play with the Metroplis Haystings algorithm as it attempts to find a posterior to help solve a mistery of two messy birds."
+excerpt: "For a long time I was confused by MCMC. I didn't understand what it was, how it worked, and why we needed to do it. In this post I attempt to clear up those questions and allow you to play with the Metroplis Haystings algorithm as it attempts to find a posterior to help solve a mystery of two messy birds."
 ---
   
   
