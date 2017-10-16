@@ -60,7 +60,7 @@ The thing is, you want to know what the makeup of your bird spillers are so you 
 
 The data likelihood is a normal mixture: $L(\delta|\text{seeds}) = \delta N(\text{Cardinal}) + (1 - \delta)N(\text{Carolina Wren})$
 
-You don't have any real idea about which bird will be more likely so your prior is a uniform distribution over the range 0 and 1.
+You don't have any real idea about which bird will be more likely so your prior is a uniform distribution over the range 0 and 1 ($U(0,1)$).
 
 `r margin_note("Turns out they actually make [products to catch spilled seeds](https://www.uniquebirdhouseboutique.com/category/bird-accessories/seed-catchers-birdseed-tray/) so this convoluted example isn't too crazy. ![](https://www.uniquebirdhouseboutique.com/wp-content/uploads/2013/04/seedhoop.jpg)")`
 
