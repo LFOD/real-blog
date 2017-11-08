@@ -1,0 +1,74 @@
+---
+title: "LSTM neural nets as told by baseball"
+author: "Nick Strayer"
+date: '2017-11-08'
+categories: ["deep learning", "algorithms", "baseball"]
+tags: ["deep learning", "algorithms", "baseball"]
+excerpt: "One thing I always found confusing when learning what an LSTM does is understanding intuitively why it's doing what it does. Here I attempt to give an example of how a LSTM hidden layer can be thought of through baseball."
+---
+  
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+library(tufte)
+library(tidyverse)
+library(jsonlite)
+```
+
+Currently I am studying for my qualifying exams on which the topic is using deep neural networks for classification of time series data. One of the extremely popular neural net architecture for doing this is the LSTM, or Long Short Term Memory model. The LSTM is a relatively recent advance `r margin_note("Introduced in [1997 by Hochreiter and Schmidhuber](http://www.bioinf.jku.at/publications/older/2604.pdf)")` in the the class of networks known as Recurrent Neural Networks (RNNs).
+
+My main problem when learning LSTMs was the horrifically mathematical way the are first described. `r margin_note("![](https://deeplearning4j.org/img/gers_lstm.png) The typical way an LSTM is first introduced. This is from [The _Beginers_ Guide to RNNs](https://deeplearning4j.org/lstm.html)... Hope you're an advanced beginner.")` Almost always the first introduction you get to them is a giant hairball diagram with a bunch of proprietary symbols and shapes accompanied by some equally confusing math equations. Personally, all this does is make me question my decision to go to grad school, not help me understand what's going on. After struggling through a lot of these introductions however, I have come up with a way that I use to intuitively understand what LSTM networks do using a baseball analogy. Hopefully it helps you too. 
+
+## Problem Setup
+
+You and a friend are sitting in your house watching a baseball game. Your friend is a fair-weather baseball fan and really doesn't care about game's details, just who's winning. They decide that instead of wasting their time watching the game they can make animojis on their phone and just have you dictate the game to them. 
+
+In order to do this efficiently you need to devise a strategy that will allow you to give your friend what he needs to know, while keeping track of the game in your own head. 
+
+![](/lstm_explainer/simple_lstm.png)
+`r margin_note("How our baseball neural network is setup.")`
+
+## Quick RNN background
+
+ RNNs are simply networks that keep track of what they have seen and use that to aid their classification or regression output for a given element in a sequence. For instance, if you were modeling a sentence, an RNN would see the letters `COO` and then, because it remembers its context from the previous three letters, will predict `L` as the next letter. This is contrasted with a naive approach which would not remember the previously seen data and would always predict `E` because it's the most common letter in the English language.
+
+
+`r margin_note("Fun fact: recently [Google switched over their translation system](https://codesachin.wordpress.com/2017/01/18/understanding-the-new-google-translate/) to use LSTMs. Language translation is a particularly good usecase for these types of models as sometimes words in early parts of a sentence matter a lot in later parts, but they don't always occur the same distance before. Thus having a flexible model that can keep track of what it's seen helps a great deal in translation.")`
+
+There are many problems with the simple implementations of RNNs that are way too complicated to go into here and not the point of this post. If you want to know more about them I would recommend any combination of [original LSTM paper](http://www.bioinf.jku.at/publications/older/2604.pdf), [this excelent blog post](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) by Chris Olah, and the chapter on RNNs from [Goodfellow et al.'s deep learning textbook](http://www.deeplearningbook.org/contents/rnn.html). All that you need to know is that, the LSTM solved many of the issues associated with training RNNs by using some clever strategies, mainly the ability to remember and forget using "gates."
+
+To recap, there are two main facts you need to remember in regards to RNNs (including their subset the LSTM): 
+
+1. An RNN takes an input and passes that input through a 'hidden' layer before returning its output of interest. 
+2. The hidden layers can communicate with each other through the sequence. Aka the hidden layer knows the values of the hidden layer the time point previous. 
+
+## Your strategy (aka an LSTM)
+
+![](/lstm_explainer/hidden_to_hidden.png)
+`r margin_note("You keep your knowledge of the state of the game from play to play.")`
+
+You decide to break your strategy for keeping your friend informed into three parts: what you care about, what you don't care about anymore, and what your friend cares about.
+
+### Part 1: What you care about (the input gate)
+
+Say a batter is up and he has two strikes. The next pitch comes in and he fouls it to right field. Since you can't strike out on a foul ball this pitch essentially doesn't matter to the current status of the game. `r margin_note("Sure you could argue that it does in fact matter that the pitcher is more tired and the batter is more weary, but let's be reasonable")` Having to juggle a lot in your brain you essentially choose to not let this play take up space (or you supress its _input_) in what you're keeping track of and thus you essentially ignore it.  
+
+### Part 2: What information no longer matters (the forget gate)
+
+Let's continue with the current batter with two strikes. Say on the next pitch he hits a great fly to left field and the fielder misses it. He gets all the way to second for a double. `r margin_note("![](https://4.imimg.com/data4/UV/JX/MY-14300680/home-gate-500x500.jpg) Of no importance, I just thought this was a nice looking gate. [Source](https://4.imimg.com/data4/UV/JX/MY-14300680/home-gate-500x500.jpg)")` The previous knowledge that you were carrying with you, the fact that the count was two strikes, no longer is important to the game. Once a batter has gotten on base, even though he had two strikes before he got there that information no longer makes any difference to the game's outcome. Because of this you decide you can "forget" this information because you will no longer need it. 
+
+### Part 3: What you tell your friend (the output gate)
+
+Let's stay with the play we considered for part 2. In this case the batter has made it to a base, and thus the state of the game has changed. For instance if a home run is hit now, there would be two runs instead of just one. Due to this, you have chosen to remember the fact that there is a runner on second base, but you don't actually choose to tell your friend. `r margin_note("![](https://headguruteacher.files.wordpress.com/2013/02/screen-shot-2013-02-12-at-22-26-37.png) [Source](https://headguruteacher.files.wordpress.com/2013/02/screen-shot-2013-02-12-at-22-26-37.png)")`
+Since he doesn't care about anything but the score of the game, he would gain nothing from you telling him this information, so you simply omit it in your report of the play (or supress your _output._)  However, you still keep that information to yourself so you can accurately know the score if for instance that home run is hit by the next batter. 
+
+## Recap
+
+There are plenty of other nitty gritty details about what exactly goes on in an LSTM but what is the most important about how they work is their 'gates.' These gates help them efficiently keep track of dependencies in the outcome that are influenced by input events happening at flexible amounts of time before. Traditional RNNs simply take their previous knowledge and transfer it wholesale to themselves at the next time-point, which, as illustrated in part two, can be very wasteful, and hard to optimize. 
+
+`r margin_note("![](http://deeplearning.net/tutorial/_images/lstm_memorycell.png) By far the easiest to parse technical diagram of the LSTM I've found. [Source](http://deeplearning.net/tutorial/_images/lstm_memorycell.png)")`
+
+
+RNNs in general are fantastically powerful algorithms because of their flexibility to learn the patterns in time that are important. This contrasts with old school methods like sliding windows, where the model is only capable of looking backwards a set amount of time, which is bad if an event of interest is further back than that window, or if most of data contained in the window is not neccesary for the current situation. 
+
+
+I admit though that I wrote this article from the entirely unrealistic perspective of a person who has been reading literature on this for a good bit now, so it is very likely I glossed over some points that are critical to your grasp of the problem. If this happened, please don't hesitate to send me angry messages on [twitter](twitter.com/NicholasStrayer) or leave a comment below. 
