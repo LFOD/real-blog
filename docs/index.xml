@@ -6,10 +6,20 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>LSTM neural nets as told by baseball</title>
+      <link>/2017/11/08/lstm-neural-nets-as-told-by-baseball/</link>
+      <pubDate>Wed, 08 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/11/08/lstm-neural-nets-as-told-by-baseball/</guid>
+      <description>Currently I am studying for my qualifying exams on which the topic is “using deep neural networks for classification of time series data.” One extremely popular neural net architecture for doing this is the LSTM, or Long Short Term Memory model. The LSTM is a relatively recent advance ⊕Introduced in 1997 by Hochreiter and Schmidhuber in the the class of networks known as Recurrent Neural Networks (RNNs).
+My main problem when I was learning about LSTMs was the horrifically mathematical way the are first described.</description>
+    </item>
     
     <item>
       <title>MCMC and the case of the spilled seeds</title>

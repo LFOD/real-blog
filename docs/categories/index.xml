@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 14 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Algorithms</title>
       <link>/categories/algorithms/</link>
-      <pubDate>Sat, 14 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 08 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/algorithms/</guid>
       <description></description>
@@ -26,6 +26,15 @@
       <pubDate>Sun, 03 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/apis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Baseball</title>
+      <link>/categories/baseball/</link>
+      <pubDate>Wed, 08 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/baseball/</guid>
       <description></description>
     </item>
     
@@ -62,6 +71,15 @@
       <pubDate>Thu, 15 Dec 2016 15:41:30 -0600</pubDate>
       
       <guid>/categories/data-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Deep Learning</title>
+      <link>/categories/deep-learning/</link>
+      <pubDate>Wed, 08 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/deep-learning/</guid>
       <description></description>
     </item>
     
