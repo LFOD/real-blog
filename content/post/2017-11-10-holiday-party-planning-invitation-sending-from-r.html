@@ -1,0 +1,59 @@
+---
+title: Holiday party planning + invitation sending from R
+author: "Lucy D'Agostino McGowan"
+date: '2017-11-10'
+slug: holiday-party-planning-invitation-sending-from-r
+categories: [rstats]
+tags: [rstats]
+---
+
+
+
+<p>’Tis the season for white elphant / גמד וענק / Yankee swap / secret santa-ing! There are various rules for this, for our version: 🏷 each participant receives the name of someone else to purchase a gift for 🎁 gifts are exchanged at a party 🎉 🤔 the receiver is tasked with guessing who the gift-giver was!</p>
+<p>We thought it’d be particularly fun to do it #rstats style.</p>
+<div id="assigning-partners" class="section level1">
+<h1>Assigning partners</h1>
+<p>We had our classmates sign up if they were interested in a Google Form.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="images/2017-11-10/google-form.png" /></span></p>
+<p>resulting in a .csv file with each participant’s <code>name</code> and <code>email</code>.</p>
+<pre class="r"><code>names &lt;- read_csv(&quot;FunPeople.csv&quot;)</code></pre>
+<p>We began by making a tibble that shuffled the <code>name</code> in the first column and assigned a random <code>partner</code> in the second.</p>
+<pre class="r"><code>dat &lt;- tibble(
+  name = sample(names$name),
+  partner = sample(names$name)
+)</code></pre>
+<p>“But what if someone was assigned to be their own partner!” you may ask. Have no fear! A <code>while</code> loop is here! We allow a <code>while</code> loop to iterate until every individual is assigned a partner (who isn’t them!).</p>
+<pre class="r"><code>while (any(dat$name == dat$partner)) {
+  dat &lt;- tibble(
+    name = sample(names$name),
+    partner = sample(names$name)
+  )
+}</code></pre>
+<p>We then do a join to pull the emails back in.</p>
+<pre class="r"><code>dat &lt;- left_join(dat, names)</code></pre>
+</div>
+<div id="sending-the-email" class="section level1">
+<h1>Sending the email</h1>
+<p><a href="https://twitter.com/_inundata">Karthik</a> and I had a blast at ropensci unconf creating the <a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress package</a> - what a delightful chance to use it! We didn’t want the secret to be spoiled (i.e. we didn’t want to know who would be buying us gifts!), so we wrote a script to send an email to our classmates.</p>
+<pre class="r"><code>## devtools::install_github(&quot;ropenscilabs/ponyexpress&quot;)
+
+library(&quot;ponyexpress&quot;)</code></pre>
+<pre class="r"><code>body &lt;- &quot;Dear {name},
+
+You have been assigned to surprise {partner} with a happy gift! {partner} told us they have the following interests: {interests}. Remember, the price limit is $20. 
+
+Happy white elephant-ing,
+Sarah &amp; Lucy&quot;
+
+our_template &lt;- glue::glue(glitter_template)
+
+parcel &lt;- parcel_create(dat,
+                        sender_name = &quot;Lucy&quot;,
+                        sender_email = &quot;lucydagostino@gmail.com&quot;,
+                        subject = &quot;Secret Santa!&quot;,
+                        template = our_template)
+
+parcel_preview(parcel)     
+
+parcel_send(parcel)</code></pre>
+</div>

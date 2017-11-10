@@ -1,0 +1,85 @@
+---
+title: Holiday party planning + invitation sending from R
+author: "Lucy D'Agostino McGowan"
+date: '2017-11-10'
+slug: holiday-party-planning-invitation-sending-from-r
+categories: [rstats]
+tags: [rstats]
+---
+
+'Tis the season for white elphant / גמד וענק / Yankee swap / secret santa-ing! There are various rules for this, for our version:
+`r emo::ji("tag")` each participant receives the name of someone else to purchase a gift for
+`r emo::ji("gift")` gifts are exchanged at a party `r emo::ji("tada")`
+`r emo::ji("think")` the receiver is tasked with guessing who the gift-giver was!
+ 
+We thought it'd be particularly fun to do it #rstats style.
+
+# Assigning partners
+
+We had our classmates sign up if they were interested in a Google Form.
+
+`r tufte::margin_note("![](images/2017-11-10/google-form.png)")`
+
+resulting in a .csv file with each participant's `name` and `email`.
+
+```{r, eval = FALSE}
+names <- read_csv("FunPeople.csv")
+```
+
+We began by making a tibble that shuffled the `name` in the first column and assigned a random `partner` in the second.
+
+```{r, eval = FALSE}
+dat <- tibble(
+  name = sample(names$name),
+  partner = sample(names$name)
+)
+```
+
+"But what if someone was assigned to be their own partner!" you may ask. Have no fear! A `while` loop is here! We allow a `while` loop to iterate until every individual is assigned a partner (who isn't them!).
+
+```{r, eval = FALSE}
+while (any(dat$name == dat$partner)) {
+  dat <- tibble(
+    name = sample(names$name),
+    partner = sample(names$name)
+  )
+}
+```
+
+We then do a join to pull the emails back in.
+
+```{r, eval = FALSE}
+dat <- left_join(dat, names)
+```
+
+# Sending the email
+
+[Karthik](https://twitter.com/_inundata) and I had a blast at ropensci unconf creating the [ponyexpress package](https://github.com/ropenscilabs/ponyexpress) - what a delightful chance to use it! We didn't want the secret to be spoiled (i.e. we didn't want to know who would be buying us gifts!), so we wrote a script to send an email to our classmates.
+
+```{r, eval = FALSE}
+## devtools::install_github("ropenscilabs/ponyexpress")
+
+library("ponyexpress")
+```
+
+```{r, eval = FALSE}
+body <- "Dear {name},
+
+You have been assigned to surprise {partner} with a happy gift! {partner} told us they have the following interests: {interests}. Remember, the price limit is $20. 
+
+Happy white elephant-ing,
+Sarah & Lucy"
+
+our_template <- glue::glue(glitter_template)
+
+parcel <- parcel_create(dat,
+                        sender_name = "Lucy",
+                        sender_email = "lucydagostino@gmail.com",
+                        subject = "Secret Santa!",
+                        template = our_template)
+
+parcel_preview(parcel)     
+
+parcel_send(parcel)
+```
+
