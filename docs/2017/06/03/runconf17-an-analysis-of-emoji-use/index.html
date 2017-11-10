@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - runconf17, an analysis of emoji use</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.27.1" />
+
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../../../css/tuftesque.css">
+<style>
+body {
+  
+    background-color: #fffff8;
+  
+}
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <span id = "blog_logo">
+         <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+      </span>
+      
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="../../../../2017/06/03/runconf17-an-analysis-of-emoji-use/">runconf17, an analysis of emoji use</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jun 3, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="../../../../categories/ropensci">rOpenSci</a>
+    
+    <a  href="../../../../categories/rstats">rstats</a>
+    
+    <a  href="../../../../categories/conferences">conferences</a>
+    
+    <a  href="../../../../categories/emojis">emojis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><p><span class="newthought">I had <em>such</em> a delightful time</span> at rOpenSci’s <a href="http://unconf17.ropensci.org">unconference</a> last week. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">21 📦 were produced!</span> Not only was it <a href="https://ropenscilabs.github.io/runconf17-projects/">extremely productive</a>, but in between the crazy productivity was some epic community building.</p>
+<p><a href="https://twitter.com/StefanieButland">Stefanie</a> kicked the conference off with ice breakers, where we explored topics ranging from #rcatladies &amp; #rdogfellas <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">for the record, I’m an #rchickenlady, <a href="https://twitter.com/search?q=%23RChickenLadies&amp;src=typd">IT’S HAPPENING</a></span> to impostor syndrome. It was an excellent way to get conversations starting!</p>
+<div id="work" class="section level2">
+<h2>work</h2>
+<p><span class="newthought"><a href="https://twitter.com/_inundata">Karthik</a> and I worked on</span> two packages:</p>
+<p><a href="https://github.com/ropenscilabs/arresteddev">arresteddev</a>: a package for when your development is going awry! <span class="marginnote"> Mostly, this was a good excuse to look up Arrested Development gifs, which, we established, is pronounced with a g like giraffe. <img src = "https://img.buzzfeed.com/buzzfeed-static/static/2016-11/17/13/asset/buzzfeed-prod-fastlane01/anigif_sub-buzz-29187-1479408030-4.gif"></img> </span> Includes functions such as <code>lmgtfy()</code>, that will seamlessly google your last error message, <a href="https://twitter.com/drob">David Robinson’s</a> <code>tracestack()</code> that will query your last error message on Stack Overflow, and <code>squirrel()</code>, a function that will randomly send you to a distracting website - for when things are really going poorly 💁.</p>
+<p><a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress</a>: a package for automating speedy emails from R - copy and paste neigh more 🐴. This package allows you to send templated emails to a list of contacts. Great for conferences, birthday parties, or karaoke invitations.</p>
+</div>
+<div id="play" class="section level2">
+<h2>play</h2>
+<p><span class="newthought">Between our package building</span>, there were SO many opportunities to get to know some of the most talented people.</p>
+<p><span class="marginnote"> <img src = "https://github.com/LFOD/real-blog/raw/master/static/images/jenny_lucy.jpg""> </img><br> <em>Jenny &amp; I enthusiastically working on <a href="https://github.com/tidyverse/googledrive">googledrive</a>.</em> </span> More than anything, this was an excellent opportunity to feel like a part of a community – and a community that certainly extends beyond the people that attended the unconference! There were so many people following along, tweeting along, and assisting along the way.</p>
+<p>a few highlights:</p>
+<ul>
+<li>🍨 ice cream outings</li>
+<li>🎤 karaoke adventures<br />
+</li>
+<li>🍸 happy hours (complete with <a href="https://twitter.com/revodavid/status/867901254466506752">R-themed drinks</a>)</li>
+<li>💪 Karthik attempting to <a href="https://twitter.com/kara_woo/status/868353913296044032">lick his elbow</a></li>
+</ul>
+</div>
+<div id="analysis" class="section level2">
+<h2>analysis</h2>
+<p><span class="newthought">In an effort to stay on brand</span>, I decided to do a small analysis of the tweets that came out of #runconf17. I designed a small study: <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><em>Note: this is not particularly statistically rigorous, but it is VERY fun.</em></span></p>
+<ul>
+<li>pulled all tweets (excluding retweets) using the hashtag #runconf17 between May 24th and May 30th</li>
+<li>also pulled all tweets (excluding retweets) using the hashtag #rstats during the same time period</li>
+</ul>
+<p><span style="color:#EB6864"> <strong>Question</strong>: Are twitter users who used the #runconf17 hashtag more likely to use emojis than those who only tweeted with the #rstats hashtag during the same time period? </span></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I used the <strong>rtweet</strong> package to pull the tweets, <strong>dplyr</strong> and <strong>fuzzyjoin</strong> to wrangle the data a bit, and <strong>rms</strong> to analyze it.</span></p>
+<pre class="r"><code>library(&quot;rtweet&quot;)
+library(&quot;dplyr&quot;)
+library(&quot;fuzzyjoin&quot;)
+library(&quot;rms&quot;)</code></pre>
+<pre class="r"><code>runconf &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;,
+                         n = 1e4, 
+                         include_rts = FALSE)
+
+rstats &lt;- search_tweets(q = &quot;#rstats AND since:2017-05-23 AND until:2017-05-31&quot;,
+                        n = 1e4,
+                        include_rts = FALSE)</code></pre>
+<p><span class="newthought">After pulling in the tweets</span>, I categorized tweeters as either using the #runconf17 hashtag during the week or not. I then merged the tweets with an emoji dictionary <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The emoji dictionary was discoved by the lovely <a href="https://twitter.com/ma_salmon">Maëlle</a>!</span>, and grouped by tweeter. If the tweeter used an emoji at any point during the week, they were categorized as an emoji-user, if not, they were sad (jk, there is room for all here!).</p>
+<pre class="r"><code>## create variable for whether tweeted about runconf
+runconf$runconf &lt;- &quot;yes&quot;
+
+rstats &lt;- rstats %&gt;%
+  mutate(runconf = ifelse(screen_name %in% runconf$screen_name, &quot;yes&quot;, &quot;no&quot;))
+
+## load in the emoji dictionary
+dico &lt;- readr::read_csv2(&quot;https://raw.githubusercontent.com/today-is-a-good-day/emojis/master/emDict.csv&quot;)</code></pre>
+<pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Description = col_character(),
+##   Native = col_character(),
+##   Bytes = col_character(),
+##   `R-encoding` = col_character()
+## )</code></pre>
+<pre class="r"><code>## combine datasets, keep only unique tweets
+data &lt;- bind_rows(runconf, rstats) %&gt;%
+  distinct(text, .keep_all = TRUE)
+
+## summarize by user, did they tweet about runconf in the past week 
+## &amp; did they use an emoji in the past week?
+used_emoji &lt;- regex_left_join(data, dico, by = c(text = &quot;Native&quot;)) %&gt;%
+  select(screen_name, 
+         text,
+         runconf,
+         emoji = Native) %&gt;%
+  group_by(screen_name) %&gt;%
+  mutate(tot_emoji = sum(!is.na(emoji)),
+         used_emoji = ifelse(tot_emoji &gt; 0, &quot;yes&quot;, &quot;no&quot;),
+         tot_tweets = n_distinct(text)) %&gt;%
+  distinct(screen_name, .keep_all = TRUE)</code></pre>
+</div>
+<div id="results" class="section level2">
+<h2>results</h2>
+<p><span class="newthought">We had 526 tweeters</span> that just used the #rstats hashtag, and 107 that tweeted with the #runconf17 hashtag. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">THESE ARE MY PEOPLE 🙌</span> Among the #rstats tweeters, 5.9% used at least one emoji in their tweets, whereas among #runconf17 tweeters, 25.2% used emojis!</p>
+<pre class="r"><code>used_emoji %&gt;%
+  group_by(`tweeted #runconf` = runconf, `used emoji` = used_emoji) %&gt;%
+  tally() %&gt;%
+  mutate(`%` = 100*prop.table(n)) %&gt;%
+  knitr::kable(digits = 1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">tweeted #runconf</th>
+<th align="left">used emoji</th>
+<th align="right">n</th>
+<th align="right">%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">no</td>
+<td align="left">no</td>
+<td align="right">495</td>
+<td align="right">94.1</td>
+</tr>
+<tr class="even">
+<td align="left">no</td>
+<td align="left">yes</td>
+<td align="right">31</td>
+<td align="right">5.9</td>
+</tr>
+<tr class="odd">
+<td align="left">yes</td>
+<td align="left">no</td>
+<td align="right">80</td>
+<td align="right">74.8</td>
+</tr>
+<tr class="even">
+<td align="left">yes</td>
+<td align="left">yes</td>
+<td align="right">27</td>
+<td align="right">25.2</td>
+</tr>
+</tbody>
+</table>
+<p><span class="newthought">Alright, that looks pretty promising</span>, but let’s get some confidence intervals. It’s time to model it! 💃</p>
+<pre class="r"><code>## modeling time!
+dd &lt;- datadist(used_emoji)
+options(datadist = &quot;dd&quot;)
+
+lrm(used_emoji~runconf, data = used_emoji) %&gt;%
+  summary() %&gt;%
+  html()</code></pre>
+<table class='gmisc_table' style='border-collapse: collapse; margin-top: 1em; margin-bottom: 1em;' >
+<thead>
+<tr><td colspan='8' style='text-align: left;'>
+Effects          &emsp;&emsp;Response: <code>used_emoji</code></td></tr>
+<tr>
+<th style='font-weight: 900; border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: center;'></th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Low</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>High</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>&Delta;</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Effect</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>S.E.</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Lower 0.95</th>
+<th style='border-bottom: 1px solid grey; border-top: 2px solid grey; text-align: right;'>Upper 0.95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style='text-align: left;'>runconf --- yes:no</td>
+<td style='padding-left:4ex; text-align: right;'>1</td>
+<td style='padding-left:4ex; text-align: right;'>2</td>
+<td style='padding-left:4ex; text-align: right;'></td>
+<td style='padding-left:4ex; text-align: right;'>1.684</td>
+<td style='padding-left:4ex; text-align: right;'>0.2895</td>
+<td style='padding-left:4ex; text-align: right;'>1.117</td>
+<td style='padding-left:4ex; text-align: right;'>2.252</td>
+</tr>
+<tr>
+<td style='border-bottom: 2px solid grey; text-align: left;'>&emsp;<em>Odds Ratio</em></td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>1</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>2</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'></td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>5.389</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'></td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>3.056</td>
+<td style='padding-left:4ex; border-bottom: 2px solid grey; text-align: right;'>9.505</td>
+</tr>
+</tbody>
+</table>
+
+<p><span class="marginnote"> <img src = "http://media.tumblr.com/4d904a2237a400973c9ba6bfd7ef8404/tumblr_inline_mtwlrqiTCg1qih9gi.gif"> </img> </span></p>
+<p><span style="color:#EB6864"> <strong>Tweeting the #runconf17 hashtag seems undeniably associated with a higher odds of emoji use (OR: 5.4, 95% CI: 3.1, 9.5).</strong> </span></p>
+</div>
+<div id="most-popular-emojis" class="section level2">
+<h2>most popular emojis</h2>
+<p><span class="newthought">Now let’s checkout</span> which emojis were most popular among #runconf17 tweeters. This time I’ll allow for retweets 👯</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">For this I used ggplot2, magick, and <a href="https://github.com/wch/webshot">webshot</a>.</span></p>
+<pre class="r"><code>library(&quot;ggplot2&quot;)
+library(&quot;webshot&quot;)
+library(&quot;magick&quot;)</code></pre>
+<pre class="r"><code>runconf_emojis &lt;- search_tweets(q = &quot;#runconf17 AND since:2017-05-23 AND until:2017-05-31&quot;,
+                                n = 1e4)</code></pre>
+<pre class="r"><code>emojis &lt;- regex_left_join(runconf_emojis, dico, by = c(text = &quot;Native&quot;)) %&gt;%
+  group_by(Native) %&gt;%
+  filter(!is.na(Native)) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n)) %&gt;%
+  head(15) %&gt;%
+  mutate(num = 1:15)</code></pre>
+<p>This (like many things I do) was very much inspired by Maëlle’s <a href="http://www.masalmon.eu/2017/02/18/complot/">post</a>.</p>
+<pre class="r"><code>plot_emojis &lt;- function(limit) {
+  emojis_filter &lt;- emojis %&gt;%
+    filter(emojis$n &lt;= limit)
+  out_svg &lt;- paste0(&quot;file://emojis_&quot;, limit,&quot;.svg&quot;)
+  out_png &lt;- paste0(&quot;emojis_&quot;, limit, &quot;.png&quot;)
+  p &lt;- ggplot(emojis_filter, aes(num, n)) + 
+    geom_col() + 
+    xlim(c(0,16)) +
+    geom_text(aes(x = num, 
+                  y = n + 1,
+                  label = Native), size = 5)  +
+    theme(axis.text.y=element_blank(),
+          axis.ticks=element_blank(),
+          legend.position=&quot;none&quot;) + 
+    ylim(c(0, max(emojis$n) + 10)) +
+    xlab(&quot;emoji&quot;) + 
+    ggtitle(&quot;#runconf17 emojis&quot;) +
+    coord_flip() 
+  print(p)
+  gridSVG::grid.export(out_svg)
+  webshot(out_svg,
+          out_png,
+          vwidth = 100,
+          vheight = 100,
+          zoom = 3)
+  out_png
+}</code></pre>
+<p>Now let’s make them into a gif!</p>
+<pre class="r"><code>out_png &lt;- purrr::map_chr(emojis$n, plot_emojis)
+
+purrr::map(unique(rev(out_png)), image_read) %&gt;%
+  image_join() %&gt;%
+  image_animate(fps=1) %&gt;%
+  image_write(&quot;runconf_emojis.gif&quot;)</code></pre>
+<p><img src = "https://github.com/LFOD/real-blog/raw/master/static/images/runconf_emojis.gif" width = "110%"> </img></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Phew, the 🐔 just barely made the cut.</span> The purple heart seems to be the most popular emoji, which makes sense given <a href="https://twitter.com/nistara_r/status/867974699044687872">25% of us were #RLadies</a>! I think it’s a credit to the awesome geographic diversity that we have two different globe emojis in our top 15!</p>
+<p>All in all, it was an epic experience. Thank you so much to the conference organizers, attendees, and #runconf17 tweeters for such a delightful week!</p>
+</div>
+</section>
+<section>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <hr/>
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/8431897?v=3&amp;s=460" alt="Lucy D&#39;Agostino McGowan image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Lucy D&#39;Agostino McGowan 
+              </span>
+              
+              <span class = "social_links">
+                 
+                  <a class = "social_buttons" href = http://lucymcgowan.com >
+                      <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+                  </a>
+                
+                
+                  <a class="social_buttons" href = https://twitter.com/lucyStats>
+                    <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/LucyMcGowan >
+                    <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+                  </a>
+                
+              </span>  
+              
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">Currently excited about: observational study methods, translational research, BB-8</p>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2017\/06\/03\/runconf17-an-analysis-of-emoji-use\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>

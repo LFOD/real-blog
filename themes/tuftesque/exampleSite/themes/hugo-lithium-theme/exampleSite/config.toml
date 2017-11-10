@@ -1,13 +1,10 @@
 baseurl = "/"
-publishDir = "docs"
-relativeurls = true
-canonifyURLs = false
 languageCode = "en-us"
-title = "Live Free or Dichotomize"
-theme = "tuftesque"
-disqusShortname = "livefreeordichotomize"
-ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
-author = "Nick Strayer & Lucy D'Agostino McGowan"
+title = "A Hugo website"
+theme = "hugo-lithium-theme"
+googleAnalytics = ""
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [permalinks]
     post = "/:year/:month/:day/:slug/"
@@ -19,15 +16,11 @@ author = "Nick Strayer & Lucy D'Agostino McGowan"
     name = "GitHub"
     url = "https://github.com/rstudio/blogdown"
 [[menu.main]]
-    name = "Lucy's Twitter"
-    url = "https://twitter.com/LucyStats"
-[[menu.main]]
-    name = "Nicks's Twitter"
-    url = "https://twitter.com/NicholasStrayer"    
+    name = "Twitter"
+    url = "https://twitter.com/rstudio"
 
 [params]
-    description = "A statistics blog from two goofy Phd students."
-    googleAnalytics = "UA-92165973-1"
+    description = "A website built through Hugo and blogdown."
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.11.0"
@@ -37,10 +30,10 @@ author = "Nick Strayer & Lucy D'Agostino McGowan"
 
     MathJaxCDN = "//cdn.bootcss.com"
     MathJaxVersion = "2.7.1"
-    
-    showtitle = false
+
     [params.logo]
-    url = "images/logo.png"
+    url = "logo.png"
     width = 50
     height = 50
     alt = "Logo"
+

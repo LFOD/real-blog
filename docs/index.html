@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - Live Free or Dichotomize</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.27.1" />
+
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="./css/tuftesque.css">
+<style>
+body {
+  
+    background-color: #fffff8;
+  
+}
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+<body>
+<style>
+  body {
+    padding-left: 0 !important;
+  }
+  p {
+    width: 100%;
+  }
+</style>
+<div id="homepage">
+<header class="brand">
+  <h1>
+    <a href="./">
+      <span id = "blog_logo">
+         <img src="./images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+      </span>
+      
+        
+      
+    </a>
+  </h1>
+</header>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
+
+<style>
+  #custom-header {
+    height: 30vh;
+    width: 100%;
+    position:relative;
+    z-index:1;
+    margin:0 auto;
+  }
+</style>
+
+
+<header id = "custom-header">
+  <div id = "header_viz"></div>
+</header>
+
+<script>
+  $( document ).ready(() => {
+
+    
+
+    
+    function seq(start, end, increment) {
+      var length = Math.round((end - start)/increment);
+      return Array(length).fill().map((_, idx) => start + idx*increment)
+    }
+
+
+    
+    var logistic = function(x, theta, i) {
+        var mu = 0.1;
+        sign = 1
+        var y = sign * (1 / (Math.sqrt(2 * Math.PI) * theta)) * (1 / x) *
+            Math.exp(-Math.pow((Math.log(x) - mu), 2) / (2 * Math.pow(theta, 2)))
+        return y;
+    }
+
+    var width   = $("#custom-header").width() ,
+        height  = $("#custom-header").outerHeight(),
+        padding = 0,
+        numOfLines = 20,
+        xs = seq(0.01, 5, .01),
+        colors = ['rgb(165,0,38)', 'rgb(215,48,39)', 'rgb(244,109,67)', 'rgb(253,174,97)', 'rgb(254,224,144)',
+            'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
+        ];
+  
+    console.log("trying to run this shit.")
+    
+    var svg = d3.select("#header_viz").append("svg")
+        .attr("width", width)
+        .attr("height", height + 2 * padding)
+        .append("g")
+
+
+    var animatelines = function(whichline) {
+        d3.selectAll(".line").style("opacity","0.5");
+
+        
+        d3.selectAll(".line").each(function(d,i){
+            
+            var totalLength = d3.select("#line" + i).node().getTotalLength();
+
+            d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(5000)
+              .delay(100*i)
+              .attr("stroke-dashoffset", 0)
+              .style("stroke-width",2)
+        })
+
+        writeGreeting()
+    }
+
+
+
+    
+    var thetaMap = d3.scaleLinear() 
+        .domain([0, numOfLines])
+        .range([0.8, 0.085])
+
+    var yPos = d3.scaleLinear() 
+        .domain([0, numOfLines])
+        .range([0, 4])
+
+    var x = d3.scaleLinear()
+        .domain([0, 5])
+        .range([0, width]);
+
+    var y = d3.scaleLinear()
+        .domain([0, 4.5])
+        .range([height, 0]);
+
+    
+    var logistic = d3.range(numOfLines).map(function(i) {
+        var odd = true
+        var toReturn = xs.map(function(num) {
+            return {
+                "x": num,
+                "y": logistic(num, thetaMap(i), i)
+            }
+        })
+        return toReturn;
+    })
+
+    
+    function writeGreeting(){
+
+        var text_scale = width < 500 ? 1 : 0.65;
+        console.log(text_scale);
+        var intro_text = "Live Free or Dichotomize";
+
+        var title = svg.append("text")
+            .attr("font-size", 30)
+            .attr("font-family", "optima")
+            .attr("text-anchor", "end")
+            .attr("fill-opacity", 0.65)
+            .attr("x", width < 500 ? x(4.8) : x(4.2))
+            .attr("y", width < 500 ? y(3.12) : y(2.1) )
+            .attr("opacity", 0)
+            .text(intro_text)
+            .attr("font-size", function(d) { return ( text_scale*width - 8) / this.getComputedTextLength() * 24 + "px"; })
+            .text("")
+            .attr("opacity", 1);
+
+        (function drawGreeting (i, start, greeting) {
+            setTimeout(function () {
+
+                
+                start += greeting[i];
+
+                title.html(start) 
+
+                if (start.length < greeting.length) { 
+                    drawGreeting(i+1,start,greeting);      
+                };
+            }, 100)
+        })(0, "", intro_text);
+    }
+
+
+    
+    var line = d3.line()
+        
+        .x(function(d) { return x(d.x); })
+        .y(function(d) { return y(d.y); });
+
+
+    svg.selectAll(".line")
+        .data(logistic)
+        .enter().append("path")
+        .attr("class", "line")
+        .attr("id" , function(d, i){ return "line" + i;})
+        .attr("d", line)
+        .style("stroke-width", 2)
+        .style("stroke", function(d, i) { return colors[i % 10] })
+        .style("opacity", 0)
+        .style("fill", "none")
+        .on("mouseover", function(d){
+            d3.select(this).style("stroke", "black")
+        })
+        .on("mouseout", function(d,i){
+            d3.select(this).style("stroke", colors[i % 10])
+        })
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    animatelines(2)
+    
+
+})
+
+</script>
+
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/11/10/holiday-party-planning-invitation-sending-from-r/">Holiday party planning &#43; invitation sending from R</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Nov 10, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;2 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p></p>
+      <p><a href="./2017/11/10/holiday-party-planning-invitation-sending-from-r/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/11/08/lstm-neural-nets-as-told-by-baseball/">LSTM neural nets as told by baseball</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Nov 8, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;7 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/deep-learning">deep learning</a>
+    
+    <a  href="./categories/algorithms">algorithms</a>
+    
+    <a  href="./categories/baseball">baseball</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>One thing I always found confusing when learning what an LSTM does is understanding intuitively why it&#39;s doing what it does. Here I attempt to give an example of how a LSTM hidden layer can be thought of through baseball.</p>
+      <p><a href="./2017/11/08/lstm-neural-nets-as-told-by-baseball/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/10/14/mcmc-and-the-case-of-the-spilled-seeds/">MCMC and the case of the spilled seeds</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Oct 14, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;8 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/interactive">interactive</a>
+    
+    <a  href="./categories/algorithms">algorithms</a>
+    
+    <a  href="./categories/visualization">visualization</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>For a long time I was confused by MCMC. I didn&#39;t understand what it was, how it worked, and why we needed to do it. In this post I attempt to clear up those questions and allow you to play with the Metroplis Haystings algorithm as it attempts to find a posterior to help solve a mystery of two messy birds.</p>
+      <p><a href="./2017/10/14/mcmc-and-the-case-of-the-spilled-seeds/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/09/28/r-release-names/">R release names</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Sep 28, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>I always love discussions about R release names and their origin. I have been working on this list for a while -- with the release of &#34;Short Summer&#34; today, I thought it&#39;d be a good time to post!</p>
+      <p><a href="./2017/09/28/r-release-names/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/09/25/commentary-and-follow-up-to-p-0-005-suggestion/">Commentary and follow up to p&lt;0.005 suggestion</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Sep 25, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;2 min read
+  
+  
+  
+    </span>
+    
+    
+    </section>
+      <p>A recent paper, Redefine Statistical Significance by 72 co-authors, has caused quite a stir in the statistical community. Our student-run journal club at Vanderbilt will be discussing this contribution at our meeting led by Nathan James this week, so I&#39;ve attempted to create a list of significant responses/commentary that have come out since this paper was posted on PsyArXiv.</p>
+      <p><a href="./2017/09/25/commentary-and-follow-up-to-p-0-005-suggestion/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/09/25/the-traveling-metallurgist/">The traveling metallurgist</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Sep 25, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/interactive">interactive</a>
+    
+    <a  href="./categories/algorithms">algorithms</a>
+    
+    <a  href="./categories/visualization">visualization</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Here I attempt to explain the concepts behind the optimization technique simulated annealing and the combinatorial optimization problem of the traveling salesman. First in words, and then more excitingly in an interactive visualization.</p>
+      <p><a href="./2017/09/25/the-traveling-metallurgist/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/09/03/a-simple-slack-bot-with-plumber/">A Simple Slack Bot With Plumber</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Sep 3, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;13 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/catslaps">catslaps</a>
+    
+    <a  href="./categories/gifs">gifs</a>
+    
+    <a  href="./categories/slack">slack</a>
+    
+    <a  href="./categories/plumber">plumber</a>
+    
+    <a  href="./categories/apis">apis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>I&#39;ve been excited about the R package Plumber ever since hearing about it for the first time as useR2017. So when I finally found an application that would allow me to use it, sending cat and dog photos over slack, I jumped at the opportunity.</p>
+      <p><a href="./2017/09/03/a-simple-slack-bot-with-plumber/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/08/14/the-exponential-power-series/">The Exponential Power Series</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Aug 14, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;4 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/statistics">statistics</a>
+    
+    <a  href="./categories/visualization">visualization</a>
+    
+    <a  href="./categories/interactive">interactive</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>I find series expansions fascinating. I also find any math envolving e to be fascinating. Here I explain some of the facets of the exponential power series and its connection to my favorite distribution, the Poisson.</p>
+      <p><a href="./2017/08/14/the-exponential-power-series/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/08/14/why-you-maybe-shouldnt-care-about-that-p-value./">Why you maybe shouldn&#39;t care about that p-value.</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Aug 14, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/p-values">p-values</a>
+    
+    <a  href="./categories/statistics">statistics</a>
+    
+    <a  href="./categories/sushi-cat">sushi-cat</a>
+    
+    <a  href="./categories/taco-tuesday">taco-tuesday</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Recently, there seems to have been an uptick in citations of studies or statistics about this or that in the news and on the internet. Often these studies claim validity on the basis of a p-value. Through a small contrived example I make the point that in some situations we may want to ignore the forest and focus on the trees.</p>
+      <p><a href="./2017/08/14/why-you-maybe-shouldnt-care-about-that-p-value./">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/08/08/how-to-make-an-rmarkdown-website/">How to make an R Markdown website (with RStudio!)</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer &amp; Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Aug 8, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;11 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/website">website</a>
+    
+    <a  href="./categories/tutorial">tutorial</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Interested in creating your personal website with R Markdown? We&#39;ve updated our R Markdown website tutorial to depend on RStudio for simplicity, making website building easy as 🍰!</p>
+      <p><a href="./2017/08/08/how-to-make-an-rmarkdown-website/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/27/new-and-improved-draw-charts-in-shinysense/">New and improved draw charts in shinysense</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 27, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;5 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/shinysense">shinysense</a>
+    
+    <a  href="./categories/shiny">shiny</a>
+    
+    <a  href="./categories/rmarkdown">rmarkdown</a>
+    
+    <a  href="./categories/javascript">javascript</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Recently I overhauled the drawr function of my package shinysense. Some bugs were fixed but potentially more interesting new features were added. Among these are support for time series and the ability to use the function outside of Shiny. This post covers what changed and how to use the new features.</p>
+      <p><a href="./2017/07/27/new-and-improved-draw-charts-in-shinysense/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/24/twitter-trees/">Twitter trees</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 24, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/twitter">twitter</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>A little over a week ago, Hilary Parker tweeted out a poll about sending calendar invites that generated quite the repartee. It was quite popular -- so much so that I couldn&#39;t possible keep up with all of the replies! I personally am quite dependent on my calender, but I was intrigured to see what others had to say. This inspired me to try out some swanky R packages for visualizing trees.</p>
+      <p><a href="./2017/07/24/twitter-trees/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/18/the-making-of-we-r-ladies/">The making of &#34;We R-Ladies&#34;</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan and Maëlle Salmon</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 18, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;5 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/rladies">rladies</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Maëlle and I created a mosaic of R-Ladies for the JSM Data Art Show. Here is a quick tutorial if you are interested in trying something similar!</p>
+      <p><a href="./2017/07/18/the-making-of-we-r-ladies/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/17/ropensci-slack-emojis/">Happy World Emoji Day: an analysis of rOpenSci&#39;s Slack emojis</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 17, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/ropensci">rOpenSci</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/emojis">emojis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>HAPPY world emoji day! In honor of this momentous occasion, I have decided to analyze the emojis used on rOpenSci&#39;s Slack.</p>
+      <p><a href="./2017/07/17/ropensci-slack-emojis/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/13/introducing-the-tuftesque-blogdown-theme/">Introducing the tuftesque blogdown theme</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 13, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>If you like the way our blog looks, you too can have your own blogdown driven site just like it! In this post I walk through how to set up an RMarkdown driven blog from scratch using blogdown and the tuftesque theme constructed for Live Free Or Dichotomize.</p>
+      <p><a href="./2017/07/13/introducing-the-tuftesque-blogdown-theme/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/07/12/user-rundown/">useR!2017 digressions</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer &amp; Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 12, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;10 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/conferences">conferences</a>
+    
+    <a  href="./categories/travel">travel</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>We both recently attended useR!2017 in Brussels. It was a blast to say the least. Here we will cover our favorite things about things about the conference and the lessons we learned.</p>
+      <p><a href="./2017/07/12/user-rundown/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/06/03/runconf17-an-analysis-of-emoji-use/">runconf17, an analysis of emoji use</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jun 3, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/ropensci">rOpenSci</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/conferences">conferences</a>
+    
+    <a  href="./categories/emojis">emojis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>I had such a delightful time at rOpenSci&#39;s unconference. Not only was it extremely productive (21 packages were produced!), but in between the crazy productivity was some epic community building.</p>
+      <p><a href="./2017/06/03/runconf17-an-analysis-of-emoji-use/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/03/16/enar-in-words/">ENAR in words</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Mar 16, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/enar">ENAR</a>
+    
+    <a  href="./categories/tidytext">tidytext</a>
+    
+    <a  href="./categories/conferences">conferences</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>I had an absolutely delightful time at ENAR this year. Lots of talk about the intersection between data science &amp; statistics, diversity, and great advancements in statistical methods. Since there was quite a bit of twitter action, I thought I&#39;d do a quick tutorial in scraping twitter data in R.</p>
+      <p><a href="./2017/03/16/enar-in-words/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/">Introducing shinyswipr: swipe your way to a great Shiny UI</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Mar 12, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/javascript">javascript</a>
+    
+    <a  href="./categories/visualization">visualization</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Recently we have been working on a shiny app that mimics tinder for preprints. One of the more exciting things we&#39;ve done in this app is implimented a swiping input. Now you can to with the package shinyswipr.</p>
+      <p><a href="./2017/03/12/introducing-shinyswipr-swipe-your-way-to-a-great-shiny-ui/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/02/24/intro-to-gmd/">Intro to GMD</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Feb 24, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;5 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/collaboration">collaboration</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/google-docs">Google Docs</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Lucy and I have made a simple package that allows you to pull down a collaborative google doc directly into an RMD file on your computer. Hopefully speeding up the process of writing collaborative statistical documents.</p>
+      <p><a href="./2017/02/24/intro-to-gmd/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/02/18/the-dire-consequences-of-tests-for-linearity/">The dire consequences of tests for linearity</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Feb 18, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/rms">rms</a>
+    
+    <a  href="./categories/type-1-error">type 1 error</a>
+    
+    <a  href="./categories/nonlinearity">nonlinearity</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>This is a tale of the dire (type 1 error) consequences that occur when you test for linearity 😱</p>
+      <p><a href="./2017/02/18/the-dire-consequences-of-tests-for-linearity/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/02/09/the-prevalence-of-drunk-podcasts/">The prevalence of drunk podcasts</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Feb 9, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;2 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/nssd">NSSD</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/emojis">emojis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>For today&#39;s rendition of I am curious about everything, in Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 32, Roger suggested the prevalence of drunk podcasting has dramatically increased - so I thought I&#39;d dig into it.</p>
+      <p><a href="./2017/02/09/the-prevalence-of-drunk-podcasts/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/01/27/yoga-for-modeling/">Yoga for modeling</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jan 27, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;5 min read
+  
+  
+  
+    </span>
+    
+    
+    </section>
+      <p>A New Year&#39;s resolution for all of our models: get more flexible! By flexible, we mean let&#39;s be more intential about fitting nonlinear parametric models.</p>
+      <p><a href="./2017/01/27/yoga-for-modeling/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/01/25/catterplot-thank-you-note/">CatterPlot thank you note</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jan 25, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;2 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/thankyou">thankyou</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    <a  href="./categories/emojis">emojis</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Lara Harmon has put in countless hours to build and uplift the ASA Student community. We are SO grateful.</p>
+      <p><a href="./2017/01/25/catterplot-thank-you-note/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/01/24/custom-javascript-visualizations-in-rmarkdown/">Custom JavaScript visualizations in RMarkdown</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jan 24, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;8 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/javascript">javascript</a>
+    
+    <a  href="./categories/visualization">visualization</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Recently RStudio added JavaScript chunks to RMarkdown. This makes many exciting things possible. Among these things is making your own custom JavaScript visualizations of data managed in R, all without leaving the .Rmd document. This is a quick walkthrough of doing just that.</p>
+      <p><a href="./2017/01/24/custom-javascript-visualizations-in-rmarkdown/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/01/17/regression-modeling-strategies-a-students-perspective/">Regression modeling strategies: a student&#39;s perspective</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jan 17, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;2 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/rms">rms</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>Nick and I are starting a series following Frank Harrell&#39;s Regression Modeling Strategies course. Get ready for some crazy fun.</p>
+      <p><a href="./2017/01/17/regression-modeling-strategies-a-students-perspective/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2017/01/07/dplyr-thank-you-note/">dplyr thank you note</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jan 7, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;1 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/thankyou">thankyou</a>
+    
+    <a  href="./categories/rstats">rstats</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>It&#39;s that post-holiday time of year to write some thank yous! I&#39;m getting excited to attend rstudio::conf next week, so in that spirit, I have put together a little thank you using dplyr</p>
+      <p><a href="./2017/01/07/dplyr-thank-you-note/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2016/12/24/wait-what-are-p-values/">Wait, what are P-values?</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nick Strayer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Dec 24, 2016
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;8 min read
+  
+  
+  
+    </span>
+    
+    
+    </section>
+      <p>P-Values are annoying, let&#39;s understand them so we dont get beaten by them.</p>
+      <p><a href="./2016/12/24/wait-what-are-p-values/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+    
+      <section>
+  <h1 class="content-title">
+  
+  <a href="./2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">Hill for the data scientist: an xkcd story</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Dec 15, 2016
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="./categories/data-science">data-science</a>
+    
+    <a  href="./categories/epidemiology">epidemiology</a>
+    
+    <a  href="./categories/xkcd">xkcd</a>
+    
+    <a  href="./categories/nssd">NSSD</a>
+    
+    
+    </span>
+    
+    
+    </section>
+      <p>This was inspired by Hilary Parker &amp; Roger Peng&#39;s Not So Standard Deviations Episode 28. It was suggested that it would be useful to lay out Hill&#39;s criterion for data scientists, I agree!</p>
+      <p><a href="./2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">Read On &rarr;</a></p>
+      <hr>
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+      <h2><a href="./post/">See all posts</a></h2>
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - Hill for the data scientist: an xkcd story</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.27.1" />
+
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../../../css/tuftesque.css">
+<style>
+body {
+  
+    background-color: #fffff8;
+  
+}
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <span id = "blog_logo">
+         <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+      </span>
+      
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="../../../../2016/12/15/hill-for-the-data-scientist-an-xkcd-story/">Hill for the data scientist: an xkcd story</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Dec 15, 2016
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;3 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="../../../../categories/data-science">data-science</a>
+    
+    <a  href="../../../../categories/epidemiology">epidemiology</a>
+    
+    <a  href="../../../../categories/xkcd">xkcd</a>
+    
+    <a  href="../../../../categories/nssd">NSSD</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><p><br></p>
+<p><em>This was inspired by Hilary Parker &amp; Roger Peng’s Not So Standard Deviations Episode 28, which can be found <a href="https://soundcloud.com/nssd-podcast/episode-28-writing-is-a-lot-harder-than-just-talking">here</a>. It was suggested that it would be useful to lay out Hill’s criterion for data scientists, I agree!</em></p>
+<p><br></p>
+<p><span style="color:#EB6864; font-size: 20pt">[<strong>causation</strong>: An event or outcome B is influenced by a change in A]</span></p>
+<p><br> Sir Austin Bradford Hill, a statistician and epidemiologist, created a list of guidelines for evaluating whether there is evidence of a causal relationship.[1] He determined the following aspects of associations ought to be considered when assessing causality. When thinking about this problem, an <a href="https://xkcd.com/">xkcd</a> comic I have seen in <em>every lecture</em> on this topic came to mind:</p>
+<p><a href="http://xkcd.com/552/" target="_blank"> <img src="http://imgs.xkcd.com/comics/correlation.png" alt="correlation"> </a></p>
+<p><br></p>
+<p>This inspired me to attempt to explain Hill’s criteria using xkcd comics, both because it seemed fun, and also to motivate causal inference instructures to have some variety in which xkcd comic they include in lectures (bear with me, some of these are a stretch 🙈💁🏻).</p>
+<p><br></p>
+<div id="strength" class="section level3">
+<h3>Strength</h3>
+<ul>
+<li>How big is the effect you are seeing?</li>
+<li>Note: Hill suggests that huge effects <em>can</em> suggest causality, however this does not mean small effects <em>cannot</em></li>
+</ul>
+<p><a href="http://xkcd.com/1592/" target="_blank"> <img src="http://imgs.xkcd.com/comics/overthinking.png" alt="strength"> </a></p>
+<p><br></p>
+</div>
+<div id="consistency" class="section level3">
+<h3>Consistency</h3>
+<ul>
+<li>This is essentially <a href="http://kbroman.org/steps2rr/">reproducibility</a> &amp; replicability</li>
+<li>Can your analysis be reproduced?</li>
+<li>Has anyone been able to replicate your findings?</li>
+</ul>
+<p><a href="http://xkcd.com/242/" target="_blank"> <img src="http://imgs.xkcd.com/comics/the_difference.png" alt="consistency"> </a></p>
+<p><br></p>
+</div>
+<div id="specificity" class="section level3">
+<h3>Specificity</h3>
+<ul>
+<li>Can the association be pinpointed to a specific cause with no other plausible explanation?</li>
+<li>I appreciate Hill’s caveat here, <em>“if specificity exists we may be able to draw conclusions without hesitation; if it is not apparent, we are not thereby necessarily left sitting irresolutely on the fence.”</em></li>
+</ul>
+<p><a href="http://xkcd.com/1217/" target="_blank"> <img src="http://imgs.xkcd.com/comics/cells.png" alt="specificity"> </a></p>
+<p><br></p>
+</div>
+<div id="temporality" class="section level3">
+<h3>Temporality</h3>
+<ul>
+<li>Does the timeline make sense?</li>
+<li>In general, the exposure ought to come before the outcome it is said to cause.</li>
+</ul>
+<p><a href="http://xkcd.com/925/" target="_blank"> <img src="http://imgs.xkcd.com/comics/cell_phones.png" alt="temporality"> </a></p>
+<p><br></p>
+</div>
+<div id="biological-gradient" class="section level3">
+<h3>Biological gradient</h3>
+<ul>
+<li>The wording of this point makes it a bit difficult to untangle from the medical application, but generally this refers to a dose effect</li>
+<li>Does increasing an exposure yield a change in the outcome.</li>
+</ul>
+<p><a href="http://xkcd.com/323/" target="_blank"> <img src="http://imgs.xkcd.com/comics/ballmer_peak.png" alt="biological-gradient"> </a></p>
+<p><br></p>
+</div>
+<div id="plausibility" class="section level3">
+<h3>Plausibility</h3>
+<ul>
+<li>Does the causal relationship make sense?</li>
+<li><em>This is also a tricky one since plausibility depends on knowledge at the time. If we found it perfectly plausible, we may not need statistics to show the relationship.</em></li>
+</ul>
+<p><a href="http://xkcd.com/605/" target="_blank"> <img src="http://imgs.xkcd.com/comics/extrapolating.png" alt="plausibility"> </a></p>
+<p><br></p>
+</div>
+<div id="coherence" class="section level3">
+<h3>Coherence</h3>
+<ul>
+<li>Similar to plausibility, is there a logical argument that can be made by/to experts in the field regarding causality.</li>
+<li>Does it fit into the understanding of the field (<em>authors note</em>: this should have caveats too…the field could be wrong).</li>
+</ul>
+<p><a href="http://xkcd.com/1170/" target="_blank"> <img src="http://imgs.xkcd.com/comics/bridge.png" alt="coherence"> </a></p>
+<p><br></p>
+</div>
+<div id="experiment" class="section level3">
+<h3>Experiment</h3>
+<ul>
+<li>If a controlled experiment can take place, this can strengthen the argument for causality</li>
+<li>I view this as a general attempt to implement a counterfactual analysis.</li>
+</ul>
+<p><a href="http://xkcd.com/1462/" target="_blank"> <img src="http://imgs.xkcd.com/comics/blind_trials.png" alt="experiment"> </a></p>
+<p><br></p>
+</div>
+<div id="analogy" class="section level3">
+<h3>Analogy</h3>
+<ul>
+<li>Have we seen a similar effect from a similar exposure?</li>
+</ul>
+<p><a href="http://xkcd.com/882/" target="_blank"> <img src="http://imgs.xkcd.com/comics/significant.png" alt="analogy"> </a></p>
+<p>[1] Hill, A. B. (1965). The Environment and Disease: Association or Causation? Proceedings of the Royal Society of Medicine, 58(5), 295–300.</p>
+<p><em>Think I’ve missed something? Submit a <a href="https://github.com/LFOD/real-blog/pulls">PR</a>.</em></p>
+</div>
+</section>
+<section>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <hr/>
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="https://avatars0.githubusercontent.com/u/8431897?v=3&amp;s=460" alt="Lucy D&#39;Agostino McGowan image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Lucy D&#39;Agostino McGowan 
+              </span>
+              
+              <span class = "social_links">
+                 
+                  <a class = "social_buttons" href = http://lucymcgowan.com >
+                      <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+                  </a>
+                
+                
+                  <a class="social_buttons" href = https://twitter.com/lucyStats>
+                    <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/LucyMcGowan >
+                    <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+                  </a>
+                
+              </span>  
+              
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">Currently excited about: observational study methods, translational research, BB-8</p>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2016\/12\/15\/hill-for-the-data-scientist-an-xkcd-story\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>

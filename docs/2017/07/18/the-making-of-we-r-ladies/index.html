@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Live Free or Dichotomize - The making of &#34;We R-Ladies&#34;</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Live Free or Dichotomize">
+<meta name="generator" content="Hugo 0.27.1" />
+
+  
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../../../../css/tuftesque.css">
+<style>
+body {
+  
+    background-color: #fffff8;
+  
+}
+</style>
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-92165973-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+</head>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="../../../../">
+      <span id = "blog_logo">
+         <img src="../../../../images/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+      </span>
+      
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="../../../../2017/07/18/the-making-of-we-r-ladies/">The making of &#34;We R-Ladies&#34;</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Lucy D&#39;Agostino McGowan and Maëlle Salmon</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Jul 18, 2017
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;5 min read
+  
+  
+  
+  <br>
+    <i class="fa fa-tags"> </i>
+    
+    <a  href="../../../../categories/rstats">rstats</a>
+    
+    <a  href="../../../../categories/rladies">rladies</a>
+    
+    
+    </span>
+    
+    
+    </section>
+
+
+<section><p>Last March <a href="https://twitter.com/ma_salmon">Maëlle</a> wrote a blog post <a href="http://www.masalmon.eu/2017/03/19/facesofr/">“Faces of #rstats Twitter”</a>, a great tutorial on scraping twitter photos and compiling them in a collage. This inspired a similar adventure, but for #RLadies!</p>
+<p><span class="marginnote"> <a href="../../../../images/first-pass-rladies-collage.jpeg"> <img class = "img-responsive" src="../../../../images/first-pass-rladies-collage.jpeg" alt="First pass" style="width:100%"> </img></a> One of our early brainstorm ideas, as Maëlle pointed out, looks a bit more like a kniting pattern. </span></p>
+<p>We brainstormed different ways we could make this collage unique, but ultimilately landed on creating a mosaic with the R-Ladies logo.</p>
+<p>We first wanted to use Twitter profile pics but even after launching a small campaign we realized we’d identify too few R-Ladies to fill a collage. Therefore we mixed two information sources:</p>
+<ul>
+<li>For the collage itself we decided on using Meetup data, which was made even cooler by the fact that the <a href="https://github.com/rladies/meetupr"><code>meetupr</code> package</a> was developed by R-Ladies in the R-Ladies Github organization!<br />
+</li>
+<li>For the frame of the collage we chose to use the R-Ladies identified via Twitter.</li>
+</ul>
+<pre class="r"><code>library(&quot;dplyr&quot;)
+## devtools::install_github(&quot;rladies/meetupr&quot;)
+library(&quot;meetupr&quot;)
+library(&quot;magick&quot;)
+library(&quot;rtweet&quot;)</code></pre>
+<div id="pull-in-meetup-data" class="section level2">
+<h2>Pull in Meetup data</h2>
+<p>To get all of our current Meetups, we scrape our <a href="https://github.com/rladies">R-Ladies GitHub</a> data.</p>
+<pre class="r"><code>doc.raw &lt;- RCurl::getURL(&quot;https://raw.githubusercontent.com/rladies/starter-kit/master/Current-Chapters.md&quot;)
+meetups &lt;- stringr::str_match_all(doc.raw, &quot;www.meetup.com/(.*?)/&quot;)[[1]][,2]
+meetups &lt;- unique(meetups)</code></pre>
+<p>We use our <code>meetupr</code> package to pull profile pictures of all of our members.</p>
+<p><span class="marginnote"> If you would like to follow along, you can grab a <a href="https://secure.meetup.com/meetup_api/key/">Meetup API Key</a>. </span></p>
+<pre class="r"><code>api_key &lt;- &quot;YOUR_MEETUP_API_KEY&quot;</code></pre>
+<p>Here are a few small functions to get and save the Meetup photos.</p>
+<pre class="r"><code>get_photos &lt;- function(i,meetup){
+  members &lt;- try(get_members(meetup[i], api_key), silent = TRUE)
+  if(class(members)[1] != &quot;try-error&quot;){
+    members %&gt;%
+      purrr::map(.,&quot;photo&quot;, .null = NA) %&gt;%
+      purrr::map_chr(., &quot;photo_link&quot;, .null = NA)
+  }
+}
+
+save_image &lt;- function(photo){
+  image &lt;- try(image_read(photo), silent = TRUE)
+  if(class(image)[1] != &quot;try-error&quot;){
+    image &lt;- image %&gt;%
+      image_scale(&quot;100x100!&quot;) %&gt;%
+      image_write(
+        paste0(
+          &quot;meetup-data/&quot;,
+          stringr::str_match(photo[1], &quot;member_(.*?)\\.&quot;)[, 2],
+          &quot;.jpg&quot;
+        ),
+        format = &quot;jpeg&quot;
+      )
+  }
+  
+}</code></pre>
+<p>Grab the photos for each Meetup group.</p>
+<pre class="r"><code>pics &lt;- purrr::map(1:length(meetups),
+                       get_photos,
+                       meetup = meetups
+                       ) %&gt;%
+                       unlist()</code></pre>
+<p>Now walk it out 💃.</p>
+<pre class="r"><code>purrr::walk(pics, save_image)</code></pre>
+</div>
+<div id="remove-the-default-avatars" class="section level2">
+<h2>Remove the default avatars</h2>
+<p>There are a few photos that are the default avatar. These have a grey color with a white center. To check if this is the case, test whether the first column of pixels is fully grey.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">This removed ~200 photos.</span></p>
+<pre class="r"><code>dir &lt;- dir(&quot;meetup-data&quot;, full.names = TRUE)
+
+check_image &lt;- function(pic) {
+  img &lt;- jpeg::readJPEG(pic)
+  if (any(dim(img) == 3)) {
+    if (length(unique(img[,1,1])) == 1) {
+      file.remove(pic)
+    }
+  }
+}
+
+purrr::walk(dir, check_image)</code></pre>
+</div>
+<div id="make-into-a-mosaic" class="section level2">
+<h2>Make into a mosaic!</h2>
+<p>We use <a href="https://cran.r-project.org/web/packages/RsimMosaic/index.html"><code>RsimMosaic</code></a>, but had to tweak a few things (there were a few pictures causing errors making the whole thing break, so I added some error catching as well as the abilitity to specify the input tile size).</p>
+<pre class="r"><code>## devtools::install_github(&quot;LucyMcGowan/RsimMosaic&quot;)
+library(&quot;RsimMosaicLDM&quot;)</code></pre>
+<pre class="r"><code>set.seed(108)
+composeMosaicFromImageRandomOptim(
+  originalImageFileName = &quot;RLadies_tofill.jpeg&quot;,
+  outputImageFileName = &quot;art-ladies.jpg&quot;,
+  inputTileSize = 100,
+  imagesToUseInMosaic = &quot;meetup-data&quot;, 
+  removeTiles = TRUE,
+  fracLibSizeThreshold = 0.01
+  )</code></pre>
+<p>We used 9106 unique tiles to create the image using K-nearest neighbors to select the optimal match.</p>
+</div>
+<div id="pull-in-the-twitter-data" class="section level2">
+<h2>Pull in the Twitter data</h2>
+<pre class="r"><code>dat &lt;- search_tweets(q = &#39;#RLadies&#39;, n = 1000, include_rts = FALSE)
+tweets &lt;- users_data(dat) %&gt;%
+  select(screen_name, profile_image_url)
+users &lt;- search_users(&quot;#RLadies&quot;, n = 1000) %&gt;%
+  select(screen_name, profile_image_url)
+
+prof &lt;- unique(rbind(tweets, users))</code></pre>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">We removed a few accounts that we know are not actually (our version of) R-Ladies accounts.</span></p>
+<pre class="r"><code>prof &lt;- prof[!(prof$screen_name %in%
+  c(&quot;Junior_RLadies&quot;,
+  &quot;RLadies_LF&quot;,
+  &quot;WomenRLadies&quot;,
+  &quot;Rstn_RLadies13&quot;,
+  &quot;RLadies&quot;,
+  &quot;RnRladies&quot;)
+  ), ]</code></pre>
+<p>Here is a function to save the images. We are using the twitter images as the frame, so they are larger than the Meetup images.</p>
+<pre class="r"><code>save_image &lt;- function(df){
+  image &lt;- try(image_read(sub(&quot;_normal&quot;, &quot;&quot;, df$profile_image_url)), silent = TRUE)
+  if(class(image)[1] != &quot;try-error&quot;){
+    image %&gt;%
+      image_scale(&quot;500x500&quot;) %&gt;%
+      image_write(paste0(&quot;tweet-data/&quot;, df$screen_name, &quot;.jpg&quot;), format = &quot;jpeg&quot;)
+  }
+  
+}
+
+users &lt;- split(prof, 1:nrow(prof))
+purrr::walk(users, save_image)</code></pre>
+<p>Now let’s randomly read them in!</p>
+<pre class="r"><code>set.seed(525)
+pics &lt;- dir(&quot;tweet-data&quot;, full.names = TRUE)
+pics &lt;- sample(pics, length(pics))</code></pre>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">We removed a few of the chapter accounts to ensure an even number.</span></p>
+<pre class="r"><code>## we need a multiple of 4
+rladies_chapters &lt;- which(grepl(&quot;RLadies&quot;, pics)) 
+pics &lt;- pics[-rladies_chapters[1:2]]</code></pre>
+</div>
+<div id="create-the-frame" class="section level2">
+<h2>Create the frame</h2>
+<p>Create the top of the frame 🎉.</p>
+<pre class="r"><code>length_size &lt;- length(pics)/4
+pics[1:length_size] %&gt;%
+  image_read() %&gt;%
+  image_append(stack = FALSE) %&gt;%
+  image_write(&quot;frame/top.jpg&quot;)</code></pre>
+<p>Create the bottom of the frame 👇.</p>
+<pre class="r"><code>pics[(length_size + 1):(length_size * 2)] %&gt;%
+  image_read() %&gt;%
+  image_append(stack = FALSE) %&gt;%
+  image_write(&quot;frame/bottom.jpg&quot;)</code></pre>
+<p>Create the left side of the frame 👈.</p>
+<pre class="r"><code>pics[(length_size * 2 + 1):(length_size * 3)] %&gt;%
+  image_read() %&gt;%
+  image_append(stack = TRUE) %&gt;%
+  image_write(&quot;frame/left.jpg&quot;)</code></pre>
+<p>Create the right side of the frame 👉.</p>
+<pre class="r"><code>pics[(length_size * 3 + 1):length(pics)] %&gt;%
+  image_read() %&gt;%
+  image_append(stack = TRUE) %&gt;%
+  image_write(&quot;frame/right.jpg&quot;)</code></pre>
+<p>We add small R-Ladies logos to the sides of the frame!</p>
+<pre class="r"><code>logo_url &lt;- &quot;https://raw.githubusercontent.com/rladies/starter-kit/master/logo/R-LadiesGlobal_RBG_online_LogoOnly.png&quot;
+
+image_read(logo_url) %&gt;%
+  image_scale(&quot;500x500+0+0&quot;) %&gt;%
+  image_write(&quot;frame/logo_small.jpg&quot;)
+
+ht &lt;- image_read(&quot;art-ladies.jpg&quot;) %&gt;% 
+  image_info %&gt;% 
+  select(height)
+  
+dims &lt;- paste0(ht, &quot;x&quot;, ht, &quot;+0+0&quot;)</code></pre>
+<p>Put it all together! 🎨</p>
+<pre class="r"><code>c(&quot;frame/bottom.jpg&quot;) %&gt;%
+  image_read() %&gt;%
+  image_append(stack = FALSE) %&gt;%
+  image_scale(geometry = dims) %&gt;%
+  image_write(&quot;frame/good_bottom.jpg&quot;)
+
+c(&quot;frame/top.jpg&quot;) %&gt;%
+  image_read() %&gt;%
+  image_append(stack = FALSE) %&gt;%
+  image_scale(geometry = dims) %&gt;%
+  image_write(&quot;frame/good_top.jpg&quot;)
+
+c(&quot;frame/good_top.jpg&quot;, &quot;art-ladies.jpg&quot;,
+  &quot;frame/good_bottom.jpg&quot;) %&gt;%
+  image_read() %&gt;%
+  image_append(stack = TRUE) %&gt;%
+  image_write(&quot;test_topbottom.jpg&quot;)
+
+ht &lt;- image_read(&quot;test_topbottom.jpg&quot;) %&gt;% 
+  image_info %&gt;% 
+  select(height)
+  
+dims &lt;- paste0(ht, &quot;x&quot;, ht, &quot;+0+0&quot;)
+
+c(&quot;frame/logo_small.jpg&quot;, 
+  &quot;frame/left.jpg&quot;,
+  &quot;frame/logo_small.jpg&quot;) %&gt;%
+  image_read() %&gt;%
+  image_append(stack = TRUE) %&gt;%
+  image_scale(geometry = dims) %&gt;%
+  image_write(&quot;frame/good_left.jpg&quot;)
+
+c(&quot;frame/logo_small.jpg&quot;, 
+  &quot;frame/right.jpg&quot;,
+  &quot;frame/logo_small.jpg&quot;) %&gt;%
+  image_read() %&gt;%
+  image_append(stack = TRUE) %&gt;%
+  image_scale(geometry = dims) %&gt;%
+  image_write(&quot;frame/good_right.jpg&quot;)
+
+c(&quot;frame/good_left.jpg&quot;, &quot;test_topbottom.jpg&quot;,
+  &quot;frame/good_right.jpg&quot;) %&gt;%
+  image_read() %&gt;%
+  image_append(stack = FALSE) %&gt;%
+  image_write(&quot;we-r-ladies.png&quot;)</code></pre>
+<p><a href="../../../../images/we-r-ladies.jpeg"> <img class = "image-responsive" src = "/images/we-r-ladies.jpeg"> </img></a></p>
+<p>Attending JSM? Come see our work on display at the <a href="https://ww2.amstat.org/meetings/jsm/2017/dataartshow.cfm">Data Art Show</a>! And since participating makes us real <em>data artists</em> now, find below the “artsy” description of our work!</p>
+<p><em>R-Ladies is a global organization focused on improving gender diversity in the R community. R is an open-source statistics programming language. We used an R-Ladies developed package, meetupr to pull several thousand profile pictures from 33 R-Ladies meetups. We then used k-nearest neighbors to optimally match each image to a pixel of the R logo. The frame is comprised of Twitter profile pictures of individuals and local chapters who used the hashtag #RLadies in the days prior to our data collection. Pictures were assembled thanks to rOpenSci’s magick package. This work symbolizes how the global R-Ladies community is composed of diverse individuals attending events and communicating about the organization, whose strengths add up and create a strong grassroots organization. The whole creation process was carried out using R, showing the diversity of the language itself, and making the most of a tool, meetupr, created by members of the R-Ladies community, further underlining the synergy we want to convey. All in all, We R-Ladies is a tribute to diversity in the R community.</em></p>
+</div>
+</section>
+<section>
+  
+
+  
+
+
+
+  
+
+
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+       
+      var disqus_shortname = 'livefreeordichotomize'; 
+      var disqus_identifier = '\/2017\/07\/18\/the-making-of-we-r-ladies\/';
+       
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2017
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>
