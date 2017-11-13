@@ -115,12 +115,15 @@ body {
     </section>
 
 
-<section><p>’Tis the season for white elphant / גמד וענק / Yankee swap / secret santa-ing! There are various rules for this, for our version: 🏷 each participant receives the name of someone else to purchase a gift for 🎁 gifts are exchanged at a party 🎉 🤔 the receiver is tasked with guessing who the gift-giver was!</p>
+<section><p>’Tis the season for white elphant / גמד וענק / Yankee swap / secret santa-ing! There are various rules for this, for our version:<br />
+🏷 each participant receives the name of someone else to purchase a gift for<br />
+🎁 gifts are exchanged at a party 🎉<br />
+🤔 the receiver is tasked with guessing who the gift-giver was!</p>
 <p>We thought it’d be particularly fun to do it #rstats style.</p>
 <div id="assigning-partners" class="section level1">
 <h1>Assigning partners</h1>
 <p>We had our classmates sign up if they were interested in a Google Form.</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="images/2017-11-10/google-form.png" /></span></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="../../../../images/2017-11-10/google-form.png" /></span></p>
 <p>resulting in a .csv file with each participant’s <code>name</code> and <code>email</code>.</p>
 <pre class="r"><code>names &lt;- read_csv(&quot;FunPeople.csv&quot;)</code></pre>
 <p>We began by making a tibble that shuffled the <code>name</code> in the first column and assigned a random <code>partner</code> in the second.</p>

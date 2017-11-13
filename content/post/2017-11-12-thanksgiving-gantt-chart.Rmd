@@ -1,0 +1,116 @@
+---
+title: Thanksgiving Gantt Chart
+author: "Lucy D'Agostino McGowan"
+date: '2017-11-12'
+slug: thanksgiving-gantt-chart
+categories: [rstats, thankyou]
+tags: [rstats, thankyou]
+excerpt: 'Thanksgiving `r emo::ji("turkey")` is right around the corner `r emo::ji("tada")` -- this year we are hosting 17 people `r emo::ji("scream")`. If you too are hosting way more than your kitchen normally cooks for, perhaps this will be of interest!'
+---
+
+Thanksgiving `r emo::ji("turkey")` is right around the corner `r emo::ji("tada")` -- this year we are hosting 17 people `r emo::ji("scream")`. <span class = "marginnote">
+Ingredients:  
+`r emo::ji("green_book")` Google Sheet  
+`r emo::ji("package")` googlesheets  
+`r emo::ji("package")` lubridate  
+`r emo::ji("package")` plotly
+</span> If you too are hosting way more than your kitchen normally cooks for, perhaps this will be of interest! We decided to make a [Google Sheet](https://docs.google.com/spreadsheets/d/1k-H3CjkQRQJv7Ni8SA9Ghse8Y-kuKSLVAV4R4w4xXRE/edit?usp=sharing) of the various dishes so we could plot out what will be cooking when.
+
+<iframe width = "500" height = "300" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQPxkGgwYI7gP8uhFPogzE2uEk5IH4mvMay7HdUnJzp38kUOPzSORO7Est5o-V8eSVYBGb6fv7XVKS0/pubhtml?widget=true&amp;headers=false"></iframe>
+
+## Packages we'll use
+
+```{r, message = FALSE, warning = FALSE}
+library("googlesheets")
+library("lubridate")
+library("plotly")
+```
+
+## Pull in the data
+
+First we can pull the spreadsheet into R using the googlesheets package.
+
+```{r, message = FALSE, warning = FALSE}
+## Register the google sheet
+dishes_ss <- gs_url("https://docs.google.com/spreadsheets/d/1k-H3CjkQRQJv7Ni8SA9Ghse8Y-kuKSLVAV4R4w4xXRE/edit?usp=sharing")
+
+## Read the sheet into R
+dishes_df <- gs_read(dishes_ss)
+```
+
+## Clean up a bit `r emo::ji("bath")`
+
+```{r}
+dishes_df$start <- as_datetime(dishes_df$start,
+                                          tz = "America/Chicago")
+dishes_df$finish <- as_datetime(dishes_df$finish,
+                                           tz = "America/Chicago")
+dishes_df$minutes <- dishes_df$finish - dishes_df$start
+```
+
+`r tufte::margin_note(paste("Let's pick some lovely turkey-themed colors for our chart", emo::ji("rainbow"), "brought to you by [colour lovers](http://www.colourlovers.com/palette/479526/Turkey_Sanwich)."))`
+```{r}
+cols <- c("#487878", "#783030", "#904830", "#A87860", "#D89048")
+dishes_df$color  <- factor(dishes_df$where, labels = cols)
+
+## Order for the chart
+dishes_df <- dishes_df[order(dishes_df$start,
+                             decreasing = TRUE), ]
+```
+
+## Make the plot `r emo::ji("dancer")`
+
+`r tufte::margin_note("This is inspired by a [Plotly](https://twitter.com/plotlygraphs) [blog post](https://moderndata.plot.ly/gantt-charts-in-r-using-plotly/)!")`
+```{r, message = FALSE, warning = FALSE}
+p <- plot_ly()
+
+for (i in 1:nrow(dishes_df)) {
+  p <- add_lines(p,
+                 x = c(dishes_df$start[i], dishes_df$finish[i]), 
+                 y = c(i, i), 
+                 line = list(color = dishes_df$color[i],
+                             width = 20),
+                 hoverinfo = "text",
+                 text = paste("Dish: ",
+                              dishes_df$dish[i],
+                              "<br>",
+                              "Cook time: ",
+                              dishes_df$minutes[i],
+                              "minutes<br>",
+                              "Where: ",
+                              dishes_df$where[i]),
+                 showlegend = FALSE
+  ) 
+}
+```
+
+`r tufte::margin_note("![](https://media.giphy.com/media/3ofT5TkrPPueovRFaE/giphy.gif)")`
+```{r, message = FALSE, warning = FALSE}
+## Add the dish names to the y-axis, remove grid
+p <- layout(p,
+            xaxis = list(showgrid = FALSE),
+            yaxis = list(showgrid = FALSE, 
+                         tickmode = "array",
+                         tickvals = 1:nrow(dishes_df),
+                         ticktext = unique(dishes_df$dish)),
+            margin = list(l = 200, r = 50, b = 50, t = 50, pad = 4),
+            plot_bgcolor = "#EBE5E5",
+            paper_bgcolor = "#EBE5E5",
+            ## add a turkey because why not!
+            images = list(
+      list(source = "https://upload.wikimedia.org/wikipedia/commons/c/c9/Twemoji2_1f983.svg",
+           xref = "paper",
+           yref = "paper",
+           x= 0.75,
+           y= 1,
+           sizex = 0.25,
+           sizey = 0.25
+           ) )
+
+)
+p
+```
+
+Happy feasting! `r emo::ji("turkey")``r emo::ji("heart")`
+
+

@@ -6,20 +6,22 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Holiday party planning &#43; invitation sending from R</title>
-      <link>/2017/11/10/holiday-party-planning-invitation-sending-from-r/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+      <title>Thanksgiving Gantt Chart</title>
+      <link>/2017/11/12/thanksgiving-gantt-chart/</link>
+      <pubDate>Sun, 12 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/11/10/holiday-party-planning-invitation-sending-from-r/</guid>
-      <description>’Tis the season for white elphant / גמד וענק / Yankee swap / secret santa-ing! There are various rules for this, for our version: 🏷 each participant receives the name of someone else to purchase a gift for 🎁 gifts are exchanged at a party 🎉 🤔 the receiver is tasked with guessing who the gift-giver was!
-We thought it’d be particularly fun to do it #rstats style.
-Assigning partners We had our classmates sign up if they were interested in a Google Form.</description>
+      <guid>/2017/11/12/thanksgiving-gantt-chart/</guid>
+      <description>Thanksgiving 🦃 is right around the corner 🎉 – this year we are hosting 17 people 😱. Ingredients:
+📗 Google Sheet
+📦 googlesheets
+📦 lubridate
+📦 plotly  If you too are hosting way more than your kitchen normally cooks for, perhaps this will be of interest! We decided to make a Google Sheet of the various dishes so we could plot out what will be cooking when.</description>
     </item>
     
     <item>
