@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="keywords" content="">
 <meta name="author" content="Live Free or Dichotomize">
-<meta name="generator" content="Hugo 0.20.2" />
+<meta name="generator" content="Hugo 0.27.1" />
 
   
 
@@ -99,7 +99,7 @@ body {
   
   
   &nbsp;<i class="fa fa-clock-o"></i>
-    &nbsp;5 min read
+    &nbsp;6 min read
   
   
   
@@ -170,9 +170,16 @@ rstats &lt;- rstats %&gt;%
   mutate(runconf = ifelse(screen_name %in% runconf$screen_name, &quot;yes&quot;, &quot;no&quot;))
 
 ## load in the emoji dictionary
-dico &lt;- readr::read_csv2(&quot;https://raw.githubusercontent.com/today-is-a-good-day/emojis/master/emDict.csv&quot;)
-
-## combine datasets, keep only unique tweets
+dico &lt;- readr::read_csv2(&quot;https://raw.githubusercontent.com/today-is-a-good-day/emojis/master/emDict.csv&quot;)</code></pre>
+<pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Description = col_character(),
+##   Native = col_character(),
+##   Bytes = col_character(),
+##   `R-encoding` = col_character()
+## )</code></pre>
+<pre class="r"><code>## combine datasets, keep only unique tweets
 data &lt;- bind_rows(runconf, rstats) %&gt;%
   distinct(text, .keep_all = TRUE)
 

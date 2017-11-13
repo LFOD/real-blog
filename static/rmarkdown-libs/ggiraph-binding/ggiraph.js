@@ -16,7 +16,7 @@ function set_over_effect(id){
 
 function set_tooltip(id, tooltip_opacity, tooltip_offx, tooltip_offy) {
 
-  var div = d3.select("body").append("div")
+  var div = d3.select('body').append("div")
       .attr("class", 'tooltip_' + id)
       .style("opacity", 0);
   var sel_tooltiped = d3.selectAll('#' + id + ' svg *[title]');
@@ -56,27 +56,16 @@ function set_highlight(id) {
   sel_data_id.classed("cl_data_id_" + id, true);
 }
 
-function set_hover_class(id) {
-  var sel_ = d3.selectAll('#' + id + ' svg *[data-id]');
-  sel_.on("mouseover", function(d) {
-          this.transition()
-              .duration(200)
-              .classed("cl_data_id_" + id, true);
-          })
-      .on("mouseout", function(d) {
-          div.transition()
-              .duration(500)
-              .classed("cl_data_id_" + id, false);
-      });
-
-}
 
 function resize(id, width, height) {
   var containerdiv = d3.select('#' + id + " div");
-  var ratio = window["ratio_" + containerdiv.attr("id")];
-  var dady = containerdiv.node().parentNode;
-  var dadybb = dady.getBoundingClientRect();
-  containerdiv.style("width", (dadybb.bottom - dadybb.top) * ratio + "px");
+  var is_fd = window["fd_" + containerdiv.attr("id")];
+  if(is_fd > 0){
+    var ratio = window["ratio_" + containerdiv.attr("id")];
+    var dady = containerdiv.node().parentNode;
+    var dadybb = dady.getBoundingClientRect();
+    containerdiv.style("width", (dadybb.bottom - dadybb.top) * ratio + "px");
+  }
 }
 
 
@@ -195,6 +184,11 @@ function select_data_id_multiple(selection, sel_array_name, selected_class, id, 
 }
 
 
+function tooltip_remove(id){
+    var subid = d3.select('#' + id + " div" ).attr("id");
+    d3.selectAll(".tooltip_" + subid ).remove();
+}
+
 
 
 HTMLWidgets.widget({
@@ -211,8 +205,19 @@ HTMLWidgets.widget({
         window["widget_" + x.uid] = el.id;
         var div_htmlwidget = d3.select("#" + el.id );
 
-        div_htmlwidget.html(x.html);
-        div_htmlwidget.style("position", "relative").style("margin", "auto");
+        if( HTMLWidgets.shinyMode || x.flexdashboard ){
+          div_htmlwidget.html(x.html);
+        }
+        else if( x.use_wh ){
+          div_htmlwidget.html("<div style='width:"+ width + "px;height:"+ height + "px;'>" +
+            x.html + "</div>");
+        } else {
+          div_htmlwidget.html("<div style='width:"+ x.width + ";'>" +
+            x.html + "</div>");
+        }
+
+
+        div_htmlwidget.style("width", null).style("height", null);
 
         var fun_ = window[x.funname];
         fun_();
@@ -232,6 +237,11 @@ HTMLWidgets.widget({
             window[x.sel_array_name] = message;
             Shiny.onInputChange(varname, window[x.sel_array_name]);
           });
+
+          Shiny.addCustomMessageHandler(el.id+'_tooltip_remove',function(message) {
+            tooltip_remove(message);
+          });
+
 
         } else{
           d3.selectAll(".ggiraph-toolbar-block").filter(".shinyonly").remove();

@@ -154,6 +154,11 @@ Here is a super cool photo of me doing one of my favorite things, yawning.
 <p><img class = "img-responsive" src="/images/2017-08-08/new_about.png" style="width:100%"></p>
 <p>Oh my, that photo looks mighty large. Perhaps we want to make it smaller. We can do that, by adding a special styling file called a <code>css</code> file. Create a new “Text file” in RStudio named “style.css” and add the following lines:</p>
 <p><strong>style.css</strong></p>
+<pre class="css"><code>img {
+  width: 400px;
+  display: block;
+  margin: 0 auto;
+}</code></pre>
 <p>This takes every image that appears on our site and makes them 400 pixels wide and centers them. You can change these parameters as you want. There are infinitely many ways to customize the style of a website using css. For more information try googling <code>how to &lt;do something&gt; with css</code> and you will most likely find 10,000 ways to do it.</p>
 <p>Now just add the following lines to your <code>_site.yml</code> file to apply this css to your site.</p>
 <p>_<strong>site.yml</strong></p>

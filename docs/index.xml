@@ -6,10 +6,23 @@
     <description>Recent content on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Thanksgiving Gantt Chart</title>
+      <link>/2017/11/12/thanksgiving-gantt-chart/</link>
+      <pubDate>Sun, 12 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/11/12/thanksgiving-gantt-chart/</guid>
+      <description>Thanksgiving 🦃 is right around the corner 🎉 – this year we are hosting 17 people 😱. Ingredients:
+📗 Google Sheet
+📦 googlesheets
+📦 lubridate
+📦 plotly  If you too are hosting way more than your kitchen normally cooks for, perhaps this will be of interest! We decided to make a Google Sheet of the various dishes so we could plot out what will be cooking when.</description>
+    </item>
     
     <item>
       <title>LSTM neural nets as told by baseball</title>
@@ -37,7 +50,7 @@ My main problem when I was learning about LSTMs was the horrifically mathematica
       
       <guid>/2017/09/28/r-release-names/</guid>
       <description>I always love discussions about R release names and their origin. I have been working on this list for a while – with the release of “Short Summer” today, I thought it’d be a good time to post!
-All of the release names are references to Peanuts strips/films. I think this is just so delightful! A few months ago, I attempted to get permission to embed the strips on our blog, but unfortunately it was denied (unless with a limited audience and password protection 🤷‍♀️), so I’ve just linked to the comics – Enjoy!</description>
+All of the release names are references to Peanuts strips/films. I think this is just so delightful! A few months ago, I attempted to get permission to embed the strips on our blog, but unfortunately it was denied (unless with a limited audience and password protection 🤷), so I’ve just linked to the comics – Enjoy!</description>
     </item>
     
     <item>
@@ -135,7 +148,7 @@ We brainstormed different ways we could make this collage unique, but ultimilate
       <pubDate>Mon, 17 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/2017/07/17/ropensci-slack-emojis/</guid>
-      <description>HAPPY world emoji day! 🌍 🐔 📆
+      <description>HAPPY world emoji day! 🌎 🐔 📆
 In honor of this momentous occasion, I have decided to analyze the emojis used on rOpenSci’s Slack.
 library(&amp;quot;dplyr&amp;quot;) ⊕If you’d like to follow along, go fetch yourself a Slack token.
 token &amp;lt;- &amp;quot;MY_SLACK_API_TOKEN&amp;quot; ## stick your token here We will first use Slack’s reactions.list method.
