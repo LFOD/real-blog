@@ -141,7 +141,7 @@ library(&quot;dplyr&quot;)</code></pre>
     partner = sample(df$name)
   )
 }</code></pre>
-<p>We then do a join to pull the emails back in.</p>
+<p>We then do a join to pull the emails and interests back in.</p>
 <pre class="r"><code>df_name &lt;- names[ , c(&quot;name&quot;, &quot;email&quot;)]
 df_partner &lt;- names[ , c(&quot;name&quot;, &quot;interests&quot;)]
 dat &lt;- dat %&gt;%
