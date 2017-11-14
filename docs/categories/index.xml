@@ -129,6 +129,15 @@
     </item>
     
     <item>
+      <title>Holiday Cheer</title>
+      <link>/categories/holiday-cheer/</link>
+      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/holiday-cheer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Interactive</title>
       <link>/categories/interactive/</link>
       <pubDate>Sat, 14 Oct 2017 00:00:00 +0000</pubDate>
@@ -221,7 +230,7 @@
     <item>
       <title>Rstats</title>
       <link>/categories/rstats/</link>
-      <pubDate>Sun, 12 Nov 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/rstats/</guid>
       <description></description>

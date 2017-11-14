@@ -6,10 +6,24 @@
     <description>Recent content in Posts on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Nov 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Secret Sampling 🎅🤶</title>
+      <link>/2017/11/15/secret-sampling/</link>
+      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/11/15/secret-sampling/</guid>
+      <description>’Tis the season for white elphant / גמד וענק / Yankee swap / secret santa-ing! There are various rules for this, for our version:
+🏷 each participant receives the name of someone else to purchase a gift for
+🎁 gifts are exchanged at a party
+🤔 the receiver is tasked with guessing who the gift-giver was!
+We thought it’d be particularly fun to do it #rstats style.
+Assigning partners We had our classmates sign up if they were interested in a Google Form.</description>
+    </item>
     
     <item>
       <title>Thanksgiving Gantt Chart</title>
