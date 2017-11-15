@@ -99,7 +99,7 @@ body {
   
   
   &nbsp;<i class="fa fa-clock-o"></i>
-    &nbsp;2 min read
+    &nbsp;3 min read
   
   
   
@@ -143,9 +143,23 @@ dat &lt;- tibble(
   )
 }</code></pre>
 <p><em>This is likely not the most efficient way, but we only had 23 friends so it’s</em> 👌 – <em>if you get excited about efficiency and would like to share a quicker way to do it, please do! We</em> ❤️ <em>to learn!</em></p>
+<p><strong>Edit:</strong> Looks like our 🙏 was answered!</p>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="en">
+<p lang="en" dir="ltr">
+What if you just did sample(names) and everyone was assigned to give a give to the next person in the vector?
+</p>
+— Hadley Wickham (<span class="citation">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/930841037626576896?ref_src=twsrc%5Etfw">November 15, 2017</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>This could look something like:</p>
+<pre class="r"><code>dat &lt;- df %&gt;%
+  select(name) %&gt;%
+  mutate(name = sample(name)) %&gt;%
+  mutate(partner = lag(name))
+dat$partner[1] &lt;- dat$name[nrow(dat)]</code></pre>
 <p>We then do a join to pull the emails and interests back in.</p>
-<pre class="r"><code>df_name &lt;- names[ , c(&quot;name&quot;, &quot;email&quot;)]
-df_partner &lt;- names[ , c(&quot;name&quot;, &quot;interests&quot;)]
+<pre class="r"><code>df_name &lt;- df[ , c(&quot;name&quot;, &quot;email&quot;)]
+df_partner &lt;- df[ , c(&quot;name&quot;, &quot;interests&quot;)]
 dat &lt;- dat %&gt;%
   left_join(df_name, c(&quot;name&quot; = &quot;name&quot;)) %&gt;%
   left_join(df_partner, c(&quot;partner&quot; = &quot;name&quot;))</code></pre>
