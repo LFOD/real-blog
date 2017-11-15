@@ -129,15 +129,16 @@ body {
 library(&quot;dplyr&quot;)</code></pre>
 <pre class="r"><code>df &lt;- gs_url(&quot;https://docs.google.com/spreadsheets/d/1NHbsjZVhvIxzuivXWQvDBst0oMN7ZcCjCbI8XJeXxJI/edit#gid=860103774&quot;) %&gt;%
   gs_read()</code></pre>
-<p>We began by making a tibble that shuffled the <code>name</code> in the first column and assigned a random <code>partner</code> in the second.</p>
-<pre class="r"><code>dat &lt;- tibble(
-  name = sample(df$name),
+<p>We began by making a tibble that has <code>name</code> in the first column and assigned a random <code>partner</code> in the second.</p>
+<pre class="r"><code>set.seed(525)
+dat &lt;- tibble(
+  name = df$name,
   partner = sample(df$name)
 )</code></pre>
 <p><em>“But what if someone was assigned to be their own partner!”</em> you may ask. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://media.giphy.com/media/23WStXFJFKN44/giphy.gif" /></span> Have no fear! A <code>while</code> loop is here! We allow a <code>while</code> loop to iterate until every individual is assigned a partner (who isn’t them!).</p>
 <pre class="r"><code>while (any(dat$name == dat$partner)) {
   dat &lt;- tibble(
-    name = sample(df$name),
+    name = df$name,
     partner = sample(df$name)
   )
 }</code></pre>
@@ -150,7 +151,7 @@ dat &lt;- dat %&gt;%
 </div>
 <div id="sending-the-email" class="section level2">
 <h2>Sending the email</h2>
-<p><a href="https://twitter.com/_inundata">Karthik</a> and I had a blast at <a href="https://ropensci.org">rOpenSci</a> unconf creating the <a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress package</a> - what a delightful chance to use it! We didn’t want the secret to be spoiled (i.e. we didn’t want to know who would be buying us gifts!), so we wrote a script to send an email to our classmates.</p>
+<p><a href="https://twitter.com/_inundata">Karthik</a> and I had a blast at the <a href="https://ropensci.org">rOpenSci</a> unconf creating the 🐴 <a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress package</a> - what a delightful chance to use it! We didn’t want the secret to be spoiled (i.e. we didn’t want to know who would be buying us gifts!), so we wrote a script to send an email to our classmates.</p>
 <pre class="r"><code>## devtools::install_github(&quot;ropenscilabs/ponyexpress&quot;)
 library(&quot;ponyexpress&quot;)</code></pre>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://assets-auto.rbl.ms/248d7dc3241d5585d0d9feba16933a8f5352c8f3fd6fb575c246725b35128824" /></span></p>
@@ -171,7 +172,7 @@ our_template &lt;- glue::glue(glitter_template)
 
 parcel &lt;- parcel_create(dat,
                         sender_name = &quot;Lucy&quot;,
-                        sender_email = &quot;lucydagostino@gmail.com&quot;,
+                        sender_email = &quot;lucy@myemail.com&quot;,
                         subject = &quot;Secret Santa!&quot;,
                         template = our_template)
 
