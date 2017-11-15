@@ -142,6 +142,7 @@ dat &lt;- tibble(
     partner = sample(df$name)
   )
 }</code></pre>
+<p><em>This is likely not the most efficient way, but we only had 23 friends so it’s</em> 👌 – <em>if you get excited about efficiency and would like to share a quicker way to do it, please do! We</em> ❤️ <em>to learn!</em></p>
 <p>We then do a join to pull the emails and interests back in.</p>
 <pre class="r"><code>df_name &lt;- names[ , c(&quot;name&quot;, &quot;email&quot;)]
 df_partner &lt;- names[ , c(&quot;name&quot;, &quot;interests&quot;)]
