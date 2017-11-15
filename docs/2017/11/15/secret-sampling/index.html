@@ -122,8 +122,8 @@ body {
 🎁 gifts are exchanged at a party<br />
 🤔 the receiver is tasked with guessing who the gift-giver was!</p>
 <p>We thought it’d be particularly fun to do it #rstats style.</p>
-<div id="assigning-partners" class="section level1">
-<h1>Assigning partners</h1>
+<div id="assigning-partners" class="section level2">
+<h2>Assigning partners</h2>
 <p>We had our interested classmates sign up on a Google Form,<label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="../../../../images/2017-11-14/google-form.png" /></span> resulting in a Google Sheet with each participant’s <code>name</code>, <code>email</code>, and <code>interests</code>.</p>
 <pre class="r"><code>library(&quot;googlesheets&quot;)
 library(&quot;dplyr&quot;)</code></pre>
@@ -134,7 +134,7 @@ library(&quot;dplyr&quot;)</code></pre>
   name = sample(df$name),
   partner = sample(df$name)
 )</code></pre>
-<p>“But what if someone was assigned to be their own partner!” you may ask. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://media.giphy.com/media/23WStXFJFKN44/giphy.gif" /></span> Have no fear! A <code>while</code> loop is here! We allow a <code>while</code> loop to iterate until every individual is assigned a partner (who isn’t them!).</p>
+<p><em>“But what if someone was assigned to be their own partner!”</em> you may ask. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://media.giphy.com/media/23WStXFJFKN44/giphy.gif" /></span> Have no fear! A <code>while</code> loop is here! We allow a <code>while</code> loop to iterate until every individual is assigned a partner (who isn’t them!).</p>
 <pre class="r"><code>while (any(dat$name == dat$partner)) {
   dat &lt;- tibble(
     name = sample(df$name),
@@ -148,8 +148,8 @@ dat &lt;- dat %&gt;%
   left_join(df_name, c(&quot;name&quot; = &quot;name&quot;)) %&gt;%
   left_join(df_partner, c(&quot;partner&quot; = &quot;name&quot;))</code></pre>
 </div>
-<div id="sending-the-email" class="section level1">
-<h1>Sending the email</h1>
+<div id="sending-the-email" class="section level2">
+<h2>Sending the email</h2>
 <p><a href="https://twitter.com/_inundata">Karthik</a> and I had a blast at <a href="https://ropensci.org">rOpenSci</a> unconf creating the <a href="https://github.com/ropenscilabs/ponyexpress">ponyexpress package</a> - what a delightful chance to use it! We didn’t want the secret to be spoiled (i.e. we didn’t want to know who would be buying us gifts!), so we wrote a script to send an email to our classmates.</p>
 <pre class="r"><code>## devtools::install_github(&quot;ropenscilabs/ponyexpress&quot;)
 library(&quot;ponyexpress&quot;)</code></pre>
