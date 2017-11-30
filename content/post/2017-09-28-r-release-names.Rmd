@@ -146,6 +146,17 @@ All of the release names are references to Peanuts strips/films. I think this is
 ## 3.4.2 (2017-09-28) Short Summer
 **Reference**: [*It was a Short Summer, Charlie Brown*](http://peanuts.wikia.com/wiki/It_Was_a_Short_Summer,_Charlie_Brown)
 
+<span class = "marginnote">
+<iframe src="https://www.youtube.com/embed/R6m16pbkKtU" frameborder="0" allowfullscreen></iframe>
+</span>
+
+## 3.4.3 (2017-11-30) Kite-eating Tree
+**Reference**: [Peanuts February 19, 1967](http://www.gocomics.com/peanuts/1967/02/19)
+
+[Peter Dalgaard](http://twitter.com/pdalgd) made a gif to commemorate the momentous occasion!
+
+![](/images/2017-09-28/kite-eating-tree.gif)
+
 Looks like we have some validation (thanks Peter!) -- I've updated the Masked Marvel accordingly `r emo::ji("tada")`.
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">Mostly on target. A few are from films/badges rather than strips. Notably Masked Marvel from the unforgettable arm-wrestling w/Lucy.</p>&mdash; Peter Dalgaard (@pdalgd) <a href="https://twitter.com/pdalgd/status/913459973304279040?ref_src=twsrc%5Etfw">September 28, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
