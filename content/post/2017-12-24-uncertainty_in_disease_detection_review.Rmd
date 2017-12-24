@@ -2,8 +2,8 @@
 title: "Leveraging uncertainty information from deep neural networks for disease detection - a summary"
 author: "Nick Strayer"
 date: '2017-12-24'
-categories: ["deep learning", "algorithms", "baseball"]
-tags: ["deep learning", "algorithms", "baseball"]
+categories: ["deep learning", "algorithms", "uncertainty", "bayesian"]
+tags: ["deep learning", "algorithms", "uncertainty", "bayesian"]
 excerpt: "I was recently sent this fantastic paper on using uncertainty in deep neural networks. In it the authors demonstrate a practical use of approximate bayesian inference by dropout in the context of massively complicated computer vision models for diagnosing disease. The paper, while well written, is very long. Here I summarize it into its main points and comment on their impactfulness."
 ---
 ```{r setup, include=FALSE}

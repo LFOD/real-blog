@@ -32,9 +32,18 @@
     <item>
       <title>Baseball</title>
       <link>/tags/baseball/</link>
-      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 08 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/baseball/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bayesian</title>
+      <link>/tags/bayesian/</link>
+      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/bayesian/</guid>
       <description></description>
     </item>
     
@@ -296,6 +305,15 @@
       <pubDate>Mon, 24 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/twitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Uncertainty</title>
+      <link>/tags/uncertainty/</link>
+      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/uncertainty/</guid>
       <description></description>
     </item>
     

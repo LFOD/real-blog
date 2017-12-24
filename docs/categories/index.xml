@@ -32,9 +32,18 @@
     <item>
       <title>Baseball</title>
       <link>/categories/baseball/</link>
-      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 08 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/baseball/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bayesian</title>
+      <link>/categories/bayesian/</link>
+      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/bayesian/</guid>
       <description></description>
     </item>
     
@@ -341,6 +350,15 @@
       <pubDate>Sat, 18 Feb 2017 09:03:06 -0600</pubDate>
       
       <guid>/categories/type-1-error/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Uncertainty</title>
+      <link>/categories/uncertainty/</link>
+      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/uncertainty/</guid>
       <description></description>
     </item>
     
