@@ -30,7 +30,7 @@ Neural networks trained with dropout will randomly drop connections in a neural 
 
 __Getting a posterior from dropout__
 
-The bayes-by-dropout paper points out that if you simply leave the dropout on at test time and sample a ton of predictions from your model, you are effectively sampling from a distribution of different models, and thus the results from that sampling reflect an approximate posterior of your model's predictions. `r margin_note("The original paper explains this in much better words and also shows that, while this relationship is intuitively appealing, it really is mathematically true. It's great work.")`
+The bayes-by-dropout paper points out that if you simply leave the dropout on at test time and sample a ton of predictions from your model, `r margin_note("The original paper explains this in much better words and also shows that, while this relationship is intuitively appealing, it really is mathematically true. It's great work.")` you are effectively sampling from a distribution of different models. Thus the results from that sampling reflect an approximate posterior of your model's predictions. 
 
 
 ```{r, echo = FALSE, fig.cap = "Example output of 100 passes through a convolutional network trained to recognize MNIST digits. You can see the model's uncertainty by the scatter of a given classification over the passes. Taken from [the bayes-by-droput paper](https://arxiv.org/pdf/1506.02142.pdf)."}
