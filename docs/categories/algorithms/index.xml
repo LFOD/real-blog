@@ -6,10 +6,19 @@
     <description>Recent content in Algorithms on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Nov 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 Dec 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/algorithms/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leveraging uncertainty information from deep neural networks for disease detection - a summary</title>
+      <link>/2017/12/24/leveraging-uncertainty-information-from-deep-neural-networks-for-disease-detection---a-summary/</link>
+      <pubDate>Sun, 24 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/12/24/leveraging-uncertainty-information-from-deep-neural-networks-for-disease-detection---a-summary/</guid>
+      <description>As a biostatistician in the deep learning world I have the awkward task of balancing the dogma of statistics (everything is uncertain) along with the alluring success of some of the newest crazy complex neural network architectures. Going onto any Kaggle competition or new paper ⊕Such as the popular but arguably flawed paper on diagnosing from radiological screens from Andrew Ng et al. you will see models with millions of parameters performing seemingly magical tasks on data of all kinds.</description>
+    </item>
     
     <item>
       <title>LSTM neural nets as told by baseball</title>
