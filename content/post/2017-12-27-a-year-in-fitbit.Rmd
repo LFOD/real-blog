@@ -57,13 +57,14 @@ fitbit_data %>%
     minimum = min(value),
     mean = mean(value),
     median = median(value),
-    maximum = max(value)
+    maximum = max(value),
+    max_time = max(time)
   ) %>% 
   knitr::kable(digits = 3)
 ```
 
 
-So from this simple summary we can see that our time column does appear to be what it should, starting at 0 and ending at $60*60*(24 - 1) = 86340$, or seemingly every minute of a given day. The earliest date we have is November first and the latest is December 26th. Mean heart rate is 73 and mean steps per minute is 6. Median heart rate is 69 bpm and median steps are zero, or more than half the time I'm not moving at all.
+So from this simple summary we can see that our time column does appear to be what it should, starting at 0 and ending at $60*60*(24 - 1) = 86340$, or seemingly every minute of a given day.  Mean heart rate is 73 and mean steps per minute is 6. Median heart rate is 69 bpm and median steps are zero, or more than half the time I'm not moving at all.
 
 Let's take a quick look at the distributions of the contiguous variables to get a better picture than a simple mean and median can show. 
 
@@ -140,15 +141,14 @@ is_weekday <- function(day_of_week) day_of_week %in% 2:6
 fitbit_data %>% 
   filter(between_six_nine(time) & is_weekday(day_of_week)) %>% 
   spread(type, value) %>% 
+  mutate(day_of_week = factor(day_of_week, 
+    labels = c('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
+    levels = 2:6)) %>% 
   ggplot(aes(x = time)) +
   geom_bar(aes(y = steps), color = 'orangered', alpha = 0.3, stat = 'identity') + 
   geom_line(aes(y = `heart rate`), color = 'steelblue', size = 0.8) + 
   facet_grid(week_of_year ~ day_of_week) +
-  theme_void() +
-  theme(
-    strip.text.x = element_blank(),
-    strip.background = element_blank()
-  ) 
+  theme_void() 
 ```
 
 You can see when I switched my run days (seen as the large red blocks of steps) from Wednesday to Tuesday and Thursday. In addition, if you look closely you can see the distinct pattern of my steps to the gym from my car.
@@ -161,15 +161,15 @@ between_seven_two <- function(time) time > 7*60*60 & time < 14*60*60
 fitbit_data %>% 
   filter(between_seven_two(time) & !(is_weekday(day_of_week))) %>% 
   spread(type, value) %>% 
+  mutate(
+  day_of_week = factor(day_of_week, 
+    labels = c('Saturday', 'Sunday'),
+    levels = c(7,1))) %>% 
   ggplot(aes(x = time)) +
   geom_bar(aes(y = steps), color = 'orangered', alpha = 0.3, stat = 'identity') + 
   geom_line(aes(y = `heart rate`), color = 'steelblue', size = 0.8) + 
   facet_grid(week_of_year ~ day_of_week) +
-  theme_void() +
-  theme(
-    strip.text.x = element_blank(),
-    strip.background = element_blank()
-  ) 
+  theme_void()
 ```
 
 

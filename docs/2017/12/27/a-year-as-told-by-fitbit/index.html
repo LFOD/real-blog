@@ -215,7 +215,8 @@ fitbit_data %&gt;%
     minimum = min(value),
     mean = mean(value),
     median = median(value),
-    maximum = max(value)
+    maximum = max(value),
+    max_time = max(time)
   ) %&gt;% 
   knitr::kable(digits = 3)</code></pre>
 <table>
@@ -227,6 +228,7 @@ fitbit_data %&gt;%
 <th align="right">mean</th>
 <th align="right">median</th>
 <th align="right">maximum</th>
+<th align="right">max_time</th>
 </tr>
 </thead>
 <tbody>
@@ -237,6 +239,7 @@ fitbit_data %&gt;%
 <td align="right">73.300</td>
 <td align="right">69</td>
 <td align="right">192</td>
+<td align="right">86340</td>
 </tr>
 <tr class="even">
 <td align="left">steps</td>
@@ -245,10 +248,11 @@ fitbit_data %&gt;%
 <td align="right">6.287</td>
 <td align="right">0</td>
 <td align="right">222</td>
+<td align="right">86340</td>
 </tr>
 </tbody>
 </table>
-<p>So from this simple summary we can see that our time column does appear to be what it should, starting at 0 and ending at <span class="math inline">\(60*60*(24 - 1) = 86340\)</span>, or seemingly every minute of a given day. The earliest date we have is November first and the latest is December 26th. Mean heart rate is 73 and mean steps per minute is 6. Median heart rate is 69 bpm and median steps are zero, or more than half the time I’m not moving at all.</p>
+<p>So from this simple summary we can see that our time column does appear to be what it should, starting at 0 and ending at <span class="math inline">\(60*60*(24 - 1) = 86340\)</span>, or seemingly every minute of a given day. Mean heart rate is 73 and mean steps per minute is 6. Median heart rate is 69 bpm and median steps are zero, or more than half the time I’m not moving at all.</p>
 <p>Let’s take a quick look at the distributions of the contiguous variables to get a better picture than a simple mean and median can show.</p>
 <pre class="r"><code>annotations &lt;- data_frame(
   x = c(115, 165),
@@ -312,15 +316,14 @@ is_weekday &lt;- function(day_of_week) day_of_week %in% 2:6
 fitbit_data %&gt;% 
   filter(between_six_nine(time) &amp; is_weekday(day_of_week)) %&gt;% 
   spread(type, value) %&gt;% 
+  mutate(day_of_week = factor(day_of_week, 
+    labels = c(&#39;Monday&#39;, &#39;Tuesday&#39;, &#39;Wednesday&#39;, &#39;Thursday&#39;, &#39;Friday&#39;),
+    levels = 2:6)) %&gt;% 
   ggplot(aes(x = time)) +
   geom_bar(aes(y = steps), color = &#39;orangered&#39;, alpha = 0.3, stat = &#39;identity&#39;) + 
   geom_line(aes(y = `heart rate`), color = &#39;steelblue&#39;, size = 0.8) + 
   facet_grid(week_of_year ~ day_of_week) +
-  theme_void() +
-  theme(
-    strip.text.x = element_blank(),
-    strip.background = element_blank()
-  ) </code></pre>
+  theme_void() </code></pre>
 <p><img src="../../../../post/2017-12-27-a-year-in-fitbit_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>You can see when I switched my run days (seen as the large red blocks of steps) from Wednesday to Tuesday and Thursday. In addition, if you look closely you can see the distinct pattern of my steps to the gym from my car.</p>
 <p>Another type of workout my girlfriend and I like to do is hikes on the weekends. We started doing this much more frequently as the year went on. Again let’s subset our data to see if we can observe this.</p>
@@ -329,15 +332,15 @@ fitbit_data %&gt;%
 fitbit_data %&gt;% 
   filter(between_seven_two(time) &amp; !(is_weekday(day_of_week))) %&gt;% 
   spread(type, value) %&gt;% 
+  mutate(
+  day_of_week = factor(day_of_week, 
+    labels = c(&#39;Saturday&#39;, &#39;Sunday&#39;),
+    levels = c(7,1))) %&gt;% 
   ggplot(aes(x = time)) +
   geom_bar(aes(y = steps), color = &#39;orangered&#39;, alpha = 0.3, stat = &#39;identity&#39;) + 
   geom_line(aes(y = `heart rate`), color = &#39;steelblue&#39;, size = 0.8) + 
   facet_grid(week_of_year ~ day_of_week) +
-  theme_void() +
-  theme(
-    strip.text.x = element_blank(),
-    strip.background = element_blank()
-  ) </code></pre>
+  theme_void()</code></pre>
 <p><img src="../../../../post/2017-12-27-a-year-in-fitbit_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>You can see that in the later half of the year we started doing hikes much more frequently. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="http://cdn-assets.alltrails.com/static-map/production/at-map/16584167/trail-us-tennessee-fiery-gizzard-grundy-to-foster-falls-at-map-16584167-1504474003-1200x630-3-6.jpg" /></span> In addition, in week 37 we did a hike at the fiery gizzard trail in South Tennessee.</p>
 </div>
