@@ -282,6 +282,15 @@
     </item>
     
     <item>
+      <title>Time Series</title>
+      <link>/tags/time-series/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/time-series/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Travel</title>
       <link>/tags/travel/</link>
       <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
@@ -320,9 +329,18 @@
     <item>
       <title>Visualization</title>
       <link>/tags/visualization/</link>
-      <pubDate>Sat, 14 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/visualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wearables</title>
+      <link>/tags/wearables/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/wearables/</guid>
       <description></description>
     </item>
     

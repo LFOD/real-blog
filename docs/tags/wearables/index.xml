@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wearables on Live Free or Dichotomize</title>
+    <link>/tags/wearables/</link>
+    <description>Recent content in Wearables on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 Dec 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/wearables/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A year as told by fitbit</title>
+      <link>/2017/12/27/a-year-as-told-by-fitbit/</link>
+      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/12/27/a-year-as-told-by-fitbit/</guid>
+      <description>I managed to wear a fitbit the entirety of 2017, this is exciting for a few reasons: one I have commitment problems, and two: it’s a lot of data that I have to play with. While fitbit’s app has some nice pretty graphs, they make it rather hard to actually dump all of your data into something nice like a csv.
+Over the summer I worked on a project with Jeff Leek at the Johns Hopkins Data Science Lab to crack open this fitbit data resource and get out nice tidy csvs of your data.</description>
+    </item>
+    
+  </channel>
+</rss>
