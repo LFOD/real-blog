@@ -97,7 +97,7 @@ Notice the second chunk gave us the same result as above, but the first chunk wa
 
 # What have we learned?
 
-* I've learned a lot just from thinking through where to set different parts of my code and how that can effect things downstream  
+* I've learned a lot just from thinking through where to set different parts of my code and how that can affect things downstream  
 * We now know a bit more about how seeds work!  
 * We've learned about the `withr::with_preserve_seed()` function `r emo::ji("tada")`  
 * We've seen the potential consequences of changing the global state in a package -- Jenny recently [added this as an issue to discuss](https://github.com/hadley/r-pkgs/issues/447) in a future version of r-pkgs, which she eloquently summarizes as "don't touch things that don't belong to you and if you have to, you need to be super careful to wipe all your sticky fingerprints off everything"  
