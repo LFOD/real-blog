@@ -1,0 +1,104 @@
+---
+title: A set.seed() + ggplot2 adventure
+author: "Lucy D'Agostino McGowan"
+date: '2018-01-22'
+slug: a-set-seed-ggplot2-adventure
+categories: [rstats, ggplot2]
+tags: [rstats, ggplot2]
+excerpt: "Recently I tweeted a small piece of advice re: when to set a seed in your script. Jenny pointed out that this may be blog post-worthy, so here we are!"
+---
+
+Recently I tweeted a small piece of advice re: when to set a seed in your script: 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> tip: always `set.seed()` AFTER loading ggplot2 <a href="https://t.co/TLpdokbSlN">pic.twitter.com/TLpdokbSlN</a></p>&mdash; Lucy 🌻 (@LucyStats) <a href="https://twitter.com/LucyStats/status/954178919242063872?ref_src=twsrc%5Etfw">January 19, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+[Jenny](http://twitter.com/JennyBryan) pointed out that this may be blog post-worthy, so here we are! 
+
+# Background
+
+`r tufte::margin_note("![](https://media1.giphy.com/media/JUh0yTz4h931K/giphy.gif)")` A little bit about where this tweet came from: I was out to lunch with my friend [Jonathan](https://twitter.com/JJ_Chipman) -- over our scrumptious Thai food, he mentioned he was having some simulation trouble. In particular, some of his simulations were breaking, but when he tried to run the script locally, everything seemed fine. He was using the same seed in both instances, and in fact was running the exact same script -- what could be causing this discrepancy! I recalled that ggplot2 would generate a random message about 10% the time, and asked whether he thought loading this package could somehow be affecting his simulation results. After some further investigation `r emo::ji("man_detective")`, it looked like indeed this may be the culprit!
+
+# Why did this happen?
+
+The `set.seed()` function sets the starting number used to generate a sequence of random numbers -- it ensures that you get the same result if you start with that same seed each time you run the same process. For example, if I use the `sample()` function immediately after setting a seed, I will always get the same sample.
+
+```{r}
+set.seed(1)
+sample(3)
+```
+
+```{r}
+set.seed(1)
+sample(3)
+```
+
+If I run `sample()` twice after setting a seed, however, I would not expect them to be the same. I'd expect the first result to match those above, and the second to be different.
+
+```{r}
+set.seed(1)
+sample(3)
+sample(3)
+```
+
+The second is different because I have already performed one random process, so now my starting point prior to running the latter `sample()` function is no longer `1`. 
+
+There is a small function in ggplot2 that runs when the library is loaded for the first time. 
+
+`r tufte::margin_note("Note: This is a little different than this code looks now, it has been updated since this discussion began!")`
+
+```{r, eval = FALSE}
+.onAttach <- function(...) {
+  if (!interactive() || stats::runif(1) > 0.1) return()
+
+  tips <- c(
+      "RStudio Community is a great place to get help: https://community.rstudio.com/c/tidyverse.",
+      "Find out what's changed in ggplot2 at https://github.com/tidyverse/ggplot2/releases.",
+      "Use suppressPackageStartupMessages() to eliminate package startup messages.",
+      "Need help? Try Stackoverflow: https://stackoverflow.com/tags/ggplot2.",
+      "Need help getting started? Try the cookbook for R: http://www.cookbook-r.com/Graphs/",
+      "Want to understand how all the pieces fit together? See the R for Data Science book: http://r4ds.had.co.nz/"
+    )
+
+  tip <- sample(tips, 1)
+  packageStartupMessage(paste(strwrap(tip), collapse = "\n"))
+}
+```
+
+This function has a `sample()` call, which will move the starting place of your random sequence of numbers. The main piece that caused Jonathan some `r emo::ji("tired_face")` is the `!interactive()` logic, which only runs the remainder of the code if the session is interactive. Another thing that can cause a bit of confusion is this `.onAttach()` function is only run the _first_ time the library is loaded, so if I run what looks like the exact same code twice during the same session, I can get different results. For example,
+
+<span class = "marginnote">
+Note: If you are quite clever, you will notice that this is *not* an interactive document and therefore neither the first nor the second chunk should run `.onAttach()` -- this is true! I've run them interactively and included the output for demonstration purposes `r emo::ji("speak_no_evil")`.
+</span>
+
+```{r, eval = FALSE}
+set.seed(1)
+library(ggplot2)
+sample(3)
+```
+<pre><code>## [1] 2 3 1</code></pre>
+
+
+```{r}
+set.seed(1)
+library(ggplot2)
+sample(3)
+```
+
+Notice the second chunk gave us the same result as above, but the first chunk was different. That is because the first chunk runs the `.onAttach()` function between when I set my seed and when I drew my sample. 
+
+# Reproducibility crisis?
+
+`r tufte::margin_note("![](https://metrouk2.files.wordpress.com/2017/04/phew.gif?w=620&h=392&crop=1)")` It turns out this really isn't cause for much concern re: reproducibility. All scripts that set seeds prior to loading ggplot2 are fully reproducible if they are run in the same environment (i.e. interactive or not) _phew!_ It can cause some confusion when trying to debug, though. In general, I like to provide future Lucy with as much assistance as possible, so I will likely avoid setting seeds prior to loading packages on the off chance that it will make my debugging trickier in the future.
+
+# What should I do?
+
+* For this particular issue, [Jim Hester](http://twitter.com/jimhester_) has already patched the development version of [ggplot2](https://github.com/tidyverse/ggplot2/pull/2409) to preserve your seed `r emo::ji("seedling")` if you set it before loading ggplot2 (he did it with a slick function, `withr::with_preserve_seed`, love it!), so you can go [download the development version](https://github.com/tidyverse/ggplot2) and set your seed wherever you please.  
+* In general, it seems somewhat prudent to set your seeds after loading packages `r emo::ji("package")`, as it can be tricky to know exactly what is going on under the hood. The wise R-Lady [Steph Locke](https://twitter.com/SteffLocke) advised in a conversation on this topic to generally try to set seeds as close to the random component as possible to avoid any confusion -- this seems like easy and good advice to follow `r emo::ji("dancing_women")`!
+
+# What have we learned?
+
+* I've learned a lot just from thinking through where to set different parts of my code and how that can effect things downstream  
+* We now know a bit more about how seeds work!  
+* We've learned about the `withr::with_preserve_seed()` function `r emo::ji("tada")`  
+* We've seen the potential consequences of changing the global state in a package -- Jenny recently [added this as an issue to discuss](https://github.com/hadley/r-pkgs/issues/447) in a future version of r-pkgs, which she eloquently summarizes as "don't touch things that don't belong to you and if you have to, you need to be super careful to wipe all your sticky fingerprints off everything"  
+* The #rstats community is so helpful and responsive! A small debugging situation led to lots of helpful advice and a quick fix from Jim `r emo::ji("construction_worker_man")`
