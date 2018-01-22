@@ -1,0 +1,96 @@
+---
+title: A set.seed() + ggplot2 adventure
+author: "Lucy D'Agostino McGowan"
+date: '2018-01-22'
+slug: a-set-seed-ggplot2-adventure
+categories: [rstats, ggplot2]
+tags: [rstats, ggplot2]
+excerpt: "Recently I tweeted a small piece of advice re: when to set a seed in your script. Jenny pointed out that this may be blog post-worthy, so here we are!"
+---
+
+
+
+<p>Recently I tweeted a small piece of advice re: when to set a seed in your script:</p>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+<a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> tip: always <code>set.seed()</code> AFTER loading ggplot2 <a href="https://t.co/TLpdokbSlN">pic.twitter.com/TLpdokbSlN</a>
+</p>
+— Lucy 🌻 (<span class="citation">@LucyStats</span>) <a href="https://twitter.com/LucyStats/status/954178919242063872?ref_src=twsrc%5Etfw">January 19, 2018</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p><a href="http://twitter.com/JennyBryan">Jenny</a> pointed out that this may be blog post-worthy, so here we are!</p>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://media1.giphy.com/media/JUh0yTz4h931K/giphy.gif" /></span> A little bit about where this tweet came from: I was out to lunch with my friend <a href="https://twitter.com/JJ_Chipman">Jonathan</a> – over our scrumptious Thai food, he mentioned he was having some simulation trouble. In particular, some of his simulations were breaking, but when he tried to run the script locally, everything seemed fine. He was using the same seed in both instances, and in fact was running the exact same script – what could be causing this discrepancy! I recalled that ggplot2 would generate a random message about 10% the time, and asked whether he thought loading this package could somehow be affecting his simulation results. After some further investigation 🕵️‍♂️, it looked like indeed this may be the culprit!</p>
+</div>
+<div id="why-did-this-happen" class="section level1">
+<h1>Why did this happen?</h1>
+<p>The <code>set.seed()</code> function sets the starting number used to generate a sequence of random numbers – it ensures that you get the same result if you start with that same seed each time you run the same process. For example, if I use the <code>sample()</code> function immediately after setting a seed, I will always get the same sample.</p>
+<pre class="r"><code>set.seed(1)
+sample(3)</code></pre>
+<pre><code>## [1] 1 3 2</code></pre>
+<pre class="r"><code>set.seed(1)
+sample(3)</code></pre>
+<pre><code>## [1] 1 3 2</code></pre>
+<p>If I run <code>sample()</code> twice after setting a seed, however, I would not expect them to be the same. I’d expect the first result to match those above, and the second to be different.</p>
+<pre class="r"><code>set.seed(1)
+sample(3)</code></pre>
+<pre><code>## [1] 1 3 2</code></pre>
+<pre class="r"><code>sample(3)</code></pre>
+<pre><code>## [1] 3 1 2</code></pre>
+<p>The second is different because I have already performed one random process, so now my starting point prior to running the latter <code>sample()</code> function is no longer <code>1</code>.</p>
+<p>There is a small function in ggplot2 that runs when the library is loaded for the first time.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Note: This is a little different than this code looks now, it has been updated since this discussion began!</span></p>
+<pre class="r"><code>.onAttach &lt;- function(...) {
+  if (!interactive() || stats::runif(1) &gt; 0.1) return()
+
+  tips &lt;- c(
+      &quot;RStudio Community is a great place to get help: https://community.rstudio.com/c/tidyverse.&quot;,
+      &quot;Find out what&#39;s changed in ggplot2 at https://github.com/tidyverse/ggplot2/releases.&quot;,
+      &quot;Use suppressPackageStartupMessages() to eliminate package startup messages.&quot;,
+      &quot;Need help? Try Stackoverflow: https://stackoverflow.com/tags/ggplot2.&quot;,
+      &quot;Need help getting started? Try the cookbook for R: http://www.cookbook-r.com/Graphs/&quot;,
+      &quot;Want to understand how all the pieces fit together? See the R for Data Science book: http://r4ds.had.co.nz/&quot;
+    )
+
+  tip &lt;- sample(tips, 1)
+  packageStartupMessage(paste(strwrap(tip), collapse = &quot;\n&quot;))
+}</code></pre>
+<p>This function has a <code>sample()</code> call, which will move the starting place of your random sequence of numbers. The main piece that caused Jonathan some 😫 is the <code>!interactive()</code> logic, which only runs the remainder of the code if the session is interactive. Another thing that can cause a bit of confusion is this <code>.onAttach()</code> function is only run the <em>first</em> time the library is loaded, so if I run what looks like the exact same code twice during the same session, I can get different results. For example,</p>
+<p><span class="marginnote"> Note: If you are quite clever, you will notice that this is <em>not</em> an interactive document and therefore neither the first nor the second chunk should run <code>.onAttach()</code> – this is true! I’ve run them interactively and included the output for demonstration purposes 🙊. </span></p>
+<pre class="r"><code>set.seed(1)
+library(ggplot2)
+sample(3)</code></pre>
+<pre><code>## [1] 2 3 1</code></pre>
+<pre class="r"><code>set.seed(1)
+library(ggplot2)
+sample(3)</code></pre>
+<pre><code>## [1] 1 3 2</code></pre>
+<p>Notice the second chunk gave us the same result as above, but the first chunk was different. That is because the first chunk runs the <code>.onAttach()</code> function between when I set my seed and when I drew my sample.</p>
+</div>
+<div id="reproducibility-crisis" class="section level1">
+<h1>Reproducibility crisis?</h1>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://metrouk2.files.wordpress.com/2017/04/phew.gif?w=620&amp;h=392&amp;crop=1" /></span> It turns out this really isn’t cause for much concern re: reproducibility. All scripts that set seeds prior to loading ggplot2 are fully reproducible if they are run in the same environment (i.e. interactive or not) <em>phew!</em> It can cause some confusion when trying to debug, though. In general, I like to provide future Lucy with as much assistance as possible, so I will likely avoid setting seeds prior to loading packages on the off chance that it will make my debugging trickier in the future.</p>
+</div>
+<div id="what-should-i-do" class="section level1">
+<h1>What should I do?</h1>
+<ul>
+<li>For this particular issue, <a href="http://twitter.com/jimhester_">Jim Hester</a> has already patched the development version of <a href="https://github.com/tidyverse/ggplot2/pull/2409">ggplot2</a> to preserve your seed 🌱 if you set it before loading ggplot2 (he did it with a slick function, <code>withr::with_preserve_seed</code>, love it!), so you can go <a href="https://github.com/tidyverse/ggplot2">download the development version</a> and set your seed wherever you please.<br />
+</li>
+<li>In general, it seems somewhat prudent to set your seeds after loading packages 📦, as it can be tricky to know exactly what is going on under the hood. The wise R-Lady <a href="https://twitter.com/SteffLocke">Steph Locke</a> advised in a conversation on this topic to generally try to set seeds as close to the random component as possible to avoid any confusion – this seems like easy and good advice to follow 👯!</li>
+</ul>
+</div>
+<div id="what-have-we-learned" class="section level1">
+<h1>What have we learned?</h1>
+<ul>
+<li>I’ve learned a lot just from thinking through where to set different parts of my code and how that can effect things downstream<br />
+</li>
+<li>We now know a bit more about how seeds work!<br />
+</li>
+<li>We’ve learned about the <code>withr::with_preserve_seed()</code> function 🎉<br />
+</li>
+<li>We’ve seen the potential consequences of changing the global state in a package – Jenny recently <a href="https://github.com/hadley/r-pkgs/issues/447">added this as an issue to discuss</a> in a future version of r-pkgs, which she eloquently summarizes as “don’t touch things that don’t belong to you and if you have to, you need to be super careful to wipe all your sticky fingerprints off everything”<br />
+</li>
+<li>The #rstats community is so helpful and responsive! A small debugging situation led to lots of helpful advice and a quick fix from Jim 👷</li>
+</ul>
+</div>
