@@ -88,7 +88,7 @@ Notice the second chunk gave us the same result as above, but the first chunk wa
 
 # Reproducibility crisis?
 
-`r tufte::margin_note("![](https://metrouk2.files.wordpress.com/2017/04/phew.gif?w=620&h=392&crop=1)")` It turns out this really isn't cause for much concern re: reproducibility. All scripts that set seeds prior to loading ggplot2 are fully reproducible if they are run in the same environment (i.e. interactive or not) _phew!_ It can cause some confusion when trying to debug, though. In general, I like to provide future Lucy with as much assistance as possible, so I will likely avoid setting seeds prior to loading packages on the off chance that it will make my debugging trickier in the future.
+`r tufte::margin_note("![](https://metrouk2.files.wordpress.com/2017/04/phew.gif?w=620&h=392&crop=1)")` It turns out this isn't cause for concern re: reproducibility, thanks to Jim Hester's new patch to ggplot2 _phew!_ In general, I like to provide future Lucy with as much assistance as possible, so I will likely avoid setting seeds prior to loading packages on the off chance that it will make my debugging trickier in the future.
 
 # What should I do?
 
