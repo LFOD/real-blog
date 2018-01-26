@@ -39,10 +39,10 @@ This inspired me to attempt to explain Hill's criteria using xkcd comics, both b
 * How big is the effect you are seeing?
 * Note: Hill suggests that huge effects *can* suggest causality, however this does not mean small effects *cannot* 
 
+`r tufte::margin_note("_Note_: I am using this idea for a talk and I found a strip (to the left) that I think better represents this concept. The original post had [this one](http://xkcd.com/1592/).")`
 
-
-<a href="http://xkcd.com/1592/" target="_blank">
-  <img src="http://imgs.xkcd.com/comics/overthinking.png" alt="strength">
+<a href="https://xkcd.com/539/" target="_blank">
+  <img src=" https://imgs.xkcd.com/comics/boyfriend.png" alt="strength">
 </a>
 
 
