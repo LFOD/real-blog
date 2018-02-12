@@ -57,6 +57,15 @@
     </item>
     
     <item>
+      <title>Climate</title>
+      <link>/categories/climate/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/climate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Collaboration</title>
       <link>/categories/collaboration/</link>
       <pubDate>Fri, 24 Feb 2017 10:54:24 +0200</pubDate>
@@ -170,6 +179,15 @@
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/categories/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Maps</title>
+      <link>/categories/maps/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/maps/</guid>
       <description></description>
     </item>
     
@@ -383,7 +401,7 @@
     <item>
       <title>Visualization</title>
       <link>/categories/visualization/</link>
-      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/categories/visualization/</guid>
       <description></description>

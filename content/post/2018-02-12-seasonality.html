@@ -1,0 +1,475 @@
+---
+title: "The United States of Seasons"
+author: "Nick Strayer"
+date: '2018-02-12'
+categories: ["visualization", "maps", "climate"]
+tags: ["visualization", "maps", "climate"]
+excerpt: "How different is the warmest day from the coldest day all around the country? Using readings from 7,000+ NOAA weather stations across the country we can find out."
+---
+
+
+
+<hr />
+<div class="fullwidth">
+<p><img src="/post/2018-02-12-seasonality_files/figure-html/unnamed-chunk-1-1.png" width="1152" /></p>
+</div>
+<p>The other day my girlfriend and I were talking about places we would like to live after grad school and one of the things that got brought up was how ‘seasonal’ the location is. She grew up in Long Beach, California, which essentially has no seasons, whereas I grew up near Ann Arbor, Michigan which very much has seasons. This got me to thinking: what does the country look like in the context of its seasonality? By ‘seasonality’ we mean how big of a shift in the weather is there during the year.</p>
+<p>Being into data and maps I figured I would try and investigate this in a data-driven way. The final result is above this, but here I will walk you through the process that got me from question to map.</p>
+<div id="the-data" class="section level3">
+<h3>The data</h3>
+<p>The data that I wanted were the average (high) temperature over the year by different locations around the US. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Turns out there are some nice APIs for getting this such as <a href="https://www.wunderground.com/weather/api?MR=1">Wunderground’s</a> but they all ended up requiring me to pay if I wanted to get anything close to the level of detail I wanted.</span> Luckily, we have a federal government agency that likes to track things related to climate/weather in the National Oceanic and Atmospheric Administration (NOAA) and they have <a href="https://www.ncdc.noaa.gov/">oodles of data.</a></p>
+<p>After some digging I discovered what I was looking for: <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/climate-normals/1981-2010-normals-data">U.S. Climate Normals</a>, a dataset for ~7,000 stations around the country that contains ‘normal’ or average measures of temperature, wind, etc for the dates from 1981-2010.</p>
+<p>Looking in their “https” datasource they had a nice <code>readme.txt</code>. After skimming this document I found that what I was looking for was in <code>products/auxiliary/station</code>, there was a problem though. It is briefly alluded to by the line in the <code>readme</code> corresponding to these files: <code>Users wanting to visually inspect normals for just one or a few stations should use the files in this subdirectory.</code> “Visually inspect”? I don’t want that I want to read it in R! Let’s see what the problem could be….</p>
+<p><strong>products/auxiliary/station/CQC00914801.normals.txt</strong></p>
+<pre><code>Station Name: MP ROTA AP
+GHCN Daily ID: CQC00914801
+Latitude: 14.1717
+Longitude: 145.2428
+Elevation: 179.2m
+ 
+Temperature-Related Normals
+ 
+Monthly                   JAN    FEB    MAR    APR    MAY    JUN    JUL    AUG    SEP    OCT    NOV    DEC
+-----------------------------------------------------------------------------------------------------------
+        mly-tmax-normal   836R   832R   839R   852R   865R   873R   867R   865R   867R   865R   859R   848R
+        mly-tavg-normal   788R   782R   790R   801R   811R   817R   811R   808R   808R   808R   806R   800R
+        mly-tmin-normal   740R   733R   741R   750R   756R   761R   754R   750R   748R   751R   753R   752R
+        mly-dutr-normal    96R    99R    98R   102R   108R   112R   113R   115R   119R   114R   105R    95R
+        mly-cldd-normal   428R   371R   434R   453R   498R   501R   498R   488R   473R   490R   468R   465R
+        mly-htdd-normal     0R     0R     0R     0R     0R     0R     0R     0R     0R     0R     0R     0R
+        mly-tmax-stddev     8R    14R    13R     8R     6R     8R     6R     5R    14R     7R     7R     8R
+        mly-tavg-stddev     5R    11R    10R     5R     4R     6R     4R     5R     9R     5R     5R     6R
+        mly-htdd-base60     0R     0R     0R     0R     0R     0R     0R     0R     0R     0R     0R     0R
+...</code></pre>
+<p>Turns out these files are just a bunch of tables concatinated into a single text file. Not exactly able to be read by <code>read_csv</code>. All I want though is that top line: <code>mly-tmax-normal...</code>. So we can go old school and read the file line by line and extract just that line.</p>
+<pre class="r"><code>get_station_data &lt;- function(station_id){
+  station_url &lt;- paste0(
+    &quot;https://www1.ncdc.noaa.gov/pub/data/normals/1981-2010/products/auxiliary/station/&quot;,
+    station_id,
+    &quot;.normals.txt&quot;
+  )
+  file_lines &lt;- readLines(url(station_url))
+  
+  # find the line that has monthly temp maxes
+  loc_of_temp &lt;- file_lines %&gt;% str_detect(&#39;mly-tmax-normal&#39; ) %&gt;% which()
+  
+  months &lt;- c(&#39;Jan&#39;, &#39;Feb&#39;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;)
+  
+  # strip out white space and split into a vector of 12 months
+  file_lines[loc_of_temp] %&gt;% 
+    strsplit(&#39;\\s+&#39;) %&gt;% 
+    .[[1]] %&gt;% 
+    .[-c(1,2)] %&gt;% {
+      data_frame(temp = ., month = months, station_id = station_id)
+    }
+}</code></pre>
+<p>This function will take a given station ID, download the text file corresponding to that station, and extract the monthly temperatures into a nice clean dataframe. Let’s test it out on the station we looked at two seconds ago.</p>
+<pre class="r"><code>get_station_data(&#39;CQC00914801&#39;) %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">temp</th>
+<th align="left">month</th>
+<th align="left">station_id</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">836R</td>
+<td align="left">Jan</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="even">
+<td align="left">832R</td>
+<td align="left">Feb</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="odd">
+<td align="left">839R</td>
+<td align="left">Mar</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="even">
+<td align="left">852R</td>
+<td align="left">Apr</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="odd">
+<td align="left">865R</td>
+<td align="left">May</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="even">
+<td align="left">873R</td>
+<td align="left">Jun</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="odd">
+<td align="left">867R</td>
+<td align="left">Jul</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="even">
+<td align="left">865R</td>
+<td align="left">Aug</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="odd">
+<td align="left">867R</td>
+<td align="left">Sep</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="even">
+<td align="left">865R</td>
+<td align="left">Oct</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="odd">
+<td align="left">859R</td>
+<td align="left">Nov</td>
+<td align="left">CQC00914801</td>
+</tr>
+<tr class="even">
+<td align="left">848R</td>
+<td align="left">Dec</td>
+<td align="left">CQC00914801</td>
+</tr>
+</tbody>
+</table>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The weird letters in the temp columns correspond to the quality of the measurement. Some stations hadn’t been up for all the years so their averages were not as exact. We ignore this here but in a more rigerous analysis we should probably look into them a bit more.</span></p>
+<p>Wonderful! Now all we need is a list of the unique station ids and we’re good to go! Luckily that is in the data as well. <code>station-inventories/allstations.txt</code> contained all the info on each station along with the geographic position of the station. Let’s grab it so we can get scraping!</p>
+<pre class="r"><code>info_loc &lt;- &quot;https://www1.ncdc.noaa.gov/pub/data/normals/1981-2010/station-inventories/allstations.txt&quot;
+
+# taken from readme.txt
+column_names &lt;- c(
+  &#39;station_id&#39;,&#39;lat&#39;,&#39;lon&#39;,&#39;elevation&#39;,    
+  &#39;state&#39;,&#39;name&#39;,&#39;gsnflag&#39;, &#39;hcnflag&#39;,      
+  &#39;wmoid&#39;, &#39;method&#39; )
+
+station_info &lt;- read_table(info_loc, col_names = column_names) %&gt;% 
+  select(station_id, lat, lon, state)
+
+station_info %&gt;% 
+  head() %&gt;% 
+  knitr::kable(align = c(&#39;l&#39;,&#39;r&#39;, &#39;r&#39;, &#39;r&#39;))</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station_id</th>
+<th align="right">lat</th>
+<th align="right">lon</th>
+<th align="right">state</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">AQC00914000</td>
+<td align="right">-14.3167</td>
+<td align="right">-170.7667</td>
+<td align="right">AS</td>
+</tr>
+<tr class="even">
+<td align="left">AQW00061705</td>
+<td align="right">-14.3306</td>
+<td align="right">-170.7136</td>
+<td align="right">AS</td>
+</tr>
+<tr class="odd">
+<td align="left">CAW00064757</td>
+<td align="right">44.2325</td>
+<td align="right">-79.7811</td>
+<td align="right">ON</td>
+</tr>
+<tr class="even">
+<td align="left">CQC00914080</td>
+<td align="right">15.2136</td>
+<td align="right">145.7497</td>
+<td align="right">MP</td>
+</tr>
+<tr class="odd">
+<td align="left">CQC00914801</td>
+<td align="right">14.1717</td>
+<td align="right">145.2428</td>
+<td align="right">MP</td>
+</tr>
+<tr class="even">
+<td align="left">CQC00914855</td>
+<td align="right">15.1189</td>
+<td align="right">145.7294</td>
+<td align="right">MP</td>
+</tr>
+</tbody>
+</table>
+<p>Now we just need to loop through all the ids and amass a nice dataset of their temperatures over the year. We are going to do this in a loop rather than something like <code>purrr::map_df</code> because we can more easily handle errors and log progress.</p>
+<pre class="r"><code>stations &lt;- station_info$station_id
+
+# initialize dataframe for first station
+all_station_data &lt;- get_station_data(stations[1])
+# vector to hold the stations who we failed to get data for
+bad_stations &lt;- c()
+
+# go!
+for(station in stations[-1]){
+  print(station)
+  tryCatch({
+    all_station_data &lt;- all_station_data %&gt;% 
+      bind_rows(get_station_data(station))
+  },error = function(e) {
+    bad_stations &lt;- c(bad_stations, station)
+  })
+}</code></pre>
+<p>This loop takes a long time to run. With each query taking ~1-2 seconds and there being ~7,000 unique stations. I let it sit overnight. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Amazingly not a single station failed to download. When dealing with long running scripts like this hitting things on the internet that is practically unheard of.</span></p>
+<pre class="r"><code># Exactly 90,000 rows.
+all_station_data %&gt;% dim()
+## [1] 90000     3</code></pre>
+<p>So we want a measure of seasonality. We will define this as how big of a delta there is between the warmest and coldest months for each station.</p>
+<pre class="r"><code>swing_by_station &lt;- all_station_data %&gt;% 
+  mutate(
+    quality = str_extract(temp, &#39;[A-Z]&#39;),
+    temp = as.numeric(str_replace(temp, &#39;[A-Z]&#39;, &#39;&#39;))
+  ) %&gt;% 
+  group_by(station_id) %&gt;% 
+  summarise(
+    warmest_month = month[which.max(temp)],
+    coldest_month = month[which.min(temp)],
+    swing = (max(temp) - min(temp))/10
+  ) %&gt;% 
+  right_join(station_info, by = &#39;station_id&#39;) %&gt;% 
+  filter((lon &lt; -60 &amp; lon &gt; -130 &amp; lat &gt; 20) &amp; !is.na(swing)) # we only want mainland us
+
+swing_by_station %&gt;% 
+  head() %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">station_id</th>
+<th align="left">warmest_month</th>
+<th align="left">coldest_month</th>
+<th align="right">swing</th>
+<th align="right">lat</th>
+<th align="right">lon</th>
+<th align="left">state</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">CAW00064757</td>
+<td align="left">Jul</td>
+<td align="left">Jan</td>
+<td align="right">51.9</td>
+<td align="right">44.2325</td>
+<td align="right">-79.7811</td>
+<td align="left">ON</td>
+</tr>
+<tr class="even">
+<td align="left">USC00010063</td>
+<td align="left">Aug</td>
+<td align="left">Jan</td>
+<td align="right">39.2</td>
+<td align="right">34.2553</td>
+<td align="right">-87.1814</td>
+<td align="left">AL</td>
+</tr>
+<tr class="odd">
+<td align="left">USC00010160</td>
+<td align="left">Jul</td>
+<td align="left">Jan</td>
+<td align="right">35.5</td>
+<td align="right">32.9453</td>
+<td align="right">-85.9481</td>
+<td align="left">AL</td>
+</tr>
+<tr class="even">
+<td align="left">USC00010178</td>
+<td align="left">Jul</td>
+<td align="left">Jan</td>
+<td align="right">36.6</td>
+<td align="right">33.1272</td>
+<td align="right">-88.1550</td>
+<td align="left">AL</td>
+</tr>
+<tr class="odd">
+<td align="left">USC00010252</td>
+<td align="left">Jul</td>
+<td align="left">Jan</td>
+<td align="right">30.8</td>
+<td align="right">31.3072</td>
+<td align="right">-86.5225</td>
+<td align="left">AL</td>
+</tr>
+<tr class="even">
+<td align="left">USC00010260</td>
+<td align="left">Jul</td>
+<td align="left">Jan</td>
+<td align="right">40.4</td>
+<td align="right">34.9092</td>
+<td align="right">-87.2747</td>
+<td align="left">AL</td>
+</tr>
+</tbody>
+</table>
+<p>We’re basically done now! Let’s just plot this and call it a day… Unfortnuately it doesn’t work that easily. Let’s see why.</p>
+<pre class="r"><code>ggplot(swing_by_station, aes(x = lon, y = lat, color = swing)) + 
+  geom_point(alpha = 0.2)</code></pre>
+<p><img src="/post/2018-02-12-seasonality_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Unsurprisingly, our data are unevenly distributed around the country, we want a nice smooth plot of the swing so we need to do some interpolation. Enter the geospatial side of R.</p>
+</div>
+<div id="geospatial-interpolation" class="section level2">
+<h2>Geospatial interpolation</h2>
+<p>What we need to do is fit a model that can predict average swing given a lat-lon pair, along with generating a high-density evenly-spaced grid to run that model on.</p>
+<div id="gridding-it" class="section level3">
+<h3>Gridding it</h3>
+<p>To get the grid we will download a US shapefile from the <a href="https://www.census.gov/cgi-bin/geo/shapefiles/index.php">Census’ Tiger repository</a> and use the library <code>rgdal</code> to read it in and exclude the given locations we don’t want to look at.</p>
+<pre class="r"><code>library(sp)
+library(rgdal)
+library(gstat)
+library(maptools)
+
+not_wanted &lt;- c(
+  &#39;Alaska&#39;, &#39;American Samoa&#39;, &#39;Puerto Rico&#39;, &#39;Guam&#39;, 
+  &#39;Commonwealth of the Northern Mariana Islands United States Virgin Islands&#39;, 
+  &#39;Commonwealth of the Northern Mariana Islands&#39;, 
+  &#39;United States Virgin Islands&#39;, &#39;Hawaii&#39;)
+
+us &lt;- rgdal::readOGR(&quot;../../static/seasons/us_shapefile/&quot;, &quot;cb_2016_us_state_500k&quot;) %&gt;% 
+  subset(!(NAME %in% not_wanted))
+## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;../../static/seasons/us_shapefile/&quot;, layer: &quot;cb_2016_us_state_500k&quot;
+## with 56 features
+## It has 9 fields
+
+plot(us)</code></pre>
+<p><img src="/post/2018-02-12-seasonality_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Looks right to me! Now let’s calculate a grid of points over this.</p>
+<pre class="r"><code># make a big grid that corresponds to the bounding box around out shapefile
+grid_us &lt;- makegrid(us, n = 5000) %&gt;% 
+  SpatialPoints(proj4string = CRS(proj4string(us))) %&gt;% 
+  .[us,] # subset the grid such that it only has points that fall inside of our states.
+
+plot(grid_us, type = &#39;p&#39;)</code></pre>
+<p><img src="/post/2018-02-12-seasonality_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In the final product I bumped up the resolution (n) way higher to make the result smoother</span></p>
+<p>Next we need to fit a model for interpolation. Here I use one of the most common techniques for this: <a href="https://en.wikipedia.org/wiki/Inverse_distance_weighting">inverse distance weighting</a>. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The task of fitting a model to these data is actually a fascinating one that I am not giving nearly enough weight in this post. Here we are just having as inputs lat and lon but we could easily make it more realistic by adding in elevation etc. Some models use 2-d gaussian processes to fit flexible models, some use splines, it’s a vast world and one I would love to dig into more!</span></p>
+<pre class="r"><code># convert the data to a spacial dataframe.
+sp::coordinates(swing_by_station) = ~lon + lat
+
+# make sure that the projection matches the grid we&#39;ve built.
+proj4string(swing_by_station) &lt;- CRS(proj4string(us)) 
+
+# fit basic inverse distance model
+idw_model &lt;- gstat::idw(
+  formula = swing ~ 1, 
+  locations = swing_by_station, 
+  newdata = grid_us,
+  idp = 2) 
+## [inverse distance weighted interpolation]
+
+# extract predictions from the interpolation model
+interpolated_results = as.data.frame(idw_model) %&gt;% {# output is defined as a data table
+    names(.)[1:3] &lt;- c(&quot;lon&quot;, &quot;lat&quot;, &quot;swing&quot;)  # give names to the modeled variables
+    . } %&gt;% 
+  select(lon, lat, swing)
+
+interpolated_results %&gt;% 
+  head() %&gt;% 
+  knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">lon</th>
+<th align="right">lat</th>
+<th align="right">swing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-80.80</td>
+<td align="right">25.34</td>
+<td align="right">18.65760</td>
+</tr>
+<tr class="even">
+<td align="right">-80.26</td>
+<td align="right">25.34</td>
+<td align="right">18.35323</td>
+</tr>
+<tr class="odd">
+<td align="right">-81.34</td>
+<td align="right">25.88</td>
+<td align="right">16.24864</td>
+</tr>
+<tr class="even">
+<td align="right">-80.80</td>
+<td align="right">25.88</td>
+<td align="right">18.56805</td>
+</tr>
+<tr class="odd">
+<td align="right">-80.26</td>
+<td align="right">25.88</td>
+<td align="right">15.06180</td>
+</tr>
+<tr class="even">
+<td align="right">-98.62</td>
+<td align="right">26.42</td>
+<td align="right">31.26166</td>
+</tr>
+</tbody>
+</table>
+<p>We’re in business! We’ve now got an evenly spaced grid of points we can plot in a standard raster way!</p>
+<pre class="r"><code>ggplot(interpolated_results, aes(x = lon, y = lat)) + 
+  geom_raster( aes(fill = swing)) +
+  xlim(-125, -65) + ylim(24, 51) + 
+  theme_void() +
+  labs(fill = &quot;Temp swing in degrees&quot;) +
+  borders(&#39;state&#39;, alpha = 0.1, size = 0.1)</code></pre>
+<p><img src="/post/2018-02-12-seasonality_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Looks good but could use some improvement. The gradiations are rather smooth and thus it’s hard to see. Let’s bin the swings to 5 degree intervals and change the color pallet to be a bit more appropriate. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I chose 5 degree intervals here because I figured that was about the limit of sensitivity for the average person. Totally arbitrary though.</span></p>
+<pre class="r"><code>interpolated_results %&gt;% 
+  mutate(swing_in_5s = round(swing/5)*5) %&gt;% 
+  ggplot(aes(x = lon, y = lat)) + 
+  geom_raster( aes(fill = swing_in_5s)) +
+  scale_fill_distiller(palette = &#39;YlGn&#39;, direction = 1) +
+  xlim(-125, -65) + ylim(24, 51) + 
+  theme_void() +
+  labs(fill = &quot;Temp swing in degrees&quot;) +
+  borders(&#39;state&#39;, alpha = 0.1, size = 0.1)</code></pre>
+<p><img src="/post/2018-02-12-seasonality_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>There it is! In the top plot I have rerun the grid with a much higher <code>n</code> and also tweaked some settings in the legend/scales to make the plot look a bit better. Hopefully now when you have some interesting geospatial data that is not evenly distributed you will know how to deal with it!</p>
+</div>
+<div id="code-for-top-figure." class="section level3">
+<h3>Code for top figure.</h3>
+<pre class="r"><code>guide_tinker =  guide_legend(
+  title.position = &quot;top&quot;,
+  label.position=&quot;bottom&quot;,
+  label.hjust = 0.5,
+  direction = &quot;horizontal&quot;,
+  keywidth = 1,
+  nrow = 1 )
+
+colourCount = interpolated_swings$swing_in_5s %&gt;% unique() %&gt;% length()
+palette = colorRampPalette(brewer.pal(9, &quot;YlGnBu&quot;))(colourCount)
+
+interpolated_swings %&gt;% 
+  mutate(swing_in_5s = factor(round(swing_in_5s)))%&gt;% 
+  ggplot(aes(x = lon, y = lat)) + 
+  geom_raster( aes(fill = swing_in_5s)) +
+  scale_fill_manual(values = palette, 
+                    guide = guide_tinker)  +
+  xlim(-130,-67) + ylim(24,50) +
+  theme_void() +
+  theme(
+    text = element_text(family = &#39;Montserrat&#39;),
+    legend.justification = c(0,0),
+    legend.position = c(0,0.02),
+    legend.title = element_text(size = 10),
+    legend.text = element_text(size = 8),
+    legend.box.background = element_rect(fill = &#39;#f0f0f0&#39;, color = NA)
+  ) + 
+  labs(
+    title = &quot;The United States of Seasons&quot;,
+    subtitle = &quot;Difference between the hottest and coldest days of the year&quot;,
+    fill = &quot;Temp swing in degrees&quot;) +
+  borders(&#39;state&#39;, alpha = 0.1, size = 0.1)</code></pre>
+</div>
+</div>

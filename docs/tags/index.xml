@@ -66,6 +66,15 @@
     </item>
     
     <item>
+      <title>Climate</title>
+      <link>/tags/climate/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/climate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Conferences</title>
       <link>/tags/conferences/</link>
       <pubDate>Wed, 12 Jul 2017 00:00:00 +0000</pubDate>
@@ -152,6 +161,15 @@
       <pubDate>Thu, 27 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>/tags/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Maps</title>
+      <link>/tags/maps/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/maps/</guid>
       <description></description>
     </item>
     
@@ -338,7 +356,7 @@
     <item>
       <title>Visualization</title>
       <link>/tags/visualization/</link>
-      <pubDate>Wed, 27 Dec 2017 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/visualization/</guid>
       <description></description>
