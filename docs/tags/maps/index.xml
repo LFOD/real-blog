@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Maps on Live Free or Dichotomize</title>
+    <link>/tags/maps/</link>
+    <description>Recent content in Maps on Live Free or Dichotomize</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/maps/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The United States of Seasons</title>
+      <link>/2018/02/12/the-united-states-of-seasons/</link>
+      <pubDate>Mon, 12 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/02/12/the-united-states-of-seasons/</guid>
+      <description>The other day my girlfriend and I were talking about places we would like to live after grad school and one of the things that got brought up was how ‘seasonal’ the location is. She grew up in Long Beach, California, which essentially has no seasons, whereas I grew up near Ann Arbor, Michigan which very much has seasons. This got me to thinking: what does the country look like in the context of its seasonality?</description>
+    </item>
+    
+  </channel>
+</rss>

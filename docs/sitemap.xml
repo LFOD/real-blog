@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/02/12/the-united-states-of-seasons/</loc>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/01/28/wrangling-data-day-texas-slides/</loc>
     <lastmod>2018-01-28T00:00:00+00:00</lastmod>
   </url>
@@ -250,6 +255,18 @@
   </url>
   
   <url>
+    <loc>/tags/climate/</loc>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/climate/</loc>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/collaboration/</loc>
     <lastmod>2017-02-24T10:54:24+02:00</lastmod>
     <priority>0</priority>
@@ -389,7 +406,19 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/maps/</loc>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/maps/</loc>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -431,7 +460,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -665,13 +694,13 @@
   
   <url>
     <loc>/tags/visualization/</loc>
-    <lastmod>2017-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/visualization/</loc>
-    <lastmod>2017-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2018-02-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
