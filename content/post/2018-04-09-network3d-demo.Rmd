@@ -1,0 +1,136 @@
+---
+title: "network3d - a 3D network visualization and layout library"
+author: "Nick Strayer"
+date: '2018-04-09'
+categories: ["visualization", "networks"]
+tags: ["visualization", "networks"]
+excerpt: "Recently, I have found myself needing to visualize networks. There are plenty of lovely options in R for visualizing networks in 2d, but I have found that many of the networks I want to visualize work much better when done in 3d and here the options are much smaller. This has prompted me to build the package network3d. This post will be a brief intro to using it."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE, 
+  collapse = TRUE)
+
+library(tidyverse)
+library(RColorBrewer) 
+library(network3d)
+library(tufte)
+```
+
+## What is network3d?
+
+`network3d` is a tiny R package built using the `htmlwidgets` package that takes network data in the form of a node and edge dataframes and performs a physics simulation to determine the optimal layout in three dimensions. There is a lot of customization you can do but attempts have been made to make it as simple to use as possible. 
+
+
+`r tufte::margin_note("I appologize in advance: this page will most likely be super slow at first. This is because I have un-wisely set three seperate one thousand node network visualizations to run and at the same time calculate their 3D layout all using our personal computer's hardware. In practice you really would only use one so things shouldn't be so sloppy. Here we're doing a bunch so you can see some of the customization options available to you.")`
+
+## Why was it made?
+
+### Need for 3d
+
+There are plenty of excellent network visualization libraries in R such as [ggraph](), and [igraph](). My main issue with these libraries is that they are limited to two dimensional visualizations (or static 3d in the case of igraph). I have personally found that in many network data adding a third dimension allows for much clearer patterns to pop out. In my opinion often worth the sacrifices that are made in terms of [perception when using 3d visualizations.](threed viz bad paper) 
+
+### Need for on-the-fly layout calculation
+
+In a research project I am working on I built a custom htmlwidget based on the javascript library to do interactive visualization of a rather large network. The problem that I ended up encountering was that frequently we wanted to resize the graph and see how it affected the structure, but to do that we needed to go back into R and recalculate the layout using `igraph`, which took forever. This prompted me to look into generating the layout right in the htmlwidget with javascript. Lo and behold, it was much faster and now allowed us to refresh the data underlying the graph in a shiny app and have it update much faster than before. 
+
+### No dependencies
+
+There is no need to generate an igraph object to plot. You simply need to be able to get your data into the form of a vertice list with an `id` column and optional `name`, `color`, and `size` columns and an edge list with two columns `source` and `target` being the ids of the vertices the edge connects. I personally found this nice especially when on a fresh computer where the process of installing igraph can be a painful one. 
+
+
+## How to install
+
+The package is not on Cran so you need to use the devtools package to install it. 
+
+```{r, eval=FALSE}
+devtools::install_github('nstrayer/network3d')
+```
+
+
+Next we can load an included data set from the Stanford graph database. It is a [network of the collaborations between researchers in general relativity and quantum cosmology.](https://snap.stanford.edu/data/ca-GrQc.html). Here the `name` column is essentially just an index of order of appearance.
+
+```{r}
+data <- collaboration_networks # comes from the package
+
+data$vertices %>% head() %>% knitr::kable()
+```
+
+```{r}
+data$edges %>% head() %>% knitr::kable()
+```
+
+Now we're ready to make the plot in the simplest way possible, just passing the data. 
+
+```{r}
+network3d(data$vertices, data$edges)
+```
+
+`r tufte::margin_note('Left click and drag to pan the plot, right click and drag to rotate.')`
+
+Cool, but we probably want to add some color to out nodes, let's do that by adding a color column to the vertices dataframe. In addition, let's modify the mouse over text for each node by adding the super helpful prefix of 'node'. 
+
+```{r}
+data$vertices <- data$vertices %>% 
+  mutate(
+    color = 'steelblue',
+    name = paste('node', name)
+  )
+
+network3d(data$vertices, data$edges)
+```
+
+That looks much better, but the nodes are kind of bunched together, to fix this let's set our node size to be smaller and increase our edge opaity to make connections more obvious. In addition we should probably adjust the simulation parameters a bit. Don't know how to change them? Go into the `force_explorer` mode...
+
+_Drag around the different parameters to change the values. Max iterations starts at a default of 75 but for some reason the controls don't reflect that, changes will register properly though._
+
+```{r}
+network3d(
+  data$vertices, data$edges, 
+  node_size = 0.05, 
+  edge_opacity = 0.25,
+  force_explorer = TRUE)
+```
+
+Great, so after fiddling let's choose a `manybody_strength` of 0.5 instead of the default of -1. This will cause the nodes to be attracted to each other instead of repelled (in addition to the forces exerted by their edges).
+
+One last attempt to make things interesting: let's change the background color to black and the nodes colors to a random selection from an `Rcolorbrewer` and node sizes to a random uniform draw between 0.01 and 0.1 (this is in the context of the world being a 2x2x2 cube).
+
+```{r}
+data$vertices <- data$vertices %>% 
+  mutate(
+    color =  RColorBrewer::brewer.pal(12, name = 'Paired') %>% sample(size = n(), replace = TRUE),
+    size = runif(n(), min = 0.01, max = 0.1)
+  )
+
+network3d(data$vertices, data$edges, 
+          max_iterations = 100,
+          manybody_strength = 0.5, 
+          background_color = 'black',
+          edge_opacity = 0.15)
+
+```
+
+`r tufte::margin_note("__A warning:__ Network structure and visualization in general is super tricky and can be extremely easy to fiddle with to get the results you want. I would encourage any sort of inference around the structure revealed in these plots to be accompanied with layout-algorithm-free method. Also, the last plot should most likely never be made, but at least it's interesting.")`
+
+## Future work
+
+Right now the package is very light in what it does. This is on purpose. This is mostly a packaging up of a one-off visualization I did for a project that some people may find useful. That being said a few things could be improved and I will if I find the time. 
+
+### Performance
+Since the networks are rendered on the viewing computers GPU they will scale great on something like a beefy macbook pro with an integrated graphics card but on lesser devices there may be some hiccups. I have successfully rendered networks with ~6k nodes and 25k edges on my Google pixelbook chromebook with no integrated graphics. 
+
+One way of improving the performance goes with the interactivity. Right now when you have set the option `interactive = TRUE` (its default) the network will display whatever node you have moused over's value in the `name` column of the vertices dataframe. The way this is calculated is a beam is projected out from the camera of the scene and every single node in your graph is checked to see if it intersects the node, if some do the closest node that was intersected is selected. This is obviously going to be a super slow process with large networks. One method of making it faster would be to use a spatially aware data structure such as an octtree to limit the nodes searched. Alternatively for faster performance when you don't need interactivity set `interactive = FALSE`. The paradox here is that as the network gets larger the more needed interactivity is to explore. 
+
+### Shiny Hooks
+Currently the networks work well with shiny in that you can send new data to the network and it will auto redraw the network with the new data. However it would be nice to allow some sort of back into shiny communication about which node is selected etc. This wouldn't be too hard, however I would want it to conform to the nice `crosstalk` format, which will necessitate changing a bit about how the library handles data. 
+
+
+## Questions or bugs?
+
+I am excited to see all the ways people use this library. More interestingly I am excited to see how people break it. If you find a bug or are confused about how to do something don't hesitate to open up an issue on [the github page](https://github.com/nstrayer/network3d). Alternatively, if twitter is more your jam, you can at me there (link in my bio card below). 
+
+
+
