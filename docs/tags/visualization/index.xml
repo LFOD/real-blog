@@ -6,10 +6,19 @@
     <description>Recent content in Visualization on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 12 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Apr 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/visualization/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>network3d - a 3D network visualization and layout library</title>
+      <link>/2018/04/09/network3d---a-3d-network-visualization-and-layout-library/</link>
+      <pubDate>Mon, 09 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/04/09/network3d---a-3d-network-visualization-and-layout-library/</guid>
+      <description>What is network3d? network3d is a tiny R package built using the htmlwidgets package that takes network data in the form of a node and edge dataframes and performs a physics simulation to determine the optimal layout in three dimensions. There is a lot of customization you can do but attempts have been made to make it as simple to use as possible.</description>
+    </item>
     
     <item>
       <title>The United States of Seasons</title>
