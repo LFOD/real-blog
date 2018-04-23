@@ -157,7 +157,19 @@ All of the release names are references to Peanuts strips/films. I think this is
 
 ![](/images/2017-09-28/kite-eating-tree.gif)
 
+`r tufte::margin_note('<a href = "/images/2017-09-28/someone-to-lean-on.jpg"><img src = "/images/2017-09-28/someone-to-lean-on.jpg" width = 200></img></a><br> *Source* [catawiki auctions](https://auction.catawiki.com/kavels/2493737-peanuts-charlie-brown-snoopy-happiness-is-having-someone-to-lean-on-1971)')`
+
+## 3.4.4 (2018-03-15) Someone to Lean On
+**Reference**: *Peanuts Figurine (1971). There are a couple of different versions of this, some with Charlie Brown and Snoopy, one with Linus and Snoopy, and one with Woodstock and Snoopy. Many of them were Hallmark cards, but there was also a [badge](https://collectpeanuts.com/Collection/ImagesW/Plaques/201405/IMG_4892.jpg) and this figurine. The oldest (dated) one I could find was this one from 1971, so we went with that!*
+
+## 3.5.0 (2018-04-23) Joy in Playing
+**Reference**: [Peanuts January 27, 1973](http://www.gocomics.com/peanuts/1973/01/27)
+
+---
+
 Looks like we have some validation (thanks Peter!) -- I've updated the Masked Marvel accordingly `r emo::ji("tada")`.
 
 <blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">Mostly on target. A few are from films/badges rather than strips. Notably Masked Marvel from the unforgettable arm-wrestling w/Lucy.</p>&mdash; Peter Dalgaard (@pdalgd) <a href="https://twitter.com/pdalgd/status/913459973304279040?ref_src=twsrc%5Etfw">September 28, 2017</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+
+<!-- http://amureprints.com/reprints -->
