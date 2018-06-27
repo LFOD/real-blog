@@ -1,5 +1,5 @@
 ---
-title: "Why you maybe shouldn't care about that p-value."
+title: "Why you maybe shouldn't care about that p-value"
 author: "Nick Strayer"
 date: '2017-08-14'
 categories: ["p-values", "statistics", "sushi-cat", "taco-tuesday"]
