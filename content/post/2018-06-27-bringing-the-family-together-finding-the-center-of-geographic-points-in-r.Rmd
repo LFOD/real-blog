@@ -148,7 +148,10 @@ center <- bind_rows(center, .id = "calculation")
 Now that we've calculated the various "center" points, we can plot them using **leaflet**. Since I have so many different things to visualize, I am going to use a color palette to help me choose the marker colors! <span class = "marginnote"> You can install this package from [GitHub](https://github.com/EmilHvitfeldt/paletteer) with `devtools::install_github("EmilHvitfeldt/paletteer")` </span> What a great excuse to try out [Emil Hvitfeldt's](https://twitter.com/Emil_Hvitfeldt) new **paletteer** `r emo::ji("package")`!
 
 ```{r}
-cols <- paletteer::paletteer_d("LaCroixColoR", "PassionFruit", n = 12, type = "continuous")
+cols <- paletteer::paletteer_d("LaCroixColoR", 
+                               "PassionFruit", 
+                               n = 12, 
+                               type = "continuous")
 ```
 
 ```{r}
