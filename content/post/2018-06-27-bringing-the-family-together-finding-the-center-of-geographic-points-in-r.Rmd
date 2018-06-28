@@ -160,12 +160,14 @@ leaflet() %>%
   setView(lng = -82, lat = 38, zoom = 04) %>%
   addCircleMarkers(lng = df$lon,
                    lat = df$lat,
+                   color = cols[1],
                    label = df$city,
-                   color = cols[1]) %>%
+                   radius = 5) %>%
   addCircleMarkers(lng = center$lon,
                    lat = center$lat,
                    color = cols[2:12],
-                   label = center$calculation)
+                   label = center$calculation,
+                   radius = 8)
 ```
 
-The average and midpoint methods seemed to yield very similar results -- the centroid was noticeably different, particularly when including the Spain point. Either way, it looks like if we want the next family reunion to be equidistant (as the crow flies `r emo::ji("bird")`), then we will be somewhere in West Virginia or Southern Ohio. If we incorporate a weight based on how many relatives live in each location, it looks like we'll end up in Wayne National Forest (coincidentally, we held the reunion here 4 years ago!). If we include the European relatives, using the average or midpoint methods, we could end up in Pennsylvania, otherwise we will be taking a cruise `r emo::ji("boat")` across the Atlantic!
+The various methods seemed to yield very similar results when not including Spain, but otherwise they are noticeably different. Without Spain, it looks like if we want the next family reunion to be equidistant (as the crow flies `r emo::ji("bird")`), then we will be somewhere in West Virginia or Southern Ohio. If we incorporate a weight based on how many relatives live in each location, it looks like we'll end up in Wayne National Forest (coincidentally, we held the reunion here 4 years ago!). If we include the European relatives, using the average or midpoint methods, we could end up in Pennsylvania, Maryland, or Delaware; otherwise we will be taking a cruise `r emo::ji("cruise")` across the Atlantic!
