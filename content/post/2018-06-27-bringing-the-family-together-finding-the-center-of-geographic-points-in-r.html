@@ -1,0 +1,183 @@
+---
+title: 'Bringing the family together: Finding the center of geographic points in R'
+author: "Lucy D'Agostino McGowan"
+date: '2018-06-27'
+slug: bringing-the-family-together-finding-the-center-of-geographic-points-in-r
+categories: ["rstats"]
+tags: ["rstats"]
+excerpt: ""
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/datatables-binding/datatables.js"></script>
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/leaflet/leaflet.js"></script>
+<link href="/rmarkdown-libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/Proj4Leaflet/proj4-compressed.js"></script>
+<script src="/rmarkdown-libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="/rmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/leaflet-binding/leaflet.js"></script>
+
+
+<p>My husband’s family throws a family reunion every year and this year we’ve been tasked with co-planning it. We were trying to decide on the best location for everyone, so I embarked on a mission to find the center of all of our residences.</p>
+<pre class="r"><code>library(tidyverse)
+library(leaflet)</code></pre>
+<div id="geocoding-the-locations" class="section level2">
+<h2>Geocoding the locations</h2>
+<p>I began by putting together a quick <code>.csv</code> of the locations and number of family members in each.</p>
+<pre class="r"><code>df &lt;- read_csv(&quot;locations.csv&quot;)
+DT::datatable(df)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"],["Dayton, OH","Charlotte, NC","Detroit, MI","Chicago, IL","Twinsburg, OH","Atlanta, GA","Beaufort, SC","Columbus, OH","Indianapolis, IN","Richmond, VA","Nashville, TN","Chapel Hill, NC","Washington, D.C.","New York, NY","Annapolis, MD","Madrid, Spain","Cleveland, OH"],[2,4,2,4,3,3,2,1,4,2,3,1,1,1,4,4,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>city<\/th>\n      <th>number<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>To get the longitude and latitude for each location, I used the <strong>opencage</strong> package. This 📦 requires an API key – you can get a free one from their <a href="https://opencagedata.com/api">website</a>. <span class="marginnote"> For tips on adding environment variables to your <code>.Renviron</code>, check out <a href="https://twitter.com/JennyBryan">Jenny Bryan’s</a> <a href="http://happygitwithr.com/api-tokens.html">Happy Git and GitHub for the useR</a>. </span> If you add this key to your <code>.Renviron</code> as <code>OPENCAGE_KEY</code> the package will automatically locate and use this.</p>
+<p><span class="marginnote">
+<a href="https://twitter.com/ma_salmon">Maëlle Salmon</a> has a blog post for everything! I based my geocoding on the methods she used in her post on the <a href="https://masalmon.eu/2017/10/06/globalrladiestour/">R-Ladies global tour</a>.
+</span>The <code>open_forward()</code> function will give multiple results for each call, along with a confidence score for each. We can sort by the confidence score and take the top result. Since I just want to grab the longitude and latitude for the most likely location, I have made a small function to grab that, based on <a href="https://masalmon.eu/2017/10/06/globalrladiestour/">Maëlle’s blog post</a>.</p>
+<pre class="r"><code>geocode_family &lt;- function(city) {
+  opencage::opencage_forward(city)$results %&gt;%
+    filter(components._type %in% c(&quot;city&quot;, &quot;state&quot;)) %&gt;%
+    arrange(desc(confidence)) %&gt;%
+    select(lat = geometry.lat, lon = geometry.lng) %&gt;%
+    slice(1)
+}</code></pre>
+<pre class="r"><code>df &lt;- df %&gt;%
+  bind_cols(map_df(.$city, geocode_family))</code></pre>
+</div>
+<div id="finding-the-center" class="section level2">
+<h2>Finding the center</h2>
+<p>It turns out there are many ways to find the center of geographic locations. The easiest way is to average all of the longitude points and average all of the latitude points. This can optionally be weighted by the number of people at each point by taking a weighted mean. I call this the <code>geographic_average()</code>.</p>
+<pre class="r"><code>geographic_average &lt;- function(lon, lat, weight = NULL) {
+  if (is.null(weight)) {
+    weight &lt;- rep(1, length(lon))
+  }
+  lon &lt;- weighted.mean(lon, w = weight)
+  lat &lt;- weighted.mean(lat, w = weight)
+  data.frame(lon = lon, lat = lat)
+}</code></pre>
+<p>A bit of a more complex version uses vector algebra – first converting the points to radians, then sticking them on a Cartesian plane. This was well explained on <a href="http://mathforum.org/library/drmath/view/68373.html">Ask Dr. Math</a>. I call this the <code>geographic_midpoint()</code>.</p>
+<pre class="r"><code>geographic_midpoint &lt;- function(lon, lat, weight = NULL) {
+  if (is.null(weight)) {
+    weight &lt;- rep(1, length(lon))
+  }
+  # degrees to radians
+  lat &lt;- lat * pi / 180
+  lon &lt;- lon * pi / 180
+  # cartesian coordinates
+  x &lt;- cos(lat) * cos(lon)
+  y &lt;- cos(lat) * sin(lon)
+  z &lt;- sin(lat)
+  # weighted mean
+  x &lt;- weighted.mean(x, w = weight)
+  y &lt;- weighted.mean(y, w = weight)
+  z &lt;- weighted.mean(z, w = weight)
+  # convert to lat and lon
+  lon &lt;- atan2(y, x) * 180 / pi
+  hyp &lt;- sqrt(x * x + y * y)
+  lat &lt;- atan2(z, hyp) * 180 / pi
+  
+  data.frame(lon = lon, lat = lat)
+}</code></pre>
+<p>A final way to do this is using the <strong>geosphere</strong> package along with the <code>centroid</code> function. This calculates the center by projecting the points onto a spherical polygon and finding the centroid.</p>
+<p>I’ll use all three methods to demonstrate their difference. Some of my husband’s family live in Europe, so I will calculate the center both with and without them.</p>
+<pre class="r"><code>unweighted_avg &lt;- geographic_average(
+  lon = df$lon,
+  lat = df$lat)
+weighted_avg &lt;- geographic_average(
+  lon = df$lon,
+  lat = df$lat,
+  weight = df$number)
+
+unweighted_mid &lt;- geographic_midpoint(
+  lon = df$lon,
+  lat = df$lat)
+weighted_mid &lt;- geographic_midpoint(
+  lon = df$lon, 
+  lat = df$lat,
+  weight = df$number)
+
+unweighted_centroid &lt;- geosphere::centroid(
+  df[, c(&quot;lon&quot;, &quot;lat&quot;)])</code></pre>
+<pre class="r"><code>df_nospain &lt;- df %&gt;%
+  filter(city != &quot;Madrid, Spain&quot;)
+
+unweighted_avg_nospain &lt;- geographic_average(
+  lon = df_nospain$lon,
+  lat = df_nospain$lat)
+weighted_avg_nospain &lt;- geographic_average(
+  lon = df_nospain$lon,
+  lat = df_nospain$lat,
+  weight = df_nospain$number)
+
+unweighted_mid_nospain &lt;- geographic_midpoint(
+  lon = df_nospain$lon, 
+  lat = df_nospain$lat)
+weighted_mid_nospain &lt;- geographic_midpoint(
+  lon = df_nospain$lon,
+  lat = df_nospain$lat,
+  weight = df_nospain$number)
+
+unweighted_centroid_nospain &lt;- geosphere::centroid(
+  df_nospain[, c(&quot;lon&quot;, &quot;lat&quot;)])</code></pre>
+</div>
+<div id="visualizing" class="section level2">
+<h2>Visualizing</h2>
+<p>Now that we’ve calculated the various “center” points, we can plot them using <strong>leaflet</strong>. Since I have so many different things to visualize, I am going to use a color palette to help me choose the marker colors! <span class="marginnote"> You can install this package from <a href="https://github.com/EmilHvitfeldt/paletteer">GitHub</a> with <code>devtools::install_github(&quot;EmilHvitfeldt/paletteer&quot;)</code> </span> What a great excuse to try out <a href="https://twitter.com/Emil_Hvitfeldt">Emil Hvitfeldt’s</a> new <strong>paletteer</strong> 📦!</p>
+<pre class="r"><code>cols &lt;- paletteer::paletteer_d(&quot;LaCroixColoR&quot;, &quot;Pamplemousse&quot;, n = 12, type = &quot;continuous&quot;)</code></pre>
+<pre class="r"><code>leaflet() %&gt;%
+  addTiles() %&gt;%  
+  setView(lng = -82, lat = 38, zoom = 04) %&gt;%
+  addCircleMarkers(lng = df$lon,
+                   lat = df$lat,
+                   label = df$city,
+                   color = cols[1]) %&gt;%
+  addCircleMarkers(lng = unweighted_avg$lon,
+                   lat = unweighted_avg$lat,
+                   color = cols[2],
+                   label = &quot;Unweighted Average&quot;) %&gt;%
+  addCircleMarkers(lng = unweighted_avg_nospain$lon, 
+                   lat = unweighted_avg_nospain$lat, 
+                   color = cols[3], 
+                   label = &quot;Unweighted Average (No Spain)&quot;) %&gt;%
+  addCircleMarkers(lng = weighted_avg$lon,
+                   lat = weighted_avg$lat,
+                   color = cols[4], 
+                   label = &quot;Weighted Average&quot;) %&gt;%
+  addCircleMarkers(lng = weighted_avg_nospain$lon,
+                   lat = weighted_avg_nospain$lat, 
+                   color = cols[5], 
+                   label = &quot;Weighted Average (No Spain)&quot;) %&gt;%
+  addCircleMarkers(lng = unweighted_mid$lon,
+                   lat = unweighted_mid$lat, 
+                   color = cols[6], 
+                   label = &quot;Unweighted Midpoint&quot;) %&gt;%
+  addCircleMarkers(lng = unweighted_mid_nospain$lon,
+                   lat = unweighted_mid_nospain$lat, 
+                   color = cols[8], 
+                   label = &quot;Unweighted Midpoint (No Spain)&quot;)%&gt;%
+  addCircleMarkers(lng = weighted_mid$lon,
+                   lat = weighted_mid$lat,
+                   color = cols[9], 
+                   label = &quot;Weighted Midpoint&quot;) %&gt;%
+  addCircleMarkers(lng = weighted_mid_nospain$lon, 
+                   lat = weighted_mid_nospain$lat, 
+                   color = cols[10], 
+                   label = &quot;Weighted Midpoint (No Spain)&quot;) %&gt;%
+  addCircleMarkers(lng = unweighted_centroid[1],
+                   lat = unweighted_centroid[2], 
+                   color = cols[11], 
+                   label = &quot;Centroid&quot;) %&gt;%
+  addCircleMarkers(lng = unweighted_centroid_nospain[1], 
+                   lat = unweighted_centroid_nospain[2], 
+                   color = cols[12],
+                   label = &quot;Centroid (No Spain)&quot;)</code></pre>
+<div id="htmlwidget-2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircleMarkers","args":[[39.7665973,35.2270869,42.3486635,41.8755546,41.3125552,33.7490987,32.4315813,39.9622601,39.7683331,37.5289588,36.1622296,36.004647,38.91706,40.7412359,38.98775,40.4167047,41.5051613],[-84.1850615,-80.8431268,-83.0567375,-87.6244212,-81.4401129,-84.3901849,-80.6698286,-83.0007065,-86.1583502,-77.4381069,-86.7743531,-79.054475,-77.00025,-73.3566912,-76.5528,-3.7035825,-81.6934446],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#EA7580","weight":5,"opacity":0.5,"fill":true,"fillColor":"#EA7580","fillOpacity":0.2},null,null,null,null,["Dayton, OH","Charlotte, NC","Detroit, MI","Chicago, IL","Twinsburg, OH","Atlanta, GA","Beaufort, SC","Columbus, OH","Indianapolis, IN","Richmond, VA","Nashville, TN","Chapel Hill, NC","Washington, D.C.","New York, NY","Annapolis, MD","Madrid, Spain","Cleveland, OH"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[38.629734,-76.8789549058824,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#EF8990","weight":5,"opacity":0.5,"fill":true,"fillColor":"#EF8990","fillOpacity":0.2},null,null,null,null,"Unweighted Average",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[38.51804833125,-81.45241568125,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#F49DA1","weight":5,"opacity":0.5,"fill":true,"fillColor":"#F49DA1","fillOpacity":0.2},null,null,null,null,"Unweighted Average (No Spain)",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[38.7682403933333,-75.2717432355556,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#F6B1A1","weight":5,"opacity":0.5,"fill":true,"fillColor":"#F6B1A1","fillOpacity":0.2},null,null,null,null,"Weighted Average",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[38.6074146073171,-82.2540028195122,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#F7C59D","weight":5,"opacity":0.5,"fill":true,"fillColor":"#F7C59D","fillOpacity":0.2},null,null,null,null,"Weighted Average (No Spain)",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[39.9442410706168,-78.0761256526176,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#BBC6A1","weight":5,"opacity":0.5,"fill":true,"fillColor":"#BBC6A1","fillOpacity":0.2},null,null,null,null,"Unweighted Midpoint",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[38.5824212121923,-81.4459089618086,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#17AEB1","weight":5,"opacity":0.5,"fill":true,"fillColor":"#17AEB1","fillOpacity":0.2},null,null,null,null,"Unweighted Midpoint (No Spain)",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[40.7418736559563,-76.995301144602,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#0E9AB8","weight":5,"opacity":0.5,"fill":true,"fillColor":"#0E9AB8","fillOpacity":0.2},null,null,null,null,"Weighted Midpoint",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[38.6669158149848,-82.2368524754235,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#0982B6","weight":5,"opacity":0.5,"fill":true,"fillColor":"#0982B6","fillOpacity":0.2},null,null,null,null,"Weighted Midpoint (No Spain)",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[39.6475948862238,-61.3719356886031,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#10548F","weight":5,"opacity":0.5,"fill":true,"fillColor":"#10548F","fillOpacity":0.2},null,null,null,null,"Centroid",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addCircleMarkers","args":[37.7853346551052,-81.7415567054774,10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#172869","weight":5,"opacity":0.5,"fill":true,"fillColor":"#172869","fillOpacity":0.2},null,null,null,null,"Centroid (No Spain)",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"setView":[[38,-82],4,[]],"limits":{"lat":[32.4315813,42.3486635],"lng":[-87.6244212,-3.7035825]}},"evals":[],"jsHooks":[]}</script>
+<p>The average and midpoint methods seemed to yield very similar results – the centroid was noticeably different, particularly when including the Spain point. Either way, it looks like if we want the next family reunion to be equidistant (as the crow flies 🐦), then we will be somewhere in West Virginia or Southern Ohio. If we incorporate a weight based on how many relatives live in each location, it looks like we’ll end up in Wayne National Forest (coincidentally, we held the reunion here 4 years ago!). If we include the European relatives, using the average or midpoint methods, we could end up in Pennsylvania, otherwise we will be taking a cruise ⛵ across the Atlantic!</p>
+</div>

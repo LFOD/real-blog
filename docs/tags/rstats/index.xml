@@ -6,10 +6,20 @@
     <description>Recent content in Rstats on Live Free or Dichotomize</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 27 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/rstats/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bringing the family together: Finding the center of geographic points in R</title>
+      <link>/2018/06/27/bringing-the-family-together-finding-the-center-of-geographic-points-in-r/</link>
+      <pubDate>Wed, 27 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/06/27/bringing-the-family-together-finding-the-center-of-geographic-points-in-r/</guid>
+      <description>My husband’s family throws a family reunion every year and this year we’ve been tasked with co-planning it. We were trying to decide on the best location for everyone, so I embarked on a mission to find the center of all of our residences.
+library(tidyverse) library(leaflet) Geocoding the locations I began by putting together a quick .csv of the locations and number of family members in each.</description>
+    </item>
     
     <item>
       <title>Wrangling Data Day Texas Slides</title>
