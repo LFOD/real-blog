@@ -103,49 +103,44 @@ A final way to do this is using the **geosphere** package along with the `centro
 I'll use all three methods to demonstrate their difference. Some of my husband's family live in Europe, so I will calculate the center both with and without them.
 
 ```{r}
-unweighted_avg <- geographic_average(
-  lon = df$lon,
-  lat = df$lat)
-weighted_avg <- geographic_average(
-  lon = df$lon,
-  lat = df$lat,
-  weight = df$number)
-
-unweighted_mid <- geographic_midpoint(
-  lon = df$lon,
-  lat = df$lat)
-weighted_mid <- geographic_midpoint(
-  lon = df$lon, 
-  lat = df$lat,
-  weight = df$number)
-
-unweighted_centroid <- geosphere::centroid(
-  df[, c("lon", "lat")])
-```
-
-
-```{r}
 df_nospain <- df %>%
   filter(city != "Madrid, Spain")
 
-unweighted_avg_nospain <- geographic_average(
-  lon = df_nospain$lon,
-  lat = df_nospain$lat)
-weighted_avg_nospain <- geographic_average(
-  lon = df_nospain$lon,
-  lat = df_nospain$lat,
-  weight = df_nospain$number)
-
-unweighted_mid_nospain <- geographic_midpoint(
-  lon = df_nospain$lon, 
-  lat = df_nospain$lat)
-weighted_mid_nospain <- geographic_midpoint(
-  lon = df_nospain$lon,
-  lat = df_nospain$lat,
-  weight = df_nospain$number)
-
-unweighted_centroid_nospain <- geosphere::centroid(
-  df_nospain[, c("lon", "lat")])
+center <- list(
+  "Unweighted Average" = geographic_average(
+    lon = df$lon,
+    lat = df$lat),
+  "Weighted Average" = geographic_average(
+    lon = df$lon,
+    lat = df$lat,
+    weight = df$number),
+  "Unweighted Midpoint" = geographic_midpoint(
+    lon = df$lon,
+    lat = df$lat),
+  "Weighted Midpoint" = geographic_midpoint(
+    lon = df$lon, 
+    lat = df$lat,
+    weight = df$number),
+  "Centroid" = data.frame(geosphere::centroid(
+    df[, c("lon", "lat")])),
+  "Unweighted Average (No Spain)" = geographic_average(
+    lon = df_nospain$lon,
+    lat = df_nospain$lat),
+  "Weighted Average (No Spain)" = geographic_average(
+    lon = df_nospain$lon,
+    lat = df_nospain$lat,
+    weight = df_nospain$number),
+  "Unweighted Midpoint (No Spain)" = geographic_midpoint(
+    lon = df_nospain$lon, 
+    lat = df_nospain$lat),
+  "Weighted Midpoint (No Spain)" = geographic_midpoint(
+    lon = df_nospain$lon,
+    lat = df_nospain$lat,
+    weight = df_nospain$number),
+  "Centroid (No Spain)" = data.frame(geosphere::centroid(
+    df_nospain[, c("lon", "lat")]))
+)
+center <- bind_rows(center, .id = "calculation")
 ```
 
 ## Visualizing 
@@ -153,7 +148,7 @@ unweighted_centroid_nospain <- geosphere::centroid(
 Now that we've calculated the various "center" points, we can plot them using **leaflet**. Since I have so many different things to visualize, I am going to use a color palette to help me choose the marker colors! <span class = "marginnote"> You can install this package from [GitHub](https://github.com/EmilHvitfeldt/paletteer) with `devtools::install_github("EmilHvitfeldt/paletteer")` </span> What a great excuse to try out [Emil Hvitfeldt's](https://twitter.com/Emil_Hvitfeldt) new **paletteer** `r emo::ji("package")`!
 
 ```{r}
-cols <- paletteer::paletteer_d("LaCroixColoR", "Pamplemousse", n = 12, type = "continuous")
+cols <- paletteer::paletteer_d("LaCroixColoR", "PassionFruit", n = 12, type = "continuous")
 ```
 
 ```{r}
@@ -164,46 +159,10 @@ leaflet() %>%
                    lat = df$lat,
                    label = df$city,
                    color = cols[1]) %>%
-  addCircleMarkers(lng = unweighted_avg$lon,
-                   lat = unweighted_avg$lat,
-                   color = cols[2],
-                   label = "Unweighted Average") %>%
-  addCircleMarkers(lng = unweighted_avg_nospain$lon, 
-                   lat = unweighted_avg_nospain$lat, 
-                   color = cols[3], 
-                   label = "Unweighted Average (No Spain)") %>%
-  addCircleMarkers(lng = weighted_avg$lon,
-                   lat = weighted_avg$lat,
-                   color = cols[4], 
-                   label = "Weighted Average") %>%
-  addCircleMarkers(lng = weighted_avg_nospain$lon,
-                   lat = weighted_avg_nospain$lat, 
-                   color = cols[5], 
-                   label = "Weighted Average (No Spain)") %>%
-  addCircleMarkers(lng = unweighted_mid$lon,
-                   lat = unweighted_mid$lat, 
-                   color = cols[6], 
-                   label = "Unweighted Midpoint") %>%
-  addCircleMarkers(lng = unweighted_mid_nospain$lon,
-                   lat = unweighted_mid_nospain$lat, 
-                   color = cols[8], 
-                   label = "Unweighted Midpoint (No Spain)")%>%
-  addCircleMarkers(lng = weighted_mid$lon,
-                   lat = weighted_mid$lat,
-                   color = cols[9], 
-                   label = "Weighted Midpoint") %>%
-  addCircleMarkers(lng = weighted_mid_nospain$lon, 
-                   lat = weighted_mid_nospain$lat, 
-                   color = cols[10], 
-                   label = "Weighted Midpoint (No Spain)") %>%
-  addCircleMarkers(lng = unweighted_centroid[1],
-                   lat = unweighted_centroid[2], 
-                   color = cols[11], 
-                   label = "Centroid") %>%
-  addCircleMarkers(lng = unweighted_centroid_nospain[1], 
-                   lat = unweighted_centroid_nospain[2], 
-                   color = cols[12],
-                   label = "Centroid (No Spain)")
+  addCircleMarkers(lng = center$lon,
+                   lat = center$lat,
+                   color = cols[2:12],
+                   label = center$calculation)
 ```
 
 The average and midpoint methods seemed to yield very similar results -- the centroid was noticeably different, particularly when including the Spain point. Either way, it looks like if we want the next family reunion to be equidistant (as the crow flies `r emo::ji("bird")`), then we will be somewhere in West Virginia or Southern Ohio. If we incorporate a weight based on how many relatives live in each location, it looks like we'll end up in Wayne National Forest (coincidentally, we held the reunion here 4 years ago!). If we include the European relatives, using the average or midpoint methods, we could end up in Pennsylvania, otherwise we will be taking a cruise `r emo::ji("boat")` across the Atlantic!
