@@ -1,0 +1,209 @@
+---
+title: 'Bringing the family together: Finding the center of geographic points in R'
+author: "Lucy D'Agostino McGowan"
+date: '2018-06-27'
+slug: bringing-the-family-together-finding-the-center-of-geographic-points-in-r
+categories: ["rstats"]
+tags: ["rstats"]
+excerpt: ""
+---
+
+My husband's family throws a family reunion every year and this year we've been tasked with co-planning it. We were trying to decide on the best location for everyone, so I embarked on a mission to find the center of all of our residences.
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(leaflet)
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+df <- read_csv("../../static/data/locations.csv")
+```
+
+## Geocoding the locations
+
+I began by putting together a quick `.csv` of the locations and number of family members in each. 
+
+```{r, eval = FALSE}
+df <- read_csv("locations.csv")
+DT::datatable(df)
+```
+
+```{r, echo = FALSE}
+DT::datatable(df)
+```
+
+
+To get the longitude and latitude for each location, I used the **opencage** package. This `r emo::ji("package")` requires an API key -- you can get a free one from their [website](https://opencagedata.com/api). <span class = "marginnote"> For tips on adding environment variables to your `.Renviron`, check out [Jenny Bryan's](https://twitter.com/JennyBryan) [Happy Git and GitHub for the useR](http://happygitwithr.com/api-tokens.html). </span> If you add this key to your `.Renviron` as `OPENCAGE_KEY` the package will automatically locate and use this. 
+
+<span class = "marginnote">
+[Maëlle Salmon](https://twitter.com/ma_salmon) has a blog post for everything! I based my geocoding on the methods she used in her post on the [R-Ladies global tour](https://masalmon.eu/2017/10/06/globalrladiestour/).
+</span>The `open_forward()` function will give multiple results for each call, along with a confidence score for each. We can sort by the confidence score and take the top result. Since I just want to grab the longitude and latitude for the most likely location, I have made a small function to grab that, based on [Maëlle's blog post](https://masalmon.eu/2017/10/06/globalrladiestour/).
+
+```{r}
+geocode_family <- function(city) {
+  opencage::opencage_forward(city)$results %>%
+    filter(components._type %in% c("city", "state")) %>%
+    arrange(desc(confidence)) %>%
+    select(lat = geometry.lat, lon = geometry.lng) %>%
+    slice(1)
+}
+```
+
+```{r}
+df <- df %>%
+  bind_cols(map_df(.$city, geocode_family))
+```
+
+
+## Finding the center
+
+It turns out there are many ways to find the center of geographic locations. The easiest way is to average all of the longitude points and average all of the latitude points. This can optionally be weighted by the number of people at each point by taking a weighted mean. I call this the `geographic_average()`.
+
+
+```{r}
+geographic_average <- function(lon, lat, weight = NULL) {
+  if (is.null(weight)) {
+    weight <- rep(1, length(lon))
+  }
+  lon <- weighted.mean(lon, w = weight)
+  lat <- weighted.mean(lat, w = weight)
+  data.frame(lon = lon, lat = lat)
+}
+```
+
+A bit of a more complex version uses vector algebra -- first converting the points to radians, then sticking them on a Cartesian plane. This was well explained on [Ask Dr. Math](http://mathforum.org/library/drmath/view/68373.html). I call this the `geographic_midpoint()`.
+
+```{r}
+geographic_midpoint <- function(lon, lat, weight = NULL) {
+  if (is.null(weight)) {
+    weight <- rep(1, length(lon))
+  }
+  # degrees to radians
+  lat <- lat * pi / 180
+  lon <- lon * pi / 180
+  # cartesian coordinates
+  x <- cos(lat) * cos(lon)
+  y <- cos(lat) * sin(lon)
+  z <- sin(lat)
+  # weighted mean
+  x <- weighted.mean(x, w = weight)
+  y <- weighted.mean(y, w = weight)
+  z <- weighted.mean(z, w = weight)
+  # convert to lat and lon
+  lon <- atan2(y, x) * 180 / pi
+  hyp <- sqrt(x * x + y * y)
+  lat <- atan2(z, hyp) * 180 / pi
+  
+  data.frame(lon = lon, lat = lat)
+}
+```
+
+A final way to do this is using the **geosphere** package along with the `centroid` function. This calculates the center by projecting the points onto a spherical polygon and finding the centroid.
+
+I'll use all three methods to demonstrate their difference. Some of my husband's family live in Europe, so I will calculate the center both with and without them.
+
+```{r}
+unweighted_avg <- geographic_average(
+  lon = df$lon,
+  lat = df$lat)
+weighted_avg <- geographic_average(
+  lon = df$lon,
+  lat = df$lat,
+  weight = df$number)
+
+unweighted_mid <- geographic_midpoint(
+  lon = df$lon,
+  lat = df$lat)
+weighted_mid <- geographic_midpoint(
+  lon = df$lon, 
+  lat = df$lat,
+  weight = df$number)
+
+unweighted_centroid <- geosphere::centroid(
+  df[, c("lon", "lat")])
+```
+
+
+```{r}
+df_nospain <- df %>%
+  filter(city != "Madrid, Spain")
+
+unweighted_avg_nospain <- geographic_average(
+  lon = df_nospain$lon,
+  lat = df_nospain$lat)
+weighted_avg_nospain <- geographic_average(
+  lon = df_nospain$lon,
+  lat = df_nospain$lat,
+  weight = df_nospain$number)
+
+unweighted_mid_nospain <- geographic_midpoint(
+  lon = df_nospain$lon, 
+  lat = df_nospain$lat)
+weighted_mid_nospain <- geographic_midpoint(
+  lon = df_nospain$lon,
+  lat = df_nospain$lat,
+  weight = df_nospain$number)
+
+unweighted_centroid_nospain <- geosphere::centroid(
+  df_nospain[, c("lon", "lat")])
+```
+
+## Visualizing 
+
+Now that we've calculated the various "center" points, we can plot them using **leaflet**. Since I have so many different things to visualize, I am going to use a color palette to help me choose the marker colors! <span class = "marginnote"> You can install this package from [GitHub](https://github.com/EmilHvitfeldt/paletteer) with `devtools::install_github("EmilHvitfeldt/paletteer")` </span> What a great excuse to try out [Emil Hvitfeldt's](https://twitter.com/Emil_Hvitfeldt) new **paletteer** `r emo::ji("package")`!
+
+```{r}
+cols <- paletteer::paletteer_d("LaCroixColoR", "Pamplemousse", n = 12, type = "continuous")
+```
+
+```{r}
+leaflet() %>%
+  addTiles() %>%  
+  setView(lng = -82, lat = 38, zoom = 04) %>%
+  addCircleMarkers(lng = df$lon,
+                   lat = df$lat,
+                   label = df$city,
+                   color = cols[1]) %>%
+  addCircleMarkers(lng = unweighted_avg$lon,
+                   lat = unweighted_avg$lat,
+                   color = cols[2],
+                   label = "Unweighted Average") %>%
+  addCircleMarkers(lng = unweighted_avg_nospain$lon, 
+                   lat = unweighted_avg_nospain$lat, 
+                   color = cols[3], 
+                   label = "Unweighted Average (No Spain)") %>%
+  addCircleMarkers(lng = weighted_avg$lon,
+                   lat = weighted_avg$lat,
+                   color = cols[4], 
+                   label = "Weighted Average") %>%
+  addCircleMarkers(lng = weighted_avg_nospain$lon,
+                   lat = weighted_avg_nospain$lat, 
+                   color = cols[5], 
+                   label = "Weighted Average (No Spain)") %>%
+  addCircleMarkers(lng = unweighted_mid$lon,
+                   lat = unweighted_mid$lat, 
+                   color = cols[6], 
+                   label = "Unweighted Midpoint") %>%
+  addCircleMarkers(lng = unweighted_mid_nospain$lon,
+                   lat = unweighted_mid_nospain$lat, 
+                   color = cols[8], 
+                   label = "Unweighted Midpoint (No Spain)")%>%
+  addCircleMarkers(lng = weighted_mid$lon,
+                   lat = weighted_mid$lat,
+                   color = cols[9], 
+                   label = "Weighted Midpoint") %>%
+  addCircleMarkers(lng = weighted_mid_nospain$lon, 
+                   lat = weighted_mid_nospain$lat, 
+                   color = cols[10], 
+                   label = "Weighted Midpoint (No Spain)") %>%
+  addCircleMarkers(lng = unweighted_centroid[1],
+                   lat = unweighted_centroid[2], 
+                   color = cols[11], 
+                   label = "Centroid") %>%
+  addCircleMarkers(lng = unweighted_centroid_nospain[1], 
+                   lat = unweighted_centroid_nospain[2], 
+                   color = cols[12],
+                   label = "Centroid (No Spain)")
+```
+
+The average and midpoint methods seemed to yield very similar results -- the centroid was noticeably different, particularly when including the Spain point. Either way, it looks like if we want the next family reunion to be equidistant (as the crow flies `r emo::ji("bird")`), then we will be somewhere in West Virginia or Southern Ohio. If we incorporate a weight based on how many relatives live in each location, it looks like we'll end up in Wayne National Forest (coincidentally, we held the reunion here 4 years ago!). If we include the European relatives, using the average or midpoint methods, we could end up in Pennsylvania, otherwise we will be taking a cruise `r emo::ji("boat")` across the Atlantic!
