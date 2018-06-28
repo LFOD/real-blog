@@ -5,7 +5,7 @@ date: '2018-06-27'
 slug: bringing-the-family-together-finding-the-center-of-geographic-points-in-r
 categories: ["rstats"]
 tags: ["rstats"]
-excerpt: ""
+excerpt: "My husband's family throws a family reunion every year and this year we've been tasked with co-planning it. We were trying to decide on the best location for everyone, so I embarked on a mission to find the center of all of our residences."
 ---
 
 My husband's family throws a family reunion every year and this year we've been tasked with co-planning it. We were trying to decide on the best location for everyone, so I embarked on a mission to find the center of all of our residences.
