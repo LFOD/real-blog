@@ -165,6 +165,9 @@ All of the release names are references to Peanuts strips/films. I think this is
 ## 3.5.0 (2018-04-23) Joy in Playing
 **Reference**: [Peanuts January 27, 1973](http://www.gocomics.com/peanuts/1973/01/27)
 
+## 3.5.1 (2018-07-02) Feather Spray
+**Reference**: [Peanuts March 9, 1972](http://www.gocomics.com/peanuts/1972/03/09)
+
 ---
 
 Looks like we have some validation (thanks Peter!) -- I've updated the Masked Marvel accordingly `r emo::ji("tada")`.
