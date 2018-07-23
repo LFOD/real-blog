@@ -63,7 +63,6 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-
   #server side call of the drawr module
   myCamera <- callModule(
     shinyviewr, "myCamera", 
