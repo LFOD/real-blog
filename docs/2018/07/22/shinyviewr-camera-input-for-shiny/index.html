@@ -123,7 +123,12 @@ body {
     </section>
 
 
-<section><div id="motivation" class="section level2">
+<section><script src="../../../../rmarkdown-libs/d3/d3.min.js"></script>
+<script src="../../../../rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="../../../../rmarkdown-libs/viewr_widget-binding/viewr_widget.js"></script>
+
+
+<div id="motivation" class="section level2">
 <h2>Motivation</h2>
 <p>My package <code>shinysense</code> has been around for more than a year now. It started as a package to add swiping via touch screens to shiny for our app <a href="https://jhubiostatistics.shinyapps.io/papr">Papr</a>, but then slowly got built to include functions for hearing (<code>shinyearr</code>), movement (<code>shinymovr</code>), and drawing (<code>shinydrawr</code>). However one major sense was missing: vision.</p>
 <p>I had it on the to-do list for the package for a while but never got around to it. Then last week <a href="https://deanattali.com/">Dean Attali</a> <a href="https://github.com/nstrayer/shinysense/issues/21">pinged me on github</a> about the status of the camera-functionality to <code>shinysense</code>.</p>
@@ -205,6 +210,18 @@ shinyApp(ui = ui, server = server)</code></pre>
 </div>
 </div>
 <p>The ability to utilize rear-facing cameras on mobile devices hopefully opens up opportunities for researchers to collect data and run models right in the field, without having to awkwardly plug in an SD card and run a script later. Collect your data and run your model right in the moment!</p>
+</div>
+<div id="widget" class="section level2">
+<h2>Widget</h2>
+<p>There is also a stand-alone htmlwidget available, however, at this point it doesn’t do much other than show you an image and give you a useless ‘Take Photo!’ button.</p>
+<pre class="r"><code>shinysense::viewr_widget(
+  width = &#39;200px&#39;, 
+  height = &#39;200px&#39;
+)</code></pre>
+<div id="htmlwidget-1" style="width:200px;height:200px;" class="viewr_widget html-widget" width="200px" height="200px"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"outputWidth":null,"outputHeight":null},"evals":[],"jsHooks":[]}</script>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In the future I am interested in looking at the potential to port models from Keras directly to javascript using <a href="https://js.tensorflow.org/">tensorflow.js</a> which would allow you to train a model in R and run it in a static document like an RMarkdown report.</span></p>
+<p>The widget is used internally for the function <code>shinyviewr</code>, but also helps to demo the function without needing a server to run a shiny app!</p>
 </div>
 <div id="example-app" class="section level2">
 <h2>Example app</h2>

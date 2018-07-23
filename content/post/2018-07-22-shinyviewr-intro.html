@@ -7,6 +7,9 @@ tags: ["shiny", "images", "deeplearning"]
 excerpt: "A brief intro to, and tutorial for, the new function in the shinysense packages: shinyviewr. This function allows you to take photos using the camera on your computer or phone and directly send them into your shiny applications."
 ---
 
+<script src="/rmarkdown-libs/d3/d3.min.js"></script>
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/viewr_widget-binding/viewr_widget.js"></script>
 
 
 <div id="motivation" class="section level2">
@@ -91,6 +94,18 @@ shinyApp(ui = ui, server = server)</code></pre>
 </div>
 </div>
 <p>The ability to utilize rear-facing cameras on mobile devices hopefully opens up opportunities for researchers to collect data and run models right in the field, without having to awkwardly plug in an SD card and run a script later. Collect your data and run your model right in the moment!</p>
+</div>
+<div id="widget" class="section level2">
+<h2>Widget</h2>
+<p>There is also a stand-alone htmlwidget available, however, at this point it doesn’t do much other than show you an image and give you a useless ‘Take Photo!’ button.</p>
+<pre class="r"><code>shinysense::viewr_widget(
+  width = &#39;200px&#39;, 
+  height = &#39;200px&#39;
+)</code></pre>
+<div id="htmlwidget-1" style="width:200px;height:200px;" class="viewr_widget html-widget" width="200px" height="200px"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"outputWidth":null,"outputHeight":null},"evals":[],"jsHooks":[]}</script>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In the future I am interested in looking at the potential to port models from Keras directly to javascript using <a href="https://js.tensorflow.org/">tensorflow.js</a> which would allow you to train a model in R and run it in a static document like an RMarkdown report.</span></p>
+<p>The widget is used internally for the function <code>shinyviewr</code>, but also helps to demo the function without needing a server to run a shiny app!</p>
 </div>
 <div id="example-app" class="section level2">
 <h2>Example app</h2>
