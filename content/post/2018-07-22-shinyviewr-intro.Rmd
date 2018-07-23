@@ -1,0 +1,210 @@
+---
+title: "Shinyviewr: camera input for shiny"
+author: "Nick Strayer"
+date: '2018-07-22'
+categories: ["shiny", "images", "deeplearning"]
+tags: ["shiny", "images", "deeplearning"]
+excerpt: "A brief intro to, and tutorial for, the new function in the shinysense packages: shinyviewr. This function allows you to take photos using the camera on your computer or phone and directly send them into your shiny applications."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE, 
+  collapse = TRUE)
+
+library(tidyverse)
+library(tufte)
+```
+
+
+## Motivation
+
+My package `shinysense` has been around for more than a year now. It started as a package to add swiping via touch screens to shiny for our app [Papr](https://jhubiostatistics.shinyapps.io/papr), but then slowly got built to include functions for hearing (`shinyearr`), movement (`shinymovr`), and drawing (`shinydrawr`). However one major sense was missing: vision. 
+
+I had it on the to-do list for the package for a while but never got around to it. Then last week [Dean Attali](https://deanattali.com/) [pinged me on github](https://github.com/nstrayer/shinysense/issues/21) about the status of the camera-functionality to `shinysense`.
+
+
+This, along with my recent dive into deep learning, spurred a renewed effort to add vision to shiny's senses. The result is the new function `shinyviewr`, which, like the rest of `shinysense`, comes in the form of a shiny module that can be easily added to your app to endow it with the ability to sense the outside world. 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Coming soon to a shiny app near you: webcam input! <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <br>(Spurred on by <a href="https://twitter.com/daattali?ref_src=twsrc%5Etfw">@daattali</a>) <a href="https://t.co/1Qav8ftDJs">pic.twitter.com/1Qav8ftDJs</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1020358336527708160?ref_src=twsrc%5Etfw">July 20, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+## How to use
+
+In this code I will supply demo code in the form of single page shiny apps. This means the UI and Server code are all contained in a single `.R` file. This makes reproducing everything easier for you. Just copy and paste the block into an RStudio console and run! 
+
+__Setup__
+
+Before you can run these examples you will need to have the latest version of `shinysense` downloaded from github. In addition, we will be running an example with a deep learning model obtained via the library Keras. Run these commands before to make sure you're all setup. 
+
+```{r, eval = FALSE}
+# Installs latest version of shinysense.
+devtools::install_github('nstrayer/shinysense')
+
+# Installs latest version of keras. 
+devtools::install_github('rstudio/keras')
+
+# Make sure you have the python versions of keras/tensorflow installed on your machine.
+keras::install_keras()
+```
+
+Now that all that is out of the way let's start with the most basic example. 
+
+```{r, eval = FALSE}
+library(shiny)
+library(shinysense)
+library(tidyverse)
+
+ui <- fluidPage(
+  shinyviewrUI("myCamera", height = '200px'),
+  imageOutput("snapshot")
+)
+
+server <- function(input, output) {
+
+  #server side call of the drawr module
+  myCamera <- callModule(
+    shinyviewr, "myCamera", 
+    outputHeight = 300,
+    outputWidth = 400)
+
+  # logic for what happens after a user has drawn their values. 
+  observeEvent(myCamera(), {
+    photo <- myCamera() 
+    print(photo) #print to console for inspection
+    output$snapshot <- renderPlot({
+      plot(as.raster(photo)) # plot photo
+    })
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
+__Result:__
+
+<img src="/viewr_post/basic_viewr_app.png" height=400px />
+
+We have a working app! 
+
+## Output format
+
+A fair question at this point would be "in what form does the image show up in shiny?" If you run the above example and look at the console you will see the image object printed. It is a rather simple thing: just a 3D array with the dimensions `(height, width, channels)`, with `channels` being red, green, and blue quantities on a scale from 0-1. 
+
+```{r, eval = FALSE}
+dim(photo)
+> [1] 300 400   3
+```
+
+
+To plot, you can do what we did in the example, just send it to the `as.raster` function and then plot the resultant raster object. 
+
+## Usage on phones
+
+Having a webcam view is interesting but ultimately rather limiting. One of the more powerful features of shiny is the ability of the apps to run anywhere, including on a phone. 
+
+`shinyviewr` can automatically detect that it is running on a phone with a rear camera and will append to its UI a drop down menu to choose between which camera you use to take a photo. 
+
+<div style = 'display: flex; flex-wrap: wrap'>
+<div>
+Front camera:
+<img src="/viewr_post/front_camera.png" height=200px width=200px />
+</div>
+<div>
+Rear camera:
+<img src="/viewr_post/rear_camera.png" height=200px width=200px />
+</div>
+</div>
+
+The ability to utilize rear-facing cameras on mobile devices hopefully opens up opportunities for researchers to collect data and run models right in the field, without having to awkwardly plug in an SD card and run a script later. Collect your data and run your model right in the moment!
+
+
+## Example app
+
+Taking a photo and just plotting it is... kind of lame. The real power of image input into shiny is, in my opinion, the easy interfacing with powerful machine learning libraries. To demonstrate this, let's build an app that attempts to classify whatever is in the photo you just took. 
+
+This is where Keras comes in from the setup script. We will use a pre-trained model that has been trained to recognize 1,000 different image classes from a dataset called 'imagenet.' Keras includes easy helpers to access multiple different models that have been already trained on this massive dataset for you, vastly simplifying your workload. 
+We will load the model `vgg50`. `r margin_note("In order to speed up your app, before you run the example, make sure to run the line loading the model. The first time this line is run it will go and fetch the (rather hefty) file containing the weights. After it's run the first time it doesn't need to be downloaded again though.")`
+
+__Image classification example__
+
+```{r, eval = FALSE}
+library(shiny)
+library(shinysense)
+library(tidyverse)
+library(keras)
+
+# instantiate the model
+model <- application_resnet50(weights = 'imagenet')
+
+ui <- fluidPage(
+  titlePanel("Image Classifier"),
+  fluidRow(
+    column(
+      width = 7,
+      h3("Webcam"),
+      shinyviewrUI("myCamera", height = '250px')
+    ),
+    column(
+      width = 4, offset = 1,
+      h3('Last Photo'),
+      imageOutput("snapshot", height = '250px')
+    )
+  ),
+  h3("Predictions"),
+  plotOutput("predPlot")
+)
+
+
+server <- function(input, output) {
+  #server side call of the drawr module
+  myCamera <- callModule(
+    shinyviewr, "myCamera", 
+    outputWidth = 500, 
+    outputHeight = 500
+  )
+  
+  observeEvent(myCamera(), {
+    
+    photo <- myCamera() 
+    photo_processed <- photo %>% 
+      image_array_resize(224, 224) %>% 
+      {.*255} %>%  #get image to 0-255 instead of 0-1
+      array_reshape(c(1, dim(.))) %>% 
+      imagenet_preprocess_input()
+    
+    # make predictions then decode and print them
+    preds <- model %>% 
+      predict(photo_processed) %>% 
+      imagenet_decode_predictions(top = 20) %>% 
+      .[[1]]
+    
+    output$predPlot <- renderPlot({
+        ggplot(preds, 
+          aes(x = reorder(class_description, score), y = score)
+        ) +
+        geom_pointrange(aes(ymin = 0, ymax = score)) +
+        coord_flip()
+    })
+    output$snapshot <- renderPlot({
+      plot(as.raster(photo))
+    })
+  })
+}
+shinyApp(ui = ui, server = server)
+```
+
+While that may seem like a lot of code to look at. Keep in mind that it is everything needed to spin up an app that uses the deep learning to classify images coming from the camera of your phone or computer. It's pretty crazy how few lines it is in that context!
+
+`r margin_note("The demo app linked will look a tad bit different from what you get if you run the code above. This is because I modified it with some stylistic changes that just added more code to the already long chunk above. If you want to see the exact code generating the demo app check out [the repo.](https://github.com/nstrayer/viewr_imagenet_demo/blob/master/basic_demo.R)")`
+Here's a snapshot of the results when running on my phone. 
+
+<img src="/viewr_post/beer_classify.png" height = 400px />
+
+
+[Here's a link](https://nstrayer.shinyapps.io/viewr_imagenet) to a live demo app for you to check out the app without having to run the code above. Beware, the app is hosted on the free tier of shinyapps.io so there's a decent chance it will not work by the time you read this. If this is the case, just running the code above will accomplish the same thing!
+
+
