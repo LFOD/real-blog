@@ -1,5 +1,4 @@
 baseurl = "/"
-publishDir = "docs"
 relativeurls = true
 canonifyURLs = false
 languageCode = "en-us"
