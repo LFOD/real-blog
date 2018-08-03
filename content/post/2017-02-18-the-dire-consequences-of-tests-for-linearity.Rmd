@@ -81,7 +81,7 @@ set.seed(1)
 
 ```{r wrong, cache = TRUE}
 test <- replicate(10000, sim()) 
-cat("The type 1 error is", mean(test <= 0.05)) 
+cat("The type 1 error is", mean(test <= 0.05))
 ```
 
 Uh oh! That **type 1 error** is certainly higher than the nominal 0.05 we claim!
