@@ -1,0 +1,261 @@
+---
+title: 'p-value thoughts: A twitter follow up'
+author: Lucy D'Agostino McGowan
+date: '2018-08-21'
+slug: p-value-thoughts-a-twitter-follow-up
+categories: ["rstats", "p-values"]
+tags: ["rstats", "p-values"]
+---
+
+
+
+<p>A conversation about how “convincing” various studies were based on sample size and p-values led me to post the following poll on twitter.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Fun fact: This was my <em>first ever</em> Twitter poll! I’ve avoided them because they seem hard to do well, but it led to fun conversations and thinking about the results was actually quite enjoyable!</span>
+{{% tweet "1029534591760195584" %}}</p>
+<p>The results definitely surprised me - while I <em>somewhat</em> expected the large study to win out, I definitely didn’t think it would by such a large margin. <em>For what it’s worth, I would have voted for the small study if I could have voted in my own poll.</em></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">You can find Royall’s <a href="https://www.jstor.org/stable/2684616">“The Effect of Sample Size on the Meaning of Significance Tests”</a> here. Unfortunately it is behind a paywall, but the first page is available has a lot of good discussion.</span>My initial intention was to post this question, and follow up by posting an article by Royall titled “The Effect of Sample Size on the Meaning of Significance Tests” where this conundrum is discussed. Daniël Lakens anticipated this and responded with a link to the same article as well!</p>
+{{% tweet "1029734016474390528" %}}
+<p>While this paper doesn’t necessarily tell you under which circumstance you ought to be more <em>convinced</em>, when I initially read it in Jeffrey Blume’s Advanced Topics course at Vandy, I walked away with two main impressions:</p>
+<ol style="list-style-type: decimal">
+<li><p>I would find a small study with the same p-value as a large study more convincing, since the effect size must be larger for this to be (<em>there are some assumptions here that I will address below</em>).</p></li>
+<li><p>Since I am convinced differently by two studies with the same p-value, but different sample sizes, p-values must not be a measure of evidence.</p></li>
+</ol>
+<p>I think I still stand by 2, but I want to delve a bit deeper into 1, since it seems most of the people in my biased twitter-sphere disagree with me. To do this, I am going to explore three scenarios. In all cases, there is a small study and a large study, and the p-values from both studies are the same.</p>
+<ol style="list-style-type: decimal">
+<li><p>You have two studies measuring <em>different interventions</em> on the <em>same population</em>.</p></li>
+<li><p>You have two studies measuring the <em>same intervention</em> on the <em>same population</em>.</p></li>
+<li><p>You have two studies measuring the <em>same intervention</em> on <em>different populations</em>.</p></li>
+</ol>
+<div id="different-intervention-same-population" class="section level2">
+<h2>Different intervention, same population</h2>
+<p>This first scenario is the one I was considering when I posted the poll (and when I initially read Royall’s paper). This definitely demonstrates one way twitter polls are so delightfully flawed – they often don’t leave enough room to state all assumptions – but in this case I actually think this lead to really neat discussion, since differing views came up in the replies!</p>
+<p>In order to demonstrate what I mean here, I am going to set up a small simulation. We have two studies, <strong>Study A</strong> and <strong>Study B</strong>. <strong>Study A</strong> is “small”, it has 16 participants. <strong>Study B</strong> is “large”, it has 10,000 participants. Both are examining new blood pressure drugs, drug <strong>A</strong> and drug <strong>B</strong>, and comparing them to “standard of care”. The study populations are the same, let’s say the distribution of systolic blood pressure in this population is Normal with a mean of 145 and a standard deviation of 30. I can generate this population in R with the following code:</p>
+<pre class="r"><code>library(tidyverse)
+set.seed(924)
+population &lt;- tibble(
+  baseline_bp = rnorm(10^6, mean = 145, sd = 30)
+)
+
+ggplot(population, aes(baseline_bp)) + 
+  geom_histogram(bins = 30)</code></pre>
+<p><img src="/post/2018-08-21-p-value-thoughts-a-twitter-follow-up_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Under these circumstances, in order for the two p-values to be the same, the effect size for the larger study, <strong>Study B</strong>, must be smaller. For example, let’s say the true effect of Drug A is -2.5, and the effect of Drug B is -0.1.</p>
+<pre class="r"><code>population &lt;- population %&gt;%
+  mutate(bp_drug_a = baseline_bp - 2.5 + rnorm(10^6),
+         bp_drug_b = baseline_bp - 0.1 + rnorm(10^6),
+         bp_soc = baseline_bp + rnorm(10^6))</code></pre>
+<p>Let’s create sample for <strong>Study A</strong> and see what happens.</p>
+<pre class="r"><code>set.seed(1)
+# sample 16 from the large population
+study_a &lt;- population[sample(1:10^6, 16), ]
+
+# update so the first half receive drug A and the second receive standard of care
+study_a &lt;- study_a %&gt;%
+  mutate(drug_a = case_when(
+    row_number() %in% 1:8 ~ 1,
+    TRUE ~ 0
+  ),
+  outcome = case_when(
+    drug_a == 1 ~ bp_drug_a,
+    TRUE ~ bp_soc
+  )) %&gt;%
+  select(baseline_bp, outcome, drug_a)
+
+# test association between drug A and blood pressure
+lm(outcome ~ baseline_bp + drug_a, data = study_a) %&gt;%
+  broom::tidy() %&gt;%
+  filter(term == &quot;drug_a&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   term   estimate std.error statistic  p.value
+##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 drug_a    -2.22     0.480     -4.63 0.000475</code></pre>
+<p>And now the sample for <strong>Study B</strong>.</p>
+<pre class="r"><code>set.seed(62)
+# sample 10000 from the large population
+study_b &lt;- population[sample(1:10^6, 10000), ]
+
+# update so the first half receive drug B and the second receive standard of care
+study_b &lt;- study_b %&gt;%
+  mutate(drug_b = case_when(
+    row_number() %in% 1:5000 ~ 1,
+    TRUE ~ 0
+  ),
+  outcome = case_when(
+    drug_b == 1 ~ bp_drug_b,
+    TRUE ~ bp_soc
+  )) %&gt;%
+  select(baseline_bp, outcome, drug_b)
+
+# test association between drug B and blood pressure
+lm(outcome ~ baseline_bp + drug_b, data = study_b) %&gt;%
+  broom::tidy() %&gt;%
+  filter(term == &quot;drug_b&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   term   estimate std.error statistic  p.value
+##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 drug_b  -0.0699    0.0201     -3.48 0.000500</code></pre>
+<p>Both of these have approximately the same p-value (0.0005), but the effect sizes are very different! Perhaps we can see this relationship a bit more clearly using confidence intervals.</p>
+<pre class="r"><code>mod_a &lt;- lm(outcome ~ baseline_bp + drug_a, data = study_a)
+confint_a &lt;- broom::tidy(mod_a) %&gt;%
+  bind_cols(broom::confint_tidy(mod_a)) %&gt;%
+  filter(term == &quot;drug_a&quot;)
+
+mod_b &lt;- lm(outcome ~ baseline_bp + drug_b, data = study_b)
+confint_b &lt;- broom::tidy(mod_b) %&gt;%
+  bind_cols(broom::confint_tidy(mod_b)) %&gt;%
+  filter(term == &quot;drug_b&quot;)
+
+confints &lt;- bind_rows(confint_a, confint_b)
+
+ggplot(confints, aes(x = term, y = estimate, ymin = conf.low, ymax = conf.high)) + 
+  geom_pointrange() + 
+  geom_hline(yintercept = 0, lty = 2) + 
+  coord_flip()</code></pre>
+<p><img src="/post/2018-08-21-p-value-thoughts-a-twitter-follow-up_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Looking at these results, if you were to ask me whether I would prefer to take Drug A or Drug B to lower my blood pressure, I’d say Drug A. Drug B is essentially detecting a clinically meaningless result. This came up a few times in the poll’s replies, for example here:</p>
+{{% tweet "1029588551162245120" %}}
+<p>If you require a little more convincing, here let’s introduce a third study that falls in the middle, <strong>Study C</strong>. This study has 100 participants and an effect size of -1. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">How am I picking these effect sizes? We know the p-value is a function of the effect size and standard error, so I’ve chosen each effect size such that the ratio of the effect size to standard error would be equal. For example, in the first case, this is <span class="math inline">\(\frac{-2.5}{30/\sqrt(16)}\)</span>, and in the second case, this <span class="math inline">\(\frac{-0.1}{30/\sqrt(10000)}\)</span>, both of which equal -0.333.</span></p>
+<pre class="r"><code>population &lt;- population %&gt;%
+  mutate(bp_drug_c = baseline_bp - 1 + rnorm(10^6))</code></pre>
+<pre class="r"><code>set.seed(68)
+
+# sample 100 from the large population
+study_c &lt;- population[sample(1:10^6, 100), ]
+
+# update so the first half receive drug C and the second receive standard of care
+study_c &lt;- study_c %&gt;%
+  mutate(drug_c = case_when(
+    row_number() %in% 1:50 ~ 1,
+    TRUE ~ 0
+  ),
+  outcome = case_when(
+    drug_c == 1 ~ bp_drug_c,
+    TRUE ~ bp_soc
+  )) %&gt;%
+  select(baseline_bp, outcome, drug_c)
+
+mod_c &lt;- lm(outcome ~ baseline_bp + drug_c, data = study_c)
+confint_c &lt;- broom::tidy(mod_c) %&gt;%
+  bind_cols(broom::confint_tidy(mod_c)) %&gt;%
+  filter(term == &quot;drug_c&quot;)
+
+confints &lt;- bind_rows(confints, confint_c)
+
+ggplot(confints, aes(x = term, y = estimate, ymin = conf.low, ymax = conf.high)) + 
+  geom_pointrange() + 
+  geom_hline(yintercept = 0, lty = 2) + 
+  coord_flip()</code></pre>
+<p><img src="/post/2018-08-21-p-value-thoughts-a-twitter-follow-up_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>As expected, <strong>Study C</strong>, which has approximately the same p-value as <strong>Study A</strong> and <strong>Study B</strong>, has an effect size that falls between the two, since the sample size falls between as well. This phenomenon was also explored in Peter Freeman’s <a href="https://doi.org/10.1002/sim.4780121510">The role of P-values in analysing trial results</a>, as pointed out by <a href="https://twitter.com/@anupampom">Anupam Singh</a> in the replies.</p>
+{{% twitter "1029620344410255360" %}}
+<p>Okay, so now I’ve shown you why <em>I</em> would have chosen the small study in my poll. Note here the small study that I have simulated <em>is</em> truly better (in other words in the large population, Drug A really does have a much larger effect size when compared to B or C). If we were to sample 10,000 participants from the Drug A group from the large population, we would see the same effect size (-2.5) with a much tighter confidence interval; this isn’t just a spurious result.</p>
+</div>
+<div id="same-intervention-same-population" class="section level2">
+<h2>Same intervention, same population</h2>
+<p>Let’s now explore what would happen if we found the same p-value for the same intervention in the same population. I hadn’t really considered this case when I was posting the poll, but I think it is an important one to discuss! It was brought up a few times in the replies, for example:</p>
+{{% twitter "1029648273894727680" %}}
+<p>Let’s use my same population as above, but just examine Drug B. We have two studies, one with 16 participants analyzing the efficacy of Drug B, and one with 10,000 participants. The “true” underlying effect here is still -0.1, the p-value will be 0.0005, as we obtained in the section above. There are a few different ways I could imagine this happening.</p>
+<ol style="list-style-type: decimal">
+<li>The small study has a design flaw that biases the result</li>
+<li>The small study gets a crazy large effect size by chance</li>
+</ol>
+<p>For the purposes of this example, I am going to assume the study designs are the same (except for the sample size), and target the second cause. I can imagine there is <em>some</em> sample of 16 from our large population of a million that would result in this spurious result. Let’s see if we can find one.</p>
+<pre class="r"><code>seed &lt;- 0
+p_val &lt;- 1
+while (p_val != 0.0005) {
+  seed &lt;- seed + 1
+  set.seed(seed)
+  # sample 16 from the large population
+  study_b &lt;- population[sample(1:10^6, 16), ]
+  
+  # update so the first half receive drug B and the second receive standard of care
+  study_b &lt;- study_b %&gt;%
+    mutate(drug_b = case_when(
+      row_number() %in% 1:8 ~ 1,
+      TRUE ~ 0
+    ),
+    outcome = case_when(
+      drug_b == 1 ~ bp_drug_b,
+      TRUE ~ bp_soc
+    )) %&gt;%
+    select(baseline_bp, outcome, drug_b)
+  
+  # test association between drug B and blood pressure
+  p_val &lt;- lm(outcome ~ baseline_bp + drug_b, data = study_b) %&gt;%
+    broom::tidy() %&gt;%
+    filter(term == &quot;drug_b&quot;) %&gt;%
+    pull(p.value) %&gt;%
+    round(4)
+}</code></pre>
+<p>This took a bit of time, but after 5124 tries, it did find a seed where it happens!</p>
+<pre class="r"><code>set.seed(5125)
+# sample 16 from the large population
+study_b &lt;- population[sample(1:10^6, 16), ]
+
+# update so the first half receive drug B and the second receive standard of care
+study_b &lt;- study_b %&gt;%
+  mutate(drug_b = case_when(
+    row_number() %in% 1:8 ~ 1,
+    TRUE ~ 0
+  ),
+  outcome = case_when(
+    drug_b == 1 ~ bp_drug_b,
+    TRUE ~ bp_soc
+  )) %&gt;%
+  select(baseline_bp, outcome, drug_b)
+
+# test association between drug B and blood pressure
+lm(outcome ~ baseline_bp + drug_b, data = study_b) %&gt;%
+  broom::tidy() %&gt;%
+  filter(term == &quot;drug_b&quot;)</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   term   estimate std.error statistic  p.value
+##   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 drug_b    -1.43     0.311     -4.58 0.000518</code></pre>
+<p>Here, the effect size is super exaggerated. We know the <em>true</em> effect size is -0.1, and yet here we are seeing an effect of -1.4. We are definitely seeing this by chance. Let’s look at the distribution of p-values in this small sample.</p>
+<pre class="r"><code>get_p_val &lt;- function() {
+  study_b &lt;- population[sample(1:10^6, 16), ]
+  
+  # update so the first half receive drug B and the second receive standard of care
+  study_b &lt;- study_b %&gt;%
+    mutate(drug_b = case_when(
+      row_number() %in% 1:8 ~ 1,
+      TRUE ~ 0
+    ),
+    outcome = case_when(
+      drug_b == 1 ~ bp_drug_b,
+      TRUE ~ bp_soc
+    )) %&gt;%
+    select(baseline_bp, outcome, drug_b)
+  
+  # test association between drug B and blood pressure
+  lm(outcome ~ baseline_bp + drug_b, data = study_b) %&gt;%
+    broom::tidy() %&gt;%
+    filter(term == &quot;drug_b&quot;) %&gt;%
+    pull(p.value)
+}
+p_vals &lt;- tibble(
+  p_val = map_dbl(1:1000, ~get_p_val())
+)
+ggplot(p_vals, aes(p_val)) + 
+  geom_histogram(bins = 100) + 
+  geom_vline(xintercept = 0.0005, color = &quot;red&quot;)</code></pre>
+<p><img src="/post/2018-08-21-p-value-thoughts-a-twitter-follow-up_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>The red line denotes 0.0005. In this run of 1,000 simulations, we only had 1 where the p-value was less than 0.0005.</p>
+<p>All this is to say that if I were to observe two studies <em>measuring the same intervention</em> with the <em>same study design</em>, one was small and one was large, I would definitely trust the large study. Perhaps this is what three quarters of my twitter-sphere were thinking! This seems akin to Gelman’s <a href="http://andrewgelman.com/2017/02/06/not-kill-statistical-significance-makes-stronger-fallacy/">“What doesn’t kill my significance makes it stronger”</a> fallacy, brought up in the replies:</p>
+{{% twitter "1029777778806280193" %}}
+<p>If a small and large study are evaluating the exact same thing, but show different results, I would certainly trust the large study more.</p>
+</div>
+<div id="same-intervention-different-populations" class="section level2">
+<h2>Same intervention, different populations</h2>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">PHEW this post seems really long, sorry, dear readers! Here is a cute gif of a cat covered in chicks for your troubles. <img src="https://media.giphy.com/media/aiOKZWnTwDdxC/giphy.gif" /></span>This brings us to our final scenario, measuring the same intervention on different populations. This is another scenario that I didn’t consider prior to posting this poll! A few people brought up the possibility by asking about the effect size, for example <a href="https://twitter.com/MilesMcBain">Miles McBain</a> said:</p>
+{{% twitter "1029555525648703489" %}}
+<p>To which I initially replied that I didn’t think that was possible. <a href="https://twitter.com/NicholasStrayer">Nick</a> then chimed in to set me straight, and after much back and forth I <em>finally</em> understood how that was possible. Essentially if the larger study ALSO had a larger standard deviation, proportional to the ratio of the square root of the sample sizes, this would happen. Here I’m not sure exactly which I would find more convincing, as they are really looking at different things.</p>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap up</h2>
+<p>SO there we have it! This poll generated a lot of fun discussion, please feel free to let me know if you think I’ve left off an important scenario to consider. After all of this, my real conclusions remain similar to how I felt previously,</p>
+<p>🤔 p-values are hard<br />
+🕯 confidence intervals shed more light on the situation<br />
+🎉 twitter is a fun way to spur good discussion!</p>
+</div>
