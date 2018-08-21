@@ -299,7 +299,7 @@ To which I initially replied that I didn't think that was possible. [Nick](https
 
 ## Wrap up
 
-SO there we have it! This poll generated a lot of fun discussion, please feel free to let me know if you think I've left off an important scenario to consider. After all of this, my real conclusions remain similar to how I felt previously, 
+SO there we have it! This poll generated a lot of fun discussion, please feel free to let me know if you think I've left off an important scenario to consider. There are so many more fun things to discuss when thinking about what makes studies "convincing". None of these simulations take into account systematic bias, for example, from which a large sample size will never save you! Perhaps that can be left for a post for another day on the trade-off between bias and power. After all of this, my real conclusions remain similar to how I felt previously, 
 
 `r emo::ji("thinking_face")` p-values are hard  
 `r emo::ji("candle")` confidence intervals shed more light on the situation  
