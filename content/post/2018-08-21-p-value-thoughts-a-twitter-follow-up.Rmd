@@ -21,16 +21,13 @@ The results definitely surprised me - while I _somewhat_ expected the large stud
 
 While this paper doesn't necessarily tell you under which circumstance you ought to be more _convinced_, when I initially read it in Jeffrey Blume's Advanced Topics course at Vandy, I walked away with two main impressions: 
 
-1. I would find a small study with the same p-value as a large study more convincing, since the effect size must be larger for this to be (_there are some assumptions here that I will address below_).
-
+1. I would find a small study with the same p-value as a large study more convincing, since the effect size must be larger for this to be (_there are some assumptions here that I will address below_).  
 2. Since I am convinced differently by two studies with the same p-value, but different sample sizes, p-values must not be a measure of evidence.
 
 I think I still stand by 2, but I want to delve a bit deeper into 1, since it seems most of the people in my biased twitter-sphere disagree with me. To do this, I am going to explore three scenarios. In all cases, there is a small study and a large study, and the p-values from both studies are the same.
 
-1. You have two studies measuring _different interventions_ on the _same population_. 
-
-2. You have two studies measuring the _same intervention_ on the _same population_.
-
+1. You have two studies measuring _different interventions_ on the _same population_.  
+2. You have two studies measuring the _same intervention_ on the _same population_.  
 3. You have two studies measuring the _same intervention_ on _different populations_.
 
 ## Different intervention, same population
