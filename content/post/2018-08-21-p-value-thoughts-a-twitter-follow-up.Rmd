@@ -131,7 +131,7 @@ Looking at these results, if you were to ask me whether I would prefer to take D
 
 `r blogdown::shortcode("tweet", "1029588551162245120")`
 
-If you require a little more convincing, let's introduce a third study that falls in the middle, **Study C**. This study has 100 participants and an effect size of -1. `r tufte::margin_note("How am I picking these effect sizes? We know the p-value is a function of the effect size and standard error, so I've chosen each effect size such that the ratio of the effect size to standard error would be equal. For example, in the first case, this is proportional to $\\frac{-2.5}{\\sqrt(16)}$, and in the second case, this is proportional to $\\frac{-0.1}{\\sqrt(10000)}$, both of which equal 10.")`
+If you require a little more convincing, let's introduce a third study that falls in the middle, **Study C**. This study has 100 participants and an effect size of -1. `r tufte::margin_note("How am I picking these effect sizes? We know the p-value is a function of the effect size and standard error, so I've chosen each effect size such that the ratio of the effect size to standard error would be equal. For example, in the first case, this is proportional to $-2.5\\sqrt{16}$, and in the second case, this is proportional to $-0.1\\sqrt{10000}$, both of which equal -10.")`
 
 ```{r}
 population <- population %>%
