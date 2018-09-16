@@ -180,7 +180,7 @@ Two things I'd like to draw your attention to are the `in_header` and `before_bo
 
 2. The `tex` folder contains the files you'll need to update to personalize this.
 
-* `preamble.tex` and `doc_preface.tex` are both based on Vanderbilt's LaTeX template. If you aren't updating the template, don't touch these files. If you school has certain specifications, then you'll need to edit these. `preamble.tex` will include anything you want to be located before the `\begin{document}` command. `doc_preface.tex` includes anything you want _after_ `\begin{document}`, but before the main part of your text (the title page, etc.).  
+* `preamble.tex` and `doc_preface.tex` are both based on Vanderbilt's LaTeX template. If you aren't updating the template, don't touch these files. If your school has certain specifications, then you'll need to edit these. `preamble.tex` will include anything you want to be located before the `\begin{document}` command. `doc_preface.tex` includes anything you want _after_ `\begin{document}`, but before the main part of your text (the title page, etc.).  
 * Update the `acknowledgements.tex` and `dedication.tex` files with your Acknowledgements and Dedication.
 * Update the `params.tex` file with your information (name, title, university, etc.).
 * My set up assumes you are using the `nomencl` LaTeX package to handle your list of abbreviations. To do this, the first time an abbreviation is used in your dissertation, include it like this `\nomenclature{<abbreviation>}{<description>}` (I have an example of this in the [`01-chapter1.Rmd` file](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/thesis/01-chapter1.Rmd)). After you compile your **bookdown** book, a file called `_main.nlo` will be created. In your terminal, navigate to your `thesis` folder and run the following:
@@ -203,7 +203,7 @@ I have gone through _many_ iterations of file sharing, and this is where I have 
 
 1. Write each chapter in RStudio as a .Rmd file.  
 2. Push to GitHub.
-`r tufte::margin_note("This script is saved in the _scripts_ folder in the **bookdown** example in my [dissertation toolkit GitHub repo](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/thesis/scripts/send-to-drive.R)")`
+`r tufte::margin_note("This script is saved in the _scripts_ folder in the **bookdown** example in my [dissertation toolkit GitHub repo](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/thesis/scripts/send-to-drive.R).")`
 3. knit my .Rmd file to a `word_document` and send this to Google Drive for comments / revisions from co-authors. I do this using the **googledrive** R package `r emo::ji("package")`. 
 
 ```{r, eval = FALSE}
