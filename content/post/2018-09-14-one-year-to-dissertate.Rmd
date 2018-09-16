@@ -1,0 +1,335 @@
+---
+title: One year to dissertate
+author: Lucy D'Agostino McGowan
+date: '2018-09-14'
+slug: one-year-to-dissertate
+categories: [phd, "one year dissertation"]
+tags: [phd, "one year dissertation"]
+excerpt: "I've compiled some resources that I used when completing my dissertation and I wanted to share them with YOU! Throughout this post, I link to a bunch of different templates that I used throughout my process. You can find them all in a GitHub repo. This how-to has gotten a biiiiiit long. This post contains the whole kit-and-kaboodle, but I will also be releasing these in a series of smaller posts over the next couple of weeks."
+---
+
+I've compiled some resources that I used when completing my dissertation and I wanted to share them with YOU! Throughout this post, I link to a bunch of different templates that I used throughout my process. You can find them all in [this GitHub repo](https://github.com/LucyMcGowan/dissertation-toolkit).
+
+I've split this post into three sections:
+
+*  **The practicals**. _This section will have specifics on how I was able execute certain tasks, such as committee meetings, draft writing, etc._
+* **The planning**. _This section will have details on how I planned out my time over the year to target a specific timeline_.
+* **Other tid bits**. _This section is a mix of other things that didn't quite fit in the first two sections, like some things I found helpful for keeping a positive attitude, etc._
+
+This how-to has gotten a biiiiiit long. This post contains the whole kit-and-caboodle, but I will also be releasing these in a series of smaller posts over the next couple of weeks, so if this seems overwhelming, stay tuned for that!
+
+## Why am I writing this?
+
+<span class = "marginnote">
+This is by no means the only way to complete a dissertation (or even the best way!) but maybe you can find something useful from my process `r emo::ji("shrug")`.
+</span>
+Speaking with current and former PhD students, many of us find / found one of the most difficult parts of the PhD process was the element of unstructured time. I thought it may be useful to lay out _one way_ to structure this time. For that reason, I am specifically focusing on the _dissertating_ phase of a PhD rather than the coursework portion.
+
+## Background
+
+Programs come in all shapes and sizes, so this may not fit your experiences. 
+
+For a bit of context:
+
+* I graduated from [Vanderbilt's Biostatistics program](https://www.vanderbilt.edu/biostatistics-graduate/)
+* At Vanderbilt, we have 2.5 years of mandatory course work 
+* We have two written comprehensive exams taken at the end of Year 1 and the end of Year 2
+* Around the 2.5 year mark (January of Year 3), we have an _oral exam_ - this (roughly) marks the start of your dissertating phase
+* After I completed my oral exam, I had the goal of finishing up my dissertation in 1 year
+
+_I think the tools I am going to lay out here could be easily applied to other timelines if you just shrink or stretch each phase._
+
+## The practicals
+
+### Dissertation requirements
+
+To start off, you'll need your department's dissertation requirements. This is sometimes vague, for example our department's website just states:
+
+>_The dissertation committee is responsible for administering the final PhD examination (i.e., dissertation defense) and will determine whether the candidate has presented an acceptable dissertation and has demonstrated strong proficiency in the five key skill areas during their educational tenure at Vanderbilt...Candidates for the PhD degree in Biostatistics must present a dissertation that yields clear evidence of original research and thinking, and that advances methodological knowledge in the discipline of Biostatistics._ 
+
+I found it helpful to set up a meeting with my advisor to specifically outline his expectations. I found it really helpful to record _all_ expectations in writing and have them reaffirmed via email after the meeting. This may seem obvious (or may seem like overkill!), but I think clear communication is one of the common roadblocks in the dissertation process. Here is a worksheet I've put together that can help with this.
+
+![](/images/2018-09-14/dissertation-expectations.png)
+
+Click here to [download the file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/dissertation-expectations.pdf).
+
+`r tufte::margin_note("Note that this can be revised lots of times! My third dissertation paper ended up being on a completely different topic than what was originally discussed -- I think this is totally normal!")`
+
+Here is (roughly) what mine would have looked like at the beginning.
+
+![](/images/2018-09-14/dissertation-expectations_lucy.png)
+
+### Committee Meetings
+
+I had committee meetings every three months. This was double the number required, but I found it _really_ helpful for keeping my timeline. In order to get away with hosting so many meetings with many Very Busy people, these meetings had to be **informative** and **efficient**. I did a few things to try to achieve this, here are my recommendations:
+
+1. Send a draft of the dissertation chapter (or whatever content) you will be focusing on in the meeting one week prior. 
+2. In addition to the dissertation chapter, include a short paragraph with a _summary of changes_ directing the reader to specific paragraphs. This makes it a bit more likely that they may open the draft (or at least skim the summary paragraph), making it possible to dive right into the material at the beginning of the meeting.
+3. Create an agenda for the meeting. I am a HUGE fan of agendas. Here is the format mine took:
+
+![](/images/2018-09-14/committee-agenda.png)
+
+`r tufte::margin_note("Not familiar with .Rmd files? Check out [these awesome resources from RStudio](https://rmarkdown.rstudio.com/lesson-1.html).")`
+
+Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/commitee-agenda.Rmd).
+
+4. Send a follow up email after the meeting with the meeting minutes and a poll to schedule the subsequent meeting. For this, I liked to just fill in my agenda with the next steps we discussed. It would often look something like this.
+
+![](/images/2018-09-14/committee-minutes.png)
+
+Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/commitee-minutes.Rmd).
+
+5. Compile a final document with the meeting minutes, the date for the next committee meeting, and a line indicating that all committee members signed off on the current plan. Here is what mine often looked like.
+
+![](/images/2018-09-14/committee-final-doc.png)
+
+Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/commitee-final-doc.Rmd).
+
+### Drafting your thesis
+
+There are lots of great resources on how to write academic papers. My favorite is Jeff Leek's [first paper GitHub repo](https://github.com/jtleek/firstpaper). My advice here is going to focus more on the _practicals_ of drafting your dissertation paper(s): file structure, using **bookdown**, and file sharing.
+
+_These sections assume you are interested in writing your thesis using R. If not, you may want to skip down to the next section._
+
+**File structure**
+
+The most important part of having a nice structure for your files is that it is consistent. I'm going to briefly discuss how I do this, but it isn't really important _how_ you structure your files, you just want to be sure to do something logical (this will save lots of time later when doing revisions / getting feedback!).
+
+The first part of constructing a lovely file structure is proper naming. [Jenny Bryan](https://twitter.com/JennyBryan) has a [beautiful slide deck](https://speakerdeck.com/jennybc/how-to-name-files) on "Naming Things". The main gist is file names should follow the following principles:
+
+`r emo::ji("robot")` Machine readable  
+`r emo::ji("information_desk_person")` Human readable  
+`r emo::ji("woman_cartwheeling")` plays well with default ordering
+
+Now that we have beautiful names, here is generally how I structure my files:
+
+```
+thesis 
+  |_ 01-chapter1.Rmd
+  |_ 02-chapter2.Rmd
+  |_ 03-chapter3.Rmd
+  |_ 04-conclusion.Rmd
+  |_ 05-references.Rmd
+  |_ /_book
+    |_ _main.pdf
+  |_ citations.bib
+  |_ /data  
+  |_ index.Rmd 
+  |_ /notes  
+  |_ /scripts  
+    |_ compile.R
+    |_ send-to-drive.R  
+  |_ /submissions  
+  |_ /tex
+    |_ acknowledgements.tex
+    |_ dedication.tex
+    |_ doc_preface.tex
+    |_ params.tex
+    |_ preamble.tex
+  |_ thesis.Rproj  
+```
+
+Some of these files may not mean much to you, but the general gist is I have each chapter in a different file (like `01-chapter1.Rmd`) and I have folders for the following:
+
+* `/_book`: This is where **bookdown** compiles my final thesis, called `_main.pdf`.  
+* `/data`: This is where I have all of my data.
+* `/notes`: This is where I hold notes for various iterations of the thesis (including meeting minutes).
+* `/scripts`: This is where I hold my compilation scripts, for example `compile.R` to compile my thesis.
+* `/submissions`: This is where I hold versions of chapters that were submitted to journals for publication.
+* `/tex`: This is where I hold all of the `.tex` files needed for compilation. This will be explained further in the _Using bookdown_ section.
+
+[Angela Li](https://twitter.com/CivicAngela) has a great tweet about how she structured her thesis files as another example of how to do this!
+  
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">When I was trying to procrastinate on actually writing, I would just organize my work, including my entire thesis into separate R Markdown documents linked by a master THESIS.Rmd file 2/n <a href="https://t.co/8iGnOyrY2h">pic.twitter.com/8iGnOyrY2h</a></p>&mdash; Angela Li (@CivicAngela) <a href="https://twitter.com/CivicAngela/status/1024470173804363776?ref_src=twsrc%5Etfw">August 1, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+In the thread above, she highlights a bunch of resources for thinking about file structure -- I highly recommend a click through!
+
+**Using bookdown**
+
+`r tufte::margin_note("Yihui has a great book (written using **bookdown**, obviously), [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/), with lots of **bookdown** details that aren't covered here!")`
+I wrote my dissertation using **bookdown** -- it was a total delight! You can download a [sample version of how I set everything up from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/tree/master/thesis).
+
+I am going to walk through how you can update the files in the sample version for your own dissertation.
+
+1. The main file is `index.Rmd`. Here is what my sample index looks like.
+
+```
+--- 
+bibliography: citations.bib
+output:
+  bookdown::pdf_book:
+    toc: no
+    template: null
+    includes:
+      in_header: tex/preamble.tex
+      before_body: tex/doc_preface.tex
+documentclass: book
+classoption: oneside
+fontsize: 12pt
+subparagraph: yes
+link-citations: yes
+biblio-style: apalike
+---
+
+# Introduction
+
+Here is the introduction to my thesis.
+```
+
+Two things I'd like to draw your attention to are the `in_header` and `before_body` parameters. These allowed me to incorporate the Vanderbilt LaTeX template. We'll be updating these in the next steps. You'll add your Introduction chapter to this file.
+
+2. The `tex` folder contains the files you'll need to update to personalize this.
+
+* `preamble.tex` and `doc_preface.tex` are both based on Vanderbilt's LaTeX template. If you aren't updating the template, don't touch these files. If you school has certain specifications, then you'll need to edit these. `preamble.tex` will include anything you want to be located before the `\begin{document}` command. `doc_preface.tex` includes anything you want _after_ `\begin{document}`, but before the main part of your text (the title page, etc.).  
+* Update the `acknowledgements.tex` and `dedication.tex` files with your Acknowledgements and Dedication.
+* Update the `params.tex` file with your information (name, title, university, etc.).
+* My set up assumes you are using the `nomencl` LaTeX package to handle your list of abbreviations. To do this, the first time an abbreviation is used in your dissertation, include it like this `\nomenclature{<abbreviation>}{<description>}` (I have an example of this in the [`01-chapter1.Rmd` file](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/thesis/01-chapter1.Rmd)). After you compile your **bookdown** book, a file called `_main.nlo` will be created. In your terminal, navigate to your `thesis` folder and run the following:
+
+```bash
+makeindex _main.nlo -s nomencl.ist -o _main.nls
+```
+
+* Recompile your **bookdown** book, and a list of abbreviations will automagically be added.
+
+3. As I mentioned in the _File naming_ section, I have a separate .Rmd file for each chapter. These will be automatically compiled when you compile the `index.Rmd` file with **bookdown**. The book is compiled using the `render_book()` function:
+
+```{r, eval = FALSE}
+bookdown::render_book("index.Rmd")
+```
+
+**File sharing**
+
+I have gone through _many_ iterations of file sharing, and this is where I have landed. 
+
+1. Write each chapter in RStudio as a .Rmd file.  
+2. Push to GitHub.
+`r tufte::margin_note("This script is saved in the _scripts_ folder in the **bookdown** example in my [dissertation toolkit GitHub repo](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/thesis/scripts/send-to-drive.R)")`
+3. knit my .Rmd file to a `word_document` and send this to Google Drive for comments / revisions from co-authors. I do this using the **googledrive** R package `r emo::ji("package")`. 
+
+```{r, eval = FALSE}
+# uncomment run the line below if googledrive package is not installed
+# install.packages("googledrive")
+
+#---- render your chapter as a Word document
+rmarkdown::render(
+  "01-chapter1.Rmd",
+  output_format = "word_document")
+
+#---- run this next part only once
+file <- googledrive::drive_upload(
+    "01-chapter1.docx", 
+    type = "document")
+
+# get the file id (copy this to your clipboard)
+file$id
+
+#----
+
+# paste file id, run this next part every time you want to push a new version to Google Drive
+id <- "pasted File Id"
+googledrive::drive_update(
+    googledrive::as_id(id), 
+    "01-chapter1.docx")
+```
+5. Incorporate Google Drive suggestions _by hand_ into the .Rmd file. This seems like a major pain, but the problem of _round tripping_ from R to Google Drive is still an open question in the #rstats field. On the bright side, I find stepping through the Google Drive revisions is a good opportunity to thoroughly read through them.
+6. Send the update to GitHub.
+7. Revise the chapter.
+8. Repeat steps 2 - 7 as needed!
+
+### Planning and accountability
+
+The section below is going to give great detail on my planning process. In addition to setting up a detailed plan to make an unstructured timeline quite structured, having someone (or many someones!) to hold you to this plan can be very helpful! For me, my husband was this someone. I shared my goals at the beginning of each month with him and asked him to ask me about it to be sure I stuck to the plan. Additionally, I set up "official" deadlines via committee meetings, conference presentations, and journal club presentations in an attempt to build in some concrete structure.
+
+
+## The planning
+
+<span class = "marginnote">
+_A lot of my goal-setting was adapted from principals I picked up using a [Passion Planner](https://passionplanner.com)._
+</span>
+
+This section is going to explain the specifics behind how I planned my dissertation timeline. I found it really helpful to have specific goals on detailed timelines in order to create structure around an inherently unstructured time. 
+
+**Once you have made up your mind that you would like to finish your dissertation in a certain amount of time, pull out your department's expectations and move on to Step 1.**
+ 
+### Step 1: Setting the goal
+
+For this first step, we are going to create a _mind map_ with completing your dissertation at the center. Grab a blank piece of paper, and draw a box in the middle that says **I HAVE COMPLETED MY DISSERTATION** `r emo::ji("tada")` or download and print this one `r emo::ji("point_down")`. Or if you don't like to print, download this and stick it on a tablet you can write on (that's how I did these!).
+
+![](/images/2018-09-14/dissertation-mind-map.png)
+
+Click here to [download it from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/dissertation-mind-map.pdf).
+
+<span class = "marginnote">
+Setting the timer became a really important part of the process for me. If I hadn't set a short timer, I'm not sure that I would have followed through with my goal-setting routine.
+</span>
+1. `r emo::ji("calendar")` Add your defense goal in the _Date_ box.  
+2. `r emo::ji("clock")` Set a timer for **five minutes** and write down all of the _tasks_ that would need to happen in order to reach this goal.  
+3. `r emo::ji("point_up")` Add in due dates for each of these tasks.    
+4. `r emo::ji("one")` Stick a number next to each task in the order it must be completed.  
+
+Here is an example for what a portion of my original mind-map looked like.
+
+![](/images/2018-09-14/dissertation-mind-map_lucy.png)
+
+_A few tips:_ 
+
+* Don't panic and don't be a perfectionist! You'll get a chance to update these at the beginning of each month!  
+* Use things like _conferences_ and _journal clubs_ to set "real" deadlines for yourself. As much as my artificial deadlines helped add some structure to my process, having a "real" deadline, such as needing to prepare a talk, was **super** helpful.
+* Speaking of "real" deadlines, as I mentioned above, I found it really helpful to have committee meetings every 3 months. This was much more frequent than the requirements, but these deadlines kept things moving along and kept everyone on the same page throughout. An important piece to this is making sure that the committee meetings are **informative** and **efficient**, using techniques like the ones highlighted in _the practicals_ section above.
+* Try to make the tasks as specific as possible. You'll be updating this each month, so if specifics are hard to come by for a task that seems way in the future, you can update it later!
+* If you aren't sure of the exact date for something, just put the week.
+
+### Step 2: Set up your weekly calendar
+
+Now that you have a bit of a global map `r emo::ji("world_map")` for the overall course of your next year (or whatever timeline you've set), now we need to scale this down to the micro-level. I found that a weekly calendar worked best for this!
+
+Here is a weekly calendar I created for this purpose.
+
+![](/images/2018-09-14/weekly-calendar.png)
+
+Click here to [dowload it from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/weekly_calendar.pdf).
+
+At the beginning of each month, map the dates you've set on your mind map to these weekly views.
+
+1. Fill in the **Week of** and the dates for the days of the week in your calendar.  
+2. Put the task from your mind map in the **This Week's Aim** box.  
+3. If you set a specific date, add the task to the **aim** under the date you've aimed for
+4. Now that you've mapped the global tasks, using the same template as above, create a mini map for the month. Specifically:
+
+* Put the tasks for the month from your large mind map in the center of your new monthly map
+* Set a timer for 5 minutes and write down specific (low-level) tasks that need to be completed to achieve your goals
+* Add in due dates for these tasks
+* Stick a number next to each task
+* Add these micro-tasks to your weekly calendar
+
+Here is an example of a week I mapped from the "Submit tipr to CRAN" task I set for myself on my mind map. 
+
+![](/images/2018-09-14/weekly-calendar_lucy.png)
+
+### Step 3: Re-evaluate your mind map
+
+The last week of the month, set aside 10 minutes to re-evaluate your mind map. 
+
+1. Pull out the mind map you've set up and stick a nice check mark `r emo::ji("heavy_check_mark")` next to the things you've completed (Woohoo, go you!!).  
+2. Take a look at the next tasks you have coming up. If they seem realistic, complete Step 2 for your next month, if not, cross out the dates and set new ones! Add new tasks as needed to make your goals a reality!
+
+Here is an example of an updated mind map.
+
+![](/images/2018-09-14/weekly-calendar_lucy-update.png)
+
+## Other tid bits
+
+This is a random list of pointers that I heard throughout my process that I found useful.
+
+* Surround yourself with people who encourage you! This makes _such_ a difference for maintaining a positive attitude throughout! In our student-run journal clubs, we began each meeting with "Good News" to give us a chance to celebrate each other's successes -- I loved hearing about the exciting things everyone was doing and found it so uplifting to have a cohort so full of encouragement!  
+* Familiarize yourself with on campus resources. Most universities have lots of programming for PhD students (but it is not always easy to find!). Your mental health is _extremely_ important during this time, so be sure to take care of yourself!
+* Find ways to make sure you aren't isolating yourself. For me, this included scheduling weekly fun activities (like Trivia!) and getting involved with groups both on campus (like Graduate Student Council) and off (like R-Ladies!).
+* Choose your advisor carefully. Having an advisor that is a good personality match makes everything abundantly easier!
+* Write a little bit every day. Think of writing as your _job_ - what you write may never end up in a final paper, but constantly practicing will make you better! 
+
+
+Do you have anything I missed? Please let me know, I'm excited to have this be a live document!
+
+`r emo::ji("sunflower")` Happy Dissertating! 
+![](https://media.giphy.com/media/3oeSAz6FqXCKuNFX6o/giphy.gif)
+[Source](https://media.giphy.com/media/3oeSAz6FqXCKuNFX6o/giphy.gif)
