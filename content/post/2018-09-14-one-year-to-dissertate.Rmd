@@ -204,7 +204,7 @@ I have gone through _many_ iterations of file sharing, and this is where I have 
 1. Write each chapter in RStudio as a .Rmd file.  
 2. Push to GitHub.
 `r tufte::margin_note("This script is saved in the _scripts_ folder in the **bookdown** example in my [dissertation toolkit GitHub repo](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/thesis/scripts/send-to-drive.R).")`
-3. knit my .Rmd file to a `word_document` and send this to Google Drive for comments / revisions from co-authors. I do this using the **googledrive** R package `r emo::ji("package")`. 
+3. knit the .Rmd file to a `word_document` and send this to Google Drive for comments / revisions from co-authors. I do this using the **googledrive** R package `r emo::ji("package")`. 
 
 ```{r, eval = FALSE}
 # uncomment run the line below if googledrive package is not installed
