@@ -267,7 +267,7 @@ Setting the timer became a really important part of the process for me. If I had
 3. `r emo::ji("point_up")` Add in due dates for each of these tasks.    
 4. `r emo::ji("one")` Stick a number next to each task in the order it must be completed.  
 
-Here is an example for what a portion of my original mind-map looked like.
+Here is an example of what a portion of my original mind map looked like.
 
 ![](/images/2018-09-14/dissertation-mind-map_lucy.png)
 
