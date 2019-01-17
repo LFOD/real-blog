@@ -12,7 +12,7 @@ excerpt: "Come enjoy a graphical exploration of various propensity score weighti
 
 <div id="lets-create-a-toy-dataset" class="section level2">
 <h2>Let’s create a toy dataset</h2>
-<p>For this post, I’m going to use this generated dataset as an example. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Here I am using the terminology ‘treatment’ for consistency, but these methods are not confined to the medical setting. You can also think of this as an ‘exposure’. For example, you could be interested in how ‘exposing’ users to a certain UI effects an outcome, like whether they purchase a product.</span> Here, I am simulating two variables, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. These are my <em>pre-treatment characteristics</em> (we’ll define that soon!). I am then using these to create a binary <code>treatment</code> variable. This <code>treatment</code> variable depends on <code>x_1</code> and <code>x_2</code>. Finally, I have genrated an <code>outcome</code> variable dependent on the <code>treatment</code>, making the treatment effect equal to 2.</p>
+<p>For this post, I’m going to use this generated dataset as an example. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Here I am using the terminology ‘treatment’ for consistency, but these methods are not confined to the medical setting. You can also think of this as an ‘exposure’. For example, you could be interested in how ‘exposing’ users to a certain UI effects an outcome, like whether they purchase a product.</span> Here, I am simulating two variables, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. These are my <em>pre-treatment characteristics</em> (we’ll define that soon!). I am then using these to create a binary <code>treatment</code> variable. This <code>treatment</code> variable depends on <code>x_1</code> and <code>x_2</code>. Finally, I have generated an <code>outcome</code> variable dependent on the <code>treatment</code>, making the treatment effect equal to 2.</p>
 <pre class="r"><code>library(tidyverse)
 set.seed(928)
 n &lt;- 1000
@@ -55,7 +55,7 @@ dat</code></pre>
     propensity_score = glm(treatment ~ x_1 + x_2, data = dat, family = &quot;binomial&quot;) %&gt;%
       predict(type = &quot;response&quot;)
   )</code></pre>
-<p>Notice here I fit a logistic regression, predicting the <code>treatment</code> from the pre-treatment characteristics, <code>x_1</code> and <code>x_2</code> using the <code>glm()</code> function along with the <code>family = &quot;binomial&quot;</code> option. I then used the <code>predict()</code> function along with <code>type = &quot;response&quot;</code> to obtain the conditional probabilities of treatment assignemnt.</p>
+<p>Notice here I fit a logistic regression, predicting the <code>treatment</code> from the pre-treatment characteristics, <code>x_1</code> and <code>x_2</code> using the <code>glm()</code> function along with the <code>family = &quot;binomial&quot;</code> option. I then used the <code>predict()</code> function along with <code>type = &quot;response&quot;</code> to obtain the conditional probabilities of treatment assignment.</p>
 </div>
 <div id="what-are-we-trying-to-estimate" class="section level2">
 <h2>What are we trying to estimate?</h2>
@@ -79,7 +79,7 @@ dat</code></pre>
 </div>
 <div id="average-treatment-effect-among-the-evenly-matchable" class="section level3">
 <h3>Average Treatment Effect Among the Evenly Matchable</h3>
-<p>The Average Treatment Effect Among the Evently Matchable (ATM) estimates the treatment effect with a <em>matched</em> population as the target population. The estimated population is nearly equivalent to the cohort formed by one-to-one pair matching.</p>
+<p>The Average Treatment Effect Among the Evenly Matchable (ATM) estimates the treatment effect with a <em>matched</em> population as the target population. The estimated population is nearly equivalent to the cohort formed by one-to-one pair matching.</p>
 </div>
 <div id="average-treatment-effect-among-the-overlap-population" class="section level3">
 <h3>Average Treatment Effect Among the Overlap Population</h3>
@@ -89,7 +89,7 @@ dat</code></pre>
 <div id="how-do-we-incorporate-a-propensity-score-in-a-weight" class="section level2">
 <h2>How do we incorporate a propensity score in a weight?</h2>
 <p>Each of these causal quantities has a weight associated with it. Brace yourself for a little bit of math (but I’ll include R code immediate after so hopefully it won’t be too bad!).</p>
-<p>The propensity score for participant <span class="math inline">\(i\)</span> is defined here as <span class="math inline">\(e_i\)</span> and the treatment assignment is <span class="math inline">\(Z_i\)</span>, where <span class="math inline">\(Z = 1\)</span> indicates the participant recieved the treatment and <span class="math inline">\(Z = 0\)</span> indicates they received the control.</p>
+<p>The propensity score for participant <span class="math inline">\(i\)</span> is defined here as <span class="math inline">\(e_i\)</span> and the treatment assignment is <span class="math inline">\(Z_i\)</span>, where <span class="math inline">\(Z = 1\)</span> indicates the participant received the treatment and <span class="math inline">\(Z = 0\)</span> indicates they received the control.</p>
 <p><span class="math inline">\(w_{ATE} = \frac{Z_i}{e_i} + \frac{1 - Z_i}{1 - e_i}\)</span><br />
 <span class="math inline">\(w_{ATT} = \frac{e_iZ_i}{e_i} + \frac{e_i(1-Z_i)}{1-e_i}\)</span><br />
 <span class="math inline">\(w_{ATC} = \frac{(1-e_i)Z_i}{e_i} + \frac{(1-e_i) (1-Z_i)}{1 - e_i}\)</span><br />
@@ -110,7 +110,7 @@ dat</code></pre>
       propensity_score * (1 - treatment)
   )</code></pre>
 <p>Let’s look at some graphs to better understand what these weights are doing. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I first saw these <em>mirrored histograms</em> in this context in a paper by <a href="https://www.ncbi.nlm.nih.gov/pubmed/23902694">Li &amp; Greene</a> and <strong>loved</strong> them!</span></p>
-<p>First, I am going to just plot a histogram of the propensity scores for the two populations, those who received treatment (<code>treatment = 1</code>), and those who recieved the control (<code>treatment = 0</code>). The histogram above the 0 line is the distribution of propensity scores among the treated. The histogram below the 0 line is the distribution of propensity scores among the controls.</p>
+<p>First, I am going to just plot a histogram of the propensity scores for the two populations, those who received treatment (<code>treatment = 1</code>), and those who received the control (<code>treatment = 0</code>). The histogram above the 0 line is the distribution of propensity scores among the treated. The histogram below the 0 line is the distribution of propensity scores among the controls.</p>
 <pre class="r"><code>d &lt;- dat %&gt;%
   tidyr::spread(treatment, propensity_score, sep = &quot;_p&quot;)
 
@@ -122,8 +122,8 @@ ggplot(d) +
   scale_y_continuous(labels = c(20, 0, 20, 40, 60), 
                      breaks= c(-20, 0, 20, 40, 60)) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Examining this, we can see in this simulated sample, more patients recieved the treatment than the control. We can also see that among those who received the treatment, propensity scores tend to be higher (we can see this based on the skew of the histogram, with more mass towards the right where the propensity scores are closer to 1). This makes sense, since the propensity score is the probability of receiving treatment, those who recieved it probably had a higher probability of doing so.</p>
-<p>Now, for each weight I am going to overlay the pseudo-population that is created via weighting. The “pseudo-population” for the treated group is in green and the “psuedo-population” for the control group is in blue.</p>
+<p>Examining this, we can see in this simulated sample, more patients received the treatment than the control. We can also see that among those who received the treatment, propensity scores tend to be higher (we can see this based on the skew of the histogram, with more mass towards the right where the propensity scores are closer to 1). This makes sense, since the propensity score is the probability of receiving treatment, those who received it probably had a higher probability of doing so.</p>
+<p>Now, for each weight I am going to overlay the pseudo-population that is created via weighting. The “pseudo-population” for the treated group is in green and the “pseudo-population” for the control group is in blue.</p>
 <div id="ate" class="section level3">
 <h3>ATE</h3>
 <pre class="r"><code>ggplot(d) +

@@ -10,7 +10,7 @@ excerpt: "Come enjoy a graphical exploration of various propensity score weighti
 
 ## Let's create a toy dataset
 
-For this post, I'm going to use this generated dataset as an example. `r tufte::margin_note("Here I am using the terminology 'treatment' for consistency, but these methods are not confined to the medical setting. You can also think of this as an 'exposure'. For example, you could be interested in how 'exposing' users to a certain UI effects an outcome, like whether they purchase a product.")` Here, I am simulating two variables, $x_1$ and $x_2$. These are my _pre-treatment characteristics_ (we'll define that soon!). I am then using these to create a binary `treatment` variable. This `treatment` variable depends on `x_1` and `x_2`. Finally, I have genrated an `outcome` variable dependent on the `treatment`, making the treatment effect equal to 2.
+For this post, I'm going to use this generated dataset as an example. `r tufte::margin_note("Here I am using the terminology 'treatment' for consistency, but these methods are not confined to the medical setting. You can also think of this as an 'exposure'. For example, you could be interested in how 'exposing' users to a certain UI effects an outcome, like whether they purchase a product.")` Here, I am simulating two variables, $x_1$ and $x_2$. These are my _pre-treatment characteristics_ (we'll define that soon!). I am then using these to create a binary `treatment` variable. This `treatment` variable depends on `x_1` and `x_2`. Finally, I have generated an `outcome` variable dependent on the `treatment`, making the treatment effect equal to 2.
 
 
 ```{r, message = FALSE, warning = FALSE}
@@ -47,7 +47,7 @@ dat <- dat %>%
   )
 ```
 
-Notice here I fit a logistic regression, predicting the `treatment` from the pre-treatment characteristics, `x_1` and `x_2` using the `glm()` function along with the `family = "binomial"` option. I then used the `predict()` function along with `type = "response"` to obtain the conditional probabilities of treatment assignemnt.
+Notice here I fit a logistic regression, predicting the `treatment` from the pre-treatment characteristics, `x_1` and `x_2` using the `glm()` function along with the `family = "binomial"` option. I then used the `predict()` function along with `type = "response"` to obtain the conditional probabilities of treatment assignment.
 
 ## What are we trying to estimate?
 
@@ -72,7 +72,7 @@ The Average Treatment Effect Among the Controls (ATC) estimates the treatment ef
 
 ### Average Treatment Effect Among the Evenly Matchable
 
-The Average Treatment Effect Among the Evently Matchable (ATM) estimates the treatment effect with a _matched_ population as the target population. The estimated population is nearly equivalent to the cohort formed by one-to-one pair matching. 
+The Average Treatment Effect Among the Evenly Matchable (ATM) estimates the treatment effect with a _matched_ population as the target population. The estimated population is nearly equivalent to the cohort formed by one-to-one pair matching. 
 
 ### Average Treatment Effect Among the Overlap Population
 
@@ -82,7 +82,7 @@ The Average Treatment Effect Among the Overlap Population (ATO) estimates the tr
 
 Each of these causal quantities has a weight associated with it. Brace yourself for a little bit of math (but I'll include R code immediate after so hopefully it won't be too bad!).
 
-The propensity score for participant $i$ is defined here as $e_i$ and the treatment assignment is $Z_i$, where $Z = 1$ indicates the participant recieved the treatment and $Z = 0$ indicates they received the control.
+The propensity score for participant $i$ is defined here as $e_i$ and the treatment assignment is $Z_i$, where $Z = 1$ indicates the participant received the treatment and $Z = 0$ indicates they received the control.
 
 $w_{ATE} = \frac{Z_i}{e_i} + \frac{1 - Z_i}{1 - e_i}$  
 $w_{ATT} = \frac{e_iZ_i}{e_i} + \frac{e_i(1-Z_i)}{1-e_i}$  
@@ -110,7 +110,7 @@ dat <- dat %>%
 
 Let's look at some graphs to better understand what these weights are doing. `r tufte::margin_note("I first saw these _mirrored histograms_ in this context in a paper by [Li & Greene](https://www.ncbi.nlm.nih.gov/pubmed/23902694) and **loved** them!")`
 
-First, I am going to just plot a histogram of the propensity scores for the two populations, those who received treatment (`treatment = 1`), and those who recieved the control (`treatment = 0`). The histogram above the 0 line is the distribution of propensity scores among the treated. The histogram below the 0 line is the distribution of propensity scores among the controls. 
+First, I am going to just plot a histogram of the propensity scores for the two populations, those who received treatment (`treatment = 1`), and those who received the control (`treatment = 0`). The histogram above the 0 line is the distribution of propensity scores among the treated. The histogram below the 0 line is the distribution of propensity scores among the controls. 
 
 ```{r, warning = FALSE, message = FALSE}
 d <- dat %>%
@@ -126,9 +126,9 @@ ggplot(d) +
 
 ```
 
-Examining this, we can see in this simulated sample, more patients recieved the treatment than the control. We can also see that among those who received the treatment, propensity scores tend to be higher (we can see this based on the skew of the histogram, with more mass towards the right where the propensity scores are closer to 1). This makes sense, since the propensity score is the probability of receiving treatment, those who recieved it probably had a higher probability of doing so.
+Examining this, we can see in this simulated sample, more patients received the treatment than the control. We can also see that among those who received the treatment, propensity scores tend to be higher (we can see this based on the skew of the histogram, with more mass towards the right where the propensity scores are closer to 1). This makes sense, since the propensity score is the probability of receiving treatment, those who received it probably had a higher probability of doing so.
 
-Now, for each weight I am going to overlay the pseudo-population that is created via weighting. The "pseudo-population" for the treated group is in green and the "psuedo-population" for the control group is in blue.
+Now, for each weight I am going to overlay the pseudo-population that is created via weighting. The "pseudo-population" for the treated group is in green and the "pseudo-population" for the control group is in blue.
 
 
 ### ATE
