@@ -33,7 +33,7 @@ dat
 
 ## What are propensity scores good for?
 
-A lot of my research is in the _observational study_ space. This basically mean that participants in the study were not randomly assigned treatments or exposures, but rather we just _observe_ how a certain exposure affects an outcome. For example, in one of the studies I worked on, we were interested in whether a certain diabetes drug was associated with heart disease. Instead of randomly assigning some patients to take diabetes drug A and some to take a diabetes drug B, we evaluated the electronic health records of patients who were already taking the drugs and assessed their health after. There are some issues with this analysis - since we didn't randomly assign patients to drug A and drug B, it is possible that doctors selected one drug over the other for certain reasons that reflect patient characteristics. For example, perhaps healthier patients are often prescribed drug A -- this could make it look like those who take drug B are more likely to have heart disease simply based on their _pre-treatment characteristics_. Propensity scores help to adjust for these pre-treatment characteristics.
+A lot of my research is in the _observational study_ space. This basically mean that participants in the study were not randomly assigned treatments or exposures, but rather we just _observe_ how a certain exposure affects an outcome. For example, in [one of the studies I worked on](https://www.lucymcgowan.com/publication/roumie2017comparative/), we were interested in whether a certain diabetes drug was associated with heart disease. Instead of randomly assigning some patients to take diabetes drug A and some to take a diabetes drug B, we evaluated the electronic health records of patients who were already taking the drugs and assessed their health after. There are some issues with this analysis - since we didn't randomly assign patients to drug A and drug B, it is possible that doctors selected one drug over the other for certain reasons that reflect patient characteristics. For example, perhaps healthier patients are often prescribed drug A -- this could make it look like those who take drug B are more likely to have heart disease simply based on their _pre-treatment characteristics_. Propensity scores help to adjust for these pre-treatment characteristics.
 
 ## What is a propensity score?
 
@@ -73,6 +73,8 @@ The Average Treatment Effect Among the Controls (ATC) estimates the treatment ef
 ### Average Treatment Effect Among the Evenly Matchable
 
 The Average Treatment Effect Among the Evenly Matchable (ATM) estimates the treatment effect with a _matched_ population as the target population. The estimated population is nearly equivalent to the cohort formed by one-to-one pair matching. 
+
+`r tufte::margin_note("My [dissertation](https://www.lucymcgowan.com/publication/mcgowan2018/) explores some nice properties of ATM and ATO weights if you are interested in a deeper dive!")`
 
 ### Average Treatment Effect Among the Overlap Population
 
