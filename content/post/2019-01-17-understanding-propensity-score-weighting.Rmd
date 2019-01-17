@@ -5,6 +5,7 @@ date: '2019-01-17'
 slug: understanding-propensity-score-weighting
 categories: ["propensity scores", "causal inference"]
 tags: ["propensity scores", "causal inference"]
+excerpt: "Come enjoy a graphical exploration of various propensity score weighting schemes."
 ---
 
 ## Let's create a toy dataset
