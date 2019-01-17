@@ -1,0 +1,208 @@
+---
+title: Understanding propensity score weighting
+author: Lucy D'Agostino McGowan
+date: '2019-01-17'
+slug: understanding-propensity-score-weighting
+categories: ["propensity scores", "causal inference"]
+tags: ["propensity scores", "causal inference"]
+---
+
+
+
+<div id="lets-create-a-toy-dataset" class="section level2">
+<h2>Let’s create a toy dataset</h2>
+<p>For this post, I’m going to use this generated dataset as an example. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Here I am using the terminology ‘treatment’ for consistency, but these methods are not confined to the medical setting. You can also think of this as an ‘exposure’. For example, you could be interested in how ‘exposing’ users to a certain UI effects an outcome, like whether they purchase a product.</span> Here, I am simulating two variables, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. These are my <em>pre-treatment characteristics</em> (we’ll define that soon!). I am then using these to create a binary <code>treatment</code> variable. This <code>treatment</code> variable depends on <code>x_1</code> and <code>x_2</code>. Finally, I have genrated an <code>outcome</code> variable dependent on the <code>treatment</code>, making the treatment effect equal to 2.</p>
+<pre class="r"><code>library(tidyverse)
+set.seed(928)
+n &lt;- 1000
+X &lt;- mvtnorm::rmvnorm(n,
+                      mean = c(0.5, 1),
+                      sigma = matrix(c(2, 1, 1, 1), ncol = 2)
+)
+
+dat &lt;- tibble(
+  x_1 = X[, 1],
+  x_2 = X[, 2],
+  treatment = as.numeric(- 0.5 + 0.25 * x_1 + 0.75 * x_2 + rnorm(n, 0, 1) &gt; 0),
+  outcome = 2 * treatment + rnorm(n, 0, 1)
+)
+dat</code></pre>
+<pre><code>## # A tibble: 1,000 x 4
+##       x_1    x_2 treatment outcome
+##     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1 -0.554  1.57          1  2.65  
+##  2 -0.154  0.949         0  0.0561
+##  3  0.138  2.42          1  1.83  
+##  4  0.668  1.36          0 -0.845 
+##  5  3.11   2.76          1  1.46  
+##  6 -0.151  0.683         0 -0.0211
+##  7  1.01  -0.414         0  0.317 
+##  8 -0.114  0.856         1  3.35  
+##  9  2.66   1.23          1  2.41  
+## 10  2.96   2.53          1  2.73  
+## # ... with 990 more rows</code></pre>
+</div>
+<div id="what-are-propensity-scores-good-for" class="section level2">
+<h2>What are propensity scores good for?</h2>
+<p>A lot of my research is in the <em>observational study</em> space. This basically mean that participants in the study were not randomly assigned treatments or exposures, but rather we just <em>observe</em> how a certain exposure affects an outcome. For example, in one of the studies I worked on, we were interested in whether a certain diabetes drug was associated with heart disease. Instead of randomly assigning some patients to take diabetes drug A and some to take a diabetes drug B, we evaluated the electronic health records of patients who were already taking the drugs and assessed their health after. There are some issues with this analysis - since we didn’t randomly assign patients to drug A and drug B, it is possible that doctors selected one drug over the other for certain reasons that reflect patient characteristics. For example, perhaps healthier patients are often prescribed drug A – this could make it look like those who take drug B are more likely to have heart disease simply based on their <em>pre-treatment characteristics</em>. Propensity scores help to adjust for these pre-treatment characteristics.</p>
+</div>
+<div id="what-is-a-propensity-score" class="section level2">
+<h2>What is a propensity score?</h2>
+<p>A propensity score is the probability of being assigned to a certain treatment, conditional on pre-treatment (or baseline) characteristics. This can be estimated in different ways, but most commonly it is estimated using <em>logistic regression</em>. Using the simulated dataset from above, we can do this in R with the following code:</p>
+<pre class="r"><code>dat &lt;- dat %&gt;%
+  mutate(
+    propensity_score = glm(treatment ~ x_1 + x_2, data = dat, family = &quot;binomial&quot;) %&gt;%
+      predict(type = &quot;response&quot;)
+  )</code></pre>
+<p>Notice here I fit a logistic regression, predicting the <code>treatment</code> from the pre-treatment characteristics, <code>x_1</code> and <code>x_2</code> using the <code>glm()</code> function along with the <code>family = &quot;binomial&quot;</code> option. I then used the <code>predict()</code> function along with <code>type = &quot;response&quot;</code> to obtain the conditional probabilities of treatment assignemnt.</p>
+</div>
+<div id="what-are-we-trying-to-estimate" class="section level2">
+<h2>What are we trying to estimate?</h2>
+<p>The point of the propensity score is to allow you to estimate the <em>treatment</em> or <em>exposure</em> effect in an unbiased way. This works based on a few assumptions:</p>
+<ul>
+<li>You have measured all of the necessary <em>pre-treatment characteristics</em> - this is sometimes known as “no unmeasured confounding”</li>
+<li>All participants have a non-zero probability of receiving either exposure / treatment</li>
+</ul>
+<p>Ultimately, we are interested in some estimate of the treatment effect, for example we may want to know what the average treatment effect is across all participants, or we may want to know what the average treatment effect is among participants who received the treatment. I’ll describe a few different <em>causal quantities</em> of interest.</p>
+<div id="average-treatment-effect" class="section level3">
+<h3>Average Treatment Effect</h3>
+<p>The Average Treatment Effect (ATE) is generally the quantity estimated when running a <em>randomized</em> study. The target population is the whole population, both treated and controlled. While this is often declared as the population of interest, it is not always the medically or scientifically appropriate population. This is because estimating the ATE assumes that every participant can be switched from their current treatment to the opposite, which doesn’t always make sense. For example, it may not be medically appropriate for every participant who didn’t receive a treatment to receive it.</p>
+</div>
+<div id="average-treatment-effect-among-the-treated" class="section level3">
+<h3>Average Treatment Effect Among the Treated</h3>
+<p>The Average Treatment Effect Among the Treated (ATT) estimates the treatment effect with the <em>treated</em> population as the target population.</p>
+</div>
+<div id="average-treatment-effect-among-the-controls" class="section level3">
+<h3>Average Treatment Effect Among the Controls</h3>
+<p>The Average Treatment Effect Among the Controls (ATC) estimates the treatment effect with the <em>controlled</em> population as the target population.</p>
+</div>
+<div id="average-treatment-effect-among-the-evenly-matchable" class="section level3">
+<h3>Average Treatment Effect Among the Evenly Matchable</h3>
+<p>The Average Treatment Effect Among the Evently Matchable (ATM) estimates the treatment effect with a <em>matched</em> population as the target population. The estimated population is nearly equivalent to the cohort formed by one-to-one pair matching.</p>
+</div>
+<div id="average-treatment-effect-among-the-overlap-population" class="section level3">
+<h3>Average Treatment Effect Among the Overlap Population</h3>
+<p>The Average Treatment Effect Among the Overlap Population (ATO) estimates the treatment effect very similar to the ATM, with some improved variance properties. Basically, if you estimated the probability of receiving treatment, the “overlap” population would consist of participants who fall in the middle - you’re estimating the treatment effect among those likely to have received either treatment or control. I’ll include some graphs in the following sections to help better understand this causal quantity.</p>
+</div>
+</div>
+<div id="how-do-we-incorporate-a-propensity-score-in-a-weight" class="section level2">
+<h2>How do we incorporate a propensity score in a weight?</h2>
+<p>Each of these causal quantities has a weight associated with it. Brace yourself for a little bit of math (but I’ll include R code immediate after so hopefully it won’t be too bad!).</p>
+<p>The propensity score for participant <span class="math inline">\(i\)</span> is defined here as <span class="math inline">\(e_i\)</span> and the treatment assignment is <span class="math inline">\(Z_i\)</span>, where <span class="math inline">\(Z = 1\)</span> indicates the participant recieved the treatment and <span class="math inline">\(Z = 0\)</span> indicates they received the control.</p>
+<p><span class="math inline">\(w_{ATE} = \frac{Z_i}{e_i} + \frac{1 - Z_i}{1 - e_i}\)</span><br />
+<span class="math inline">\(w_{ATT} = \frac{e_iZ_i}{e_i} + \frac{e_i(1-Z_i)}{1-e_i}\)</span><br />
+<span class="math inline">\(w_{ATC} = \frac{(1-e_i)Z_i}{e_i} + \frac{(1-e_i) (1-Z_i)}{1 - e_i}\)</span><br />
+<span class="math inline">\(w_{ATM} = \frac{\min\{e_i, 1-e_i\}}{Z_ie_i + (1- Z_i)(1-e_i)}\)</span><br />
+<span class="math inline">\(w_{AT0} = (1-e_i)Z_i + e_i(1-Z_i)\)</span></p>
+<p><em>Phew</em>, okay let’s get this coded up!</p>
+<pre class="r"><code>dat &lt;- dat %&gt;%
+  mutate(
+    w_ate = (treatment / propensity_score) + 
+      ((1 - treatment) / (1 - propensity_score)),
+    w_att = ((propensity_score * treatment) / propensity_score) + 
+      ((propensity_score * (1 - treatment)) / (1 - propensity_score)),
+    w_atc = (((1 - propensity_score) * treatment) / propensity_score) + 
+      (((1 - propensity_score) * (1 - treatment)) / (1 - propensity_score)),
+    w_atm = pmin(propensity_score, 1 - propensity_score) / 
+      (treatment * propensity_score + (1 - treatment) * (1 - propensity_score)),
+    w_ato = (1 - propensity_score) * treatment + 
+      propensity_score * (1 - treatment)
+  )</code></pre>
+<p>Let’s look at some graphs to better understand what these weights are doing. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I first saw these <em>mirrored histograms</em> in this context in a paper by <a href="https://www.ncbi.nlm.nih.gov/pubmed/23902694">Li &amp; Greene</a> and <strong>loved</strong> them!</span></p>
+<p>First, I am going to just plot a histogram of the propensity scores for the two populations, those who received treatment (<code>treatment = 1</code>), and those who recieved the control (<code>treatment = 0</code>). The histogram above the 0 line is the distribution of propensity scores among the treated. The histogram below the 0 line is the distribution of propensity scores among the controls.</p>
+<pre class="r"><code>d &lt;- dat %&gt;%
+  tidyr::spread(treatment, propensity_score, sep = &quot;_p&quot;)
+
+ggplot(d) + 
+  geom_histogram(bins = 50, aes(treatment_p1)) + 
+  geom_histogram(bins = 50, aes(x = treatment_p0, y = -..count..)) + 
+  ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
+  geom_hline(yintercept = 0, lwd = 0.5) +
+  scale_y_continuous(labels = c(20, 0, 20, 40, 60), 
+                     breaks= c(-20, 0, 20, 40, 60)) </code></pre>
+<p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Examining this, we can see in this simulated sample, more patients recieved the treatment than the control. We can also see that among those who received the treatment, propensity scores tend to be higher (we can see this based on the skew of the histogram, with more mass towards the right where the propensity scores are closer to 1). This makes sense, since the propensity score is the probability of receiving treatment, those who recieved it probably had a higher probability of doing so.</p>
+<p>Now, for each weight I am going to overlay the pseudo-population that is created via weighting. The “pseudo-population” for the treated group is in green and the “psuedo-population” for the control group is in blue.</p>
+<div id="ate" class="section level3">
+<h3>ATE</h3>
+<pre class="r"><code>ggplot(d) +
+  geom_histogram(bins = 50, aes(treatment_p1), alpha = 0.5) + 
+  geom_histogram(bins = 50, aes(treatment_p1, weight = w_ate), fill = &quot;green&quot;, alpha = 0.5) + 
+  geom_histogram(bins = 50, alpha = 0.5, aes(x = treatment_p0, y = -..count..)) + 
+  geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_ate, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
+  ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
+  geom_hline(yintercept = 0, lwd = 0.5) +
+  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
+                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+<p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="att" class="section level3">
+<h3>ATT</h3>
+<pre class="r"><code>ggplot(d) +
+  geom_histogram(bins = 50, aes(treatment_p1), alpha = 0.5) + 
+  geom_histogram(bins = 50, aes(treatment_p1, weight = w_att), fill = &quot;green&quot;, alpha = 0.5) + 
+  geom_histogram(bins = 50, alpha = 0.5, aes(x = treatment_p0, y = -..count..)) + 
+  geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_att, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
+  ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
+  geom_hline(yintercept = 0, lwd = 0.5) +
+  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
+                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+<p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Notice here, the “pseudo-population” for the treatment group is exactly the same as the actual population. For the ATT, we take the treatment population as it is and try to weight the control population to match it.</p>
+</div>
+<div id="atc" class="section level3">
+<h3>ATC</h3>
+<pre class="r"><code>ggplot(d) +
+  geom_histogram(bins = 50, aes(treatment_p1), alpha = 0.5) + 
+  geom_histogram(bins = 50, aes(treatment_p1, weight = w_atc), fill = &quot;green&quot;, alpha = 0.5) + 
+  geom_histogram(bins = 50, alpha = 0.5, aes(x = treatment_p0, y = -..count..)) + 
+  geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_atc, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
+  ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
+  geom_hline(yintercept = 0, lwd = 0.5) +
+  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
+                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+<p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Notice now this is the opposite of the previous graph. Now the target population is the control group, so this “pseudo-population” exactly matches the population of controls and the treatment group is weighted to try to mimic this.</p>
+</div>
+<div id="atm" class="section level3">
+<h3>ATM</h3>
+<pre class="r"><code>ggplot(d) +
+  geom_histogram(bins = 50, aes(treatment_p1), alpha = 0.5) + 
+  geom_histogram(bins = 50, aes(treatment_p1, weight = w_atm), fill = &quot;green&quot;, alpha = 0.5) + 
+  geom_histogram(bins = 50, alpha = 0.5, aes(x = treatment_p0, y = -..count..)) + 
+  geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_atm, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
+  ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
+  geom_hline(yintercept = 0, lwd = 0.5) +
+  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
+                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+<p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>This “pseudo-population” looks like a 1:1 matched population. In the regions where the treatment group is in the minority, on the left side of the graph, the controls are weighted to match the distribution of the treated. In the regions where the control group is in the minority, on the right side of the graph, the treated are weighted to match the distribution of the controls.</p>
+</div>
+<div id="ato" class="section level3">
+<h3>ATO</h3>
+<pre class="r"><code>ggplot(d) +
+  geom_histogram(bins = 50, aes(treatment_p1), alpha = 0.5) + 
+  geom_histogram(bins = 50, aes(treatment_p1, weight = w_ato), fill = &quot;green&quot;, alpha = 0.5) + 
+  geom_histogram(bins = 50, alpha = 0.5, aes(x = treatment_p0, y = -..count..)) + 
+  geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_ato, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
+  ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
+  geom_hline(yintercept = 0, lwd = 0.5) +
+  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
+                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+<p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>This looks a lot like the ATM graph, except shifted just a bit to improve the variance properties.</p>
+</div>
+</div>
+<div id="estimating-the-treatment-effect" class="section level2">
+<h2>Estimating the treatment effect</h2>
+<p>Now that we have a bit of an understanding of what these weights do, we can estimated the treatment effect in each of these “pseudo-populations”. Mathematically, we can write this as follows, with the outcome for each individual defined as <span class="math inline">\(Y_i\)</span>, the treatment <span class="math inline">\(Z_i\)</span> and the weight <span class="math inline">\(w_i\)</span>.</p>
+<p><span class="math inline">\(\frac{\sum{Y_i Z_i w_i}}{\sum{Y_i w_i}} + \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}\)</span></p>
+<p>In R, we can make a function to do this.</p>
+<pre class="r"><code>treatment_effect &lt;- function(treatment, outcome, weight) {
+  (sum(treatment * outcome * weight) / sum(treatment * weight)) + (sum((1 - treatment) * outcome * weight) / sum((1 - treatment) * weight))
+}</code></pre>
+<p>For example, to calculate the ATO for this population, we can do the following.</p>
+<pre class="r"><code>treatment_effect(dat$treatment, dat$outcome, dat$w_ato)</code></pre>
+<pre><code>## [1] 2.046207</code></pre>
+<p>And we did it! Hopefully this helped to elucidate what is going on with propensity score weighting - please let me know if there are any parts that can be clarified!</p>
+</div>
