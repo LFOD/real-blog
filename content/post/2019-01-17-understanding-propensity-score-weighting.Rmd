@@ -214,7 +214,7 @@ This looks a lot like the ATM graph, except shifted just a bit to improve the va
 
 ## Estimating the treatment effect
 
-Now that we have a bit of an understanding of what these weights do, we can estimated the treatment effect in each of these "pseudo-populations". Mathematically, we can write this as follows, with the outcome for each individual defined as $Y_i$, the treatment $Z_i$ and the weight $w_i$.
+Now that we have a bit of an understanding of what these weights do, we can estimate the treatment effect in each of these "pseudo-populations". Mathematically, we can write this as follows, with the outcome for each individual defined as $Y_i$, the treatment $Z_i$ and the weight $w_i$.
 
 $\frac{\sum{Y_i Z_i w_i}}{\sum{Y_i w_i}} + \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}$
 
@@ -225,7 +225,7 @@ treatment_effect <- function(treatment, outcome, weight) {
 }
 ```
 
-For example, to calculate the ATO for this population, we can do the following.
+For example, to estimate the ATO for this population, we can do the following.
 
 ```{r}
 treatment_effect(dat$treatment, dat$outcome, dat$w_ato)
