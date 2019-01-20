@@ -123,8 +123,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, y = -..count..)) + 
   ylab("count") + xlab("p") +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(20, 0, 20, 40, 60), 
-                     breaks= c(-20, 0, 20, 40, 60)) 
+  scale_y_continuous(label = abs) 
 
 ```
 
@@ -143,8 +142,8 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_ate, y = -..count..), fill = "blue", alpha = 0.5) + 
   ylab("count") + xlab("p") +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))
+  scale_y_continuous(label = abs) 
+
 ```
 
 
@@ -158,8 +157,8 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_att, y = -..count..), fill = "blue", alpha = 0.5) + 
   ylab("count") + xlab("p") +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))
+  scale_y_continuous(label = abs) 
+
 ```
 
 Notice here, the "pseudo-population" for the treatment group is exactly the same as the actual population. For the ATT, we take the treatment population as it is and try to weight the control population to match it.
@@ -174,8 +173,8 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_atc, y = -..count..), fill = "blue", alpha = 0.5) + 
   ylab("count") + xlab("p") +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))
+  scale_y_continuous(label = abs) 
+
 ```
 
 Notice now this is the opposite of the previous graph. Now the target population is the control group, so this "pseudo-population" exactly matches the population of controls and the treatment group is weighted to try to mimic this.
@@ -190,8 +189,8 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_atm, y = -..count..), fill = "blue", alpha = 0.5) + 
   ylab("count") + xlab("p") +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))
+  scale_y_continuous(label = abs) 
+
 ```
 
 This "pseudo-population" looks like a 1:1 matched population. In the regions where the treatment group is in the minority, on the left side of the graph, the controls are weighted to match the distribution of the treated. In the regions where the control group is in the minority, on the right side of the graph, the treated are weighted to match the distribution of the controls. 
@@ -206,8 +205,8 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_ato, y = -..count..), fill = "blue", alpha = 0.5) + 
   ylab("count") + xlab("p") +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))
+  scale_y_continuous(label = abs) 
+
 ```
 
 This looks a lot like the ATM graph, except shifted just a bit to improve the variance properties. 

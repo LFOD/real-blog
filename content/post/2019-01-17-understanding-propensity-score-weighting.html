@@ -120,8 +120,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, y = -..count..)) + 
   ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(20, 0, 20, 40, 60), 
-                     breaks= c(-20, 0, 20, 40, 60)) </code></pre>
+  scale_y_continuous(label = abs) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Examining this, we can see in this simulated sample, more patients received the treatment than the control. We can also see that among those who received the treatment, propensity scores tend to be higher (we can see this based on the skew of the histogram, with more mass towards the right where the propensity scores are closer to 1). This makes sense, since the propensity score is the probability of receiving treatment, those who received it probably had a higher probability of doing so.</p>
 <p>Now, for each weight I am going to overlay the pseudo-population that is created via weighting. The “pseudo-population” for the treated group is in green and the “pseudo-population” for the control group is in blue.</p>
@@ -134,8 +133,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_ate, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
   ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+  scale_y_continuous(label = abs) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="att" class="section level3">
@@ -147,8 +145,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_att, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
   ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+  scale_y_continuous(label = abs) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Notice here, the “pseudo-population” for the treatment group is exactly the same as the actual population. For the ATT, we take the treatment population as it is and try to weight the control population to match it.</p>
 </div>
@@ -161,8 +158,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_atc, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
   ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+  scale_y_continuous(label = abs) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Notice now this is the opposite of the previous graph. Now the target population is the control group, so this “pseudo-population” exactly matches the population of controls and the treatment group is weighted to try to mimic this.</p>
 </div>
@@ -175,8 +171,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_atm, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
   ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+  scale_y_continuous(label = abs) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>This “pseudo-population” looks like a 1:1 matched population. In the regions where the treatment group is in the minority, on the left side of the graph, the controls are weighted to match the distribution of the treated. In the regions where the control group is in the minority, on the right side of the graph, the treated are weighted to match the distribution of the controls.</p>
 </div>
@@ -189,8 +184,7 @@ ggplot(d) +
   geom_histogram(bins = 50, aes(x = treatment_p0, weight = w_ato, y = -..count..), fill = &quot;blue&quot;, alpha = 0.5) + 
   ylab(&quot;count&quot;) + xlab(&quot;p&quot;) +
   geom_hline(yintercept = 0, lwd = 0.5) +
-  scale_y_continuous(labels = c(60, 40, 20, 0, 20, 40, 60), 
-                     breaks= c(-60, -40, -20, 0, 20, 40, 60))</code></pre>
+  scale_y_continuous(label = abs) </code></pre>
 <p><img src="/post/2019-01-17-understanding-propensity-score-weighting_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>This looks a lot like the ATM graph, except shifted just a bit to improve the variance properties.</p>
 </div>
