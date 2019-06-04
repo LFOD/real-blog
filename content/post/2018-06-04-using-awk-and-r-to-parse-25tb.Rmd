@@ -5,7 +5,7 @@ date: '2019-06-04'
 slug: using_awk_and_R_to_parse_25tb
 categories: ["big data", "awk", "data cleaning"]
 tags:  ["big data", "awk", "data cleaning"]
-excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. Here's the story of how I brought the query time and cost down from 8mins and $20 to 0.1sec and less than a penny."
+excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. This is the story of how I brought the query time and cost down from 8 mins and $20 to 0.1sec and less than a penny."
 ---
 
 
@@ -22,7 +22,7 @@ excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. Here's t
 }
 </style>
 
-__How to read this post:__ I sincerely appologize for how long and wrambling the following text is. To speed up skimming of it for those who have better things to do with their time I have started most sections with a ["Lesson learned"]{.lesson_learned} blurb that boils down the takeaway from the following text into a sentence or two. 
+__How to read this post:__ I sincerely appologize for how long and rambling the following text is. To speed up skimming of it for those who have better things to do with their time I have started most sections with a ["Lesson learned"]{.lesson_learned} blurb that boils down the takeaway from the following text into a sentence or two. 
 
 __Just show me the sollution!__ If you just want to see how I ended up solving the task jump to the section "_Getting Creative_", but I honestly think the failures are more interesting/valuable. 
 
@@ -39,7 +39,7 @@ The data was delivered to us by our university's genetics processing center as 2
 
 
 ## The Goal
-As with any data management project the most important thing is to consider _how_ the data will be used. In this case what we will mostly be doing is fitting models and workflows on a SNP by SNP basis. I.e. we only will need a single SNP's data at a time. I needed to make it as easy, fast, and cheap as possible to extract all the records pertaining to one of the 2.5 million SNPs.
+As with any data management project the most important thing is to consider _how_ the data will be used. In this case what __we will mostly be doing is fitting models and workflows on a SNP by SNP basis.__ I.e. we only will need a single SNP's data at a time. I needed to make it as easy, fast, and cheap as possible to extract all the records pertaining to one of the 2.5 million SNPs.
 
 # How _not_ to do this
 To appropriate a cliched quote: 
@@ -53,7 +53,7 @@ To appropriate a cliched quote:
 
 Having taken a class at Vanderbilt titled 'Advanced methods in Big Data' I was sure I had this in the bag. `r tufte::margin_note("Capital B capital D Big Data, so you know it's serious.")`It would be maybe an hour or two of me setting up a Hive server to run over all our data and then calling it good.  Since our data is stored on AWS S3 I used a service called [Athena](https://aws.amazon.com/athena/) which allows you to run Hive SQL queries on your S3 data. Not only do you get to avoid setting/ spinning up a Spark cluster, you only pay for the data searched. 
 
-After pointing athena to my data and it's format I ran a few tests with queries like 
+After pointing Athena to my data and its format I ran a few tests with queries like 
 ```sql
 select * from intensityData limit 10;
 ```
@@ -70,14 +70,14 @@ where snp = 'rs123456';
 ```
 
 
-... and I waited. Eight minutes later and 4+ terabytes of data queried later I had my results. Unfortunately, Athena charges you by data searched at the reasonable rate of \$5 per TB. So this single query cost \$20 and eight minutes.  `r tufte::margin_note("If we ever wanted to run a model over all the data we better be ready to wait roughly 38 years and pay $50 million.")` Clearly this wasn't going to work. 
+... and I waited. Eight minutes and 4+ terabytes of data queried later I had my results. Unfortunately, Athena charges you by data searched at the reasonable rate of \$5 per TB. So this single query cost \$20 and eight minutes.  `r tufte::margin_note("If we ever wanted to run a model over all the data we better be ready to wait roughly 38 years and pay $50 million.")` Clearly this wasn't going to work. 
 
 
 
 ## This should be a walk in the parquet...
 
 
-[__Lesson Learned:__ Be careful with your parquet file sizes.]{.lesson_learned}
+[__Lesson Learned:__ Be careful with your parquet file sizes and organization.]{.lesson_learned}
 
 My first attempt to remedy the situation was to convert all of the TSV's to [parquet files](https://parquet.apache.org). Parquet files are good for working with larger datasets because they store data in a 'columnar' fashion. Meaning each column is stored in its own section of memory/disk, rather than a text file with lines containing every column. This means to look for something you only have to read the neccesary column. Also,they keep a record of the range of values by column for each file so if the value you're looking for isn't in the column range Spark doesn't waste it's time scanning through the file. 
 
