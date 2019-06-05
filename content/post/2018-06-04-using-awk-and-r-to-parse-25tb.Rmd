@@ -1,5 +1,5 @@
 ---
-title: "Using AWK and R to parse 25TB"
+title: "Using AWK and R to parse 25tb"
 author: Nick Strayer
 date: '2019-06-04'
 slug: using_awk_and_R_to_parse_25tb
@@ -13,6 +13,7 @@ excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. This is 
 .lesson_learned {
   color: #238443;
 }
+
 .lesson_learned strong {
   color: #005a32;
 }
@@ -22,17 +23,17 @@ excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. This is 
 }
 </style>
 
-__How to read this post:__ I sincerely appologize for how long and rambling the following text is. To speed up skimming of it for those who have better things to do with their time I have started most sections with a ["Lesson learned"]{.lesson_learned} blurb that boils down the takeaway from the following text into a sentence or two. 
+__How to read this post:__ I sincerely apologize for how long and rambling the following text is. To speed up skimming of it for those who have better things to do with their time, I have started most sections with a ["Lesson learned"]{.lesson_learned} blurb that boils down the takeaway from the following text into a sentence or two. 
 
-__Just show me the sollution!__ If you just want to see how I ended up solving the task jump to the section <a href='#getting-more-creative'>Getting More Creative</a>, but I honestly think the failures are more interesting/valuable. 
+__Just show me the solution!__ If you just want to see how I ended up solving the task jump to the section <a href='#getting-more-creative'>Getting More Creative</a>, but I honestly think the failures are more interesting/valuable. 
 
 ## Intro
-Recently I was put in charge of setting up a workflow for dealing with a large amount of raw DNA sequencing (well technically a SNP chip) data for my lab.  The goal was to be able to quickly get data for a given genetic location (called a SNP) for use for modeling etc. I managed to get a workflow setup involving vanilla R and AWK that has allowed us to speedup the querying from the original SPARK workflow by a large factor. It certainly wasn't easy and it took lots of iterations. This post is meant to help others avoid some of the same mistakes and show what did eventually work. 
+Recently I was put in charge of setting up a workflow for dealing with a large amount of raw DNA sequencing (well technically a SNP chip) data for my lab.  The goal was to be able to quickly get data for a given genetic location (called a SNP) for use for modeling etc. Using vanilla R and AWK I was able to cleanup and organize the data in a natural way, massively speeding up the querying. It certainly wasn't easy and it took lots of iterations. This post is meant to help others avoid some of the same mistakes and show what did eventually work. 
 
 First some background:
 
 ## The Data
-The data was delivered to us by our university's genetics processing center as 25 TB of tsvs. Before handing it off to me my advisor split and gzipped these files into five batches each composed of roughly 240 four gigabyte files. Each row contained a data for a single SNP for a single person. `r tufte::margin_note("There were ~2.5 million SNPS and ~60 thousand people")` Along with the SNP value there were multiple numeric columns on things like intensity of the reading, frequency of different alleles etc. All told there were around 30 columns with frustratingly unique values. 
+The data was delivered to us by our university's genetics processing center as 25 TB of tsvs. Before handing it off to me, my advisor split and gzipped these files into five batches each composed of roughly 240 four gigabyte files. Each row contained a data for a single SNP for a single person. `r tufte::margin_note("There were ~2.5 million SNPS and ~60 thousand people")` Along with the SNP value there were multiple numeric columns on things like intensity of the reading, frequency of different alleles etc. All told there were around 30 columns with frustratingly unique values. 
 
 `r tufte::margin_note("<img src='https://www.researchgate.net/profile/Debi_Mishra4/publication/320298591/figure/fig5/AS:547880880820228@1507636389471/DNA-chips-to-analyze-single-nucleotide-polymorphisms-SNPs-A-DNA-chip-is-repaired-by.png' alt='DNA chips explainer' width=200px/> How a SNP Chip works. <a href='https://www.researchgate.net/figure/DNA-chips-to-analyze-single-nucleotide-polymorphisms-SNPs-A-DNA-chip-is-repaired-by_fig5_320298591'>Via Research Gate</a>")`
 
@@ -44,17 +45,17 @@ As with any data management project the most important thing is to consider _how
 # How _not_ to do this
 To appropriate a cliched quote: 
 
-> I didn't fail a thousand times, I just discovered a thousand ways _not_ to parse lots of data into an easily queryable format. 
+> I didn't fail a thousand times, I just discovered a thousand ways _not_ to parse lots of data into an easily query-able format. 
 
 ## The first attempt
 
 
 [__Lesson Learned:__ There's no cheap way to parse 25tb of data at once.]{.lesson_learned}
 
-Having taken a class at Vanderbilt titled 'Advanced methods in Big Data' I was sure I had this in the bag. `r tufte::margin_note("Capital B capital D Big Data, so you know it's serious.")`It would be maybe an hour or two of me setting up a Hive server to run over all our data and then calling it good.  Since our data is stored on AWS S3 I used a service called [Athena](https://aws.amazon.com/athena/) which allows you to run Hive SQL queries on your S3 data. Not only do you get to avoid setting/ spinning up a Spark cluster, you only pay for the data searched. 
+Having taken a class at Vanderbilt titled 'Advanced methods in Big Data' I was sure I had this in the bag. `r tufte::margin_note("Capital B capital D Big Data, so you know it's serious.")`It would be maybe an hour or two of me setting up a Hive server to run over all our data and then calling it good.  Since our data is stored on AWS S3 I used a service called [Athena](https://aws.amazon.com/athena/) which allows you to run Hive SQL queries on your S3 data. Not only do you get to avoid setting/ spinning up a Hive cluster, you only pay for the data searched. 
 
 After pointing Athena to my data and its format I ran a few tests with queries like 
-```sql
+```{sql, eval = FALSE}
 select * from intensityData limit 10;
 ```
 
@@ -70,18 +71,20 @@ where snp = 'rs123456';
 ```
 
 
-... and I waited. Eight minutes and 4+ terabytes of data queried later I had my results. Unfortunately, Athena charges you by data searched at the reasonable rate of \$5 per TB. So this single query cost \$20 and eight minutes.  `r tufte::margin_note("If we ever wanted to run a model over all the data we better be ready to wait roughly 38 years and pay $50 million.")` Clearly this wasn't going to work. 
+... and I waited. Eight minutes and 4+ terabytes of data queried later I had my results. Athena charges you by data searched at the reasonable rate of \$5 per TB. So this single query cost \$20 and eight minutes.  `r tufte::margin_note("If we ever wanted to run a model over all the data we better be ready to wait roughly 38 years and pay $50 million.")` Clearly this wasn't going to work. 
 
 
 
-## This should be a walk in the parquet...
+## This should be a walk in the Parquet...
 
 
-[__Lesson Learned:__ Be careful with your parquet file sizes and organization.]{.lesson_learned}
+[__Lesson Learned:__ Be careful with your Parquet file sizes and organization.]{.lesson_learned}
 
-My first attempt to remedy the situation was to convert all of the TSV's to [parquet files](https://parquet.apache.org). Parquet files are good for working with larger datasets because they store data in a 'columnar' fashion. Meaning each column is stored in its own section of memory/disk, unlike a text file with lines containing every column. This means to look for something you only have to read the neccesary column. Also, they keep a record of the range of values by column for each file so if the value you're looking for isn't in the column range Spark doesn't waste it's time scanning through the file. 
+My first attempt to remedy the situation was to convert all of the TSV's to [Parquet files](https://Parquet.apache.org). Parquet files are good for working with larger datasets because they store data in a 'columnar' fashion. Meaning each column is stored in its own section of memory/disk, unlike a text file with lines containing every column. This means to look for something you only have to read the necessary column. Also, they keep a record of the range of values by column for each file so if the value you're looking for isn't in the column range Spark doesn't waste it's time scanning through the file. 
 
-I ran a simple [AWS Glue job](https://aws.amazon.com/glue/) to convert our TSVs to Parquet and hooked up the new parquet files to Athena. Unfortunately, the query took just about the same amount of time and a tiny bit less money. This is because Spark in its attempt to optimize the job just unzipped a single TSV chunk and placed it in its own parquet chunk. Because each chunk was big enough to contain multiple people's full records, this meant that every file had every SNP in them and thus Spark had to open all of them to extract what we wanted. 
+I ran a simple [AWS Glue job](https://aws.amazon.com/glue/) to convert our TSVs to Parquet and hooked up the new Parquet files to Athena. This took only around five hours. However, when I ran a query it took just about the same amount of time and a tiny bit less money. This is because Spark in its attempt to optimize the job just unzipped a single TSV chunk and placed it in its own Parquet chunk. Because each chunk was big enough to contain multiple people's full records, this meant that every file had every SNP in them and thus Spark had to open all of them to extract what we wanted. 
+
+`r tufte::margin_note("Interestingly the default (and recomended) Parquet compression type: 'snappy' is not splitable. So each executor was still stuck with the task of uncompressing and loading an entire 3.5gig dataset.")`
 
 ![](/using_awk_and_r_to_parse_25tb/large_parquet_chunks.png)
 
@@ -89,17 +92,21 @@ I ran a simple [AWS Glue job](https://aws.amazon.com/glue/) to convert our TSVs 
 
 [__Lesson Learned:__ Sorting is hard, especially when data is distributed.]{.lesson_learned}
 
-I thought that I had the problem figured out now. All I needed to do was to sort the data on the SNP column instead of the individual. This would allow a given chunk of data to only have a few SNPs in it. Unfortunately, sorting billions of rows of data distributed across a cluster is not a trivial task.
+I thought that I had the problem figured out now. All I needed to do was to sort the data on the SNP column instead of the individual. This would allow a given chunk of data to only have a few SNPs in it and Parquet's smart only-open-if-values-in-range feature could shine. Unfortunately, sorting billions of rows of data distributed across a cluster is not a trivial task.
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Me taking algorithms class in college: &quot;Ugh, no one cares about computational complexity of all these sorting algorithms&quot; <br><br>Me trying to sort on a column in a 20TB <a href="https://twitter.com/hashtag/spark?src=hash&amp;ref_src=twsrc%5Etfw">#spark</a> table: &quot;Why is this taking so long?&quot; <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> struggles.</p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1105127759318319105?ref_src=twsrc%5Etfw">March 11, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Me taking algorithms class in college: &quot;Ugh, no one cares about computational complexity of all these sorting algorithms&quot; <br><br>Me trying to sort on a column in a 20TB <a href="https://twitter.com/hashtag/Spark?src=hash&amp;ref_src=twsrc%5Etfw">#Spark</a> table: &quot;Why is this taking so long?&quot; <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> struggles.</p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1105127759318319105?ref_src=twsrc%5Etfw">March 11, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+
+`r tufte::margin_note("AWS doesn't exactly want to give refunds for the cause 'I am an absent minded graduate student.'")`
 
 After attempting to run this on Amazon's glue it ran for 2 days and then crashed. 
 
+
 ## What about partitioning?
 
-[__Lesson Learned:__ Partitions in spark need to be balanced.]{.lesson_learned} 
+[__Lesson Learned:__ Partitions in Spark need to be balanced.]{.lesson_learned} 
 
-Another idea I had was to partition the data into chromosomes. There are 23 of these (plus a few extra to account for mitochondrial DNA or unmapped regions). This would provide a way of cutting down the data into much more manageable chunks. By adding just a single line to the spark export function in the glue script: `partition_by = "chr"`, the data should be put into those buckets. 
+Another idea I had was to partition the data into chromosomes. There are 23 of these (plus a few extra to account for mitochondrial DNA or unmapped regions). This would provide a way of cutting down the data into much more manageable chunks. By adding just a single line to the Spark export function in the glue script: `partition_by = "chr"`, the data should be put into those buckets. 
 
 `r tufte::margin_note("<img src='https://cdn.prod-carehubs.net/n2/71b34990bba71dfd/uploads/2018/07/boldchromosomecellturquoise.png' alt='Chromosome graphic'/> DNA is made up of multiple chunks called Chromosomes. Img via [kintalk.org](https://kintalk.org/genetics-101/).")`
 
@@ -113,17 +120,17 @@ I decided to get crazy with my partitioning and partitioned on each SNP. This gu
 
 ## Partitioning + Sorting
 
-[__Lesson Learned:__ Sorting is still hard and so is tuning spark.]{.lesson_learned}
+[__Lesson Learned:__ Sorting is still hard and so is tuning Spark.]{.lesson_learned}
 
-The last attempt in the partitioning era was to partition on chromosome and then sort each partition. In theory this would have made each query quicker because the desired SNP data would only reside in the ranges of a few of the parquet chunks within a given region. Alas, it turns out sorting even the partitioned data was a lot of work. I ended up switching to EMR for a custom cluster, using 8 powerful instances (C5.4xl) and using Sparklyr to build a more flexible workflow...
+The last attempt in the partitioning era was to partition on chromosome and then sort each partition. In theory this would have made each query quicker because the desired SNP data would only reside in the ranges of a few of the Parquet chunks within a given region. Alas, it turns out sorting even the partitioned data was a lot of work. I ended up switching to EMR for a custom cluster, using 8 powerful instances (C5.4xl) and using Sparklyr to build a more flexible workflow...
 
 ```{r, eval = FALSE}
-# sparklyr snippet to partition by chr and sort w/in partition
+# Sparklyr snippet to partition by chr and sort w/in partition
 # Join the raw data with the snp bins
 raw_data
   group_by(chr) %>%
   arrange(Position) %>% 
-  spark_write_parquet(
+  Spark_write_Parquet(
     path = DUMP_LOC,
     mode = 'overwrite',
     partition_by = c('chr')
@@ -133,13 +140,13 @@ raw_data
 
 ...but no mater what the job never finished. I tried all the tuning tricks: bumped up the memory allocated to each executor of the queries, used high ram node types, broadcasting variables, but it would always get around half way done then executors would slowly start failing till everything eventually ground to a halt. 
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Current status: desperately watching <a href="https://twitter.com/hashtag/spark?src=hash&amp;ref_src=twsrc%5Etfw">#spark</a> UI to see stage progression. Will it complete half the steps and then drop all the executors with cryptic error messages and never spin them back up? Probably. Still better than game of thrones season 8. <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> <a href="https://t.co/3Tc0a8PY2O">pic.twitter.com/3Tc0a8PY2O</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1128702940376633344?ref_src=twsrc%5Etfw">May 15, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Update: so it begins. <a href="https://t.co/agY4GU2ru5">pic.twitter.com/agY4GU2ru5</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1128703858610450434?ref_src=twsrc%5Etfw">May 15, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 # Getting more creative
 
-[__Lesson Learned:__ Sometimes bespoke bespoke data needs bespoke solutions.]{.lesson_learned}
+[__Lesson Learned:__ Sometimes bespoke data needs bespoke solutions.]{.lesson_learned}
 
-Every SNP has a position value. This is an integer corresponding to how many bases along its chromosome it lies. This is a nice and natural method of organizing our data. The first though I had was building partitions by regions of each chromosome. Aka (positions 1 - 2000, 2001 - 4000, etc). The problem is SNPs are not evenly distributed along their chromosomes, so the bins would be wildly different in size. 
+Every SNP has a position value. This is an integer corresponding to how many bases along its chromosome it lies. This is a nice and natural method of organizing our data. The first thought I had was building partitions by regions of each chromosome. Aka (positions 1 - 2000, 2001 - 4000, etc). The problem is SNPs are not evenly distributed along their chromosomes, so the bins would be wildly different in size. 
 
 
 ![](/using_awk_and_r_to_parse_25tb/uneven_snps.png)
@@ -171,13 +178,13 @@ data_w_bin <- raw_data %>%
   left_join(sdf_broadcast(snp_to_bin), by ='snp_name') %>%
   group_by(chr_bin) %>%
   arrange(Position) %>% 
-  spark_write_parquet(
+  Spark_write_Parquet(
     path = DUMP_LOC,
     mode = 'overwrite',
     partition_by = c('chr_bin')
   )
 ```
-`r tufte::margin_note("Notice the use of sdf_broadcast(), this lets spark know it should send this dataframe to all nodes. It's helpful when the data is small and needed for all tasks. Otherwise Spark tries to be clever and waits to distribute it till it needs it which can cause bottlenecks.")`
+`r tufte::margin_note("Notice the use of <code>sdf_broadcast()</code>, this lets Spark know it should send this dataframe to all nodes. It's helpful when the data is small and needed for all tasks. Otherwise Spark tries to be clever and waits to distribute it till it needs it which can cause bottlenecks.")`
 
 
 Again, things didn't work out. Like the sorting attempt, the jobs would run for a while, finish the joining task, and then as the partitioning started executors would start crashing. 
@@ -186,7 +193,7 @@ Again, things didn't work out. Like the sorting attempt, the jobs would run for 
 
 [__Lesson Learned:__ Don't sleep on the basics. Someone probably solved your problem in the 80s.]{.lesson_learned}
 
-Given that all my Spark failures were due to the data being shuffled around the cluster because it was starting all mixed up, I figured I could attempt to help Spark out by preprocessing. I decided to try and split the raw text data on the chromosome column, that way I would be able to provide Spark with somewhat 'pre-partitioned' data. 
+Up to this point all my Spark failures were due to the data being shuffled around the cluster because it was starting all mixed up. Perhaps I could help it out with some preprocessing. I decided to try and split the raw text data on the chromosome column, that way I would be able to provide Spark with somewhat 'pre-partitioned' data. 
 
 I stack overflow searched how to split by column value and found [this wonderful answer.](https://unix.stackexchange.com/questions/114061/extract-data-from-a-file-and-place-in-different-files-based-on1-column-value) Using AWK you can split a text file up by a column's values by performing the writing in the script rather than sending results to `stdout`.
 
@@ -204,16 +211,16 @@ It worked!
 
 [__Lesson Learned:__ `gnu parallel` is magic and everyone should use it.]{.lesson_learned}
 
-The spliting was a tad bit slow and when I ran `htop` to see the usage of the powerful (expensive) ec2 instance I was using a single core and ~200 mb of ram. If I wanted to get things done and not waste a lot of money I was going to need to figure out how to parallize. Luckily I found the chapter on parallelizing workflows in [Data Science at the Command Line](https://www.datascienceatthecommandline.com), the utterly fantastic book by Jeroen Janssens. It introduced me to `gnu parallel` which is very flexible method for spinning up multiple threads in a unix pipeline. 
+The splitting was a tad bit slow and when I ran `htop` to see the usage of the powerful (expensive) ec2 instance I was using a single core and ~200 MB of ram. If I wanted to get things done and not waste a lot of money I was going to need to figure out how to parallelize. Luckily I found the chapter on parallelizing workflows in [Data Science at the Command Line](https://www.datascienceatthecommandline.com), the utterly fantastic book by Jeroen Janssens. It introduced me to `gnu parallel` which is very flexible method for spinning up multiple threads in a unix pipeline. 
 
 `r tufte::margin_note("<a href = 'https://www.datascienceatthecommandline.com' ><img src = 'https://www.datascienceatthecommandline.com/images/cover.png' alt = 'Data Science at the Command Line book cover.'/></a>")`
 
-Once I ran the splitting using the new GNU parallel workflow it was great, but I was still getting some bottlenecking caused by downloading the S3 objects to disk being a little bit slow and not fully parallelized. I did a few things to fix this. 
+Once I ran the splitting using the new GNU parallel workflow it was great, but I was still getting some bottle-necking caused by downloading the S3 objects to disk being a little bit slow and not fully parallelized. I did a few things to fix this. 
 
 1. Found out that you can implement the S3 download step right into the pipeline, completely skipping intermediate disk storage. This meant I could avoid writing the raw data to disk and also use smaller and thus cheaper storage on AWS. 
 2. Increased the number of threads that the AWS CLI uses to some large number (the default is 10) with `aws configure set default.s3.max_concurrent_requests 50`.
 3. Switched to a network speed optimized ec2 instance. These are the ones with the `n` in the name. `r tufte::margin_note("I found that the loss in compute power caused from using the 'n' instances was more than made up for by the increased download speeds.")` I used c5n.4xl's for most of my stuff. 
-4. Swapped `gzip` to [`pigz`](https://linux.die.net/man/1/pigz), which is a parallel gzip tool that does some clever things to parallelize an inherently unparallizable task of decompressing gziped files. (This helped the least.)
+4. Swapped `gzip` to [`pigz`](https://linux.die.net/man/1/pigz), which is a parallel gzip tool that does some clever things to parallelize an inherently unparallelizable task of decompressing gziped files. (This helped the least.)
 
 ```{bash, eval = FALSE}
 # Let S3 use as many threads as it wants
@@ -239,7 +246,7 @@ done
 
 These steps combined to make things _very_ fast. By virtue of increasing the speed of download and avoiding writing to disk I was now able to process a whole 5 terabyte batch in just a few hours. 
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">There&#39;s nothing sweeter than seeing all the cores you&#39;re paying for on AWS being used. Thanks to gnu-parallel I can unzip and split a 19gig csv just as fast as I can download it. I couldn&#39;t even get spark to run this. <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> <a href="https://twitter.com/hashtag/Linux?src=hash&amp;ref_src=twsrc%5Etfw">#Linux</a> <a href="https://t.co/Nqyba2zqEk">pic.twitter.com/Nqyba2zqEk</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1129416944233226240?ref_src=twsrc%5Etfw">May 17, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">There&#39;s nothing sweeter than seeing all the cores you&#39;re paying for on AWS being used. Thanks to gnu-parallel I can unzip and split a 19gig csv just as fast as I can download it. I couldn&#39;t even get Spark to run this. <a href="https://twitter.com/hashtag/DataScience?src=hash&amp;ref_src=twsrc%5Etfw">#DataScience</a> <a href="https://twitter.com/hashtag/Linux?src=hash&amp;ref_src=twsrc%5Etfw">#Linux</a> <a href="https://t.co/Nqyba2zqEk">pic.twitter.com/Nqyba2zqEk</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1129416944233226240?ref_src=twsrc%5Etfw">May 17, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 `r tufte::margin_note("This tweet should have said 'tsv'. Alas.")`
 
@@ -248,30 +255,30 @@ These steps combined to make things _very_ fast. By virtue of increasing the spe
 
 [__Lesson Learned:__ Spark likes uncompressed data and does not like combining partitions.]{.lesson_learned}
 
-Now that I had the data sitting in an unzipped (see splittable) and semi-organized format on S3 I could go back to Spark. Surprise -- things didn't workout again! It was very hard to accurately tell Spark how the data was partitioned and even when I did it seemed to like to split things into way too many partitions (like 95k), which then when I used `coalesce` to reduce down to a reasonable number of partitions, ended up ruining the partitioning I had used. `r tufte::margin_note("I am sure there is a way to fix this but I couldn't find it over a couple days of looking.")`  I did end up getting things to finish on Spark, it took a while however and my split parquet files were not super tiny (~200kb) But the data was where it needed to be. 
+Now that I had the data sitting in an unzipped (see splittable) and semi-organized format on S3 I could go back to Spark. Surprise -- things didn't workout again! It was very hard to accurately tell Spark how the data was partitioned and even when I did it seemed to like to split things into way too many partitions (like 95k), which then when I used `coalesce` to reduce down to a reasonable number of partitions, ended up ruining the partitioning I had used. `r tufte::margin_note("I am sure there is a way to fix this but I couldn't find it over a couple days of looking.")`  I did end up getting things to finish on Spark, it took a while however and my split Parquet files were not super tiny (~200KB) But the data was where it needed to be. 
 
 <img src='/using_awk_and_r_to_parse_25tb/uneven_small_partitions.png'/> 
 [_Too small and uneven, wonderful!_]{.photo_caption}
 
 
-## Testing out local spark queries
+## Testing out local Spark queries
 
 [__Lesson Learned:__ Spark is a lot of overhead for simple jobs.]{.lesson_learned}
 
-With the data loaded up into a reasonable format I could test out the speed. I setup an R script to spin up a local Spark server and then load a spark dataframe from a given parquet bins location. `r tufte::margin_note("I tried loading all the data but couldn't get sparklyr to recognize the partitioning for some reason.")`
+With the data loaded up into a reasonable format I could test out the speed. I setup an R script to spin up a local Spark server and then load a Spark dataframe from a given Parquet bins location. `r tufte::margin_note("I tried loading all the data but couldn't get Sparklyr to recognize the partitioning for some reason.")`
 
 
 ```{r, eval = FALSE}
-sc <- spark_connect(master = "local")
+sc <- Spark_connect(master = "local")
 
 desired_snp <- 'rs34771739'
 
 # Start a timer
 start_time <- Sys.time()
 
-# Load the desired bin into spark
+# Load the desired bin into Spark
 intensity_data <- sc %>% 
-  spark_read_parquet(
+  Spark_read_Parquet(
     name = 'intensity_data', 
     path = get_snp_location(desired_snp),
     memory = FALSE )
@@ -333,15 +340,15 @@ rm chunked/*
 
 This script has two `parallel` sections:
 
-The first one reads in every file containing data for the desired chromosome and divies them up to multiple threads that spit their files into its representative bins. In order to prevent race conditions from the multiple threads writing to the same bin file, AWK is passed the name of the file which it uses to write to unique locations, e.g. `chr_10_bin_52_batch_2_aa.csv` This results in a _ton_ of tiny files located on the disk (I used 1TB EBS volumes for this). 
+The first one reads in every file containing data for the desired chromosome and divvies them up to multiple threads that spit their files into its representative bins. In order to prevent race conditions from the multiple threads writing to the same bin file, AWK is passed the name of the file which it uses to write to unique locations, e.g. `chr_10_bin_52_batch_2_aa.csv` This results in a _ton_ of tiny files located on the disk (I used 1TB EBS volumes for this). 
 
-The second `parallel` pipeline goes through and merges every bin's separate files into single csv's with `cat`, sends them for export... 
+The second `parallel` pipeline goes through and merges every bin's separate files into single csv's with `cat`, and sends them for export... 
 
 ## Piping to R?
 
-[__Lesson Learned:__ You can access `stdin` and `stdout` from inside an R script.]{.lesson_learned}
+[__Lesson Learned:__ You can access `stdin` and `stdout` from inside an R script and thus use it in a pipeline.]{.lesson_learned}
 
-You may have noticed this part of the bash script above: `...cat chunked/*_bin_{}_*.csv | ./upload_as_rds.R...`. This line pipes all the concated files for a bin into the following R script...
+You may have noticed this part of the bash script above: `...cat chunked/*_bin_{}_*.csv | ./upload_as_rds.R...`. This line pipes all the concatenated files for a bin into the following R script... `r tufte::margin_note("The <code>{}</code> in there is a special <code>parallel</code> technique that pastes whatever data it is sending to the given thread right into the command it's sending. Other option are <code>{#}</code> which gives the unique thread ID and <code>{%}</code> which is the job slot number (repeates but never at the same time). For all of the option checkout [the docs.](https://www.gnu.org/software/parallel/parallel_tutorial.html#Replacement-strings)")`
 
 ```{r, eval = FALSE}
 #!/usr/bin/env Rscript
@@ -365,11 +372,11 @@ s3saveRDS(
 
 By passing `readr::read_csv` the variable `file("stdin")` it loads the data piped to the R script into a dataframe, which then gets written as an `.rds` file directly to s3 using `aws.s3`. 
 
-`r tufte::margin_note("Rds is kind-of like a junior version of parquet without the niceties of columnar storage.")`
+`r tufte::margin_note("Rds is kind-of like a junior version of Parquet without the niceties of columnar storage.")`
 
-After this bash script had finished I have a bunch of `.rds` files sitting in S3 benefiting from the great compression techniques and also types built in that `.rds` offers.  
+After this bash script had finished I have a bunch of `.rds` files sitting in S3 benefiting with the benefits of efficient compression and built-in types.
 
-Even with notoriously slow R in the workflow this was super fast. `r tufte::margin_note("Unsurprisingly the parts of R for reading and writing data are rather optimized.")` After testing on a single average size chromosome the job finished in about two hours. 
+Even with notoriously slow R in the workflow, this was super fast. `r tufte::margin_note("Unsurprisingly the parts of R for reading and writing data are rather optimized.")` After testing on a single average size chromosome the job finished in about two hours using a C5n.4xl instance. 
 
 
 ## Limits of S3
@@ -378,23 +385,24 @@ Even with notoriously slow R in the workflow this was super fast. `r tufte::marg
 
 I was worried about how S3 would handle having a ton of files dumped onto it. I could make the file names make sense, but how would S3 handle searching for one? 
 
-It turns out S3 treats the path to a given file as a simple key in what can be thought of as a hash table, or a document-based database. Think of a "bucket" as a table and every file is an entry. Because of this folders in S3 are just a cosmetic thing and S3 doesn't actually care about the `/` character. 
+`r tufte::margin_note("<img src='/using_awk_and_r_to_parse_25tb/s3_keys_explained.png'/> Folders in S3 are just a cosmetic thing and S3 doesn't actually care about the <code>/</code> character.<a href='https://aws.amazon.com/s3/faqs/'>From the S3 FAQs page</a>")`
 
-`r tufte::margin_note("<img src='/using_awk_and_r_to_parse_25tb/s3_keys_explained.png'/> <a href='https://aws.amazon.com/s3/faqs/'>From the S3 FAQs page</a>")`
+It turns out S3 treats the path to a given file as a simple key in what can be thought of as a hash table, or a document-based database. Think of a "bucket" as a table and every file is an entry. 
 
-Because speed and efficiency are a important to S3 making money for Amazon it's no surprise that this key-is-a-file-path system is super optimized. Still, I tried to strike a balance. I wanted to not need to do a ton of `get` requests and I wanted the queries to be fast. I found that making around 20k bin files worked best. `r tufte::margin_note("I am sure further optimizations could speed things up (such as making a special bucket just for the data and thus reducing the size of the lookup table.) But I ran out of time and money to do more experiments.")`
 
-## What about cross-compatability?
+Because speed and efficiency are important to S3 making money for Amazon, it's no surprise that this key-is-a-file-path system is super optimized. Still, I tried to strike a balance. I wanted to not need to do a ton of `get` requests and I wanted the queries to be fast. I found that making around 20k bin files worked best. `r tufte::margin_note("I am sure further optimizations could speed things up (such as making a special bucket just for the data and thus reducing the size of the lookup table.) But I ran out of time and money to do more experiments.")`
 
-[__Lesson Learned:__ Premature optimizing your storage method is the root of all time wasted.]{.lesson_learned}
+## What about cross-compatibility?
 
-A very reasonable thing to ask at this point is "why would you use a proprietary file format for this?" The reason came down to speed of loading (using gzipped csvs took about 7 times longer to load) and compatibility with our workflows.`r tufte::margin_note("Once R can easily load Parquet (or Arrow) files without the overhead of spark I may reconsider.")` Everyone else in my lab exclusively uses R and if I end up needing to convert the data to another format I still have the original raw text data and can just run the pipeline again. 
+[__Lesson Learned:__ Premature optimization of your storage method is the root of all time wasted.]{.lesson_learned}
 
-## Divying out the work
+A very reasonable thing to ask at this point is "why would you use a proprietary file format for this?" The reason came down to speed of loading (using gzipped csvs took about 7 times longer to load) and compatibility with our workflows.`r tufte::margin_note("Once R can easily load Parquet (or Arrow) files without the overhead of Spark I may reconsider.")` Everyone else in my lab exclusively uses R and if I end up needing to convert the data to another format I still have the original raw text data and can just run the pipeline again. 
+
+## Divvying out the work
 
 [__Lesson Learned:__ Don't try to hand optimize jobs, let the computer do it.]{.lesson_learned}
 
-I wanted to spin up multiple ec2 instances to convert all my data but I also didn’t want to have super unbalanced job loads (just like how spark suffered from the unbalanced partitions). `r tufte::margin_note("I also didn’t want to spin up a single instance for each chromosome, since there is a limit by default of 10 instances at a time for AWS accounts.")` 
+Now that I had the workflow for a single chromosome working, I needed to process every chromosome's data. I wanted to spin up multiple ec2 instances to convert all my data but I also didn’t want to have super unbalanced job loads (just like how Spark suffered from the unbalanced partitions). `r tufte::margin_note("I also didn’t want to spin up a single instance for each chromosome, since there is a limit by default of 10 instances at a time for AWS accounts.")` 
 
 My solution was to write a brute force job optimization script using R….
 
@@ -409,12 +417,12 @@ chr_sizes <- get_bucket_df(
   mutate(Size = as.numeric(Size)) %>% 
   filter(Size != 0) %>% 
   mutate(
-    # Extract from the file name the chromosome
+    # Extract chromosome from the file name 
     chr = str_extract(Key, 'chr.{1,4}\\.csv') %>%
 			 str_remove_all('chr|\\.csv')
   ) %>% 
   group_by(chr) %>% 
-  summarise(total_size = sum(Size)/1e+9)
+  summarise(total_size = sum(Size)/1e+9) # Divide to get value in GB
 ```
 
 ```
@@ -483,7 +491,7 @@ This gave me a set of jobs that were all very close in size. All I had do do the
 ```{bash, eval = FALSE}
 for DESIRED_CHR in "16" "9" "7" "21" "MT"
 do
-#...
+# Code for processing a single chromosome
 fi
 ```
 
@@ -503,18 +511,17 @@ aws ec2 run-instances ...\
 # Packing it up!
 [__Lesson Learned:__ Keep API simple for your end users and flexible for you.]{.lesson_learned}
 
-Finally, the data was where and how I needed it. The last step was to simplify the process for using the data as much as possible for my lab members. I wanted to provide a simple API for querying. If in the future I did decide to switch from using `.rds` to parquet files I wanted to be able to make that my issue and not my lab mate's. The way I decided to to this was an internal R package. 
+Finally, the data was where and how I needed it. The last step was to simplify the process for using the data as much as possible for my lab members. I wanted to provide a simple API for querying. If in the future I did decide to switch from using `.rds` to Parquet files I wanted to be able to make that my issue and not my lab mate's. The way I decided to to this was an internal R package. 
 
-I built and documented a very simple package that contains just a few functions for accessing the data, centered around the function `get_snp`. In addition I built a [pkgdown site](https://pkgdown.r-lib.org) so lab members could easily see examples/docs. 
+I built and documented a very simple package that contains just a few functions for accessing the data, centered around the function `get_snp`. Additionally, I built a [pkgdown site](https://pkgdown.r-lib.org) so lab members could easily see examples/docs. 
 
-
-<img src='/using_awk_and_r_to_parse_25tb/pkg_down.png'/> 
+![](/using_awk_and_r_to_parse_25tb/pkg_down.png)
 
 ## Intelligent caching. 
 
-[__Lesson Learned:__ If your data is setup well caching will be easy!]{.lesson_learned}
+[__Lesson Learned:__ If your data is setup well, caching will be easy!]{.lesson_learned}
 
-Since one of the main workflows for these data was running the same model/ analysis across a bunch of SNPs at a time I decided that I could use the binning to my advantage. When pulling the data down for a SNP, the entire bin's data is kept and attached to the returned object. This means if a new query is run the old queries result's can (potentially) be used to speed it up.
+Since one of the main workflows for these data was running the same model/ analysis across a bunch of SNPs at a time, I decided that I should use the binning to my advantage. When pulling the data down for a SNP, the entire bin's data is kept and attached to the returned object. This means if a new query is run the old queries result's can (potentially) be used to speed it up.
 
 ```{r, eval = FALSE}
 # Part of get_snp()
@@ -539,7 +546,7 @@ Since one of the main workflows for these data was running the same model/ analy
 
 `r tufte::margin_note("While building the package I ran a lot of benchmarks to compare the speed between different methods. I recomend it because sometimes the results went against my intuition. For instance, <code>dplyr::filter</code> was much faster than using indexing based filtering for grabbing rows, but getting a single column from a filtered dataframe was much faster using indexing syntax.")`
 
-Notice that the `prev_snp_results` object contains the key `snps_in_bin`. This allows fast searching through if we already have the data from a previous query, while also making it easy for the user to loop through all the SNPs in a bin using code like: 
+Notice that the `prev_snp_results` object contains the key `snps_in_bin`. This is an array of all unique SNPs in the bin, allowing fast checking for if we already have the data from a previous query. It also makes it easy for the user to loop through all the SNPs in a bin using code like: 
 
 ```{r, eval = FALSE}
 # Get bin-mates
@@ -551,28 +558,49 @@ for(current_snp in snps_in_bin){
 }
 ```
 
-In addition, since a common workflow is scanning SNP-by-SNP along a region, caching the bin made it very likely that the next requested SNP would already be on the machine and thus could be immediately grabbed. 
-
 
 # End results
 
-We are now able to (and have started in ernest) run models and scenarios we were incapable of before. The best part is the other members of my lab don’t have to think about the complexities that went into it. They just have a function that works. 
+We are now able to (and have started in earnest) run models and scenarios we were incapable of before. The best part is the other members of my lab don’t have to think about the complexities that went into it. They just have a function that works. 
 
-`r tufte::margin_note("Even though the package abstracts away the details I tried to make the format of the data simple enough that if I were to dissapear tomorrow someone could figure it out.")`
+`r tufte::margin_note("Even though the package abstracts away the details, I tried to make the format of the data simple enough that if I were to dissapear tomorrow someone could figure it out.")`
 
 
-The speed is much improved. A typical use-case is to scan a functionally significant region of the genome (such as a gene) . Before we couldn’t do this (because it cost too much) but now, because of the caching, it takes on average less than a tenth of a second per SNP queried and the data usage is not even high enough to round up to a penny on our S3 costs. 
+The speed is much improved. A typical use-case is to scan a functionally significant region of the genome (such as a gene). Before we couldn’t do this (because it cost too much) but now, because of the bin structure and caching, it takes on average less than a tenth of a second per SNP queried and the data usage is not even high enough to round up to a penny on our S3 costs. 
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Recently I got put in change of wrangling 25+ TB of raw genotyping data for my lab. When I started, using spark took 8 min &amp; cost $20 to query a SNP. After using AWK + <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> to process, it now takes less than a 10th of a second and costs $0.00001. My personal <a href="https://twitter.com/hashtag/BigData?src=hash&amp;ref_src=twsrc%5Etfw">#BigData</a> win. <a href="https://t.co/ANOXVGrmkk">pic.twitter.com/ANOXVGrmkk</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1134151057385369600?ref_src=twsrc%5Etfw">May 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Recently I got put in change of wrangling 25+ TB of raw genotyping data for my lab. When I started, using Spark took 8 min &amp; cost $20 to query a SNP. After using AWK + <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> to process, it now takes less than a 10th of a second and costs $0.00001. My personal <a href="https://twitter.com/hashtag/BigData?src=hash&amp;ref_src=twsrc%5Etfw">#BigData</a> win. <a href="https://t.co/ANOXVGrmkk">pic.twitter.com/ANOXVGrmkk</a></p>&mdash; Nick Strayer (@NicholasStrayer) <a href="https://twitter.com/NicholasStrayer/status/1134151057385369600?ref_src=twsrc%5Etfw">May 30, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
 
 ## Take Away
-
 
 This post post isn't meant to be a how-to guide. The final solution is bespoke and almost assuredly not the optimal one. For risk of sounding unbearably cheesy this was about the journey. I want others to realize that these solutions don't pop fully formed into peoples head's but they are a product of trial and error. 
 
 In addition, if you are in the position of hiring someone as a data scientist please consider the fact that getting good at these tools requires experience, and experience requires money. I am lucky that I have grant funding to pay for this but many who assuredly could do a better job than me will never get the chance because they don't have the funds to even try. 
 
-"Big Data" tools are generalists. If you have the time you will almost assuredly be able to write up a faster sollution to your problem using smart data cleaning, storage, and retrieval techniques. Ultimately it comes down to a cost-benefit analysis.
+"Big Data" tools are generalists. If you have the time you will almost assuredly be able to write up a faster solution to your problem using smart data cleaning, storage, and retrieval techniques. Ultimately it comes down to a cost-benefit analysis.
 
+
+### All lessons learned:
+
+In case you wanted everything in a neat list format:
+
+
+- [There's no cheap way to parse 25tb of data at once.]{.lesson_learned}
+- [Be careful with your Parquet file sizes and organization.]{.lesson_learned}
+- [Partitions in Spark need to be balanced.]{.lesson_learned} 
+- [Never, ever, try and make 2.5 million partitions.]{.lesson_learned}
+- [Sorting is still hard and so is tuning Spark.]{.lesson_learned}
+- [Sometimes bespoke data needs bespoke solutions.]{.lesson_learned}
+- [Spark joining is fast, but partitioning is still expensive]{.lesson_learned}
+- [Don't sleep on the basics. Someone probably solved your problem in the 80s.]{.lesson_learned}
+- [`gnu parallel` is magic and everyone should use it.]{.lesson_learned}
+- [Spark likes uncompressed data and does not like combining partitions.]{.lesson_learned}
+- [Spark is a lot of overhead for simple jobs.]{.lesson_learned}
+- [Associative arrays in AWK are super powerful.]{.lesson_learned}
+- [You can access `stdin` and `stdout` from inside an R script and thus use it in a pipeline.]{.lesson_learned}
+- [S3 can handle a _lot_ of files due to smart path implementation.]{.lesson_learned}
+- [Premature optimization of your storage method is the root of all time wasted.]{.lesson_learned}
+- [Don't try to hand optimize jobs, let the computer do it.]{.lesson_learned}
+- [Keep API simple for your end users and flexible for you.]{.lesson_learned}
+- [If your data is setup well, caching will be easy!]{.lesson_learned}
 
