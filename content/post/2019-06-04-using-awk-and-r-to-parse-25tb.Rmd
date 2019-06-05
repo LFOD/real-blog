@@ -5,7 +5,7 @@ date: '2019-06-04'
 slug: using_awk_and_R_to_parse_25tb
 categories: ["big data", "awk", "data cleaning"]
 tags:  ["big data", "awk", "data cleaning"]
-excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. This is the story of how I brought the query time and cost down from 8 mins and $20 to 0.1sec and less than a penny."
+excerpt: "Recently I was tasked with parsing 25tb of raw genotype data. This is the story of how I brought the query time and cost down from 8 minutes and $20 to a tenth of a second and less than a penny plus the lessons learned along the way."
 ---
 
 
