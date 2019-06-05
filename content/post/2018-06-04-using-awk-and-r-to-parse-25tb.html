@@ -200,14 +200,14 @@ There's nothing sweeter than seeing all the cores you're paying for on AWS being
 <div id="using-newly-parsed-data" class="section level2">
 <h2>Using newly parsed data</h2>
 <p><span class="lesson_learned"><strong>Lesson Learned:</strong> Spark likes uncompressed data and does not like combining partitions.</span></p>
-<p>Now that I had the data sitting in an unzipped (see splittable) and semi-organized format on S3 I could go back to spark and work again. Surprise – things didn’t workout again! It was very hard to accurately tell spark how the data was partitioned and even when I did it seemed to like to split things into way too many partitions (like 95k), which then when I used <code>coalesce</code> to reduce down to a reasonable number of partitions, ended up ruining the partitioning I had used. I am sure there is a way to fix this but I couldn’t find it over a couple days of looking. I did end up getting things to finish on Spark, it took a while however and my split parquet files were not super tiny (~200kb) But the data was where it needed to be.</p>
+<p>Now that I had the data sitting in an unzipped (see splittable) and semi-organized format on S3 I could go back to Spark. Surprise – things didn’t workout again! It was very hard to accurately tell Spark how the data was partitioned and even when I did it seemed to like to split things into way too many partitions (like 95k), which then when I used <code>coalesce</code> to reduce down to a reasonable number of partitions, ended up ruining the partitioning I had used. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I am sure there is a way to fix this but I couldn’t find it over a couple days of looking.</span> I did end up getting things to finish on Spark, it took a while however and my split parquet files were not super tiny (~200kb) But the data was where it needed to be.</p>
 <p><img src='/using_awk_and_r_to_parse_25tb/uneven_small_partitions.png'/>
 <span class="photo_caption"><em>Too small and uneven, wonderful!</em></span></p>
 </div>
 <div id="testing-out-local-spark-queries" class="section level2">
 <h2>Testing out local spark queries</h2>
 <p><span class="lesson_learned"><strong>Lesson Learned:</strong> Spark is a lot of overhead for simple jobs.</span></p>
-<p>Now that the data was loaded up into a reasonable format I could test out the speed. I setup an R script to spin up a local spark server and then load a spark dataframe from a given parquet bins location. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I tried loading all the data but couldn’t get sparklyr to recognize the partitioning for some reason.</span></p>
+<p>With the data loaded up into a reasonable format I could test out the speed. I setup an R script to spin up a local Spark server and then load a spark dataframe from a given parquet bins location. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I tried loading all the data but couldn’t get sparklyr to recognize the partitioning for some reason.</span></p>
 <pre class="r"><code>sc &lt;- spark_connect(master = &quot;local&quot;)
 
 desired_snp &lt;- &#39;rs34771739&#39;
@@ -233,10 +233,10 @@ print(Sys.time() - start_time)</code></pre>
 <div id="back-to-awk" class="section level2">
 <h2>Back to AWK</h2>
 <p><span class="lesson_learned"><strong>Lesson Learned:</strong> Associative arrays in AWK are super powerful.</span></p>
-<p>I knew I could do better. I remembered that I had read about a cool feature in AWK called <a href="http://www.grymoire.com/Unix/Awk.html#uh-22">&quot;associative arrays’</a>. in this charming <a href="http://www.grymoire.com/Unix/Awk.html">AWK guide by Bruce Barnett</a>. These are essentially a key value stores in AWK that for some reason had been given a different name and thus I never thought too much about. I realized that I could use these associative arrays to perform the union between my SNP -&gt; bin table and my raw data without using something like spark.</p>
-<p>What I had do to was use the <code>BEGIN</code> block in my AWK script. This is a block of code that gets run before any lines of data are fed into the main body of the script. I used this block to read my entire SNP -&gt; bin table in to an associative array that was keyed with the SNP name and valued with the SNPs bin.</p>
+<p>I knew I could do better. I remembered that I had read in this charming <a href="http://www.grymoire.com/Unix/Awk.html">AWK guide by Bruce Barnett</a> about a cool feature in AWK called <a href="http://www.grymoire.com/Unix/Awk.html#uh-22">&quot;associative arrays’</a>. These are essentially a key value stores in AWK that for some reason had been given a different name and thus I never thought too much about. I realized that I could use these associative arrays to perform the union between my SNP -&gt; bin table and my raw data without using Spark.</p>
+<p>To do this I used the <code>BEGIN</code> block in my AWK script. This is a block of code that gets run before any lines of data are fed into the main body of the script.</p>
 <p><strong>join_data.awk</strong></p>
-<pre class="awk"><code>BEGIN {
+<pre><code>BEGIN {
   FS=&quot;,&quot;;
   batch_num=substr(chunk,7,1);
   chunk_id=substr(chunk,15,2);
@@ -245,9 +245,9 @@ print(Sys.time() - start_time)</code></pre>
 {
   print $0 &gt; &quot;chunked/chr_&quot;chr&quot;_bin_&quot;bin[$1]&quot;_&quot;batch_num&quot;_&quot;chunk_id&quot;.csv&quot;
 }</code></pre>
-<p>The <code>while(getline...)</code> command loaded all the rows in from my bin csv and set the first column (the SNP name) as the key to the <code>bin</code> associative array and the second value (the bin) to the value. Then in the <code>{</code> block <code>}</code> that gets run on every line of the main file each line is sent to an output file that was had a unique name based upon its bin: <code>..._bin_&quot;bin[$1]&quot;_...</code>.</p>
+<p>The <code>while(getline...)</code> command loaded all the rows in from my bin csv and set the first column (the SNP name) as the key to the <code>bin</code> associative array and the second value (the bin) to the value. Then, in the <code>{</code> block <code>}</code> that gets run on every line of the main file, each line is sent to an output file that was had a unique name based upon its bin: <code>..._bin_&quot;bin[$1]&quot;_...</code>.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The variables of <code>batch_num</code> and <code>chunk_id</code> corresponded to data given by the pipeline that allowed me to avoid race conditions in my writing by making sure that every thread run by <code>parallel</code> wrote to its own unique file. </span></p>
-<p>Because I had all the raw data split into chromosome folders from my previous AWK experiment I could now write another bash script to work through a chromosome at a time and send back the now further partitioned data into S3.</p>
+<p>Because I had all the raw data split into chromosome folders from my previous AWK experiment I could now write another bash script to work through a chromosome at a time and send back the further partitioned data to S3.</p>
 <pre class="bash"><code>DESIRED_CHR=&#39;13&#39;
 
 # Download chromosome data from s3 and split into bins
@@ -263,8 +263,8 @@ sort -u |
 parallel &quot;echo &#39;zipping bin {}&#39;; cat chunked/*_bin_{}_*.csv | ./upload_as_rds.R &#39;$S3_DEST&#39;/chr_&#39;$DESIRED_CHR&#39;_bin_{}.rds&quot;
 rm chunked/*</code></pre>
 <p>This script has two <code>parallel</code> sections:</p>
-<p>The first one splits up every file containing the desired chromosome’s data and spins up a separate process to spit that file into its representative bins. In order to prevent race conditions from the multiple threads writing to the same bin file AWK is passed the name of the file which it uses to write to unique locations. This results in a <em>ton</em> of tiny files located on the disk (I used 1tb EBS volumes for this).</p>
-<p>The second <code>parallel</code> pipeline goes through and merges every bin’s separate files into single csv’s with <code>cat</code>, sends them to an R script…</p>
+<p>The first one reads in every file containing data for the desired chromosome and divies them up to multiple threads that spit their files into its representative bins. In order to prevent race conditions from the multiple threads writing to the same bin file, AWK is passed the name of the file which it uses to write to unique locations, e.g. <code>chr_10_bin_52_batch_2_aa.csv</code> This results in a <em>ton</em> of tiny files located on the disk (I used 1TB EBS volumes for this).</p>
+<p>The second <code>parallel</code> pipeline goes through and merges every bin’s separate files into single csv’s with <code>cat</code>, sends them for export…</p>
 </div>
 <div id="piping-to-r" class="section level2">
 <h2>Piping to R?</h2>
@@ -287,18 +287,18 @@ s3saveRDS(
     ),
   object = data_destination
 )</code></pre>
-<p>By passing <code>readr::read_csv</code> the value <code>file(&quot;stdin&quot;)</code> it loads the data piped to the R script into a dataframe, which then gets written as an <code>.rds</code> file directly to s3 using <code>aws.s3</code>.</p>
+<p>By passing <code>readr::read_csv</code> the variable <code>file(&quot;stdin&quot;)</code> it loads the data piped to the R script into a dataframe, which then gets written as an <code>.rds</code> file directly to s3 using <code>aws.s3</code>.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Rds is kind-of like a junior version of parquet without the niceties of columnar storage.</span></p>
-<p>After this bash script had finishes I have a bunch of <code>.rds</code> files sitting in S3 benefiting from the great compression techniques and also types built in that <code>.rds</code> offers.</p>
+<p>After this bash script had finished I have a bunch of <code>.rds</code> files sitting in S3 benefiting from the great compression techniques and also types built in that <code>.rds</code> offers.</p>
 <p>Even with notoriously slow R in the workflow this was super fast. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Unsurprisingly the parts of R for reading and writing data are rather optimized.</span> After testing on a single average size chromosome the job finished in about two hours.</p>
 </div>
 <div id="limits-of-s3" class="section level2">
 <h2>Limits of S3</h2>
 <p><span class="lesson_learned"><strong>Lesson Learned:</strong> S3 can handle a <em>lot</em> of files due to smart path implementation.</span></p>
 <p>I was worried about how S3 would handle having a ton of files dumped onto it. I could make the file names make sense, but how would S3 handle searching for one?</p>
-<p>It turns out S3 treats the path to a given file as a simple key in what can be thought of as a hash table. Aka a document-based database. Think of a “bucket” as a table and every file is an entry. Because of this folders in S3 are just a cosmetic thing and S3 doesn’t actually care about the <code>/</code> character.</p>
+<p>It turns out S3 treats the path to a given file as a simple key in what can be thought of as a hash table, or a document-based database. Think of a “bucket” as a table and every file is an entry. Because of this folders in S3 are just a cosmetic thing and S3 doesn’t actually care about the <code>/</code> character.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src='/using_awk_and_r_to_parse_25tb/s3_keys_explained.png'/> <a href='https://aws.amazon.com/s3/faqs/'>From the S3 FAQs page</a></span></p>
-<p>Because speed and efficiency are a important to S3 making money for Amazon it’s no surprise that this key-is-a-file-path system is super optimized. Still I tried to strike a balance. I wanted to not need to do a ton of <code>get</code> requests and I wanted the queries to be fast. I found that making around 20k bin files worked best. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I am sure further optimizations could speed things up (such as making a special bucket just for the data and thus reducing the size of the lookup table.) But I ran out of time and money to do more experiments.</span></p>
+<p>Because speed and efficiency are a important to S3 making money for Amazon it’s no surprise that this key-is-a-file-path system is super optimized. Still, I tried to strike a balance. I wanted to not need to do a ton of <code>get</code> requests and I wanted the queries to be fast. I found that making around 20k bin files worked best. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I am sure further optimizations could speed things up (such as making a special bucket just for the data and thus reducing the size of the lookup table.) But I ran out of time and money to do more experiments.</span></p>
 </div>
 <div id="what-about-cross-compatability" class="section level2">
 <h2>What about cross-compatability?</h2>
@@ -366,7 +366,7 @@ shuffle_job(1)</code></pre>
      sd data            
   &lt;dbl&gt; &lt;list&gt;          
 1  153. &lt;tibble [7 × 3]&gt;</code></pre>
-<p>Once this was setup all I had do do was run a ton of shuffles and pick the best one using purrr.</p>
+<p>Once this was setup I ran a thousand shuffles using purrr and picked the best one.</p>
 <pre class="r"><code>1:1000 %&gt;% 
   map_df(shuffle_job) %&gt;% 
   filter(sd == min(sd)) %&gt;% 
@@ -380,7 +380,7 @@ do
 fi</code></pre>
 <p>add a shutdown command at the end….</p>
 <pre class="bash"><code>sudo shutdown -h now</code></pre>
-<p>… and I was off the the races. I now used the AWS CLI to spin up a bunch of instances, passing them this bash script via the <code>user_data</code> option. They ran and then shutdown automatically so I didn’t pay for extra compute.</p>
+<p>… and I was off the the races. I used the AWS CLI to spin up a bunch of instances, passing them their job’s bash script via the <code>user_data</code> option. They ran and then shutdown automatically so I didn’t pay for extra compute.</p>
 <pre class="bash"><code>aws ec2 run-instances ...\
 --tag-specifications &quot;ResourceType=instance,Tags=[{Key=Name,Value=&lt;&lt;job_name&gt;&gt;}]&quot; \
 --user-data file://&lt;&lt;job_script_loc&gt;&gt;</code></pre>
@@ -395,7 +395,7 @@ fi</code></pre>
 <div id="intelligent-caching." class="section level2">
 <h2>Intelligent caching.</h2>
 <p><span class="lesson_learned"><strong>Lesson Learned:</strong> If your data is setup well caching will be easy!</span></p>
-<p>Since one of the main workflows for these data was running the same model/ analysis across a bunch of SNPs at a time I decided that I could use the binning to my advantage. When pulling the data down for a SNP the entire bin’s data is kept and attached to the returned object. This means if a new query is run the old queries result’s can (potentially) be used to speed it up.</p>
+<p>Since one of the main workflows for these data was running the same model/ analysis across a bunch of SNPs at a time I decided that I could use the binning to my advantage. When pulling the data down for a SNP, the entire bin’s data is kept and attached to the returned object. This means if a new query is run the old queries result’s can (potentially) be used to speed it up.</p>
 <pre class="r"><code># Part of get_snp()
 ...
   # Test if our current snp data has the desired snp.
@@ -412,7 +412,6 @@ fi</code></pre>
     snp_results &lt;- prev_snp_results
   }
 ...</code></pre>
-<p>Since a common workflow is scanning SNP-by-SNP along a region, caching the bin made it very likely that the next requested SNP would already be on the machine and thus could be immediately grabbed.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">While building the package I ran a lot of benchmarks to compare the speed between different methods. I recomend it because sometimes the results went against my intuition. For instance, <code>dplyr::filter</code> was much faster than using indexing based filtering for grabbing rows, but getting a single column from a filtered dataframe was much faster using indexing syntax.</span></p>
 <p>Notice that the <code>prev_snp_results</code> object contains the key <code>snps_in_bin</code>. This allows fast searching through if we already have the data from a previous query, while also making it easy for the user to loop through all the SNPs in a bin using code like:</p>
 <pre class="r"><code># Get bin-mates
@@ -422,11 +421,13 @@ for(current_snp in snps_in_bin){
   my_snp_results &lt;- get_snp(current_snp, my_snp_results)
   # Do something with results 
 }</code></pre>
+<p>In addition, since a common workflow is scanning SNP-by-SNP along a region, caching the bin made it very likely that the next requested SNP would already be on the machine and thus could be immediately grabbed.</p>
 </div>
 </div>
 <div id="end-results" class="section level1">
 <h1>End results</h1>
 <p>We are now able to (and have started in ernest) run models and scenarios we were incapable of before. The best part is the other members of my lab don’t have to think about the complexities that went into it. They just have a function that works.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Even though the package abstracts away the details I tried to make the format of the data simple enough that if I were to dissapear tomorrow someone could figure it out.</span></p>
 <p>The speed is much improved. A typical use-case is to scan a functionally significant region of the genome (such as a gene) . Before we couldn’t do this (because it cost too much) but now, because of the caching, it takes on average less than a tenth of a second per SNP queried and the data usage is not even high enough to round up to a penny on our S3 costs.</p>
 <blockquote class="twitter-tweet" data-lang="en">
 <p lang="en" dir="ltr">

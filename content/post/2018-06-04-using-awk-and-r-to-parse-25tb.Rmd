@@ -117,7 +117,7 @@ I decided to get crazy with my partitioning and partitioned on each SNP. This gu
 
 The last attempt in the partitioning era was to partition on chromosome and then sort each partition. In theory this would have made each query quicker because the desired SNP data would only reside in the ranges of a few of the parquet chunks within a given region. Alas, it turns out sorting even the partitioned data was a lot of work. I ended up switching to EMR for a custom cluster, using 8 powerful instances (C5.4xl) and using Sparklyr to build a more flexible workflow...
 
-```r
+```{r, eval = FALSE}
 # sparklyr snippet to partition by chr and sort w/in partition
 # Join the raw data with the snp bins
 raw_data
@@ -148,7 +148,7 @@ The solution I came up with was to bin by position _rank_. I ran a query on our 
 
 `r tufte::margin_note("I ended up using 75 SNPs per bin, I explain why later.")`
 
-```r
+```{r, eval = FALSE}
 snp_to_bin <- unique_snps %>% 
   group_by(chr) %>% 
   arrange(position) %>% 
@@ -165,7 +165,7 @@ snp_to_bin <- unique_snps %>%
 
 The goal was to read this small (2.5 million row) dataframe into Spark, join it with the raw data, and then partition on the newly added `bin` column. 
 
-```r
+```{r, eval = FALSE}
 # Join the raw data with the snp bins
 data_w_bin <- raw_data %>%
   left_join(sdf_broadcast(snp_to_bin), by ='snp_name') %>%
@@ -248,7 +248,7 @@ These steps combined to make things _very_ fast. By virtue of increasing the spe
 
 [__Lesson Learned:__ Spark likes uncompressed data and does not like combining partitions.]{.lesson_learned}
 
-Now that I had the data sitting in an unzipped (see splittable) and semi-organized format on S3 I could go back to spark and work again. Surprise -- things didn't workout again! It was very hard to accurately tell spark how the data was partitioned and even when I did it seemed to like to split things into way too many partitions (like 95k), which then when I used `coalesce` to reduce down to a reasonable number of partitions, ended up ruining the partitioning I had used. I am sure there is a way to fix this but I couldn't find it over a couple days of looking. I did end up getting things to finish on Spark, it took a while however and my split parquet files were not super tiny (~200kb) But the data was where it needed to be. 
+Now that I had the data sitting in an unzipped (see splittable) and semi-organized format on S3 I could go back to Spark. Surprise -- things didn't workout again! It was very hard to accurately tell Spark how the data was partitioned and even when I did it seemed to like to split things into way too many partitions (like 95k), which then when I used `coalesce` to reduce down to a reasonable number of partitions, ended up ruining the partitioning I had used. `r tufte::margin_note("I am sure there is a way to fix this but I couldn't find it over a couple days of looking.")`  I did end up getting things to finish on Spark, it took a while however and my split parquet files were not super tiny (~200kb) But the data was where it needed to be. 
 
 <img src='/using_awk_and_r_to_parse_25tb/uneven_small_partitions.png'/> 
 [_Too small and uneven, wonderful!_]{.photo_caption}
@@ -258,10 +258,10 @@ Now that I had the data sitting in an unzipped (see splittable) and semi-organiz
 
 [__Lesson Learned:__ Spark is a lot of overhead for simple jobs.]{.lesson_learned}
 
-Now that the data was loaded up into a reasonable format I could test out the  speed. I setup an R script to spin up a local spark server and then load a spark dataframe from a given parquet bins location. `r tufte::margin_note("I tried loading all the data but couldn't get sparklyr to recognize the partitioning for some reason.")`
+With the data loaded up into a reasonable format I could test out the speed. I setup an R script to spin up a local Spark server and then load a spark dataframe from a given parquet bins location. `r tufte::margin_note("I tried loading all the data but couldn't get sparklyr to recognize the partitioning for some reason.")`
 
 
-```r
+```{r, eval = FALSE}
 sc <- spark_connect(master = "local")
 
 desired_snp <- 'rs34771739'
@@ -290,12 +290,12 @@ This took 29.415 seconds. Much better than before, but still not a great sign fo
 
 [__Lesson Learned:__ Associative arrays in AWK are super powerful.]{.lesson_learned}
 
-I knew I could do better. I remembered that I had read about a cool feature in AWK called ["associative arrays'](http://www.grymoire.com/Unix/Awk.html#uh-22). in this charming [AWK guide by Bruce Barnett](http://www.grymoire.com/Unix/Awk.html). These are essentially a key value stores in AWK that for some reason had been given a different name and thus I never thought too much about. I realized that I could use these associative arrays to perform the union between my SNP -> bin table and my raw data without using something like spark. 
+I knew I could do better. I remembered that I had read in this charming [AWK guide by Bruce Barnett](http://www.grymoire.com/Unix/Awk.html) about a cool feature in AWK called ["associative arrays'](http://www.grymoire.com/Unix/Awk.html#uh-22). These are essentially a key value stores in AWK that for some reason had been given a different name and thus I never thought too much about. I realized that I could use these associative arrays to perform the union between my SNP -> bin table and my raw data without using Spark. 
 
-What I had do to was use the `BEGIN` block in my AWK script. This is a block of code that gets run before any lines of data are fed into the main body of the script. I used this block to read my entire SNP -> bin table in to an associative array that was keyed with the SNP name and valued with the SNPs bin. 
+To do this I used the `BEGIN` block in my AWK script. This is a block of code that gets run before any lines of data are fed into the main body of the script. 
 
 __join_data.awk__
-```awk
+```
 BEGIN {
   FS=",";
   batch_num=substr(chunk,7,1);
@@ -307,13 +307,12 @@ BEGIN {
 }
 ```
 
-
-The `while(getline...)` command loaded all the rows in from my bin csv and set the first column (the SNP name) as the key to the `bin` associative array and the second value (the bin) to the value. Then in the `{` block `}` that gets run on every line of the main file each line is sent to an output file that was had a unique name based upon its bin: `..._bin_"bin[$1]"_...`. 
+The `while(getline...)` command loaded all the rows in from my bin csv and set the first column (the SNP name) as the key to the `bin` associative array and the second value (the bin) to the value. Then, in the `{` block `}` that gets run on every line of the main file, each line is sent to an output file that was had a unique name based upon its bin: `..._bin_"bin[$1]"_...`. 
 
 `r tufte::margin_note("The variables of <code>batch_num</code> and <code>chunk_id</code> corresponded to data given by the pipeline that allowed me to avoid race conditions in my writing by making sure that every thread run by <code>parallel</code> wrote to its own unique file. ")`
 
 
-Because I had all the raw data split into chromosome folders from my previous AWK experiment I could now write another bash script to work through a chromosome at a time and send back the now further partitioned data into S3. 
+Because I had all the raw data split into chromosome folders from my previous AWK experiment I could now write another bash script to work through a chromosome at a time and send back the further partitioned data to S3. 
 
 ```{bash, eval = FALSE}
 DESIRED_CHR='13'
@@ -334,9 +333,9 @@ rm chunked/*
 
 This script has two `parallel` sections:
 
-The first one splits up every file containing the desired chromosome's data and spins up a separate process to spit that file into its representative bins. In order to prevent race conditions from the multiple threads writing to the same bin file AWK is passed the name of the file which it uses to write to unique locations. This results in a _ton_ of tiny files located on the disk (I used 1tb EBS volumes for this). 
+The first one reads in every file containing data for the desired chromosome and divies them up to multiple threads that spit their files into its representative bins. In order to prevent race conditions from the multiple threads writing to the same bin file, AWK is passed the name of the file which it uses to write to unique locations, e.g. `chr_10_bin_52_batch_2_aa.csv` This results in a _ton_ of tiny files located on the disk (I used 1TB EBS volumes for this). 
 
-The second `parallel` pipeline goes through and merges every bin's separate files into single csv's with `cat`, sends them to an R script... 
+The second `parallel` pipeline goes through and merges every bin's separate files into single csv's with `cat`, sends them for export... 
 
 ## Piping to R?
 
@@ -344,7 +343,7 @@ The second `parallel` pipeline goes through and merges every bin's separate file
 
 You may have noticed this part of the bash script above: `...cat chunked/*_bin_{}_*.csv | ./upload_as_rds.R...`. This line pipes all the concated files for a bin into the following R script...
 
-```r
+```{r, eval = FALSE}
 #!/usr/bin/env Rscript
 library(readr)
 library(aws.s3)
@@ -364,11 +363,11 @@ s3saveRDS(
 )
 ```
 
-By passing `readr::read_csv` the value `file("stdin")` it loads the data piped to the R script into a dataframe, which then gets written as an `.rds` file directly to s3 using `aws.s3`. 
+By passing `readr::read_csv` the variable `file("stdin")` it loads the data piped to the R script into a dataframe, which then gets written as an `.rds` file directly to s3 using `aws.s3`. 
 
 `r tufte::margin_note("Rds is kind-of like a junior version of parquet without the niceties of columnar storage.")`
 
-After this bash script had finishes I have a bunch of `.rds` files sitting in S3 benefiting from the great compression techniques and also types built in that `.rds` offers.  
+After this bash script had finished I have a bunch of `.rds` files sitting in S3 benefiting from the great compression techniques and also types built in that `.rds` offers.  
 
 Even with notoriously slow R in the workflow this was super fast. `r tufte::margin_note("Unsurprisingly the parts of R for reading and writing data are rather optimized.")` After testing on a single average size chromosome the job finished in about two hours. 
 
@@ -379,11 +378,11 @@ Even with notoriously slow R in the workflow this was super fast. `r tufte::marg
 
 I was worried about how S3 would handle having a ton of files dumped onto it. I could make the file names make sense, but how would S3 handle searching for one? 
 
-It turns out S3 treats the path to a given file as a simple key in what can be thought of as a hash table. Aka a document-based database. Think of a "bucket" as a table and every file is an entry. Because of this folders in S3 are just a cosmetic thing and S3 doesn't actually care about the `/` character. 
+It turns out S3 treats the path to a given file as a simple key in what can be thought of as a hash table, or a document-based database. Think of a "bucket" as a table and every file is an entry. Because of this folders in S3 are just a cosmetic thing and S3 doesn't actually care about the `/` character. 
 
 `r tufte::margin_note("<img src='/using_awk_and_r_to_parse_25tb/s3_keys_explained.png'/> <a href='https://aws.amazon.com/s3/faqs/'>From the S3 FAQs page</a>")`
 
-Because speed and efficiency are a important to S3 making money for Amazon it's no surprise that this key-is-a-file-path system is super optimized. Still I tried to strike a balance. I wanted to not need to do a ton of `get` requests and I wanted the queries to be fast. I found that making around 20k bin files worked best. `r tufte::margin_note("I am sure further optimizations could speed things up (such as making a special bucket just for the data and thus reducing the size of the lookup table.) But I ran out of time and money to do more experiments.")`
+Because speed and efficiency are a important to S3 making money for Amazon it's no surprise that this key-is-a-file-path system is super optimized. Still, I tried to strike a balance. I wanted to not need to do a ton of `get` requests and I wanted the queries to be fast. I found that making around 20k bin files worked best. `r tufte::margin_note("I am sure further optimizations could speed things up (such as making a special bucket just for the data and thus reducing the size of the lookup table.) But I ran out of time and money to do more experiments.")`
 
 ## What about cross-compatability?
 
@@ -400,7 +399,7 @@ I wanted to spin up multiple ec2 instances to convert all my data but I also did
 My solution was to write a brute force job optimization script using R….
 
 First I queried S3 to figure out how large each chromosome was in terms of storage.
-```r
+```{r, eval = FALSE}
 library(aws.s3)
 library(tidyverse)
 
@@ -437,7 +436,7 @@ chr_sizes <- get_bucket_df(
 
 Then I wrote a function that would take this total size info, shuffle the order, and split into `num_jobs` groups and report how variable the sizes of each job’s data was. 
 
-```r
+```{r, eval = FALSE}
 num_jobs <- 7
 # How big would each job be if perfectly split?
 job_size <- sum(chr_sizes$total_size)/7
@@ -468,8 +467,9 @@ shuffle_job(1)
 ```
 
 
-Once this was setup all I had do do was run a ton of shuffles and pick the best one using purrr. 
-```r
+Once this was setup I ran a thousand shuffles using purrr and picked the best one.
+
+```{r, eval = FALSE}
 1:1000 %>% 
   map_df(shuffle_job) %>% 
   filter(sd == min(sd)) %>% 
@@ -492,7 +492,7 @@ add a shutdown command at the end….
 sudo shutdown -h now
 ```
 
-… and I was off the the races. I now used the AWS CLI to spin up a bunch of instances, passing them this bash script via the `user_data` option. They ran and then shutdown automatically so I didn’t pay for extra compute. 
+… and I was off the the races. I used the AWS CLI to spin up a bunch of instances, passing them their job's bash script via the `user_data` option. They ran and then shutdown automatically so I didn’t pay for extra compute. 
 
 ```{bash, eval = FALSE}
 aws ec2 run-instances ...\
@@ -514,9 +514,9 @@ I built and documented a very simple package that contains just a few functions 
 
 [__Lesson Learned:__ If your data is setup well caching will be easy!]{.lesson_learned}
 
-Since one of the main workflows for these data was running the same model/ analysis across a bunch of SNPs at a time I decided that I could use the binning to my advantage. When pulling the data down for a SNP the entire bin's data is kept and attached to the returned object. This means if a new query is run the old queries result's can (potentially) be used to speed it up.
+Since one of the main workflows for these data was running the same model/ analysis across a bunch of SNPs at a time I decided that I could use the binning to my advantage. When pulling the data down for a SNP, the entire bin's data is kept and attached to the returned object. This means if a new query is run the old queries result's can (potentially) be used to speed it up.
 
-```r
+```{r, eval = FALSE}
 # Part of get_snp()
 ...
   # Test if our current snp data has the desired snp.
@@ -535,14 +535,13 @@ Since one of the main workflows for these data was running the same model/ analy
 ...
 ```
 
-Since a common workflow is scanning SNP-by-SNP along a region, caching the bin made it very likely that the next requested SNP would already be on the machine and thus could be immediately grabbed. 
 
 
 `r tufte::margin_note("While building the package I ran a lot of benchmarks to compare the speed between different methods. I recomend it because sometimes the results went against my intuition. For instance, <code>dplyr::filter</code> was much faster than using indexing based filtering for grabbing rows, but getting a single column from a filtered dataframe was much faster using indexing syntax.")`
 
 Notice that the `prev_snp_results` object contains the key `snps_in_bin`. This allows fast searching through if we already have the data from a previous query, while also making it easy for the user to loop through all the SNPs in a bin using code like: 
 
-```r
+```{r, eval = FALSE}
 # Get bin-mates
 snps_in_bin <- my_snp_results$snps_in_bin
 
@@ -552,9 +551,15 @@ for(current_snp in snps_in_bin){
 }
 ```
 
+In addition, since a common workflow is scanning SNP-by-SNP along a region, caching the bin made it very likely that the next requested SNP would already be on the machine and thus could be immediately grabbed. 
+
+
 # End results
 
 We are now able to (and have started in ernest) run models and scenarios we were incapable of before. The best part is the other members of my lab don’t have to think about the complexities that went into it. They just have a function that works. 
+
+`r tufte::margin_note("Even though the package abstracts away the details I tried to make the format of the data simple enough that if I were to dissapear tomorrow someone could figure it out.")`
+
 
 The speed is much improved. A typical use-case is to scan a functionally significant region of the genome (such as a gene) . Before we couldn’t do this (because it cost too much) but now, because of the caching, it takes on average less than a tenth of a second per SNP queried and the data usage is not even high enough to round up to a penny on our S3 costs. 
 
