@@ -217,6 +217,10 @@ The splitting was a tad bit slow and when I ran `htop` to see the usage of the p
 
 Once I ran the splitting using the new GNU parallel workflow it was great, but I was still getting some bottle-necking caused by downloading the S3 objects to disk being a little bit slow and not fully parallelized. I did a few things to fix this. 
 
+
+`r tufte::margin_note("It was [pointed out on twitter](https://twitter.com/hyperosonic/status/1143667117553856514?s=21) by [Hyperosonic](https://twitter.com/Hyperosonic) that I forgot to cite <code>gnu parallel</code> properly as requested by the package. You would think that the number of times I saw the message reminding me to cite that wouldn't be possible!  Tange, Ole. 'Gnu parallel-the command-line power tool.' The USENIX Magazine 36.1 (2011): 42-47.")`
+
+
 1. Found out that you can implement the S3 download step right into the pipeline, completely skipping intermediate disk storage. This meant I could avoid writing the raw data to disk and also use smaller and thus cheaper storage on AWS. 
 2. Increased the number of threads that the AWS CLI uses to some large number (the default is 10) with `aws configure set default.s3.max_concurrent_requests 50`.
 3. Switched to a network speed optimized ec2 instance. These are the ones with the `n` in the name. `r tufte::margin_note("I found that the loss in compute power caused from using the 'n' instances was more than made up for by the increased download speeds.")` I used c5n.4xl's for most of my stuff. 
