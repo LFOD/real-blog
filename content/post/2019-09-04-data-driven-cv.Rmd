@@ -505,7 +505,7 @@ Finally, knit your results by pressing 'Knit' at the top of the `.Rmd` in RStudi
 `r tufte::margin_note("Not using RStudio? Then just run <code>rmarkdown::render('index.Rmd')</code>.")`
 
 
- The giants upon who's shoulders I stand
+## The giants upon who's shoulders I stand
 
 I want to emphasise that I have done nothing particularly special here. Everything is possible because of a series of amazing contributions by the R community. 
 
