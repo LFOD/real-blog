@@ -476,18 +476,19 @@ The main file you need to change is `positions.csv`. Once you have all your posi
 
 Then fill in your sections. If my sections don't fit your profile (likely) you can add a new section in `positions.csv` (, say `'serious_workthings'`.) You can include this new section by placing the following in the document. 
 
-`r tufte::margin_note("In your code you'll need to add a <code>{r}</code> before the code chunk. I can't figure out how to print that in Rmarkdown which is why it's omited in the example.")`
+`r tufte::margin_note("A huge thanks to Mark Scheuerell, who [showed me how to properly render meta-rmarkdown!](https://twitter.com/mark_scheuerell/status/1181271306177613824)")`
 
 
 ````
 Serious Work Things {data-icon=book}
 --------------------------------------------------------------------------------
 
-```
+`r ''````{r, results = 'asis'}
 position_data %>% print_section('serious_workthings')
 ```
-
 ````
+
+
 
 ### Personalize text
 

@@ -553,14 +553,13 @@ h3 {
 <h3>Replace position data</h3>
 <p>The main file you need to change is <code>positions.csv</code>. Once you have all your positions in then go into the main <code>index.Rmd</code> if you’re making a CV or <code>resume.Rmd</code> if you’re making a resume.</p>
 <p>Then fill in your sections. If my sections don’t fit your profile (likely) you can add a new section in <code>positions.csv</code> (, say <code>'serious_workthings'</code>.) You can include this new section by placing the following in the document.</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In your code you’ll need to add a <code>{r}</code> before the code chunk. I can’t figure out how to print that in Rmarkdown which is why it’s omited in the example.</span></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">A huge thanks to Mark Scheuerell, who <a href="https://twitter.com/mark_scheuerell/status/1181271306177613824">showed me how to properly render meta-rmarkdown!</a></span></p>
 <pre><code>Serious Work Things {data-icon=book}
 --------------------------------------------------------------------------------
 
-```
+```{r, results = &#39;asis&#39;}
 position_data %&gt;% print_section(&#39;serious_workthings&#39;)
-```
-</code></pre>
+```</code></pre>
 </div>
 <div id="personalize-text" class="section level3">
 <h3>Personalize text</h3>
