@@ -21,14 +21,14 @@ td, th {
     border: 1px solid grey;
 }
 </style>
-<p>A confession: I always put off updating my CV and Resume. Every time I go to update it, I end up deciding that I don’t like the style and then start from scratch. Each time I do this I have to manually extract each relevant piece of information from where it was to where it now goes. I don’t have a long CV yet, but even now, this takes much too long.</p>
+<p>A confession: I always put off updating my CV and Resume. Every time I go to update it, I end up deciding that I don’t like the style and then start from scratch. Each time I do this, I have to manually extract each relevant piece of information from where it was to where it now goes. I don’t have a long CV yet, but even now, this takes much too long.</p>
 <p>A programmer would look at a problem like this and say, “any scenario where I repeat the same actions I should write a script.” Since I self-identify as a “data scientist” - an unholy mashup of programmer and statistician - I figured I could write a script to do the formatting and store all my information in… spreadsheets!
 <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In a hurry and just want to know how you can build your CV or resume this way? Skip to <a href="#want-to-build-your-cv-this-way">here</a></span></p>
 <p>The goal of this post is to walk you through the techniques I used and help you do the same.</p>
 <p>First, let’s talk about the framework that allows this.</p>
 <div id="rmarkdown-pagedown" class="section level2">
 <h2>RMarkdown &amp; Pagedown</h2>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">RMarkdown is just one of a good number of tools that allow you to use the <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programing paradigm</a>, popularized by the computer scientist Donald Knuth.</span>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">RMarkdown is just one of a good number of tools that allow you to use the <a href="https://en.wikipedia.org/wiki/Literate_programming">literate programming paradigm</a>, popularized by the computer scientist Donald Knuth.</span>
 If you are familiar with the world of R programming, you will likely have heard of <a href="https://rmarkdown.rstudio.com/">Rmarkdown</a>. RMarkdown is a file-format/package that takes a standard markdown document and allows the code chunks within to be executed and their outputs recorded.</p>
 <p><a href="https://pagedown.rbind.io">Pagedown</a> is a new R package that formats the final output from your Rmarkdown into paginated HTML. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I had the pleasure of sitting in the very back of a packed conference hall at RStudio::conf 2019 when Yihui Xie introduced Pagedown. You can watch the presentation from a much better vantage point than I had on the <a href="https://resources.rstudio.com/rstudio-conf-2019/pagedown-creating-beautiful-pdfs-with-r-markdown-and-css">RStudioConf presentations site.</a></span> This HTML can then be easily turned into a PDF by using the print function in your browser. Previously, if you wanted to generate a PDF from RMarkdown, you had two options. You could just print unpaginated HTML (ugly), or you could compile to Latex, which meant you losing out on a lot of niceties that are provided by CSS formatting. Personally, I know a lot more about formatting with CSS than I do with Latex, so this was a perfect fit for me.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">It’s beautiful</span>
@@ -66,8 +66,8 @@ Making a CV/ Resume is something I always put off. But thanks to the {pagedown},
 — Nick Strayer (<span class="citation">@NicholasStrayer</span>) <a href="https://twitter.com/NicholasStrayer/status/1177258660260544512?ref_src=twsrc%5Etfw">September 26, 2019</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>This sticking point was the one of the inspirations for the package <code>glue</code>, by the brilliant <a href="https://twitter.com/jimhester_">Jim Hester</a>. Glue works by allowing you to write your output string in a natural template format. You tell R where you want each variable placed by writing the variable name wrapped in curly braces in the desired position in your template. Then when <code>glue()</code> evaluates, it pastes the values of each variable into its respective curly-braced location. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">You can change what character is used to wrap variables with the arguments <code>.open</code> and <code>.close</code>. In case you want a curly brace in your output.</span></p>
-<p>This means we can write the markdown for a resume position by encoding all the neccesary details about the position in variables and passing those variables to <code>glue()</code>…</p>
+<p>This sticking point was one of the inspirations for the package <code>glue</code>, by the brilliant <a href="https://twitter.com/jimhester_">Jim Hester</a>. Glue works by allowing you to write your output string in a natural template format. You tell R where you want each variable placed by writing the variable name wrapped in curly braces in the desired position in your template. Then when <code>glue()</code> evaluates, it pastes the values of each variable into its respective curly-braced location. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">You can change what character is used to wrap variables with the arguments <code>.open</code> and <code>.close</code>. In case you want a curly brace in your output.</span></p>
+<p>This means we can write the markdown for a resume position by encoding all the necessary details about the position in variables and passing those variables to <code>glue()</code>…</p>
 <pre class="r"><code>title &lt;- &quot;PhD. Candidate, Biostatistics&quot;
 loc &lt;- &quot;Nashville, TN&quot;
 institution &lt;- &quot;Vanderbilt University&quot;
@@ -119,8 +119,8 @@ I decided to do one final copy and paste of my positions into a CSV.</p>
 — Mara Averick (<span class="citation">@dataandme</span>) <a href="https://twitter.com/dataandme/status/1175010415341985793?ref_src=twsrc%5Etfw">September 20, 2019</a>
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>I made multiple columns for description and creatively titled them <code>description_1</code>, <code>description_2</code>, and <code>description_3</code>. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If I had an entry with four description bullet points I would have just added a <code>description_4</code>, and so on.</span>I filled in the columns for each entry until all bullets had been pasted and then left the remaining columns empty.</p>
-<p>For the rest of this post I will use the actual position dataframe that my CV is using to demonstrate, it’s loaded currently as <code>positions</code>.</p>
+<p>I made multiple columns for description and creatively titled them <code>description_1</code>, <code>description_2</code>, and <code>description_3</code>. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If I had an entry with four description bullet points, I would have just added a <code>description_4</code>, and so on.</span>I filled in the columns for each entry until all bullets had been pasted and then left the remaining columns empty.</p>
+<p>For the rest of this post, I will use the actual position dataframe that my CV is using to demonstrate, it’s loaded currently as <code>positions</code>.</p>
 <pre class="r"><code># Helper function to print table without overwhelming output
 print_head &lt;- function(data, size = 5){
   head(data, size) %&gt;% 
@@ -180,7 +180,7 @@ position_data %&gt;%
 </tr>
 </tbody>
 </table>
-<p>Using <code>pivot_longer</code> I targeted the description columns using <code>tidyr::starts_with('description')</code> and transformed each positions single row into a series of rows with each description stored as <code>'description'</code> and its value as <code>'description_num'</code>. All the other columns were simply repeated.</p>
+<p>Using <code>pivot_longer</code>, I targeted the description columns using <code>tidyr::starts_with('description')</code> and transformed each individual position row into a series of rows with each description stored as <code>'description'</code> and its value as <code>'description_num'</code>. All the other columns were simply repeated.</p>
 <pre class="r"><code>pivoted_positions &lt;- position_data %&gt;% 
   pivot_longer(
      starts_with(&#39;description&#39;),
@@ -231,7 +231,7 @@ pivoted_positions %&gt;%
 </tr>
 </tbody>
 </table>
-<p>Once this was completed, I got back to a single row per entry by using <code>group_by()</code> and <code>mutate()</code> to generate a list column that contained every description for a given position. Finally, I just kept the first row for each entry. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I am almost sure there’s a more elegant way doing this whole step, but I couldn’t figure it out. Know a better way? Please let me know!</span></p>
+<p>Once this was completed, I got back to a single row per entry by using <code>group_by()</code> and <code>mutate()</code> to generate a list column that contained every description for a given position. Finally, I just kept the first row for each entry. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I am almost sure there’s a more elegant way to do this whole step, but I couldn’t figure it out. Know a better way? Please let me know!</span></p>
 <pre class="r"><code>pos_w_descrip_list &lt;- pivoted_positions %&gt;% 
   group_by(id) %&gt;% 
   # Wrap all descriptions into a list column
@@ -286,7 +286,7 @@ pos_w_descrip_list %&gt;%
 <div id="glue_data-to-the-rescue" class="section level2">
 <h2><code>glue_data</code> to the rescue</h2>
 <p><code>glue::glue_data()</code> is a sister-function to <code>glue::glue()</code> that allows you to use a glue template in a dplyr pipe. You write out the column name in your curly braces, and glue runs row-by-row through your tibble, building a string for each.</p>
-<p>Before I could do this, I needed to take care of a few things. One was the dates. Some positions didn’t have both start and end date, or they were less than a year-long. In these scenarios I just wanted to print a single date rather than a range. To do this, I used a <code>mutate</code> and an <code>ifelse</code> to build a <code>timeline</code> column.</p>
+<p>Before I could do this, I needed to take care of a few things. One was the dates. Some positions didn’t have both start and end date, or they were less than a year-long. In these scenarios, I just wanted to print a single date rather than a range. To do this, I used a <code>mutate</code> and an <code>ifelse</code> to build a <code>timeline</code> column.</p>
 <pre class="r"><code># If missing start or start is same as end
 # date, just use end date. otw build range
 positions_w_timeline &lt;- pos_w_descrip_list %&gt;% 
@@ -343,8 +343,8 @@ positions_w_timeline %&gt;%
 </tr>
 </tbody>
 </table>
-<p>Second, I needed to collapse my list column of descriptions into the one-bullet-per-line format that the Pagedown resume template uses. I used <code>purrr::map_chr</code>, and the <code>paste</code> function.</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Everytime I write specify the dash character I always feel like it’s a non-plussed face that is judging me: <code>‘-’</code></span></p>
+<p>Second, I needed to collapse my list column of descriptions into the one-bullet-per-line format that the Pagedown resume template uses. I used <code>purrr::map_chr</code> and the <code>paste</code> function.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Every time I write a quoted dash character, I always feel like it’s a non-plussed face that is judging me: <code>‘-’</code></span></p>
 <pre class="r"><code>positions_collapsed_bullets &lt;- positions_w_timeline %&gt;% 
   mutate(
      description_bullets = map_chr(
@@ -401,11 +401,11 @@ positions_collapsed_bullets %&gt;%
 <p>Here’s what <a href="https://github.com/nstrayer/cv/blob/master/parsing_functions.R#L47-L88">the final function looks like</a>.
 <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">You may notice a function <code>strip_links_from_cols()</code> in this that I haven’t mentioned yet. We will get to that!</span></p>
 <p><a href="https://github.com/nstrayer/cv/blob/master/parsing_functions.R#L47-L88"><img src="/nicks_resume_data/print_section_function.png" /></a></p>
-<p>Now I can just go through and lay out my resume by dropping in an R chunk with output <code>asis</code>. If I end up wanting to change the layout in the future, I just need to rearrange my glue template.</p>
+<p>Now I can just go through and draft my resume by dropping in an R chunk with output <code>asis</code>. If I end up wanting to change the layout in the future, I just need to rearrange my glue template.</p>
 </div>
 <div id="building-a-resume" class="section level2">
 <h2>Building a resume</h2>
-<p>I used this new-layout flexibility almost immediately. As some people doing hiring may not want - or have time - to scan through multiple pages of a CV, I built a template for a single-paged resume. All this took was adding a single column to the spreadsheet that contained a boolean indicating if I wanted the position in my resume or not.</p>
+<p>I used this new-layout flexibility almost immediately. As some people doing hiring may not want - or have time - to scan through multiple pages of a CV, I built a template for a single-page resume. All this took was adding a single column to the spreadsheet that contained a boolean indicating if I wanted the position in my resume or not.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The fact I had an extra curly brace to start {pagedown} in this tweet has caused me large quantities of distress.</span></p>
 <blockquote class="twitter-tweet">
 <p lang="en" dir="ltr">
@@ -417,12 +417,12 @@ Added a 1 page resume to my <a href="https://twitter.com/hashtag/rstats?src=hash
 </div>
 <div id="dealing-with-links" class="section level2">
 <h2>Dealing with links</h2>
-<p>One of the beautiful things about HTML is that you can interact with it. The most common type of interaction is clicking on links. In my positions, I liberally added links to things for people to click on. This works great when people view my CV on the web, but what if someone wants to print it out and read it in real life? After all, pagedown is paginated for exactly that purpose.</p>
-<p>In the standard pagedown format, there is a YAML header option (<code>links-to-footnotes: true</code>) <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">For all the options available check out the <a href="https://pagedown.rbind.io/#links">wonderful docs for pagedown</a>.</span> that replaces every link with a footnote and then adds a superscript to the link text guiding the reader to the correct reference. This is a great solution. Unfortunately, the option isn’t available for the resume template.</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">There is a <a href="https://github.com/rstudio/pagedown/blob/master/inst/resources/lua/uri-to-fn.lua">pandoc processing function</a> for parsing links that <a href="https://github.com/rstudio/pagedown/blob/master/R/paged.R#L43">is passed to the standard paged format</a> but <a href="https://github.com/rstudio/pagedown/blob/master/R/resume.R#L13-L17">is not passed to the Resume template</a>. I tried to add it by modifying the Pagedown package itself could never get it to respect the sidebar layout. If I had more time I would like to fix this at the package-level to make it more elegant.</span></p>
+<p>One of the beautiful things about HTML is that you can interact with it. The most common type of interaction is clicking on links. In my positions, I liberally added links to things for people to click on. This works great when people view my CV on the web, but what if someone wants to print it out and read it in real life? After all, pagedown is paginated for precisely that purpose.</p>
+<p>In the standard pagedown format, there is a YAML header option (<code>links-to-footnotes: true</code>) <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">For all the available options, check out the <a href="https://pagedown.rbind.io/#links">excellent docs for pagedown</a>.</span> that replaces every link with a footnote and then adds a superscript to the link text guiding the reader to the correct reference. This is a great solution. Unfortunately, the option isn’t available for the resume template.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">There is a <a href="https://github.com/rstudio/pagedown/blob/master/inst/resources/lua/uri-to-fn.lua">pandoc processing function</a> for parsing links that <a href="https://github.com/rstudio/pagedown/blob/master/R/paged.R#L43">is passed to the standard paged format</a> but <a href="https://github.com/rstudio/pagedown/blob/master/R/resume.R#L13-L17">is not passed to the Resume template</a>. I tried to add it by modifying the Pagedown package itself could never get it to respect the sidebar layout. If I had more time, I would like to fix this at the package-level to make it more elegant.</span></p>
 <p>Since I liked the resume template, I decided to roll my own solution.</p>
 <p>I wrote a function <code>sanitize_links()</code> that takes a chunk of text as input and identifies the markdown links in it with a regular expression. The function then replaces the markdown link with plain text and adds a sequential superscript. Each link it replaces is placed in a bookkeeping array: <code>links</code>. At the very end of the document, <code>links</code> is printed out as a numbered list.</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I just found out you can do comments in your regular expressions, and it makes me very happy.</span></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I just found out you can write comments in your regular expressions, and it makes me very happy.</span></p>
 <pre class="r"><code>library(stringr)
 # Regex to locate links in text
 find_link &lt;- regex(&quot;
@@ -486,7 +486,7 @@ strip_links_from_cols &lt;- function(data, cols_to_strip){
   data
 }</code></pre>
 <p>I wrapped links in the free text section in <code>sanitize_links()</code> so they would get stripped as well. This means that the links sequentially decrease as the page goes down. Is this actually important? Probably not.</p>
-<p>Now when I want to generate the CV for printing to PDF I just flip a boolean <code>PDF_EXPORT</code> at the top of the RMD, and all the links are stripped out.</p>
+<p>Now when I want to generate the CV for printing to PDF, I just flip a boolean <code>PDF_EXPORT</code> at the top of the RMD, and all the links are stripped out.</p>
 <pre class="r"><code>sanitize_links &lt;- function(text){
   # Only do stuff to text if we&#39;re exporting PDF
   if(PDF_EXPORT){
@@ -507,9 +507,9 @@ strip_links_from_cols &lt;- function(data, cols_to_strip){
 </div>
 <div id="customizing-the-css" class="section level2">
 <h2>Customizing the CSS</h2>
-<p>Previously we focused on how to get the positions in, but one of the more interesting aspects of a CV is how you can stand out by making it unique. Because of this I didn’t want to just use the default (but wonderful) resume template; so I modified the CSS using the CSS overide option available in RMarkdown.</p>
-<p>This involves just writing your new styles in a <code>.css</code> file somewhere in the same directory as your markdown and then referencing it in the yaml header:</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I left in the orginal <code>‘resume’</code> css file so I didn’t lose all the niceness it provides and my styles just stack on top of it.</span></p>
+<p>Previously we focused on how to get the positions in, but one of the more compelling aspects of a CV is how you can stand out by making it unique. Because of this, I didn’t want to just use the default (but beautiful) resume template; so I modified the CSS using the CSS override option available in RMarkdown.</p>
+<p>This involves just writing your new styles in a <code>.css</code> file somewhere in the same directory as your markdown and then referencing it in the YAML header:</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I left in the original <code>‘resume’</code> CSS file so I didn’t lose all the niceness it provides and my styles just stack on top of it.</span></p>
 <pre><code>---
 title: &quot;Nick Strayer&#39;s CV&quot;
 output:
@@ -534,18 +534,25 @@ h3 {
   font-family: &quot;Playfair Display&quot;, serif;
   color: #000;
 }</code></pre>
-<p>This blog is not one you’re probably reading to get CSS tips, so I will not go into the specifics. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you are interested in learning more about custom css I really like <a href="https://www.youtube.com/channel/UCJZv4d5rbIKd4QHMPkcABCw">Kevin Powell’s youtube chanel</a>. It transformed the way I view and write CSS for the better.</span> I essentially went in and made the sidebar a bit smaller and changed the way some of the lists were formatted. If you want to see all the CSS I used for my CV check out the <a href="https://github.com/nstrayer/cv/blob/master/css/styles.css">main style file on github</a>. The singe-paged resume also has an additional <a href="https://github.com/nstrayer/cv/blob/master/css/custom_resume.css">set of styles</a> that stack on top of both the default style sheet and my CV styles.</p>
+<p>This blog is not one you’re probably reading to get CSS tips, so I will not go into the specifics. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">If you are interested in learning more about CSS I really like <a href="https://www.youtube.com/channel/UCJZv4d5rbIKd4QHMPkcABCw">Kevin Powell’s youtube channel</a>. It transformed the way I view and write CSS for the better.</span> I mainly went in and made the sidebar a bit smaller and changed the way some of the lists were formatted. If you want to see all the CSS I used for my CV check out the <a href="https://github.com/nstrayer/cv/blob/master/css/styles.css">main style file on github</a>. The singe-paged resume also has an additional <a href="https://github.com/nstrayer/cv/blob/master/css/custom_resume.css">set of styles</a> that stack on top of both the default style sheet and my CV styles.</p>
 </div>
 <div id="want-to-build-your-cv-this-way" class="section level2">
 <h2>Want to build your CV this way?</h2>
-<p>Okay, we can dispense with the formalities. The quickest and easiest way to build your CV this way is to copy the files from <a href="https://github.com/nstrayer/cv">my CV</a> and then replace the positions data with your own data and customize some of the text.</p>
+<p>Okay, we can dispense with the formalities. The quickest and easiest way to build your CV this way is to:</p>
+<ul>
+<li>Copy the files from <a href="https://github.com/nstrayer/cv">my CV</a></li>
+<li>Replace the positions data with your own data</li>
+<li>Personalize the text main document text…</li>
+</ul>
+<div id="copy-the-files" class="section level3">
+<h3>Copy the files</h3>
 <p>If you are familiar with git/ github you can fork <a href="https://github.com/nstrayer/cv">the repo</a>, if you just want the files, here’s <a href="https://github.com/nstrayer/cv/archive/master.zip">a link to download a zip of all the files needed</a>.</p>
 <p><img src="/nicks_resume_data/layout_of_files.png" /></p>
+</div>
+<div id="replace-position-data" class="section level3">
+<h3>Replace position data</h3>
 <p>The main file you need to change is <code>positions.csv</code>. Once you have all your positions in then go into the main <code>index.Rmd</code> if you’re making a CV or <code>resume.Rmd</code> if you’re making a resume.</p>
-<p>Next, change the <a href="https://github.com/nstrayer/cv/blob/master/index.Rmd#L51-L119">personalized text</a> for skills and header text etc..</p>
-<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I didn’t put <em>everything</em> into a spreadsheet.</span></p>
-<p><a href="https://github.com/nstrayer/cv/blob/master/index.Rmd#L51-L119"><img src="/nicks_resume_data/code_to_change.png" /></a></p>
-<p>Then fill in your sections. If my sections don’t fit your profile (likely) you can add a new section in <code>positions.csv</code>, say <code>'serious_workthings'</code>. You can include this by placing the following in the document.</p>
+<p>Then fill in your sections. If my sections don’t fit your profile (likely) you can add a new section in <code>positions.csv</code> (, say <code>'serious_workthings'</code>.) You can include this new section by placing the following in the document.</p>
 <p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In your code you’ll need to add a <code>{r}</code> before the code chunk. I can’t figure out how to print that in Rmarkdown which is why it’s omited in the example.</span></p>
 <pre><code>Serious Work Things {data-icon=book}
 --------------------------------------------------------------------------------
@@ -555,8 +562,14 @@ position_data %&gt;% print_section(&#39;serious_workthings&#39;)
 ```
 </code></pre>
 </div>
-<div id="the-giants-upon-whos-shoulders-i-stand" class="section level2">
-<h2>The giants upon who’s shoulders I stand</h2>
+<div id="personalize-text" class="section level3">
+<h3>Personalize text</h3>
+<p>Last, change the <a href="https://github.com/nstrayer/cv/blob/master/index.Rmd#L51-L119">personalized text</a> for skills and header text etc..</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I didn’t put <em>everything</em> into a spreadsheet.</span></p>
+<p><a href="https://github.com/nstrayer/cv/blob/master/index.Rmd#L51-L119"><img src="/nicks_resume_data/code_to_change.png" /></a></p>
+<p>Finally, knit your results by pressing ‘Knit’ at the top of the <code>.Rmd</code> in RStudio.
+<label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Not using RStudio? Then just run <code>rmarkdown::render(‘index.Rmd’)</code>.</span></p>
+<p>The giants upon who’s shoulders I stand</p>
 <p>I want to emphasise that I have done nothing particularly special here. Everything is possible because of a series of amazing contributions by the R community.</p>
 <p>In particular for this you should thank:</p>
 <ul>
@@ -567,6 +580,7 @@ position_data %&gt;% print_section(&#39;serious_workthings&#39;)
 <li><a href="https://twitter.com/hadleywickham">Hadley Wickham</a> and <a href="https://twitter.com/_lionelhenry">Lionel Henry</a>: for <code>purrr</code></li>
 <li>Many more that I have neglected to mention.</li>
 </ul>
+</div>
 </div>
 <div id="share-your-product" class="section level2">
 <h2>Share your product!</h2>
