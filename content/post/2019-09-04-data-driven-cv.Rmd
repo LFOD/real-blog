@@ -31,7 +31,7 @@ td, th {
 ```
 
 
-A confession: I always put off updating my CV and Resume. Every time I go to update it, I end up deciding that I don't like the style and then start from scratch. Each time I do this, I have to manually extract each relevant piece of information from where it was to where it now goes. I don't have a long CV yet, but even now, this takes much too long.  
+A confession: I always put off updating my CV and Resume. Every time I go to update it, I end up deciding that I don't like the style and then start from scratch. Upon starting over,  I need to manually extract all relevant information for each position and conform it to my new layout. I don't have a long CV yet, but even now, this takes much too long.
 
 A programmer would look at a problem like this and say, "any scenario where I repeat the same actions I should write a script." Since I self-identify as a "data scientist" - an unholy mashup of programmer and statistician - I figured I could write a script to do the formatting and store all my information in... spreadsheets! 
 `r tufte::margin_note("In a hurry and just want to know how you can build your CV or resume this way? Skip to [here](#want-to-build-your-cv-this-way)")`
@@ -41,7 +41,7 @@ The goal of this post is to walk you through the techniques I used and help you 
 First, let's talk about the framework that allows this. 
 
 ## RMarkdown & Pagedown
-`r tufte::margin_note("RMarkdown is just one of a good number of tools that allow you to use the [literate programming paradigm](https://en.wikipedia.org/wiki/Literate_programming), popularized by the computer scientist Donald Knuth.")`
+`r tufte::margin_note("RMarkdown is just one of a number of tools that allow you to use the [literate programming paradigm](https://en.wikipedia.org/wiki/Literate_programming), invented/popularized by the computer scientist Donald Knuth.")`
 If you are familiar with the world of R programming, you will likely have heard of [Rmarkdown](https://rmarkdown.rstudio.com/). RMarkdown is a file-format/package that takes a standard markdown document and allows the code chunks within to be executed and their outputs recorded. 
 
 [Pagedown](https://pagedown.rbind.io) is a new R package that formats the final output from your Rmarkdown into paginated HTML. `r tufte::margin_note('I had the pleasure of sitting in the very back of a packed conference hall at RStudio::conf 2019 when Yihui Xie introduced Pagedown. You can watch the presentation from a much better vantage point than I had on the [RStudioConf presentations site.](https://resources.rstudio.com/rstudio-conf-2019/pagedown-creating-beautiful-pdfs-with-r-markdown-and-css)')` This HTML can then be easily turned into a PDF by using the print function in your browser. Previously, if you wanted to generate a PDF from RMarkdown, you had two options.  You could just print unpaginated HTML (ugly), or you could compile to Latex, which meant you losing out on a lot of niceties that are provided by CSS formatting.  Personally, I know a lot more about formatting with CSS than I do with Latex, so this was a perfect fit for me. 
@@ -520,6 +520,11 @@ In particular for this you should thank:
 - Many more that I have neglected to mention.
 
 
+Also, because I have no original thoughts. The 'data-driven CV' concept has been done before by others. For instance:
+
+
+- [Lucy D'Agostino-McGowan](https://twitter.com/LucyStats) (aka the better half of this blog) has a [data-driven academic website](https://github.com/LucyMcGowan/lazyacademic).
+- The [Vitae package](https://www.r-bloggers.com/vitae-dynamic-cvs-with-r-markdown/) by [Mitchell O'Hara-Wild](https://twitter.com/mitchoharawild) and [Rob J Hyndman](https://twitter.com/robjhyndman).
 
 ## Share your product!
 
@@ -528,9 +533,13 @@ If you end up building your CV or resume using these techniques let me know! Twe
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">new version my CV, <a href="https://t.co/tWYjP6hxKf">https://t.co/tWYjP6hxKf</a> many thanks to <a href="https://twitter.com/NicholasStrayer?ref_src=twsrc%5Etfw">@NicholasStrayer</a></p>&mdash; Guangchuang Yu (@guangchuangyu) <a href="https://twitter.com/guangchuangyu/status/1178236765762543616?ref_src=twsrc%5Etfw">September 29, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I already had an resume made from pagedown. But thanks to this tweet and the code you made available, now it&#39;s really easy to update the 2 versions (long and short). Thank you so much! This is my resume (thanks to your code): <a href="https://t.co/QQ5NO5T9mJ">https://t.co/QQ5NO5T9mJ</a></p>&mdash; Beatriz Milz (@BeaMilz) <a href="https://twitter.com/BeaMilz/status/1180971502625263626?ref_src=twsrc%5Etfw">October 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">I already had an resume made from pagedown. But thanks to this tweet and the code you made available, now it&#39;s really easy to update the 2 versions (long and short). Thank you so much! This is my resume (thanks to your code): <a href="https://t.co/QQ5NO5T9mJ">https://t.co/QQ5NO5T9mJ</a></p>&mdash; Beatriz Milz (@BeaMilz) <a href="https://twitter.com/BeaMilz/status/1180971502625263626?ref_src=twsrc%5Etfw">October 6, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Thanks <a href="https://twitter.com/NicholasStrayer?ref_src=twsrc%5Etfw">@NicholasStrayer</a> ! I use your your framework to build my new CV, and it looks great ! <a href="https://t.co/zyOTEalcqK">https://t.co/zyOTEalcqK</a></p>&mdash; Félix M. (@felix_mil_) <a href="https://twitter.com/felix_mil_/status/1181545597138083840?ref_src=twsrc%5Etfw">October 8, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+`r tufte::margin_note("Check out the slick skills visualization!")`
+
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Thanks very much! Here my cv in R created with pagedown <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://twitter.com/hashtag/RLover?src=hash&amp;ref_src=twsrc%5Etfw">#RLover</a> <a href="https://t.co/jcbokatnyM">pic.twitter.com/jcbokatnyM</a></p>&mdash; Antony.Barja (@AntonyBarja1) <a href="https://twitter.com/AntonyBarja1/status/1181422605091385344?ref_src=twsrc%5Etfw">October 8, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 ## Questions
