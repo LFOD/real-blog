@@ -1,0 +1,289 @@
+---
+title: "PheWAS-ME, an app for exploration of multimorbidity patterns in PheWAS"
+author: Nick Strayer
+date: '2019-10-16'
+slug: phewas_me
+categories: ["R", "shiny", "javascript", "d3", "EHR", "biobank"]
+tags:  ["R", "shiny", "javascript", "d3", "EHR", "biobank"]
+excerpt: "This post is a longer-form and less-formal introduction to the manuscript \"PheWAS-ME: A web-app for interactive exploration of multimorbidity patterns in PheWAS\" and accompanying application. As the first of three papers that make up my PhD dissertation, the project represents a significant collaborative effort bringing together Electronic Health Records (EHR) and Biobank data using R and Shiny."
+---
+
+
+
+<p>This post is a longer-form and less-formal introduction to the manuscript <em>“PheWAS-ME: A web-app for interactive exploration of multimorbidity patterns in PheWAS”</em> and accompanying application. As the first of three papers that make up my PhD dissertation, the project represents a significant collaborative effort bringing together Electronic Health Records (EHR) and Biobank data using R and Shiny.</p>
+<p>I have organized the following into three primary sections: what the app does, why it does it, and how it works.</p>
+<div id="what" class="section level1">
+<h1>What</h1>
+<div id="what-is-the-app" class="section level2">
+<h2>What is the app?</h2>
+<p>The paper describes Phewas-Multimorbidity Explorer (Phewas-ME): a Shiny app that we have been producing over the past two years in collaboration with the Vanderbilt Drug Repurposing team. It is an interactive data exploration tool for digging into PheWAS results and the subject-level data that generated those results.</p>
+</div>
+<div id="what-is-phewas" class="section level2">
+<h2>What is Phewas?</h2>
+<p>PheWAS is a statistical method for finding associations between a given genetic mutation (often a Single Nucleotide Polymorphism, or SNP) and phenotypes. It is a sibling to the GWAS (genome-wide association study). However, in GWAS, you fix your desired phenotype and scan the genome for associations, whereas in PheWAS, you fix a genetic mutation, and scan the ‘phenome.’</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Slide from my talk <a href="http://nickstrayer.me/biostat_seminar/">Taking a network view of EHR and Biobank data to find explainable multivariate patterns.</a></span>
+<img src="/phewas_me/phewas_vs_gwas.png" /></p>
+</div>
+<div id="what-is-the-data" class="section level2">
+<h2>What is the data?</h2>
+<p>Both PheWAS analyses and Phewas-ME take two types of subject-level data.
+First is information on a given genetic mutation. In this case, 0, 1, or 2 copies of the minor allele of an SNP.
+The second is the subject’s ‘phenome.’ In this case, a list of every phenotype that they had. In the paper and this blog post, we have used the <a href="https://phewascatalog.org/phecodes">Vanderbilt developed ‘Phecode,’</a> but any binary phenotype information works. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In this post, when I refer to ‘codes’ I mean ’phecodes.</span></p>
+</div>
+</div>
+<div id="why" class="section level1">
+<h1>Why</h1>
+<div id="why-is-the-app-needed" class="section level2">
+<h2>Why is the app needed?</h2>
+<p>Phewas-ME came out of the need for subject-experts to dig through the very high-dimensional results of PheWAS analyses. Unlike a typical statistical analysis, which may return just a handful of p-values or effect-sizes of interest, a PheWAS analysis returns a single p-value and effect-size for every phenotype in the scanned phenome. In the case of Phecodes, this is around 1,500 (and goes into the many thousands for more traditional ICD-based encodings).</p>
+<div id="previous-methods" class="section level3">
+<h3>Previous methods</h3>
+<p>In the past, communicating these results was accomplished using two different tools.</p>
+<p>First is a manhattan plot: or simply a plot of every phenotype investigated and their significance (as encoded by the negative log of the p-value). This plot allows the reader to pick out which codes are significant in the results.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Manhattan plot for PheWAS results. Taken from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5480096/pdf/nihms864620.pdf">Denny et al, 2016</a></span>
+<img src="/phewas_me/basic_manhattan_plot.png" /></p>
+<p>The second is the ever-present table. A PheWAS table has columns on all sorts of values of interest such as p-value, effect-size, phenotype description, etc.. Due to a large number of phenotypes typically present, these tables often get filtered to only includes codes that fit some criteria, such as significance level.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Table of PheWAS results from simulated data provided with app.</span>
+<img src="/phewas_me/phewas_results_table.png" /></p>
+</div>
+<div id="problems-with-previous-methods" class="section level3">
+<h3>Problems with previous methods</h3>
+<p>While looking at the most significantly associated phenotypes is straightforward, it can mask important aspects of the data. Different phenotypes across the phenome correlate with each other in complex ways. These correlations manifest themselves in common patterns of phenotypes called multimorbidities (also referred to as comorbidities).
+Since PheWAS looks at single SNP and Phenotype associations, these correlations can be extremely hard to discover and reason about with a traditional manhattan plot and table report.</p>
+</div>
+</div>
+<div id="why-does-our-app-fix-these-problems" class="section level2">
+<h2>Why does our app fix these problems?</h2>
+<p>PheWAS-Multimorbidity Explorer helps subject-matter experts parse through the results of a PheWAS analysis by letting them isolate and explore specific regions of phenotypes by looking not only at their p-values and effects-sizes but also by the subject-level data that generated those results.</p>
+<p>The analyst selects a set of phenotypes to explore by dragging a selection box around a region in a manhattan plot, choosing directly from a table, or using text-search. Once a desired set of phenotypes is selected, the application displays the subject-level data using an interactive force-directed network plot and an upset plot.</p>
+<p><img src="/phewas_me/subject_level_plots.png" /></p>
+<p>These subject-level visualizations allow the analyst to see patterns of comorbid phenotypes directly and to interrogate their potential causes. For instance, often, a group of codes are highly correlated because they are more or less specific definitions of the same phenotype, e.g., cancer -&gt; lung cancer -&gt; stage 2 lung cancer. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">In the above plot, you can see a cluster of phenotypes in light green. This cluster is caused by the afformentioned phenotype hierarchy, with each refering to the same broad-level phenotype with differing levels of specificity.</span> Another possibility is multimorbidity caused by drug side-effects; e.g., patients taking a drug to treat the cancer phenotype likely also have the nausea phenotype.</p>
+</div>
+</div>
+<div id="how" class="section level1">
+<h1>How</h1>
+<div id="how-is-interaction-used-in-the-app" class="section level2">
+<h2>How is interaction used in the app?</h2>
+<p>Interaction with Phewas-ME centers around one primary thing: a list of currently selected phenotypes. The typical way to choose these phenotypes is by using the Phewas results panel.</p>
+<p><img src="/phewas_me/phewas_results_panel.png" /></p>
+<p>This panel includes the traditional manhattan plot and results table; however, they are now interactive. Selecting codes using this panel can be done in a few different ways.</p>
+<style type="text/css">
+.giphy-holder {
+  max-width: 95vw;
+  width:100%;
+  height:0;
+  padding-bottom:85%;
+  position:relative;
+}
+</style>
+<div id="code-selection" class="section level3">
+<h3>Code Selection</h3>
+<div id="region-dragging" class="section level4">
+<h4>Region Dragging</h4>
+<p>The user can drag a box around a region in the manhattan plot, selecting the codes within. Adding another region to the selection is accomplished by holding down the ‘a’ key (for add) and dragging another box. Conversely, removing a region of codes from the selection can be done by holding down the “d” key and dragging a box.</p>
+<div class="giphy-holder">
+<iframe src="https://giphy.com/embed/USmaMDjOKv8lwM16Q8" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+</div>
+<p>
+<a href="https://giphy.com/gifs/USmaMDjOKv8lwM16Q8">via GIPHY</a>
+</p>
+</div>
+<div id="code-clicking" class="section level4">
+<h4>Code Clicking</h4>
+<p>Clicking individual phenotypes in either the plot or the table toggles their selected-ness. This slower but more precise method allows for fine-grained tuning of the selected codes.</p>
+<iframe src="https://giphy.com/embed/j5cMQWSrfrSXnix4w5" width="342" height="480" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/j5cMQWSrfrSXnix4w5">via GIPHY</a>
+</p>
+</div>
+<div id="search" class="section level4">
+<h4>Search</h4>
+<p>Above the results table is a search bar. The user can search for phenotypes by name or description. Codes that match a supplied search query are raised to the top of the results table and highlighted. The user can then select codes as needed.</p>
+<iframe src="https://giphy.com/embed/J34OMvCKAFx0WQdIww" width="480" height="236" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/J34OMvCKAFx0WQdIww">via GIPHY</a>
+</p>
+</div>
+<div id="network-filtering" class="section level4">
+<h4>Network Filtering</h4>
+<p>In the subject-level network plot, nodes corresponding to phenotypes can be used to filter the selection further. After selecting codes in the network plot by clicking, users can delete from the current selection, isolate a subset, or invert (this flips the definition of a connection to a phenotype in the network to the lack of that phenotype in a subject’s phenome).</p>
+<iframe src="https://giphy.com/embed/RLbNe4MPLObvDFbndP" width="480" height="376" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/RLbNe4MPLObvDFbndP">via GIPHY</a>
+</p>
+</div>
+</div>
+<div id="other-interaction" class="section level3">
+<h3>Other interaction</h3>
+<p>Outside of phenotype selection, there are a few other forms of interaction.</p>
+<div id="pattern-highlighting" class="section level4">
+<h4>Pattern Highlighting</h4>
+<p>When a user clicks on a given pattern in the Upset Plot panel, the network plot updates to highlight the subjects who have that pattern. Similarly, if a phenotype node in the network plot itself is moused over, the subjects connected to that phenotype are highlighted.</p>
+<iframe src="https://giphy.com/embed/lNFuQt8PKgtgk8da0K" width="450" height="480" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/lNFuQt8PKgtgk8da0K">via GIPHY</a>
+</p>
+</div>
+<div id="info-tooltips" class="section level4">
+<h4>Info Tooltips</h4>
+<p>In both the manhattan plot and the network plot, when a given phenotype’s point is moused-over, a tooltip with all the supplied information for that phenotype appears.</p>
+</div>
+<div id="snp-filtering" class="section level4">
+<h4>SNP Filtering</h4>
+<p>A check-box by the network plot allows the user to show only carriers of the minor allele of interest in the network plot. This helps differentiate between genetics driven network patterns and simply population trends.</p>
+<iframe src="https://giphy.com/embed/d7kMk9pURkZTrDf5mJ" width="480" height="378" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/d7kMk9pURkZTrDf5mJ">via GIPHY</a>
+</p>
+</div>
+<div id="upset-interaction" class="section level4">
+<h4>Upset Interaction</h4>
+<p>There are two helpful interaction aides not present in the original UpSet plot.</p>
+<p><strong>Singleton Toggle</strong>
+First, a toggle allows the hiding of single-phenotype patterns (i.e., subjects who had just a single phenotype). Often these singletons can crowd out the more exciting comorbidity patterns, so by hiding them, the user can focus on the patterns.</p>
+<iframe src="https://giphy.com/embed/jUc3727H1hc0V5PaV8" width="480" height="392" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/jUc3727H1hc0V5PaV8">via GIPHY</a>
+</p>
+<p><strong>Minimum Pattern Size Slider</strong>
+Second, a slider allows the user to set the threshold for inclusion in the plot based on the number of times a pattern appears. Often there will be patterns of phenotypes that are only had by one or two subjects. Because of their tiny sample-sizes, these are usually not of interest, so filtering them out can again improve the plot’s effectiveness.</p>
+</div>
+</div>
+</div>
+<div id="how-was-it-made" class="section level2">
+<h2>How was it made?</h2>
+<p>There is a lot of exciting tech going on behind the scenes of Phewas-ME.</p>
+<div id="general-app" class="section level3">
+<h3>General App</h3>
+<div id="framework" class="section level4">
+<h4>Framework</h4>
+<p>The main app is built using the Shiny package/framework in R. An R package was created to wrap all the code, easing deployment and customization. There are two main functions in the package: <code>run_me()</code> which takes dataframes of all necessary information as input and starts at the main dashboard; and also <code>build_me_app()</code> which returns an app that starts at a data-loading screen where the user can either load data using spreadsheets, or pick from a list of pre-populated datasets. All individual plots and panels exported by the package as shiny modules. This modular format eases the creation of customized versions of PheWAS-ME.</p>
+</div>
+<div id="state-management" class="section level4">
+<h4>State Management</h4>
+<p>The reactivity protocol of shiny works great if you have a single component of your app that listens to and modifies unique parts of your apps state. In PheWAS-ME, multiple components listen to the same state variables (for instance, both the PheWAS results table and the network plot modify the currently selected codes). A state management system inspired by Javascript’s Redux was built to keep each component pure and modular.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Broad level idea of how Redux works, via the <a href="https://blog.jscrambler.com/becoming-familiar-with-redux/">jscrabler blog</a></span>
+<img src="https://css-tricks.com/wp-content/uploads/2016/03/redux-article-3-03.svg" /></p>
+<p>In this system, a single message-passing reactive value is supplied to all of the separate components. When a component needs to modify the state, it sends a message through that reactive value to the main app.</p>
+<p>As an example, if the user removes a code using the network plot. The network plot module sends a list to the message passing reactive variable containing an action type: <code>'delete code'</code>, and then a payload: <code>'008.12'</code>.
+Then at the main app level, an <code>observeEvent()</code> chunk that watches that message passing reactive reads the message and modifies the appropriate state variables, in this case, the selected codes list.</p>
+<pre class="r"><code>shiny::observeEvent(app_interaction(),{
+  action_type &lt;- app_interaction() %&gt;% pluck(&#39;type&#39;)
+  action_payload &lt;- app_interaction() %&gt;% pluck(&#39;payload&#39;)
+  
+  action_type %&gt;%
+    switch(
+      delete = {
+        codes_to_delete &lt;- extract_codes(action_payload)
+        prev_selected_codes &lt;- state$selected_codes()
+        state$selected_codes(
+          prev_selected_codes[!(prev_selected_codes %in% codes_to_delete)]
+        )
+      },
+      selection = {
+        ...
+      },
+      ...
+    )
+  ...
+})</code></pre>
+<p>By isolating all state modification in a single observable chunk, the primary app state is only ever modified in a single place. This isolation reduces the amount of overhead required to reason about state changes, both for Shiny and the programmer.</p>
+</div>
+</div>
+<div id="r-to-javascript-communications" class="section level3">
+<h3>R to Javascript Communications</h3>
+<p>Every visual in the app is built using custom javascript and HTML. The fantastic package <a href="https://rstudio.github.io/r2d3/"><code>R2D3</code></a> is used to facilitate the handoff of data between R/Shiny and the javascript visualization code.</p>
+<div id="manhattan-plot" class="section level4">
+<h4>Manhattan Plot</h4>
+<p>The manhattan plot is built using <a href="https://d3js.org">d3js</a>, the popular javascript visualization library. With such a large number of points plotted, finding points within a selected area can be very slow when naively searching through every point. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Point_quadtree.svg/600px-Point_quadtree.svg.png" /> A 2d quadree storing datapoints. These subdividing boxes are stored as in a tree-structure, which is always a big-O help. <a href="https://en.wikipedia.org/wiki/Quadtree">From wikipedia</a></span> The javascript code utilizes a special data structure known as a <a href="https://en.m.wikipedia.org/wiki/Quadtree">quad-tree</a> to speed up finding codes within a region. By storing data in a hierarchical location-aware tree, a quad-tree only searches through points near the selection, cutting down on the computation needed and speeding up app reaction times.</p>
+</div>
+<div id="phewas-table" class="section level4">
+<h4>PheWAS Table</h4>
+<p>Like the manhattan plot, the PheWAS table has tricks to help keep the app responsive while also showing large amounts of data. The browser stores all the elements on a webpage in a text-based format called the DOM (or Document Object Model). (What you get when you right-click and say ‘view source.’) When a browser renders the page, it parses through the DOM and figures out how to place that element on the screen. Because the browser has to parse through so much every time it wants to update the screen, there are limits to how many elements can be stored in the DOM before things start slowing down. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="/phewas_me/optimal_dom_size.png" /> Recomendations from <a href="https://developers.google.com/web/tools/lighthouse/audits/dom-size">developers.google.com</a> for optimal DOM performance. Oops!</span>Displaying a table of more than 1,500 phenotypes, along with 5+ columns, quickly hits that limit.</p>
+<p>The trick used to display a large table while not overloading the DOM is only rendering a small portion of the table at a time. At any moment, only 50 rows of the table are actually in the DOM. As the user scrolls down, the javascript writes new rows at the bottom and removes old rows from the top. As to maintain the illusion that the entire table is available for scrolling, secret elements placed above and below the visible rows that expand and contract to simulate a table with every row filled in. The user sees a table just like it was full of 1,000 rows, but the browser only has to render 50. Implementing this optimization resulted in interaction latency dropping by ~4 times.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Performance improvements in results table after implementing smart-table. Via the Chrome devtool’s <a href="https://developers.google.com/web/tools/lighthouse/">lighthose audits tool.</a></span>
+<img src="/phewas_me/table_performance_improvements.png" /></p>
+</div>
+<div id="upset-plot" class="section level4">
+<h4>UpSet Plot</h4>
+<p>Like the manhattan plot, the upset plot is drawn using d3. Unlike the results table, there are not too many elements to draw here, so no fancy tricks are needed to speed it up.</p>
+</div>
+<div id="network-plot" class="section level4">
+<h4>Network Plot</h4>
+<p>The network plot was where the most coding and optimization hours were spent. The goal was to have a plot that could show every subject’s data. To draw every subject often involved drawing tens of thousands of points and even more links. Also, since the user would be on-the-fly reconfiguring the data displayed, we needed to calculate the layout in real-time.</p>
+<p><strong>Drawing lots of points and lines</strong>
+Plotting lots of points and lines had a relatively simple solution: use the Canvas element rather than the SVG. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">The Canvas element</a> allows the user to draw to the screen at the pixel-level, basically coding an image. Because the Canvas element acts as a fancy image, the DOM only has a single item added is not slowed down.</p>
+<p><strong>Adding interactivity</strong>
+The only issue with the canvas element: there’s no easy way to detect if a component of the chart is interacted with by the user. We wanted interactivity with the phenotypes (e.g., mouseover and selection). Adding interactivity was solved by overlaying an SVG element on top of the Canvas element. The SVG element draws only the phenotype nodes. We could then use the SVG’s built-in intersection observers to detect interaction, rather than building a custom solution using things like <a href="https://observablehq.com/@camargo/canvas-picking-with-a-hidden-canvas">hidden colors.</a></p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Both the Canvas and the SVG are absolutely positioned within the parent to make sure they overlap properly.</span>
+<img src="/phewas_me/network_canvas_and_svg.png" /></p>
+<p><strong>Exporting paper-ready plots</strong>
+One feature that was frequently requested was the ability to export the network plot for use in a publication. Since canvas elements are just raster-images, they didn’t scale well when exported. To allow for clean high-res exports, an ‘export mode’ was added that switches all rendering to the SVG (which is vector-based) and adds a download button. Also available is a callouts mode where little draggable annotations for each phenotype name are added. When a user presses the download button, the SVG element is converted to the SVG file format and downloaded the user’s computer. Adobe Illustrator or other vector-based tools can be used to insert the plot into a figure or PDF.</p>
+<iframe src="https://giphy.com/embed/H3edojKWcvr3fY6tDX" width="480" height="338" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/H3edojKWcvr3fY6tDX">via GIPHY</a>
+</p>
+<p><em>Not visible due to compression for video: a slight increase in sharpness when switching to all SVG-Rendering.</em></p>
+<p><strong>Calculating a force-layout in real time</strong>
+Calculating the layout was relatively easy to do: D3 includes a sub-library for running force-layout simulations. The problem is these force simulations are computationally intensive, especially when you start running them on large networks. When you run computationally intensive tasks in javascript, your app will slow to a crawl because the same thread responsible for updating the screen is also running those calculations.</p>
+<p>Our solution was to offload the layout calculation to another thread using a technology called ‘web workers.’ <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">Web workers</a> allow javascript code to run on another thread and communicate with the main thread through a series of asynchronous callbacks.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><img src="https://www.barbarianmeetscoding.com/images/barbaric-basics-web-workers.jpg" /> Web workers are there own threads with their own event loops, so they don’t slow down your main page. Source: <a href="https://www.barbarianmeetscoding.com/blog/2015/02/13/barbaric-basics-web-workers">Barbaric Basics.</a></span></p>
+<pre class="js"><code>// Function to send new network data to webworker
+function send_new_job(network_data, callbacks){
+
+  const {on_progress_report, on_finish, on_layout_data} = callbacks;
+
+  // Initialize the worker
+  worker = new Worker(worker_url);
+
+  // Send worker the data we are working with
+  worker.postMessage(network_data);
+
+  // Control what is done when a message is received from the webworker
+  worker.onmessage = function(event) {
+    switch (event.data.type) {
+      case &quot;progress_report&quot;: return on_progress_report(event.data.progress);
+      case &quot;layout_data&quot;: return on_layout_data(event.data);
+      case &quot;end&quot;: return on_finish(event.data);
+    }
+  };
+};</code></pre>
+<p>When the network plot receives new data, it spins up one of these web-worker threads, sends the data to it to run the layout simulation. The simulation web worker sends back occasional updates on the node positions to the main thread to update the plot, assuring the user it is doing something and not frozen. This adaptation meant that massive networks could be laid out and rendered without causing any perceivable slowdowns on the main app.</p>
+<iframe src="https://giphy.com/embed/RGe5NHijYCuZm2R25D" width="480" height="340" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+<p>
+<a href="https://giphy.com/gifs/RGe5NHijYCuZm2R25D">via GIPHY</a>
+</p>
+</div>
+</div>
+</div>
+<div id="how-can-i-use-the-app-myself" class="section level2">
+<h2>How can I use the app myself?</h2>
+<p>Do you have data of the form described and want to try the app out yourself? There are two main methods for doing so.</p>
+<div id="hosted-version" class="section level3">
+<h3>Hosted Version</h3>
+<p>We have a version of Phewas-ME up and <a href="https://prod.tbilab.org/phewas_me/">running on our lab’s website</a> that anyone can use. There is a simulated dataset for exploration, but a data loading screen allows you to test out with data you upload yourself.</p>
+</div>
+<div id="an-r-package" class="section level3">
+<h3>An R Package</h3>
+<p>As mentioned before, the application lives in an R package. Because of this, running it locally is as easy as installing the package from GitHub using…</p>
+<pre class="r"><code>devtools::install_github(&#39;tbilab/meToolkit&#39;)</code></pre>
+<p>…and then starting an app up with the function <code>run_me()</code>.</p>
+<p>If you want to learn how to make an app that loads directly to a given dataset or preload data, check out the online documentation for the package at <a href="https://prod.tbilab.org/phewas_me_manual/">prod.tbilab.org/phewas_me_manual</a>.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">The package’s beautiful website, courtesy of <a href="https://pkgdown.r-lib.org/">pkgdown!</a></span>
+<img src="/phewas_me/package_site.png" /></p>
+</div>
+</div>
+</div>
+<div id="question-or-comments" class="section level1">
+<h1>Question or Comments?</h1>
+<p>If you would like to know any more about the application, package, or manuscript, send me an email or twitter DM!</p>
+</div>
