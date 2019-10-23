@@ -293,37 +293,3 @@ If you want to learn how to make an app that loads directly to a given dataset o
 # Question or Comments?
 
 If you would like to know any more about the application, package, or manuscript, send me an email or twitter DM!  
-
-```{js}
-const selected_class = 'lightbox-loaded';
-window.addEventListener('load', function() {
-  // Select all the windowboxable images
-  const lightboxed_elements = document.querySelectorAll('.lightbox img');
-  lightboxed_elements.forEach(function(element) {
-    element.addEventListener('click', function(){
-      const is_selected = this.classList.contains(selected_class);
-      if(is_selected){
-        this.classList.remove(selected_class);
-      } else {
-        this.classList.add(selected_class);
-      }
-    });
-  });
-});
-```
-
-```{css}
-/* Style activated by the addition of the selected class */
-.lightbox-loaded {
-  position: fixed;
-  z-index: 999;
-  width: 90%;
-  height: auto;
-  max-height: 90%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0px 0px 50px black;
-}
-
-```
