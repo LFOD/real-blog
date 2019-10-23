@@ -10,6 +10,11 @@ excerpt: "This post is a longer-form and less-formal introduction to the manuscr
 
 ```{r, include = FALSE}
 library(tufte)
+
+lightboxed_margin <- function(content){
+  wrapped_content <- paste("<span class = 'lightbox'>", content, "</span>")
+  tufte::margin_note(wrapped_content)
+}
 ```
 
 This post is a longer-form and less-formal introduction to the manuscript _"PheWAS-ME: A web-app for interactive exploration of multimorbidity patterns in PheWAS"_ and accompanying application. As the first of three papers that make up my PhD dissertation, the project represents a significant collaborative effort bringing together Electronic Health Records (EHR) and Biobank data using R and Shiny.
@@ -94,9 +99,8 @@ This panel includes the traditional manhattan plot and results table; however, t
 ### Code Selection
 #### Region Dragging
 The user can drag a box around a region in the manhattan plot, selecting the codes within. Adding another region to the selection is accomplished by holding down the 'a' key (for add) and dragging another box. Conversely, removing a region of codes from the selection can be done by holding down the "d" key and dragging a box.
- 
-<div class="giphy-holder"><iframe src="https://giphy.com/embed/USmaMDjOKv8lwM16Q8" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/USmaMDjOKv8lwM16Q8">via GIPHY</a></p>
 
+<iframe src="https://giphy.com/embed/USmaMDjOKv8lwM16Q8" width="480" height="406" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/USmaMDjOKv8lwM16Q8">via GIPHY</a></p>
 
 #### Code Clicking
 Clicking individual phenotypes in either the plot or the table toggles their selected-ness. This slower but more precise method allows for fine-grained tuning of the selected codes.
@@ -198,7 +202,7 @@ Every visual in the app is built using custom javascript and HTML. The fantastic
 The manhattan plot is built using [d3js](https://d3js.org), the popular javascript visualization library. With such a large number of points plotted, finding points within a selected area can be very slow when naively searching through every point. `r margin_note("![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Point_quadtree.svg/600px-Point_quadtree.svg.png) A 2d quadree storing datapoints. These subdividing boxes are stored as in a tree-structure, which is always a big-O help. [From wikipedia](https://en.wikipedia.org/wiki/Quadtree)")` The javascript code utilizes a special data structure known as a [quad-tree](https://en.m.wikipedia.org/wiki/Quadtree) to speed up finding codes within a region. By storing data in a hierarchical location-aware tree, a quad-tree only searches through points near the selection, cutting down on the computation needed and speeding up app reaction times.  
 
 #### PheWAS Table
-Like the manhattan plot, the PheWAS table has tricks to help keep the app responsive while also showing large amounts of data. The browser stores all the elements on a webpage in a text-based format called the DOM (or Document Object Model). (What you get when you right-click and say 'view source.') When a browser renders the page, it parses through the DOM and figures out how to place that element on the screen.  Because the browser has to parse through so much every time it wants to update the screen, there are limits to how many elements can be stored in the DOM before things start slowing down. `r margin_note("![](/phewas_me/optimal_dom_size.png) Recomendations from [developers.google.com](https://developers.google.com/web/tools/lighthouse/audits/dom-size) for optimal DOM performance. Oops!")`Displaying a table of more than 1,500 phenotypes, along with 5+ columns, quickly hits that limit. 
+Like the manhattan plot, the PheWAS table has tricks to help keep the app responsive while also showing large amounts of data. The browser stores all the elements on a webpage in a text-based format called the DOM (or Document Object Model). (What you get when you right-click and say 'view source.') When a browser renders the page, it parses through the DOM and figures out how to place that element on the screen.  Because the browser has to parse through so much every time it wants to update the screen, there are limits to how many elements can be stored in the DOM before things start slowing down. `r lightboxed_margin("![](/phewas_me/optimal_dom_size.png) Recomendations from [developers.google.com](https://developers.google.com/web/tools/lighthouse/audits/dom-size) for optimal DOM performance. Oops!")`Displaying a table of more than 1,500 phenotypes, along with 5+ columns, quickly hits that limit. 
 
 The trick used to display a large table while not overloading the DOM is only rendering a small portion of the table at a time. At any moment, only 50 rows of the table are actually in the DOM. As the user scrolls down, the javascript writes new rows at the bottom and removes old rows from the top.  As to maintain the illusion that the entire table is available for scrolling, secret elements placed above and below the visible rows that expand and contract to simulate a table with every row filled in. The user sees a table just like it was full of 1,000 rows, but the browser only has to render 50. Implementing this optimization resulted in interaction latency dropping by ~4 times. 
 
@@ -289,3 +293,37 @@ If you want to learn how to make an app that loads directly to a given dataset o
 # Question or Comments?
 
 If you would like to know any more about the application, package, or manuscript, send me an email or twitter DM!  
+
+```{js}
+const selected_class = 'lightbox-loaded';
+window.addEventListener('load', function() {
+  // Select all the windowboxable images
+  const lightboxed_elements = document.querySelectorAll('.lightbox img');
+  lightboxed_elements.forEach(function(element) {
+    element.addEventListener('click', function(){
+      const is_selected = this.classList.contains(selected_class);
+      if(is_selected){
+        this.classList.remove(selected_class);
+      } else {
+        this.classList.add(selected_class);
+      }
+    });
+  });
+});
+```
+
+```{css}
+/* Style activated by the addition of the selected class */
+.lightbox-loaded {
+  position: fixed;
+  z-index: 999;
+  width: 90%;
+  height: auto;
+  max-height: 90%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 50px black;
+}
+
+```
