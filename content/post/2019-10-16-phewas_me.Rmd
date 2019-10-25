@@ -24,6 +24,9 @@ This post is a longer-form and less-formal accompaniment to the manuscript just 
 
 As the first of three papers that make up my PhD dissertation, the project represents a significant collaborative effort bringing together Electronic Health Records (EHR) and Biobank data using R and Shiny.
 
+`r margin_note("The main dashboard view of Phewas-ME.")`
+![](/phewas_me/whole_app.png)
+
 
 I have organized the following into three primary sections: __what__ the app does, __why__ it does it, and __how__ it works.
 
