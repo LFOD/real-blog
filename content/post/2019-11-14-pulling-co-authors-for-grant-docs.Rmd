@@ -1,0 +1,61 @@
+---
+title: Pulling co-authors for grant docs
+author: "Lucy D'Agostino McGowan"
+date: '2019-11-14'
+slug: pulling-co-authors-for-grant-docs
+categories: [rstats]
+tags: [rstats]
+math: no
+meta: yes
+toc: yes
+excerpt: "I just submitted my first grant. It turns out you need tons of little things when you submit a grant (who knew!) and one of the little things is a list of all of the coauthors you've published with in the past four years. Instead of tracking that down, I automated the process using R and then stuck the code here so I have it for next time!"
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+So I just submitted my first grant (yikes) and WOW are there a lot of little pieces! One of the little required pieces was a spreadsheet detailing all of my co-authors for the past 4 years with their affiliations `r emo::ji("scream")`. This sounded like a total nightmare to compile `r tufte::margin_note("And I don't have very many papers! I am on a few clinical papers that have a ton of co-authors. **Sidenote to people who know grant things**: Did I actually need to do this for _every_ co-author? Please comment with your advise!")` and naturally I left it until the last second to do. I am mostly writing this post so I have a way to do this quickly documented for next time. 
+
+It turns out R has once again come to the rescue! There is a `r emo::ji("bomb")` package, `easyPubMed` that made this easy peasy.  
+
+## Load packages
+
+`r tufte::margin_note(glue::glue("I'm loading four packages: **easyPubMed**, the trusty **tidyverse** {emo::ji('package')}, one of my all times favorites, **glue**, and the unfortunately named **lubridate**") )`
+
+```{r}
+library(easyPubMed) 
+library(tidyverse)
+library(glue)
+library(lubridate)
+```
+
+## Pull my papers
+
+Here I'm querying pubmed for the papers I've authored. I'm creating a data frame that includes details about the papers (include all of the authors!).
+
+```{r}
+query <- "Lucy D'Agostino McGowan[AU] OR LD McGowan[AU]"
+get_pubmed_ids(query) %>%
+fetch_pubmed_data(encoding = "ASCII") %>%
+table_articles_byAuth(included_authors = "all", 
+                            max_chars = 100, 
+                            autofill = TRUE) -> my_papers
+```
+
+## Clean it up
+
+Using the **glue** package, I combine the first and lastname variables into the `lastname, firstname` form requested by the granting agency. Year is pulled in as a ??character?? variable, so we need to fix that. I also filter out _myself_ and only keep the papers from the past four years. Finally I select just the co-author's name and affiliation and filter out any duplicates.
+
+```{r}
+my_papers %>%
+  mutate(name = glue("{lastname}, {firstname}"),
+         year = as.numeric((year))) %>%
+  filter(!str_detect(name, "D'Agostino"), year >= year(today()) - 4) %>%
+  select(name, address) %>%
+  distinct() -> coauthors
+```
+
+And there you have it! `r emo::ji("tada")`
+
+

@@ -1,0 +1,49 @@
+---
+title: Pulling co-authors for grant docs
+author: "Lucy D'Agostino McGowan"
+date: '2019-11-14'
+slug: pulling-co-authors-for-grant-docs
+categories: [rstats]
+tags: [rstats]
+math: no
+meta: yes
+toc: yes
+excerpt: "I just submitted my first grant. It turns out you need tons of little things when you submit a grant (who knew!) and one of the little things is a list of all of the coauthors you've published with in the past four years. Instead of tracking that down, I automated the process using R and then stuck the code here so I have it for next time!"
+---
+
+
+<div id="TOC">
+true
+</div>
+
+<p>So I just submitted my first grant (yikes) and WOW are there a lot of little pieces! One of the little required pieces was a spreadsheet detailing all of my co-authors for the past 4 years with their affiliations 😱. This sounded like a total nightmare to compile <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">And I don’t have very many papers! I am on a few clinical papers that have a ton of co-authors. <strong>Sidenote to people who know grant things</strong>: Did I actually need to do this for <em>every</em> co-author? Please comment with your advise!</span> and naturally I left it until the last second to do. I am mostly writing this post so I have a way to do this quickly documented for next time.</p>
+<p>It turns out R has once again come to the rescue! There is a 💣 package, <code>easyPubMed</code> that made this easy peasy.</p>
+<div id="load-packages" class="section level2">
+<h2>Load packages</h2>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">I’m loading four packages: <strong>easyPubMed</strong>, the trusty <strong>tidyverse</strong> 📦, one of my all times favorites, <strong>glue</strong>, and the unfortunately named <strong>lubridate</strong></span></p>
+<pre class="r"><code>library(easyPubMed) 
+library(tidyverse)
+library(glue)
+library(lubridate)</code></pre>
+</div>
+<div id="pull-my-papers" class="section level2">
+<h2>Pull my papers</h2>
+<p>Here I’m querying pubmed for the papers I’ve authored. I’m creating a data frame that includes details about the papers (include all of the authors!).</p>
+<pre class="r"><code>query &lt;- &quot;Lucy D&#39;Agostino McGowan[AU] OR LD McGowan[AU]&quot;
+get_pubmed_ids(query) %&gt;%
+fetch_pubmed_data(encoding = &quot;ASCII&quot;) %&gt;%
+table_articles_byAuth(included_authors = &quot;all&quot;, 
+                            max_chars = 100, 
+                            autofill = TRUE) -&gt; my_papers</code></pre>
+</div>
+<div id="clean-it-up" class="section level2">
+<h2>Clean it up</h2>
+<p>Using the <strong>glue</strong> package, I combine the first and lastname variables into the <code>lastname, firstname</code> form requested by the granting agency. Year is pulled in as a ??character?? variable, so we need to fix that. I also filter out <em>myself</em> and only keep the papers from the past four years. Finally I select just the co-author’s name and affiliation and filter out any duplicates.</p>
+<pre class="r"><code>my_papers %&gt;%
+  mutate(name = glue(&quot;{lastname}, {firstname}&quot;),
+         year = as.numeric((year))) %&gt;%
+  filter(!str_detect(name, &quot;D&#39;Agostino&quot;), year &gt;= year(today()) - 4) %&gt;%
+  select(name, address) %&gt;%
+  distinct() -&gt; coauthors</code></pre>
+<p>And there you have it! 🎉</p>
+</div>
