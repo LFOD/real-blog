@@ -1,0 +1,26 @@
+---
+title: 'Prevalence of a disease plays an important role in your probability of having COVID-19 given you tested positive'
+author: "Lucy D'Agostino McGowan"
+date: '2020-04-13'
+slug: prevalence-and-probability-of-covid
+categories: [statistics, uncertainty, coronavirus, casual inference, bayes theorem]
+tags: [statistics, uncertainty, coronavirus, casual inference, bayes]
+excerpt: "The prevalence of a disease plays an important role in your probability of having it given you test positive."
+---
+
+The prevalence of a disease plays an important role in your probability of having it given you test positive.
+
+This is less relevant for testing positive for SARS-CoV-2 **infection** since RT-PCR rarely (if ever) has false positives. However, this may be relevant for antibody tests, which are less precise. Here is a quick explainer for how this works.
+
+<iframe width="768" height="480" src="https://www.youtube.com/embed/I63OGstyQ3w" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+The numbers in this explainer are made up. Are some real numbers for the sensitivity and specificity (as it stands today):
+`r tufte::margin_note("1. https://www.mayoclinicproceedings.org/article/S0025-6196(20)30365-7/fulltext <br> 2. https://www.fda.gov/media/136151/download <br> 3. https://www.centerforhealthsecurity.org/resources/COVID-19/serology/Serology-based-tests-for-COVID-19.html")`
+
+RT-PCR:     
+`r emo::ji("point_right")` sensitivity: can be as low as 70%, maybe closer to 90%¹     
+`r emo::ji("point_right")` specificity: ~100%²
+
+Antibody test (depends on the test, the one approved in US³):    
+`r emo::ji("point_right")` sensitivity: 93.8%     
+`r emo::ji("point_right")` specificity: 95.6%
