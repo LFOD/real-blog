@@ -1,0 +1,164 @@
+---
+title: 'Bayes Theorem and the Probability of Having COVID-19'
+author: "Lucy D'Agostino McGowan"
+date: '2020-04-09'
+slug: bayes-theorem-and-covid-19-infection
+categories: [statistics, uncertainty, coronavirus, casual inference, bayes theorem]
+tags: [statistics, uncertainty, coronavirus, casual inference, bayes]
+excerpt: "I've seen a few papers describing the characteristics of people who tested positive for SARS-CoV-2 and this is sometimes being interpreted as describing people with certain characteristic's the probability of infection. Let's talk about why that's likely not true."
+---
+
+I've seen a few papers describing the characteristics of people who tested positive for SARS-CoV-2 and this is sometimes being interpreted as describing people with certain characteristic's the **probability of infection**. Let's talk about why that's likely not true.
+
+`r emo::ji("point_right")` Usually when thinking about estimating the prevalence of a disease, we use the **sensitivity** and **specificity** of the test to help us     
+`r emo::ji("point_right")` The calculations assume that everyone is equally likely to get tested, and with SARS-CoV-2 that is likely not the case
+
+Let's do some `r emo::ji("thought_balloon")` thought experiments. For these, my goal is to estimate the probability of being infected with `r emo::ji("microbe")` SARS-CoV-2 given you have `r emo::ji("jigsaw")` Disease X
+
+For example,`r emo::ji("jigsaw")` Disease X could be:    
+
+`r emo::ji("heart_suit")` heart disease       
+`r emo::ji("rage")` hypertension        
+`r emo::ji("heavy_plus_sign")` it could also be any subgroup (for example age, etc)
+
+In these `r emo::ji("thought_balloon")` thought experiments, we don't actually have perfect information about who is infected with `r emo::ji("microbe")` SARS-CoV-2, we just know among those who are `r emo::ji("test_tube")` **tested** who has been infected with `r emo::ji("microbe")` SARS-CoV-2. This is really the crux of the matter.
+
+For these `r emo::ji("thought_balloon")` thought experiments, assume that the current tests are *perfect* (that is there are 0 false positives and 0 false negatives)
+
+`r emo::ji("point_up")` Note that this is likely not the case, with the current testing framework false positives (+) are unlikely but false negatives (-) may be occurring.
+
+We want the probability of being infected with SARS-CoV-2 given you have Disease X: P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`)
+
+To get this, we need P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`) because based on Bayes' Theorem we know:
+
+P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) = P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`)P(`r emo::ji("microbe")`) / P(`r emo::ji("jigsaw")`)
+
+BUT, instead of P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`), we actually have P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`, `r emo::ji("test_tube")`) - the probability of having  disease X given you have SARS-CoV-2 AND you were tested. So the crux of these thought experiments will be trying to get an accurate estimate of  P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`) so that we can get back to P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`).
+
+## Thought experiment 1️⃣: Best case scenario
+
+`r tufte::margin_note("Note: all of these numbers are made up!")`
+`r emo::ji("jigsaw")` 20% of the population has disease X    
+`r emo::ji("microbe")`  50% are infected with SARS-CoV-2
+`r emo::ji("x")` There is no relationship between disease X and SARS-CoV-2      
+`r emo::ji("test_tube")` People with disease X are just as likely to get tested than people without disease X
+
+![](https://pbs.twimg.com/media/EVLdlokU4AQauYQ?format=jpg&name=medium)
+
+Why is thought experiment 1️⃣ a best case scenario?
+
+It looks like:
+
+`r emo::ji("test_tube")` 50% have SARS-CoV-2 infection among those tested    
+`r emo::ji("test_tube")` Of those who tested positive, the prevalence of disease X is 20%    
+P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) = 50%
+
+`r emo::ji("white_heavy_check_mark")` Reality (no relationship between disease X and SARS-CoV-2) matches what we see
+
+## Thought experiment 2️⃣: Oversampling scenario
+
+`r emo::ji("jigsaw")` 20% of the population has disease X
+Microbe 50% have SARS-CoV-2 infection       
+`r emo::ji("cross_mark")` There is no relationship between disease X and SARS-CoV-2      
+`r emo::ji("test_tube")` People with disease X are **2x** more likely to get tested than people without disease X
+
+![](https://pbs.twimg.com/media/EVLSv4XUUAAmrVf?format=jpg&name=medium)
+
+Why is thought experiment 2️⃣ bad?
+
+It looks like:
+
+`r emo::ji("test_tube")` 50% have SARS-CoV-2 infection among those tested     
+`r emo::ji("test_tube")` Of those who tested positive for SARS-CoV-2, the prevalence of disease X is 33% `r emo::ji("face_screaming_in_fear")`
+
+`r emo::ji("cross_mark")` If we plug in what we see (P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`, `r emo::ji("test_tube")`) for P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`)), it looks like P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) is 82.5%, when in reality it is 50%.
+
+## Thought experiment 3️⃣: Undersampling scenario
+
+`r emo::ji("jigsaw")` 20% of the population has disease X       
+`r emo::ji("microbe")` 50% have SARS-CoV-2 infection     
+`r emo::ji("cross_mark")` There is no relationship between disease X and SARS-CoV-2     
+`r emo::ji("test_tube")` People with disease X are **1/2** as likely to get tested than people without disease X
+
+![](https://pbs.twimg.com/media/EVLTevlUUAEvE14?format=jpg&name=medium)
+
+Why is thought experiment 3️⃣ bad?
+
+It looks like:
+`r emo::ji("test_tube")` 50% have SARS-CoV-2 infection among those tested     
+`r emo::ji("test_tube")` Of those who tested positive for SARS-CoV-2, the prevalence of disease X is 11% 
+
+`r emo::ji("cross_mark")` If we plug in what we see (P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`, `r emo::ji("test_tube")`) for P(`r emo::ji("jigsaw")`|`r emo::ji("microbe")`)), it looks like P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) is 27.5%, when in reality it is 50%.
+
+## Thought experiment 4️⃣: two problems scenario
+
+`r emo::ji("jigsaw")` 20% of the population has disease X    
+`r emo::ji("microbe")` 56% have SARS-CoV-2 infection    
+`r emo::ji("white_check_mark")` people with disease X are 1.6 times more likely to have SARS-CoV-2 infection, P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) = 80%      
+`r emo::ji("test_tube")` People with disease X are **5** as likely to get tested than people without disease X
+
+![](https://pbs.twimg.com/media/EVLUjEyUMAELWG8?format=jpg&name=medium)
+
+Why is thought  experiment 4️⃣ bad?
+
+It looks like:
+
+`r emo::ji("microbe")``r emo::ji("test_tube")` 66% have SARS-CoV-2 infection among those tested     
+`r emo::ji("jigsaw")``r emo::ji("test_tube")` Of those who tested positive for SARS-CoV-2, the prevalence of disease X is 66%
+
+`r emo::ji("cross_mark")` We're getting both the prevalence of SARS-CoV-2 **and** it's association with Disease X wrong
+
+## How can we fix this?
+
+OKAY, scenarios finished, so hopefully this highlights why we can't take the prevalence of characteristics in the **tested positive** population as the prevalence of characteristics in the overall population with a SARS-CoV-2 infection. Now, here are tips for how we can correct the numbers.
+
+Scenario 2️⃣: Oversampling by 2x
+
+`r emo::ji("point_right")` take those with disease X that tested positive for SARS-CoV-2 and downweight them by a factor of 2.
+
+`r emo::ji("white_heavy_check_mark")` the adjusted prevalence of Disease X among those that tested positive for SARS-CoV-2 (0.5 / 2.5) = 0.2 (20%)
+
+P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) = 50%
+
+![](https://pbs.twimg.com/media/EVLXjDhUMAE1K7_?format=jpg&name=medium)
+
+Scenario 3️⃣: Undersampling by 1/2
+
+`r emo::ji("point_right")` take those with disease X that tested positive for SARS-CoV-2 and upweight them by a factor of 2.
+
+`r emo::ji("white_heavy_check_mark")` the adjusted prevalence of Disease X among those that tested positive for SARS-CoV-2 (2/ 10) = 0.2 (20%)
+
+P(`r emo::ji("microbe")`|`r emo::ji("jigsaw")`) = 50%
+
+![](https://pbs.twimg.com/media/EVLXmSkUMAAHZ3g?format=jpg&name=medium)
+
+
+Scenario 4️⃣: Two problems
+
+For the prevalence of SARS-CoV-2 infections, correct by weighing by the probability of being tested in each subgroup. Here:
+
+`r emo::ji("jigsaw")` = disease X    
+`r emo::ji("x")``r emo::ji("jigsaw")` = No disease X
+
+P(`r emo::ji("microbe")`) = P(`r emo::ji("microbe")` | `r emo::ji("jigsaw")`) P(`r emo::ji("jigsaw")`) + P(`r emo::ji("microbe")` | `r emo::ji("x")``r emo::ji("jigsaw")`) P(`r emo::ji("x")``r emo::ji("jigsaw")`) 
+
+`r emo::ji("white_check_mark")`P(`r emo::ji("microbe")`) = ⅘ * 0.2 + ½ * 0.8 = 56%
+
+Said another way, for calculating the overall prevalence of SARS-CoV-2, this is like downweighting the oversampled Disease X people (divide by 5). 
+
+`r emo::ji("white_check_mark")` P(`r emo::ji("microbe")`) = (⅘ + 2) / (⅘ + 2 + ⅕ + 2) = 0.56
+
+For calculating the prevalence of disease X among those with SARS-CoV-2 infections:
+
+`r emo::ji("white_check_mark")` P(`r emo::ji("jigsaw")` | `r emo::ji("microbe")`) = P(`r emo::ji("microbe")` | `r emo::ji("jigsaw")`) P(`r emo::ji("jigsaw")`) / P(`r emo::ji("microbe")`) = ⅘  * 0.2 / 0.56 = 0.285
+
+Again, downweight the oversampled Disease X population (divide by 5).
+
+`r emo::ji("white_check_mark")` P(`r emo::ji("jigsaw")` | `r emo::ji("microbe")`) = ⅘ / (⅘ + 2) = 0.285
+
+P(`r emo::ji("microbe")` | `r emo::ji("jigsaw")`) = 80%
+
+![](https://pbs.twimg.com/media/EVLXqXAUEAApzdi?format=jpg&name=medium)
+
+
+Hopefully this is somewhat helpful when reading about characteristics of those who are currently testing positive for SARS-CoV-2. As always, please let me know if there is something I've missed! `r emo::ji("folded_hands")`

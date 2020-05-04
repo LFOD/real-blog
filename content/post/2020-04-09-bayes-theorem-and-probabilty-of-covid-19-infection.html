@@ -1,0 +1,110 @@
+---
+title: 'Bayes Theorem and the Probability of Having COVID-19'
+author: "Lucy D'Agostino McGowan"
+date: '2020-04-09'
+slug: bayes-theorem-and-covid-19-infection
+categories: [statistics, uncertainty, coronavirus, casual inference, bayes theorem]
+tags: [statistics, uncertainty, coronavirus, casual inference, bayes]
+excerpt: "I've seen a few papers describing the characteristics of people who tested positive for SARS-CoV-2 and this is sometimes being interpreted as describing people with certain characteristic's the probability of infection. Let's talk about why that's likely not true."
+---
+
+
+
+<p>I’ve seen a few papers describing the characteristics of people who tested positive for SARS-CoV-2 and this is sometimes being interpreted as describing people with certain characteristic’s the <strong>probability of infection</strong>. Let’s talk about why that’s likely not true.</p>
+<p>👉 Usually when thinking about estimating the prevalence of a disease, we use the <strong>sensitivity</strong> and <strong>specificity</strong> of the test to help us<br />
+👉 The calculations assume that everyone is equally likely to get tested, and with SARS-CoV-2 that is likely not the case</p>
+<p>Let’s do some 💭 thought experiments. For these, my goal is to estimate the probability of being infected with 🦠 SARS-CoV-2 given you have 🧩 Disease X</p>
+<p>For example,🧩 Disease X could be:</p>
+<p>♥️ heart disease<br />
+😡 hypertension<br />
+➕ it could also be any subgroup (for example age, etc)</p>
+<p>In these 💭 thought experiments, we don’t actually have perfect information about who is infected with 🦠 SARS-CoV-2, we just know among those who are 🧪 <strong>tested</strong> who has been infected with 🦠 SARS-CoV-2. This is really the crux of the matter.</p>
+<p>For these 💭 thought experiments, assume that the current tests are <em>perfect</em> (that is there are 0 false positives and 0 false negatives)</p>
+<p>☝️ Note that this is likely not the case, with the current testing framework false positives (+) are unlikely but false negatives (-) may be occurring.</p>
+<p>We want the probability of being infected with SARS-CoV-2 given you have Disease X: P(🦠|🧩)</p>
+<p>To get this, we need P(🧩|🦠) because based on Bayes’ Theorem we know:</p>
+<p>P(🦠|🧩) = P(🧩|🦠)P(🦠) / P(🧩)</p>
+<p>BUT, instead of P(🧩|🦠), we actually have P(🧩|🦠, 🧪) - the probability of having disease X given you have SARS-CoV-2 AND you were tested. So the crux of these thought experiments will be trying to get an accurate estimate of P(🧩|🦠) so that we can get back to P(🦠|🧩).</p>
+<div id="thought-experiment-1-best-case-scenario" class="section level2">
+<h2>Thought experiment 1️⃣: Best case scenario</h2>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Note: all of these numbers are made up!</span>
+🧩 20% of the population has disease X<br />
+🦠 50% are infected with SARS-CoV-2
+❌ There is no relationship between disease X and SARS-CoV-2<br />
+🧪 People with disease X are just as likely to get tested than people without disease X</p>
+<p><img src="https://pbs.twimg.com/media/EVLdlokU4AQauYQ?format=jpg&amp;name=medium" /></p>
+<p>Why is thought experiment 1️⃣ a best case scenario?</p>
+<p>It looks like:</p>
+<p>🧪 50% have SARS-CoV-2 infection among those tested<br />
+🧪 Of those who tested positive, the prevalence of disease X is 20%<br />
+P(🦠|🧩) = 50%</p>
+<p>✅ Reality (no relationship between disease X and SARS-CoV-2) matches what we see</p>
+</div>
+<div id="thought-experiment-2-oversampling-scenario" class="section level2">
+<h2>Thought experiment 2️⃣: Oversampling scenario</h2>
+<p>🧩 20% of the population has disease X
+Microbe 50% have SARS-CoV-2 infection<br />
+❌ There is no relationship between disease X and SARS-CoV-2<br />
+🧪 People with disease X are <strong>2x</strong> more likely to get tested than people without disease X</p>
+<p><img src="https://pbs.twimg.com/media/EVLSv4XUUAAmrVf?format=jpg&amp;name=medium" /></p>
+<p>Why is thought experiment 2️⃣ bad?</p>
+<p>It looks like:</p>
+<p>🧪 50% have SARS-CoV-2 infection among those tested<br />
+🧪 Of those who tested positive for SARS-CoV-2, the prevalence of disease X is 33% 😱</p>
+<p>❌ If we plug in what we see (P(🧩|🦠, 🧪) for P(🧩|🦠)), it looks like P(🦠|🧩) is 82.5%, when in reality it is 50%.</p>
+</div>
+<div id="thought-experiment-3-undersampling-scenario" class="section level2">
+<h2>Thought experiment 3️⃣: Undersampling scenario</h2>
+<p>🧩 20% of the population has disease X<br />
+🦠 50% have SARS-CoV-2 infection<br />
+❌ There is no relationship between disease X and SARS-CoV-2<br />
+🧪 People with disease X are <strong>1/2</strong> as likely to get tested than people without disease X</p>
+<p><img src="https://pbs.twimg.com/media/EVLTevlUUAEvE14?format=jpg&amp;name=medium" /></p>
+<p>Why is thought experiment 3️⃣ bad?</p>
+<p>It looks like:
+🧪 50% have SARS-CoV-2 infection among those tested<br />
+🧪 Of those who tested positive for SARS-CoV-2, the prevalence of disease X is 11%</p>
+<p>❌ If we plug in what we see (P(🧩|🦠, 🧪) for P(🧩|🦠)), it looks like P(🦠|🧩) is 27.5%, when in reality it is 50%.</p>
+</div>
+<div id="thought-experiment-4-two-problems-scenario" class="section level2">
+<h2>Thought experiment 4️⃣: two problems scenario</h2>
+<p>🧩 20% of the population has disease X<br />
+🦠 56% have SARS-CoV-2 infection<br />
+✅ people with disease X are 1.6 times more likely to have SARS-CoV-2 infection, P(🦠|🧩) = 80%<br />
+🧪 People with disease X are <strong>5</strong> as likely to get tested than people without disease X</p>
+<p><img src="https://pbs.twimg.com/media/EVLUjEyUMAELWG8?format=jpg&amp;name=medium" /></p>
+<p>Why is thought experiment 4️⃣ bad?</p>
+<p>It looks like:</p>
+<p>🦠🧪 66% have SARS-CoV-2 infection among those tested<br />
+🧩🧪 Of those who tested positive for SARS-CoV-2, the prevalence of disease X is 66%</p>
+<p>❌ We’re getting both the prevalence of SARS-CoV-2 <strong>and</strong> it’s association with Disease X wrong</p>
+</div>
+<div id="how-can-we-fix-this" class="section level2">
+<h2>How can we fix this?</h2>
+<p>OKAY, scenarios finished, so hopefully this highlights why we can’t take the prevalence of characteristics in the <strong>tested positive</strong> population as the prevalence of characteristics in the overall population with a SARS-CoV-2 infection. Now, here are tips for how we can correct the numbers.</p>
+<p>Scenario 2️⃣: Oversampling by 2x</p>
+<p>👉 take those with disease X that tested positive for SARS-CoV-2 and downweight them by a factor of 2.</p>
+<p>✅ the adjusted prevalence of Disease X among those that tested positive for SARS-CoV-2 (0.5 / 2.5) = 0.2 (20%)</p>
+<p>P(🦠|🧩) = 50%</p>
+<p><img src="https://pbs.twimg.com/media/EVLXjDhUMAE1K7_?format=jpg&amp;name=medium" /></p>
+<p>Scenario 3️⃣: Undersampling by 1/2</p>
+<p>👉 take those with disease X that tested positive for SARS-CoV-2 and upweight them by a factor of 2.</p>
+<p>✅ the adjusted prevalence of Disease X among those that tested positive for SARS-CoV-2 (2/ 10) = 0.2 (20%)</p>
+<p>P(🦠|🧩) = 50%</p>
+<p><img src="https://pbs.twimg.com/media/EVLXmSkUMAAHZ3g?format=jpg&amp;name=medium" /></p>
+<p>Scenario 4️⃣: Two problems</p>
+<p>For the prevalence of SARS-CoV-2 infections, correct by weighing by the probability of being tested in each subgroup. Here:</p>
+<p>🧩 = disease X<br />
+❌🧩 = No disease X</p>
+<p>P(🦠) = P(🦠 | 🧩) P(🧩) + P(🦠 | ❌🧩) P(❌🧩)</p>
+<p>✅P(🦠) = ⅘ * 0.2 + ½ * 0.8 = 56%</p>
+<p>Said another way, for calculating the overall prevalence of SARS-CoV-2, this is like downweighting the oversampled Disease X people (divide by 5).</p>
+<p>✅ P(🦠) = (⅘ + 2) / (⅘ + 2 + ⅕ + 2) = 0.56</p>
+<p>For calculating the prevalence of disease X among those with SARS-CoV-2 infections:</p>
+<p>✅ P(🧩 | 🦠) = P(🦠 | 🧩) P(🧩) / P(🦠) = ⅘ * 0.2 / 0.56 = 0.285</p>
+<p>Again, downweight the oversampled Disease X population (divide by 5).</p>
+<p>✅ P(🧩 | 🦠) = ⅘ / (⅘ + 2) = 0.285</p>
+<p>P(🦠 | 🧩) = 80%</p>
+<p><img src="https://pbs.twimg.com/media/EVLXqXAUEAApzdi?format=jpg&amp;name=medium" /></p>
+<p>Hopefully this is somewhat helpful when reading about characteristics of those who are currently testing positive for SARS-CoV-2. As always, please let me know if there is something I’ve missed! 🙏</p>
+</div>
