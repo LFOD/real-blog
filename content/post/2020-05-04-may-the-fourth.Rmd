@@ -1,0 +1,52 @@
+---
+title: 'May the Fourth Be With You (#rstats style)'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-04'
+slug: may-the-fourth-be-with-you-rstats-style
+categories: [rstats, star wars, ggplot2, gganimate]
+tags: [rstats, star wars, ggplot2, gganimate]
+excerpt: "Rafael Irizarry made a fabulous TIE fighter plot in R, Jake Thompson recreated it using ggplot2 and gganimate, I added some stars."
+---
+
+Happy Star Wars Day!
+
+[Rafael Irizarry](https://twitter.com/rafalab) has made a fabulous TIE fighter plot. 
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Happy <a href="https://twitter.com/hashtag/MayFourth?src=hash&amp;ref_src=twsrc%5Etfw">#MayFourth</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a><br>par(bg=1,fg=&quot;white&quot;)<br>x&lt;-0.5-&gt;y<br>z&lt;-&quot;|-o-|&quot;<br>s&lt;-cbind(runif(50),runif(50))<br>m&lt;-c(-1,1)/20<br>while(TRUE){<br> rafalib::nullplot(xaxt=&quot;n&quot;,yaxt=&quot;n&quot;,bty=&quot;n&quot;)<br> points(s,pch=&quot;.&quot;)<br> text(x,y,z, cex=4)<br> x&lt;-pmin(pmax(x+sample(m,1),0),1)<br> y&lt;-pmin(pmax(y+sample(m,1),0),1)<br>} <a href="https://t.co/2kBwklMjTy">pic.twitter.com/2kBwklMjTy</a></p>&mdash; Rafael Irizarry (@rafalab) <a href="https://twitter.com/rafalab/status/992397723532963841?ref_src=twsrc%5Etfw">May 4, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Jake Thompson [recreated this plot](https://www.wjakethompson.com/post/2018-05-04-animated-tie-fighter/) using the {gganimate} package. I posted this amazing recreation in celebration of Star Wars Day (May the Fourth be with YOU!), and Rafa pointed out that the stars are missing! 
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Where are the stars ✨ though? 😁</p>&mdash; Rafael Irizarry (@rafalab) <a href="https://twitter.com/rafalab/status/1257325600219357184?ref_src=twsrc%5Etfw">May 4, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+So I've taken it upon myself to add them. Here you go!
+
+```{r plot, cache = TRUE, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(gganimate)
+set.seed(20200504)
+
+locations <- 20
+n_stars <- 50
+tie_data <- tibble(
+  id = rep(seq_len(locations), each = n_stars),
+  x = rep(runif(locations), each = n_stars),
+  y = rep(runif(locations), each = n_stars),
+  star_x = rep(runif(n_stars), locations),
+  star_y = rep(runif(n_stars), locations),
+  label = "|-o-|"
+)
+
+
+ggplot(tie_data, aes(x = x, y = y, label = label)) +
+  geom_point(color = "white", aes(star_x, star_y)) +
+  geom_text(color = "white", fontface = "bold", size = 12) +
+  expand_limits(x = c(-0.1, 1.1), y = c(-0.1, 1.1)) +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "black")) +
+  transition_states(id, transition_length = 4, state_length = 1)
+```
+
+Check out the other amazing Star Wars - R content from the fabulous #rstats community!
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Happy <a href="https://twitter.com/hashtag/MayThe4th?src=hash&amp;ref_src=twsrc%5Etfw">#MayThe4th</a>! In honor of this special day, I&#39;ve curated a list of my favorite <a href="https://twitter.com/hashtag/StarWars?src=hash&amp;ref_src=twsrc%5Etfw">#StarWars</a> and <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> crossovers 💕 <br><br>🧵 1/n <a href="https://t.co/A4HTZesxl8">pic.twitter.com/A4HTZesxl8</a></p>&mdash; Lucy D’Agostino McGowan (@LucyStats) <a href="https://twitter.com/LucyStats/status/1257322839314542592?ref_src=twsrc%5Etfw">May 4, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
