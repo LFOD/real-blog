@@ -1,0 +1,80 @@
+---
+title: 'IHME Model Uncertainty: A quick explainer'
+author: "Lucy D'Agostino McGowan"
+date: '2020-04-08'
+slug: ihme-model-uncertainty-a-quick-explainer
+categories: [statistics, uncertainty, coronavirus, casual inference]
+tags: [statistics, uncertainty, coronavirus, casual inference, ihme]
+excerpt: "There has been a lot of talk about the IHME Covid-19 projection model. Ellie Murray & I have a chat about it on Episode 10 of Casual Inference; here is a quick description of what is going on here with a focus on the uncertainty."
+---
+
+There has been a lot of talk about the [IHME Covid-19 projection model](https://covid19.healthdata.org/united-states-of-america). [Ellie Murray](https://twitter/com/EpiEllie) & I have a chat about it on [Episode 10 of Casual Inference](https://casualinfer.libsyn.com/coronavirus-conversations-2); here is a quick description of what is going on here with a focus on the **uncertainty**.
+
+When I look at models, I usually start with two things:
+
+`r emo::ji("chart_with_upwards_trend")` What method is being used?  
+`r emo::ji("inbox_tray")` What data is it based on?
+
+Let's start with the methods!
+
+### Methods
+
+`r tufte::margin_note("in particular it is using [a non-linear mixed effects model](https://ihmeuw-msca.github.io/CurveFit/methods/)")`
+
+`r emo::ji("chart_with_upwards_trend")` The IHME model is estimating the log of the cumulative death rate for a given state at a given time  
+`r emo::ji("water_wave")` Using curve fitting   
+`r emo::ji("straight_ruler")` parametrized with info about the state's social distancing  
+
+Since the IHME model is trying to estimate a **curve** there are `r emo::ji("victory_hand")` two important pieces:
+
+1️⃣ When will deaths "peak"    
+2️⃣ How many deaths will there be at the "peak"
+
+To estimate when these occur, the IHME model has two sources of info: 
+
+⏱ the current death rate over time for the state   
+`r emo::ji("straight_ruler")` the social distancing measures being implemented 
+
+This information is combined with some `r emo::ji("earth_asia")`global info as well
+
+`r emo::ji("baby")` In the short run, the model is impacted more by the state's data  
+`r emo::ji("older_man")` In the long run, they use info from locations that have seemingly already reached a peak: Wuhan, 5 in Italy, 2 in Spain
+
+### Uncertainty
+
+OKAY now that we know what the IHME model is doing, let's get to the good stuff - where is the uncertainty? 
+
+1. There is uncertainty that the model itself will accurately predict what will happen (it's based on a Gaussian error function - is that right?)  
+2. There is uncertainty in the distributional assumptions of the model  
+3. Even if the model is correctly specified, there is uncertainty in the parameter estimation (this is a mixed effects model, so there is uncertainty associated with fixed and the random effects)  
+4. There may be systematic uncertainty in the reported state-by-state death data. Why? Fewer deaths may be reported on weekends, if systems are overrun, COVID-19 related deaths may go unreported, etc `r tufte::margin_note("[NPR reports that NYC is seeing a spike of deaths at home](https://www.npr.org/sections/coronavirus-live-updates/2020/04/08/829506542/after-deaths-at-home-in-nyc-officials-plan-to-count-many-as-covid-19) that are not originally included in COVID-19 count")`  
+5. There may be random uncertainty in the reported state-by-state death data
+6. There is uncertainty in the reported information coming from cities that seem to have already peaked
+
+So let's recap on the uncertainty in the IHME model:
+
+1️⃣ model choice   
+2️⃣ model parameters   
+3️⃣ model estimation   
+4️⃣ data from the states (systematic)   
+5️⃣ data from the states (random)   
+6️⃣ data from the "peaked" locations  
+
+In the original model (pre-last week) the error bands you saw only accounted for 3️⃣, since then the model was updated so that the uncertainty also accounts for out-of-sample uncertainty, which I believe covers 5️⃣
+
+The shaded red region in the model is the *uncertainty* the model accounts for, just two of the 6:
+
+`r emo::ji("cross_mark")`1️⃣ model choice    
+`r emo::ji("cross_mark")`2️⃣ model parameters     
+`r emo::ji("white_heavy_check_mark")`3️⃣ model estimation   
+`r emo::ji("cross_mark")`4️⃣ data from the states (systematic)        
+`r emo::ji("white_heavy_check_mark")`5️⃣ data from the states (random)       
+`r emo::ji("cross_mark")`6️⃣ data from the "peaked" locations
+
+![](https://pbs.twimg.com/media/EVHHUCqVAAAVbtw?format=jpg&name=medium)
+
+This is not unusual or bad! It is just good to keep in mind the uncertainty that these projections carry with them. If all of the uncertainty we've talked about today was quantified, it's possible we'd basically have no answers to go off of `r emo::ji("woman_shrugging")`
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">&quot;You guys think I don&#39;t give you straight answers. You have to talk to these statisticians. They will not give you a direct answer on anything.&quot; 🤣 <a href="https://t.co/4AhCHYaDtz">https://t.co/4AhCHYaDtz</a></p>&mdash; Hilary Parker (@hspter) <a href="https://twitter.com/hspter/status/1246955939946803202?ref_src=twsrc%5Etfw">April 6, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Think I missed something important? Please let me know! `r emo::ji("folded_hands")`

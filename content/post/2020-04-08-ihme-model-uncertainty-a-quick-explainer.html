@@ -1,0 +1,74 @@
+---
+title: 'IHME Model Uncertainty: A quick explainer'
+author: "Lucy D'Agostino McGowan"
+date: '2020-04-08'
+slug: ihme-model-uncertainty-a-quick-explainer
+categories: [statistics, uncertainty, coronavirus, casual inference]
+tags: [statistics, uncertainty, coronavirus, casual inference, ihme]
+excerpt: "There has been a lot of talk about the IHME Covid-19 projection model. Ellie Murray & I have a chat about it on Episode 10 of Casual Inference; here is a quick description of what is going on here with a focus on the uncertainty."
+---
+
+
+
+<p>There has been a lot of talk about the <a href="https://covid19.healthdata.org/united-states-of-america">IHME Covid-19 projection model</a>. <a href="https://twitter/com/EpiEllie">Ellie Murray</a> &amp; I have a chat about it on <a href="https://casualinfer.libsyn.com/coronavirus-conversations-2">Episode 10 of Casual Inference</a>; here is a quick description of what is going on here with a focus on the <strong>uncertainty</strong>.</p>
+<p>When I look at models, I usually start with two things:</p>
+<p>📈 What method is being used?<br />
+📥 What data is it based on?</p>
+<p>Let’s start with the methods!</p>
+<div id="methods" class="section level3">
+<h3>Methods</h3>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">in particular it is using <a href="https://ihmeuw-msca.github.io/CurveFit/methods/">a non-linear mixed effects model</a></span></p>
+<p>📈 The IHME model is estimating the log of the cumulative death rate for a given state at a given time<br />
+🌊 Using curve fitting<br />
+📏 parametrized with info about the state’s social distancing</p>
+<p>Since the IHME model is trying to estimate a <strong>curve</strong> there are ✌️ two important pieces:</p>
+<p>1️⃣ When will deaths “peak”<br />
+2️⃣ How many deaths will there be at the “peak”</p>
+<p>To estimate when these occur, the IHME model has two sources of info:</p>
+<p>⏱ the current death rate over time for the state<br />
+📏 the social distancing measures being implemented</p>
+<p>This information is combined with some 🌏global info as well</p>
+<p>👶 In the short run, the model is impacted more by the state’s data<br />
+👴 In the long run, they use info from locations that have seemingly already reached a peak: Wuhan, 5 in Italy, 2 in Spain</p>
+</div>
+<div id="uncertainty" class="section level3">
+<h3>Uncertainty</h3>
+<p>OKAY now that we know what the IHME model is doing, let’s get to the good stuff - where is the uncertainty?</p>
+<ol style="list-style-type: decimal">
+<li>There is uncertainty that the model itself will accurately predict what will happen (it’s based on a Gaussian error function - is that right?)<br />
+</li>
+<li>There is uncertainty in the distributional assumptions of the model<br />
+</li>
+<li>Even if the model is correctly specified, there is uncertainty in the parameter estimation (this is a mixed effects model, so there is uncertainty associated with fixed and the random effects)<br />
+</li>
+<li>There may be systematic uncertainty in the reported state-by-state death data. Why? Fewer deaths may be reported on weekends, if systems are overrun, COVID-19 related deaths may go unreported, etc <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote"><a href="https://www.npr.org/sections/coronavirus-live-updates/2020/04/08/829506542/after-deaths-at-home-in-nyc-officials-plan-to-count-many-as-covid-19">NPR reports that NYC is seeing a spike of deaths at home</a> that are not originally included in COVID-19 count</span><br />
+</li>
+<li>There may be random uncertainty in the reported state-by-state death data</li>
+<li>There is uncertainty in the reported information coming from cities that seem to have already peaked</li>
+</ol>
+<p>So let’s recap on the uncertainty in the IHME model:</p>
+<p>1️⃣ model choice<br />
+2️⃣ model parameters<br />
+3️⃣ model estimation<br />
+4️⃣ data from the states (systematic)<br />
+5️⃣ data from the states (random)<br />
+6️⃣ data from the “peaked” locations</p>
+<p>In the original model (pre-last week) the error bands you saw only accounted for 3️⃣, since then the model was updated so that the uncertainty also accounts for out-of-sample uncertainty, which I believe covers 5️⃣</p>
+<p>The shaded red region in the model is the <em>uncertainty</em> the model accounts for, just two of the 6:</p>
+<p>❌1️⃣ model choice<br />
+❌2️⃣ model parameters<br />
+✅3️⃣ model estimation<br />
+❌4️⃣ data from the states (systematic)<br />
+✅5️⃣ data from the states (random)<br />
+❌6️⃣ data from the “peaked” locations</p>
+<p><img src="https://pbs.twimg.com/media/EVHHUCqVAAAVbtw?format=jpg&amp;name=medium" /></p>
+<p>This is not unusual or bad! It is just good to keep in mind the uncertainty that these projections carry with them. If all of the uncertainty we’ve talked about today was quantified, it’s possible we’d basically have no answers to go off of 🤷‍♀</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+“You guys think I don't give you straight answers. You have to talk to these statisticians. They will not give you a direct answer on anything.” 🤣 <a href="https://t.co/4AhCHYaDtz">https://t.co/4AhCHYaDtz</a>
+</p>
+— Hilary Parker (<span class="citation">@hspter</span>) <a href="https://twitter.com/hspter/status/1246955939946803202?ref_src=twsrc%5Etfw">April 6, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Think I missed something important? Please let me know! 🙏</p>
+</div>
