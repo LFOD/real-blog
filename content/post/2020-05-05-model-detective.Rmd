@@ -23,7 +23,7 @@ library(tidyverse)
 library(magick)
 library(grid)
 
-img <- image_read("https://pbs.twimg.com/media/EXRujkPWsAEHdx4?format=jpg&name=medium")
+img <- image_read("https://pbs.twimg.com/media/EXQlsS6WAAAXy3W?format=jpg&name=medium")
 d <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv")
 ```
 
