@@ -1,0 +1,135 @@
+---
+title: 'Model Detective'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-05'
+slug: model-detective
+categories: [rstats, covid-19]
+tags: [rstats, covid-19]
+math: no
+meta: yes
+excerpt: "It has recently been brought to our attention that a model is predicting we will have 0 COVID-19 related deaths after May 15th. This model was described as a \"cubic polynomial\". Inspired by David Robinson's data sleuthing, I decided to see if we could reverse engineer this \"model\"."
+---
+
+It has recently been brought to our attention that a model is predicting we will have 0 COVID-19 related deaths after May 15th. This model was described as a "cubic polynomial". Inspired by Dave Robinson's data sleuthing, I decided to see if we could reverse engineer this "model".
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The &quot;cubic model&quot; from <a href="https://twitter.com/CEA?ref_src=twsrc%5Etfw">@CEA</a> + Kevin Hassett was pretty clearly fit on log(deaths + 1). Which is... pretty dangerous for forecasting.<br><br>Just imagine if they&#39;d fit a quartic model <a href="https://t.co/VTlFoD9qvC">pic.twitter.com/VTlFoD9qvC</a></p>&mdash; David Robinson (@drob) <a href="https://twitter.com/drob/status/1257753751781289986?ref_src=twsrc%5Etfw">May 5, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Turns out we can!
+
+Let's read in the data from the [New York Times GitHub Repo](https://Github.com/nytimes/covid-19-data).
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(magick)
+library(grid)
+
+img <- image_read("https://pbs.twimg.com/media/EXRujkPWsAEHdx4?format=jpg&name=medium")
+d <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us.csv")
+```
+
+I'm going to do some data manipulation:
+
+1. Add some future dates for our "prediction model"
+2. Filter so we only include dates from the graph we are trying to replicate
+3. The New York Times gives us cumulative deaths, we want just deaths per day, so I'll create that
+
+```{r}
+dat <- d %>%
+  bind_rows(tibble(date = Sys.Date() + 1:91)) %>%
+  filter(date >= "2020-02-26") %>%   
+  mutate(death = c(deaths[1], diff(deaths)))
+
+```
+
+Here is a VERY basic prediction model. It includes a 3rd degree polynomial term it is predicting log(death + a small constant). I tried a few, a small constant of 0.5 seems to fit the best `r emo::ji("shrug")`.
+
+```{r}
+p <- predict(lm(log(death + 0.5) ~ poly(date, 3), data = dat), newdata = dat)
+```
+
+Let's plot it. First I'll create a plot that just includes the original graph.
+
+```{r, message = FALSE, warning = FALSE}
+p1 <- ggplot(dat, aes(x = date, y = death)) +
+  geom_line() + 
+  annotation_custom(rasterGrob(img, 
+                               width = unit(1,"npc"), 
+                               height = unit(1,"npc")), 
+                    -Inf, Inf, -Inf, Inf) +
+  ylim(c(-500, 5000)) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) + 
+  scale_x_date(limits = as.Date(c('2020-02-17','2020-08-10')))
+p1
+```
+
+
+Now I'll add a plot that has the New York Times death data overlaid, just to be sure things line up properly.
+
+```{r, message = FALSE, warning = FALSE}
+p2 <- ggplot(dat, aes(x = date, y = death)) +
+  geom_line() + 
+  annotation_custom(rasterGrob(img, 
+                               width = unit(1,"npc"), 
+                               height = unit(1,"npc")), 
+                    -Inf, Inf, -Inf, Inf) +
+  geom_line() + 
+  ylim(c(-500, 5000)) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) +
+  scale_x_date(limits = as.Date(c('2020-02-17','2020-08-10')))
+p2
+```
+
+Finally, let's plot our "model".
+
+```{r, message = FALSE, warning = FALSE}
+p3 <- ggplot(dat, aes(x = date, y = death)) +
+  annotation_custom(rasterGrob(img, 
+                               width = unit(1,"npc"), 
+                               height = unit(1,"npc")), 
+                    -Inf, Inf, -Inf, Inf) +
+  geom_line() + 
+  geom_line(aes(x = date, y = exp(p))) +
+  ylim(c(-500, 5000)) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(),
+        axis.ticks = element_blank()) + 
+  scale_x_date(limits = as.Date(c('2020-02-17','2020-08-10')))
+p3
+```
+
+
+Let's make this into a gif for sharing!
+
+```{r, results = "hide", message = FALSE, warning = FALSE}
+fig1<- image_graph(width = 1000, height = 650, res = 300)
+p1
+dev.off()
+
+fig2<- image_graph(width = 1000, height = 650, res = 300)
+p2
+dev.off()
+
+fig2 <- fig2 %>%
+  image_annotate("I've added death data from NYTimes - @LucyStats",
+                 location = "+650+400", size = 15)
+
+fig3 <- image_graph(width = 1000, height = 650, res = 300)
+p3
+dev.off()
+
+fig3 <- fig3 %>%
+  image_annotate("I've added death data from NYTimes - @LucyStats",
+                 location = "+650+400", size = 15) %>%
+  image_annotate("I've added a model with 3rd degree polynomial\n for log(death + 0.5) - @LucyStats",
+                 location = "+650+420", size = 15)
+```
+
+```{r}
+image_join(fig1, fig2, fig3) %>%
+  image_animate(fps = 1)
+```
+
