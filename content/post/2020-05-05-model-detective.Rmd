@@ -105,11 +105,11 @@ p3
 Let's make this into a gif for sharing!
 
 ```{r, results = "hide", message = FALSE, warning = FALSE}
-fig1<- image_graph(width = 1000, height = 650, res = 300)
+fig1 <- image_graph(width = 1000, height = 650, res = 300)
 p1
 dev.off()
 
-fig2<- image_graph(width = 1000, height = 650, res = 300)
+fig2 <- image_graph(width = 1000, height = 650, res = 300)
 p2
 dev.off()
 
