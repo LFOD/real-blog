@@ -43,10 +43,9 @@ d &lt;- read_csv(&quot;https://raw.githubusercontent.com/nytimes/covid-19-data/m
 <p>Let’s plot it. First I’ll create a plot that just includes the original graph.</p>
 <pre class="r"><code>p1 &lt;- ggplot(dat, aes(x = date, y = death)) +
   geom_line() + 
-  annotation_custom(rasterGrob(img, 
-                               width = unit(1,&quot;npc&quot;), 
-                               height = unit(1,&quot;npc&quot;)), 
-                    -Inf, Inf, -Inf, Inf) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, &quot;npc&quot;),  height = unit(1, &quot;npc&quot;)), 
+    -Inf, Inf, -Inf, Inf) +
   ylim(c(-500, 5000)) +
   theme(axis.title = element_blank(), 
         axis.text = element_blank(),
@@ -57,10 +56,9 @@ p1</code></pre>
 <p>Now I’ll add a plot that has the New York Times death data overlaid, just to be sure things line up properly.</p>
 <pre class="r"><code>p2 &lt;- ggplot(dat, aes(x = date, y = death)) +
   geom_line() + 
-  annotation_custom(rasterGrob(img, 
-                               width = unit(1,&quot;npc&quot;), 
-                               height = unit(1,&quot;npc&quot;)), 
-                    -Inf, Inf, -Inf, Inf) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, &quot;npc&quot;),  height = unit(1, &quot;npc&quot;)), 
+    -Inf, Inf, -Inf, Inf) +
   geom_line() + 
   ylim(c(-500, 5000)) +
   theme(axis.title = element_blank(), 
@@ -71,10 +69,9 @@ p2</code></pre>
 <p><img src="/post/2020-05-05-model-detective_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Finally, let’s plot our “model”.</p>
 <pre class="r"><code>p3 &lt;- ggplot(dat, aes(x = date, y = death)) +
-  annotation_custom(rasterGrob(img, 
-                               width = unit(1,&quot;npc&quot;), 
-                               height = unit(1,&quot;npc&quot;)), 
-                    -Inf, Inf, -Inf, Inf) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, &quot;npc&quot;),  height = unit(1, &quot;npc&quot;)), 
+    -Inf, Inf, -Inf, Inf) +
   geom_line() + 
   geom_line(aes(x = date, y = exp(p))) +
   ylim(c(-500, 5000)) +
@@ -109,3 +106,19 @@ fig3 &lt;- fig3 %&gt;%
 <pre class="r"><code>image_join(fig1, fig2, fig3) %&gt;%
   image_animate(fps = 1)</code></pre>
 <p><img src="/post/2020-05-05-model-detective_files/figure-html/unnamed-chunk-8-1.gif" /><!-- --></p>
+<div id="but-wait-theres-more" class="section level2">
+<h2>But wait there’s more!</h2>
+<p>Thomas Lumley aptly pointed out that while we’re extrapolating, let’s see how this model does if we peek a little into the past.</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+So, since (as you know) a cubic must go to -infinity at one end and +infinity at the other, I wondered how well this would extrapolate the other way. Turns out the entire world population were cases on December 4, which isn't quite how I remembered it.
+</p>
+— Thomas Lumley (<span class="citation">@tslumley</span>) <a href="https://twitter.com/tslumley/status/1257819452596301825?ref_src=twsrc%5Etfw">May 5, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Hmm fascinating, it looks like deaths began to increase again as of January 7th. 🤔 I don’t seem to remember that.</p>
+<p><img src="/post/2020-05-05-model-detective_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Okay, let’s see how bad things got, according to this model.</p>
+<p><img src="/post/2020-05-05-model-detective_files/figure-html/unnamed-chunk-12-1.gif" /><!-- --></p>
+<p>Yikes. Looks like the whole population died on December 4, 2019. RIP us.</p>
+</div>

@@ -38,7 +38,6 @@ dat <- d %>%
   bind_rows(tibble(date = Sys.Date() + 1:91)) %>%
   filter(date >= "2020-02-26") %>%   
   mutate(death = c(deaths[1], diff(deaths)))
-
 ```
 
 Here is a VERY basic prediction model. It includes a 3rd degree polynomial term it is predicting log(death + a small constant). I tried a few, a small constant of 0.5 seems to fit the best `r emo::ji("shrug")`.
@@ -52,10 +51,9 @@ Let's plot it. First I'll create a plot that just includes the original graph.
 ```{r, message = FALSE, warning = FALSE}
 p1 <- ggplot(dat, aes(x = date, y = death)) +
   geom_line() + 
-  annotation_custom(rasterGrob(img, 
-                               width = unit(1,"npc"), 
-                               height = unit(1,"npc")), 
-                    -Inf, Inf, -Inf, Inf) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, "npc"),  height = unit(1, "npc")), 
+    -Inf, Inf, -Inf, Inf) +
   ylim(c(-500, 5000)) +
   theme(axis.title = element_blank(), 
         axis.text = element_blank(),
@@ -70,10 +68,9 @@ Now I'll add a plot that has the New York Times death data overlaid, just to be 
 ```{r, message = FALSE, warning = FALSE}
 p2 <- ggplot(dat, aes(x = date, y = death)) +
   geom_line() + 
-  annotation_custom(rasterGrob(img, 
-                               width = unit(1,"npc"), 
-                               height = unit(1,"npc")), 
-                    -Inf, Inf, -Inf, Inf) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, "npc"),  height = unit(1, "npc")), 
+    -Inf, Inf, -Inf, Inf) +
   geom_line() + 
   ylim(c(-500, 5000)) +
   theme(axis.title = element_blank(), 
@@ -87,10 +84,9 @@ Finally, let's plot our "model".
 
 ```{r, message = FALSE, warning = FALSE}
 p3 <- ggplot(dat, aes(x = date, y = death)) +
-  annotation_custom(rasterGrob(img, 
-                               width = unit(1,"npc"), 
-                               height = unit(1,"npc")), 
-                    -Inf, Inf, -Inf, Inf) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, "npc"),  height = unit(1, "npc")), 
+    -Inf, Inf, -Inf, Inf) +
   geom_line() + 
   geom_line(aes(x = date, y = exp(p))) +
   ylim(c(-500, 5000)) +
@@ -132,4 +128,133 @@ fig3 <- fig3 %>%
 image_join(fig1, fig2, fig3) %>%
   image_animate(fps = 1)
 ```
+
+## But wait there's more!
+
+Thomas Lumley aptly pointed out that while we're extrapolating, let's see how this model does if we peek a little into the past. 
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">So, since (as you know) a cubic must go to -infinity at one end and +infinity at the other, I wondered how well this would extrapolate the other way. Turns out the entire world population were cases on December 4, which isn&#39;t quite how I remembered it.</p>&mdash; Thomas Lumley (@tslumley) <a href="https://twitter.com/tslumley/status/1257819452596301825?ref_src=twsrc%5Etfw">May 5, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Hmm fascinating, it looks like deaths began to increase again as of January 7th. `r emo::ji("thinking")` I don't seem to remember that.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+new_data <- tibble(date = Sys.Date() - 156:82)
+p <- predict(lm(log(death + 0.5) ~ poly(date, 3), data = dat), newdata = new_data)
+
+p4 <- ggplot(new_data, aes(x = date, y = exp(p))) +
+  annotation_custom(
+    rasterGrob(img, width = unit(1, "npc"), height = unit(1, "npc")),
+    as.Date("2020-02-13"), as.Date("2020-08-10"), -700, 5000) +
+  geom_line(color = "red", lty = 2) + 
+  coord_cartesian(ylim = c(-700, 5000)) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        panel.background = element_blank()) + 
+  scale_x_date(limits = as.Date(c("2019-12-01","2020-08-10")))
+p4
+```
+
+Okay, let's see how bad things got, according to this model.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+new_data2 <- tibble(date = c(Sys.Date() - 156:1, Sys.Date() + 1:91))
+p2 <- predict(lm(log(death + 0.5) ~ poly(date, 3), data = dat), newdata = new_data2)
+
+
+p5 <- ggplot(new_data2, aes(x = date, y = exp(p2))) +
+  geom_line(color = "red", lty = 2) + 
+  coord_cartesian(ylim = c(-700, 5000)) +
+  theme_minimal() +
+  theme(axis.title = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.background = element_blank(),
+        axis.text = element_text(size = 5)) + 
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(limits = as.Date(c("2019-12-01","2020-08-10")))
+
+p5_5 <- ggplot(new_data2, aes(x = date, y = exp(p2))) +
+  geom_line(color = "red", lty = 2) + 
+  coord_cartesian(ylim = c(-700, 10000)) +
+  theme_minimal() +
+  theme(axis.title = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.background = element_blank(),
+        axis.text = element_text(size = 5)) + 
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(limits = as.Date(c("2019-12-01","2020-08-10")))
+
+p6 <- ggplot(new_data2, aes(x = date, y = exp(p2))) +
+  geom_line(color = "red", lty = 2) + 
+  coord_cartesian(ylim = c(-700, 100000)) +
+  theme_minimal() +
+  theme(axis.title = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.background = element_blank(),
+        axis.text = element_text(size = 5)) + 
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(limits = as.Date(c("2019-12-01","2020-08-10")))
+
+p7 <- ggplot(new_data2, aes(x = date, y = exp(p2))) +
+  geom_line(color = "red", lty = 2) + 
+  coord_cartesian(ylim = c(-700, 7800000000)) +
+  theme_minimal() +
+  theme(axis.title = element_blank(), 
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.background = element_blank(),
+        axis.text = element_text(size = 5)) +
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(limits = as.Date(c("2019-12-01","2020-08-10")))
+
+p8 <- ggplot(new_data2, aes(x = date, y = exp(p2))) +
+  geom_hline(yintercept = 7800000000) +
+  geom_line(color = "red", lty = 2) + 
+  coord_cartesian(ylim = c(-700, 7800000000)) +
+  theme_minimal() +
+  theme(axis.title = element_blank(), 
+        panel.background = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        axis.text = element_text(size = 5)) + 
+  scale_y_continuous(labels = scales::comma) +
+  scale_x_date(limits = as.Date(c("2019-12-01","2020-08-10")))
+
+```
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = "hide"}
+fig4 <- image_graph(width = 1000, height = 650, res = 300)
+p4
+dev.off()
+fig5 <- image_graph(width = 1000, height = 650, res = 300)
+p5
+dev.off()
+fig5_5 <- image_graph(width = 1000, height = 650, res = 300)
+p5_5
+dev.off()
+fig6 <- image_graph(width = 1000, height = 650, res = 300)
+p6
+dev.off()
+fig7 <- image_graph(width = 1000, height = 650, res = 300)
+p7
+dev.off()
+fig8 <- image_graph(width = 1000, height = 650, res = 300)
+p8
+dev.off()
+
+fig8 <- fig8 %>%
+  image_annotate("This is the total population in the world,\nallegedly we all died on December 4, 2019. RIP us. - @LucyStats",
+                 location = "+400+100", size = 15) 
+```
+
+```{r, echo = FALSE}
+image_join(fig4, fig5, fig5_5, fig6, fig7, fig8) %>%
+  image_animate(fps = 1)
+```
+
+Yikes. Looks like the whole population died on December 4, 2019. RIP us.
 
