@@ -7,10 +7,17 @@ categories: []
 tags: []
 math: no
 meta: yes
-excerpt: "I just completed my first year as a faculty member - here is what I've learned!"
+excerpt: "I just completed my first year as a faculty member - here is what I've learned! I'll start by giving some context for where I am, what my university is like, etc. Then I'll describe four recommendations, summarized by: discover your institution's culture, become a peer, find harmony, and build community!"
 ---
 
-I just completed my first year as a faculty member - here is what I've learned!
+I just completed my first year as a faculty member - here is what I've learned! I'll start by giving some _context_ for where I am, what my university is like, etc. Then I'll describe four recommendations, summarized by:
+
+`r emo::ji("performing_arts")` Discover your institution's culture      
+`r emo::ji("woman_office_worker")` Become a peer   
+`r emo::ji("notes")` Find harmony   
+`r emo::ji("dancing_women")` Build community 
+
+Here we gooo!
 
 ## Context
 
