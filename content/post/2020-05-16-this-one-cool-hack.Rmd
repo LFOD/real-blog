@@ -78,7 +78,6 @@ harry_potter %>%
 
 ```
 
-sdfsdf
 
 ```{r, echo = FALSE}
 harry_potter %>%
