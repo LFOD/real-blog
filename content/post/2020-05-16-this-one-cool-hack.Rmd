@@ -145,3 +145,42 @@ harry_potter %>%
   DT::datatable()
 ```
 
+## Inspired
+
+After tweeting this out, several people pointed out that this is a nice use case for `tribble()`!
+
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">Such lookup tables are things where `tribble` really shines, IMHO.</p>&mdash; Konrad Rudolph (@klmr) <a href="https://twitter.com/klmr/status/1261677585404174350?ref_src=twsrc%5Etfw">May 16, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">tribble() would be just as clear as the tired one and just as nifty as the wired one.</p>&mdash; Dave Harris, but masked (@davidjayharris) <a href="https://twitter.com/davidjayharris/status/1261702260486221824?ref_src=twsrc%5Etfw">May 16, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">That’s how set nice labels for plots and tables. Make a tribble and join at the last minute.</p>&mdash; tj mahr 🍕🍍 (@tjmahr) <a href="https://twitter.com/tjmahr/status/1261695799056117762?ref_src=twsrc%5Etfw">May 16, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Let's see how that looks!
+
+```{r, eval = FALSE}
+ranks <- tribble(
+  ~House,      ~smart_rank, ~brave_rank, ~cunning_rank, ~kind_rank,
+  "Gryffindor", 2,           1,          3,             2,
+  "Ravenclaw",  1,           3,          3,             3,
+  "Hufflepuff", 4,           4,          4,             1,
+  "Slytherin",  3,           2,          1,             4,
+)
+
+harry_potter %>%
+  left_join(ranks, by = "House") 
+```
+
+```{r, echo = FALSE}
+ranks <- tribble(
+  ~House,      ~smart_rank, ~brave_rank, ~cunning_rank, ~kind_rank,
+  "Gryffindor", 2,           1,          3,             2,
+  "Ravenclaw",  1,           3,          3,             3,
+  "Hufflepuff", 4,           4,          4,             1,
+  "Slytherin",  3,           2,          1,             4,
+)
+
+harry_potter %>%
+  left_join(ranks, by = "House") %>%
+  DT::datatable()
+```
+
