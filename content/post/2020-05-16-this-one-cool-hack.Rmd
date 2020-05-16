@@ -1,0 +1,148 @@
+---
+title: 'This one cool hack will...help you categorize Harry Potter Characters!'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-16'
+slug: this-one-cool-hack
+categories: [rstats]
+tags: [rstats]
+math: no
+meta: yes
+excerpt: "Inspired by the amazing Not So Standard Deviations, as usual, here is a fun way to categorize data using a left join instead of case_when or if/else statements!!!"
+---
+
+Hilary Parker & Roger Peng mention a cool tactic for categorizing data on their podcast, [Not So Standard Deviations](http://nssdeviations.com). (If I recall correctly, I think Hilary mentioned it first, then Roger used it in a subsequent episode, unfortunatly I don't remember which episodes these were and a quick lookback proved futile. If I figure it out, I'll link it here!)
+
+The basic concept is to make a small table & join it into the data frame you are trying to categorize instead of writing a bunch of if/else statements. This is especially useful if you are:
+
+`r emo::ji("point_up")` Using the same categories on a bunch of different data frames (you can just create the small table of categories once!)  
+`r emo::ji("v")` Creating multiple _new_ variables from a single variable
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Have a bunch of things to recategorize?<br><br>TIRED: write a bunch of case_when or if/else statements <br><br>WIRED: left join a small data frame with the updated categories <br><br>*this message is brought to you by <a href="https://twitter.com/NSSDeviations?ref_src=twsrc%5Etfw">@nssdeviations</a> (THANK YOU!) and my HAPPY HEART each time I do this now <a href="https://t.co/smFubWEGcq">pic.twitter.com/smFubWEGcq</a></p>&mdash; Lucy D’Agostino McGowan (@LucyStats) <a href="https://twitter.com/LucyStats/status/1261260481467224064?ref_src=twsrc%5Etfw">May 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+I tweeted about this kernel of wisdom and a few people asked me to write up an example, so here it is!
+
+## Example 
+
+For this example, I am going to rank Harry Potter characters based on the house they were sorted into on a variety of characteristics. 
+
+`r tufte::margin_note("This data originated from a [Kaggle Dataset by Gulsah Demiryurek](https://www.kaggle.com/gulsahdemiryurek/harry-potter-dataset)")`
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+harry_potter <- read_csv("https://raw.githubusercontent.com/LFOD/real-blog/master/static/data/harry-potter.csv")
+```
+
+<!-- ```{r, echo = FALSE, eval = FALSE} -->
+<!-- d <- read_delim("~/Downloads/Characters.csv", delim = ";") -->
+<!-- set.seed(1) -->
+<!-- d <- d %>% -->
+<!--   filter(House %in% c("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin")) %>% -->
+<!--   select(Name, House) %>% -->
+<!--   mutate(Name = ifelse(grepl("Lee Jordan", Name), "Lee Jordan", Name)) -->
+<!-- d <- d[sample(nrow(d)),] -->
+<!-- write_csv(d, "../../static/data/harry-potter.csv") -->
+<!-- ``` -->
+
+## Tired
+
+Here is how I would do this with `case_when()`.
+
+```{r, eval = FALSE}
+harry_potter %>%
+  mutate(
+    smart_rank = case_when(
+      House == "Ravenclaw" ~ 1,
+      House == "Gryffindor" ~ 2,
+      House == "Slytherin" ~ 3,
+      House == "Hufflepuff" ~ 4
+    ),
+    brave_rank = case_when(
+      House == "Gryffindor" ~ 1,
+      House == "Slytherin" ~ 2,
+      House == "Ravenclaw" ~ 3,
+      House == "Hufflepuff" ~ 4
+    ),
+    cunning_rank = case_when(
+      House == "Slytherin" ~ 1,
+      House == "Ravenclaw" ~ 2,
+      House == "Gryffindor" ~ 3,
+      House == "Hufflepuff" ~ 4
+    ),
+    kind_rank = case_when(
+      House == "Hufflepuff" ~ 1,
+      House == "Gryffindor" ~ 2,
+      House == "Ravenclaw" ~ 3,
+      House == "Slytherin" ~ 4
+    )
+  )
+
+```
+
+sdfsdf
+
+```{r, echo = FALSE}
+harry_potter %>%
+  mutate(
+    smart_rank = case_when(
+      House == "Ravenclaw" ~ 1,
+      House == "Gryffindor" ~ 2,
+      House == "Slytherin" ~ 3,
+      House == "Hufflepuff" ~ 4
+    ),
+    brave_rank = case_when(
+      House == "Gryffindor" ~ 1,
+      House == "Slytherin" ~ 2,
+      House == "Ravenclaw" ~ 3,
+      House == "Hufflepuff" ~ 4
+    ),
+    cunning_rank = case_when(
+      House == "Slytherin" ~ 1,
+      House == "Ravenclaw" ~ 2,
+      House == "Gryffindor" ~ 3,
+      House == "Hufflepuff" ~ 4
+    ),
+    kind_rank = case_when(
+      House == "Hufflepuff" ~ 1,
+      House == "Gryffindor" ~ 2,
+      House == "Ravenclaw" ~ 3,
+      House == "Slytherin" ~ 4
+    )
+  ) %>%
+  DT::datatable()
+```
+
+
+## Wired
+
+Here's how I would do this with a data frame
+
+
+```{r, eval = FALSE}
+ranks <- tibble(
+  House = c("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin"),
+  smart_rank = c(2, 1, 4, 3),
+  brave_rank = c(1, 3, 4, 2),
+  cunning_rank = c(3, 2, 4, 1),
+  kind_rank = c(2, 3, 1, 4)
+)
+
+harry_potter %>%
+  left_join(ranks, by = "House")
+```
+
+
+
+```{r, echo = FALSE}
+ranks <- tibble(
+  House = c("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin"),
+  smart_rank = c(2, 1, 4, 3),
+  brave_rank = c(1, 3, 4, 2),
+  cunning_rank = c(3, 2, 4, 1),
+  kind_rank = c(2, 3, 1, 4)
+)
+
+harry_potter %>%
+  left_join(ranks, by = "House") %>%
+  DT::datatable()
+```
+

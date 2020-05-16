@@ -1,0 +1,102 @@
+---
+title: 'This one cool hack will...help you categorize Harry Potter Characters!'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-16'
+slug: this-one-cool-hack
+categories: [rstats]
+tags: [rstats]
+math: no
+meta: yes
+excerpt: "Inspired by the amazing Not So Standard Deviations, as usual, here is a fun way to categorize data using a left join instead of case_when or if/else statements!!!"
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/datatables-binding/datatables.js"></script>
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<p>Hilary Parker &amp; Roger Peng mention a cool tactic for categorizing data on their podcast, <a href="http://nssdeviations.com">Not So Standard Deviations</a>. (If I recall correctly, I think Hilary mentioned it first, then Roger used it in a subsequent episode, unfortunatly I don’t remember which episodes these were and a quick lookback proved futile. If I figure it out, I’ll link it here!)</p>
+<p>The basic concept is to make a small table &amp; join it into the data frame you are trying to categorize instead of writing a bunch of if/else statements. This is especially useful if you are:</p>
+<p>☝️ Using the same categories on a bunch of different data frames (you can just create the small table of categories once!)<br />
+✌️ Creating multiple <em>new</em> variables from a single variable</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Have a bunch of things to recategorize?<br><br>TIRED: write a bunch of case_when or if/else statements <br><br>WIRED: left join a small data frame with the updated categories <br><br>*this message is brought to you by <a href="https://twitter.com/NSSDeviations?ref_src=twsrc%5Etfw"><span class="citation">@nssdeviations</span></a> (THANK YOU!) and my HAPPY HEART each time I do this now <a href="https://t.co/smFubWEGcq">pic.twitter.com/smFubWEGcq</a>
+</p>
+— Lucy D’Agostino McGowan (<span class="citation">@LucyStats</span>) <a href="https://twitter.com/LucyStats/status/1261260481467224064?ref_src=twsrc%5Etfw">May 15, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>I tweeted about this kernel of wisdom and a few people asked me to write up an example, so here it is!</p>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<p>For this example, I am going to rank Harry Potter characters based on the house they were sorted into on a variety of characteristics.</p>
+<p><label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">This data originated from a <a href="https://www.kaggle.com/gulsahdemiryurek/harry-potter-dataset">Kaggle Dataset by Gulsah Demiryurek</a></span></p>
+<pre class="r"><code>library(tidyverse)
+harry_potter &lt;- read_csv(&quot;https://raw.githubusercontent.com/LFOD/real-blog/master/static/data/harry-potter.csv&quot;)</code></pre>
+<!-- ```{r, echo = FALSE, eval = FALSE} -->
+<!-- d <- read_delim("~/Downloads/Characters.csv", delim = ";") -->
+<!-- set.seed(1) -->
+<!-- d <- d %>% -->
+<!--   filter(House %in% c("Gryffindor", "Ravenclaw", "Hufflepuff", "Slytherin")) %>% -->
+<!--   select(Name, House) %>% -->
+<!--   mutate(Name = ifelse(grepl("Lee Jordan", Name), "Lee Jordan", Name)) -->
+<!-- d <- d[sample(nrow(d)),] -->
+<!-- write_csv(d, "../../static/data/harry-potter.csv") -->
+<!-- ``` -->
+</div>
+<div id="tired" class="section level2">
+<h2>Tired</h2>
+<p>Here is how I would do this with <code>case_when()</code>.</p>
+<pre class="r"><code>harry_potter %&gt;%
+  mutate(
+    smart_rank = case_when(
+      House == &quot;Ravenclaw&quot; ~ 1,
+      House == &quot;Gryffindor&quot; ~ 2,
+      House == &quot;Slytherin&quot; ~ 3,
+      House == &quot;Hufflepuff&quot; ~ 4
+    ),
+    brave_rank = case_when(
+      House == &quot;Gryffindor&quot; ~ 1,
+      House == &quot;Slytherin&quot; ~ 2,
+      House == &quot;Ravenclaw&quot; ~ 3,
+      House == &quot;Hufflepuff&quot; ~ 4
+    ),
+    cunning_rank = case_when(
+      House == &quot;Slytherin&quot; ~ 1,
+      House == &quot;Ravenclaw&quot; ~ 2,
+      House == &quot;Gryffindor&quot; ~ 3,
+      House == &quot;Hufflepuff&quot; ~ 4
+    ),
+    kind_rank = case_when(
+      House == &quot;Hufflepuff&quot; ~ 1,
+      House == &quot;Gryffindor&quot; ~ 2,
+      House == &quot;Ravenclaw&quot; ~ 3,
+      House == &quot;Slytherin&quot; ~ 4
+    )
+  )</code></pre>
+<p>sdfsdf</p>
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97"],["Colin Creevey","Michael Corner","Albus Percival Wulfric Brian Dumbledore","Bloody Baron","Molly Weasley","Antonin Dolohov","Sirius Black","Edgar Bones","Rubeus Hagrid","Hannah Abbott","Cedric Diggory","Padma Patil","Rose Granger-Weasley","Marcus Belby","Dennis Creevey","Draco Malfoy","Rowena Ravenclaw","Augustus Rookwood","Ernest Macmillan","Vincent Crabbe","Penelope Clearwater","Susan Bones","James Sirius Potter","Neville Longbottom","Millicent Bulstrode","Romilda Vane","Parvati Patil","Harry James Potter","George Weasley","Dean Thomas","Horace Eugene Flaccus Slughorn","Salazar Slytherin","Remus John Lupin","Peter Pettigrew","Amycus Carrow","Filius Flitwick","Godric Gryffindor","Scorpius Hyperion Malfoy","Terry Boot","Blaise Zabini","Ronald Bilius Weasley","Fat Friar","Minerva McGonagall","Alicia Spinnet","Pomona Sprout","Edward Remus Lupin","Gilderoy Lockhart","Oliver Wood","Frank Longbottom","Lily J. Potter","Gregory Goyle","Ginevra (Ginny) Molly Weasley","Arthur Weasley","(Bill) William Arthur Weasley","Walden Macnair","Charles Weasley","Theodore Nott","Alecto Carrow","Severus Snape","Narcissa Malfoy","Tom Marvolo Riddle","Bellatrix Lestrange","Anthony Goldstein","Nicholas de Mimsy-Porpington","Percy Ignatius Weasley","Pansy Parkinson","Marcus Flint","James Potter","Regulus Arcturus Black","Lee Jordan","Nymphadora Tonks","Angelina Johnson","Myrtle Elizabeth Warren (Moaning Myrtle)","Albus Severus Potter","Hermione Jean Granger","Cormac McLaggen","Justin Finch-Fletchley","Rodolphus Lestrange","Newton Scamander","Luna Lovegood","Marietta Edgecombe","Sybill Patricia Trelawney","Dolores Jane Umbridge","Roger Davies","Lavender Brown","Helena Ravenclaw","Lucius Malfoy","Katie Bell","Fred Weasley","Corban Yaxley","Seamus Finnigan","Helga Hufflepuff","Garrick Ollivander","Quirinus Quirrell","Cho Chang","Zacharias Smith","Graham Montague"],["Gryffindor","Ravenclaw","Gryffindor","Slytherin","Gryffindor","Slytherin","Gryffindor","Hufflepuff","Gryffindor","Hufflepuff","Hufflepuff","Ravenclaw","Gryffindor","Ravenclaw","Gryffindor","Slytherin","Ravenclaw","Slytherin","Hufflepuff","Slytherin","Ravenclaw","Hufflepuff","Gryffindor","Gryffindor","Slytherin","Gryffindor","Gryffindor","Gryffindor","Gryffindor","Gryffindor","Slytherin","Slytherin","Gryffindor","Gryffindor","Slytherin","Ravenclaw","Gryffindor","Slytherin","Ravenclaw","Slytherin","Gryffindor","Hufflepuff","Gryffindor","Gryffindor","Hufflepuff","Hufflepuff","Ravenclaw","Gryffindor","Gryffindor","Gryffindor","Slytherin","Gryffindor","Gryffindor","Gryffindor","Slytherin","Gryffindor","Slytherin","Slytherin","Slytherin","Slytherin","Slytherin","Slytherin","Ravenclaw","Gryffindor","Gryffindor","Slytherin","Slytherin","Gryffindor","Slytherin","Gryffindor","Hufflepuff","Gryffindor","Ravenclaw","Slytherin","Gryffindor","Gryffindor","Hufflepuff","Slytherin","Hufflepuff","Ravenclaw","Ravenclaw","Ravenclaw","Slytherin","Ravenclaw","Gryffindor","Ravenclaw","Slytherin","Gryffindor","Gryffindor","Slytherin","Gryffindor","Hufflepuff","Ravenclaw","Ravenclaw","Ravenclaw","Hufflepuff","Slytherin"],[2,1,2,3,2,3,2,4,2,4,4,1,2,1,2,3,1,3,4,3,1,4,2,2,3,2,2,2,2,2,3,3,2,2,3,1,2,3,1,3,2,4,2,2,4,4,1,2,2,2,3,2,2,2,3,2,3,3,3,3,3,3,1,2,2,3,3,2,3,2,4,2,1,3,2,2,4,3,4,1,1,1,3,1,2,1,3,2,2,3,2,4,1,1,1,4,3],[1,3,1,2,1,2,1,4,1,4,4,3,1,3,1,2,3,2,4,2,3,4,1,1,2,1,1,1,1,1,2,2,1,1,2,3,1,2,3,2,1,4,1,1,4,4,3,1,1,1,2,1,1,1,2,1,2,2,2,2,2,2,3,1,1,2,2,1,2,1,4,1,3,2,1,1,4,2,4,3,3,3,2,3,1,3,2,1,1,2,1,4,3,3,3,4,2],[3,2,3,1,3,1,3,4,3,4,4,2,3,2,3,1,2,1,4,1,2,4,3,3,1,3,3,3,3,3,1,1,3,3,1,2,3,1,2,1,3,4,3,3,4,4,2,3,3,3,1,3,3,3,1,3,1,1,1,1,1,1,2,3,3,1,1,3,1,3,4,3,2,1,3,3,4,1,4,2,2,2,1,2,3,2,1,3,3,1,3,4,2,2,2,4,1],[2,3,2,4,2,4,2,1,2,1,1,3,2,3,2,4,3,4,1,4,3,1,2,2,4,2,2,2,2,2,4,4,2,2,4,3,2,4,3,4,2,1,2,2,1,1,3,2,2,2,4,2,2,2,4,2,4,4,4,4,4,4,3,2,2,4,4,2,4,2,1,2,3,4,2,2,1,4,1,3,3,3,4,3,2,3,4,2,2,4,2,1,3,3,3,1,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Name<\/th>\n      <th>House<\/th>\n      <th>smart_rank<\/th>\n      <th>brave_rank<\/th>\n      <th>cunning_rank<\/th>\n      <th>kind_rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="wired" class="section level2">
+<h2>Wired</h2>
+<p>Here’s how I would do this with a data frame</p>
+<pre class="r"><code>ranks &lt;- tibble(
+  House = c(&quot;Gryffindor&quot;, &quot;Ravenclaw&quot;, &quot;Hufflepuff&quot;, &quot;Slytherin&quot;),
+  smart_rank = c(2, 1, 4, 3),
+  brave_rank = c(1, 3, 4, 2),
+  cunning_rank = c(3, 2, 4, 1),
+  kind_rank = c(2, 3, 1, 4)
+)
+
+harry_potter %&gt;%
+  left_join(ranks, by = &quot;House&quot;)</code></pre>
+<div id="htmlwidget-2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97"],["Colin Creevey","Michael Corner","Albus Percival Wulfric Brian Dumbledore","Bloody Baron","Molly Weasley","Antonin Dolohov","Sirius Black","Edgar Bones","Rubeus Hagrid","Hannah Abbott","Cedric Diggory","Padma Patil","Rose Granger-Weasley","Marcus Belby","Dennis Creevey","Draco Malfoy","Rowena Ravenclaw","Augustus Rookwood","Ernest Macmillan","Vincent Crabbe","Penelope Clearwater","Susan Bones","James Sirius Potter","Neville Longbottom","Millicent Bulstrode","Romilda Vane","Parvati Patil","Harry James Potter","George Weasley","Dean Thomas","Horace Eugene Flaccus Slughorn","Salazar Slytherin","Remus John Lupin","Peter Pettigrew","Amycus Carrow","Filius Flitwick","Godric Gryffindor","Scorpius Hyperion Malfoy","Terry Boot","Blaise Zabini","Ronald Bilius Weasley","Fat Friar","Minerva McGonagall","Alicia Spinnet","Pomona Sprout","Edward Remus Lupin","Gilderoy Lockhart","Oliver Wood","Frank Longbottom","Lily J. Potter","Gregory Goyle","Ginevra (Ginny) Molly Weasley","Arthur Weasley","(Bill) William Arthur Weasley","Walden Macnair","Charles Weasley","Theodore Nott","Alecto Carrow","Severus Snape","Narcissa Malfoy","Tom Marvolo Riddle","Bellatrix Lestrange","Anthony Goldstein","Nicholas de Mimsy-Porpington","Percy Ignatius Weasley","Pansy Parkinson","Marcus Flint","James Potter","Regulus Arcturus Black","Lee Jordan","Nymphadora Tonks","Angelina Johnson","Myrtle Elizabeth Warren (Moaning Myrtle)","Albus Severus Potter","Hermione Jean Granger","Cormac McLaggen","Justin Finch-Fletchley","Rodolphus Lestrange","Newton Scamander","Luna Lovegood","Marietta Edgecombe","Sybill Patricia Trelawney","Dolores Jane Umbridge","Roger Davies","Lavender Brown","Helena Ravenclaw","Lucius Malfoy","Katie Bell","Fred Weasley","Corban Yaxley","Seamus Finnigan","Helga Hufflepuff","Garrick Ollivander","Quirinus Quirrell","Cho Chang","Zacharias Smith","Graham Montague"],["Gryffindor","Ravenclaw","Gryffindor","Slytherin","Gryffindor","Slytherin","Gryffindor","Hufflepuff","Gryffindor","Hufflepuff","Hufflepuff","Ravenclaw","Gryffindor","Ravenclaw","Gryffindor","Slytherin","Ravenclaw","Slytherin","Hufflepuff","Slytherin","Ravenclaw","Hufflepuff","Gryffindor","Gryffindor","Slytherin","Gryffindor","Gryffindor","Gryffindor","Gryffindor","Gryffindor","Slytherin","Slytherin","Gryffindor","Gryffindor","Slytherin","Ravenclaw","Gryffindor","Slytherin","Ravenclaw","Slytherin","Gryffindor","Hufflepuff","Gryffindor","Gryffindor","Hufflepuff","Hufflepuff","Ravenclaw","Gryffindor","Gryffindor","Gryffindor","Slytherin","Gryffindor","Gryffindor","Gryffindor","Slytherin","Gryffindor","Slytherin","Slytherin","Slytherin","Slytherin","Slytherin","Slytherin","Ravenclaw","Gryffindor","Gryffindor","Slytherin","Slytherin","Gryffindor","Slytherin","Gryffindor","Hufflepuff","Gryffindor","Ravenclaw","Slytherin","Gryffindor","Gryffindor","Hufflepuff","Slytherin","Hufflepuff","Ravenclaw","Ravenclaw","Ravenclaw","Slytherin","Ravenclaw","Gryffindor","Ravenclaw","Slytherin","Gryffindor","Gryffindor","Slytherin","Gryffindor","Hufflepuff","Ravenclaw","Ravenclaw","Ravenclaw","Hufflepuff","Slytherin"],[2,1,2,3,2,3,2,4,2,4,4,1,2,1,2,3,1,3,4,3,1,4,2,2,3,2,2,2,2,2,3,3,2,2,3,1,2,3,1,3,2,4,2,2,4,4,1,2,2,2,3,2,2,2,3,2,3,3,3,3,3,3,1,2,2,3,3,2,3,2,4,2,1,3,2,2,4,3,4,1,1,1,3,1,2,1,3,2,2,3,2,4,1,1,1,4,3],[1,3,1,2,1,2,1,4,1,4,4,3,1,3,1,2,3,2,4,2,3,4,1,1,2,1,1,1,1,1,2,2,1,1,2,3,1,2,3,2,1,4,1,1,4,4,3,1,1,1,2,1,1,1,2,1,2,2,2,2,2,2,3,1,1,2,2,1,2,1,4,1,3,2,1,1,4,2,4,3,3,3,2,3,1,3,2,1,1,2,1,4,3,3,3,4,2],[3,2,3,1,3,1,3,4,3,4,4,2,3,2,3,1,2,1,4,1,2,4,3,3,1,3,3,3,3,3,1,1,3,3,1,2,3,1,2,1,3,4,3,3,4,4,2,3,3,3,1,3,3,3,1,3,1,1,1,1,1,1,2,3,3,1,1,3,1,3,4,3,2,1,3,3,4,1,4,2,2,2,1,2,3,2,1,3,3,1,3,4,2,2,2,4,1],[2,3,2,4,2,4,2,1,2,1,1,3,2,3,2,4,3,4,1,4,3,1,2,2,4,2,2,2,2,2,4,4,2,2,4,3,2,4,3,4,2,1,2,2,1,1,3,2,2,2,4,2,2,2,4,2,4,4,4,4,4,4,3,2,2,4,4,2,4,2,1,2,3,4,2,2,1,4,1,3,3,3,4,3,2,3,4,2,2,4,2,1,3,3,3,1,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Name<\/th>\n      <th>House<\/th>\n      <th>smart_rank<\/th>\n      <th>brave_rank<\/th>\n      <th>cunning_rank<\/th>\n      <th>kind_rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,6]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
