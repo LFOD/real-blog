@@ -10,14 +10,14 @@ meta: yes
 excerpt: "Inspired by the amazing Not So Standard Deviations, as usual, here is a fun way to categorize data using a left join instead of case_when or if/else statements!!!"
 ---
 
-Hilary Parker & Roger Peng mention a cool tactic for categorizing data on their podcast, [Not So Standard Deviations](http://nssdeviations.com). (If I recall correctly, I think Hilary mentioned it first, then Roger used it in a subsequent episode, unfortunatly I don't remember which episodes these were and a quick lookback proved futile. If I figure it out, I'll link it here!)
+Hilary Parker & Roger Peng mention a cool tactic for categorizing data on their podcast, [Not So Standard Deviations](http://nssdeviations.com). (If I recall correctly, I think Hilary mentioned it first, then Roger used it in a subsequent episode, unfortunately I don't remember which episodes these were and a quick look-back proved futile. If I figure it out, I'll link it here!)
 
 The basic concept is to make a small table & join it into the data frame you are trying to categorize instead of writing a bunch of if/else statements. This is especially useful if you are:
 
 `r emo::ji("point_up")` Using the same categories on a bunch of different data frames (you can just create the small table of categories once!)  
 `r emo::ji("v")` Creating multiple _new_ variables from a single variable
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Have a bunch of things to recategorize?<br><br>TIRED: write a bunch of case_when or if/else statements <br><br>WIRED: left join a small data frame with the updated categories <br><br>*this message is brought to you by <a href="https://twitter.com/NSSDeviations?ref_src=twsrc%5Etfw">@nssdeviations</a> (THANK YOU!) and my HAPPY HEART each time I do this now <a href="https://t.co/smFubWEGcq">pic.twitter.com/smFubWEGcq</a></p>&mdash; Lucy D’Agostino McGowan (@LucyStats) <a href="https://twitter.com/LucyStats/status/1261260481467224064?ref_src=twsrc%5Etfw">May 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Have a bunch of things to re-categorize?<br><br>TIRED: write a bunch of case_when or if/else statements <br><br>WIRED: left join a small data frame with the updated categories <br><br>*this message is brought to you by <a href="https://twitter.com/NSSDeviations?ref_src=twsrc%5Etfw">@nssdeviations</a> (THANK YOU!) and my HAPPY HEART each time I do this now <a href="https://t.co/smFubWEGcq">pic.twitter.com/smFubWEGcq</a></p>&mdash; Lucy D’Agostino McGowan (@LucyStats) <a href="https://twitter.com/LucyStats/status/1261260481467224064?ref_src=twsrc%5Etfw">May 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 I tweeted about this kernel of wisdom and a few people asked me to write up an example, so here it is!
 
