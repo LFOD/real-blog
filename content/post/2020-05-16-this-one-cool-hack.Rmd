@@ -1,5 +1,5 @@
 ---
-title: 'This one cool hack will...help you categorize Harry Potter Characters!'
+title: 'This one cool hack will...help you categorize Harry Potter characters!'
 author: "Lucy D'Agostino McGowan"
 date: '2020-05-16'
 slug: this-one-cool-hack
