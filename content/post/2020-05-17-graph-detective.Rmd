@@ -172,7 +172,6 @@ Hmm, ok that is better, in that at least the x-axis is sensible. It's still pret
 
 ## Overlaid Histograms
 
-
 ```{r}
 d %>%
   filter(date >= "2020-04-26", date <= "2020-05-09") %>%
@@ -234,10 +233,9 @@ d %>%
   facet_grid(county~.)
 ```
 
-This is okay, I still find it kind of hard to compare though
+This is okay, I still find it kind of hard to compare though.
 
 ## Maybe a combo?
-
 
 ```{r}
 d %>%
@@ -267,7 +265,84 @@ d %>%
         title = element_text(color = "white")) 
 ```
 
-Ridgeline plots are nice, but I'm still not sure I get a lot out of this vis. Hmm. I think part of the problem is it is quite hard to compare 5 things over two axis simultaneously without a clear signal. Maybe if we could reduce it to comparisons between 2 things at a time?
+Ridgeline plots are nice, but I'm still not sure I get a lot out of this vis. Hmm. 
+
+
+## Line plot
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  ggplot(aes(x = date, y = case, color = county)) +
+  geom_line() + 
+  geom_point() +
+  scale_x_date(date_labels = "%d%b%Y",
+               date_breaks = "5 days") +
+  scale_color_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white"))
+```
+
+Meh.
+
+## Bump chart
+
+Joshua suggested a bump chart with the dots scaled based on the number of cases.
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Would something like a bump chart be better? You could encode severity in size maybe?</p>&mdash; Joshua de la Bruere (@delaBJL) <a href="https://twitter.com/delaBJL/status/1262032309995307008?ref_src=twsrc%5Etfw">May 17, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  group_by(date) %>%
+    mutate(rank = rank(-case, ties = "first")) %>%
+  ggplot(aes(x = date, y = rank, color = county)) +
+  geom_line() + 
+  geom_point(aes(size = case)) +
+  scale_x_date(date_labels = "%d%b%Y",
+               date_breaks = "5 days") +
+  scale_size_continuous("Number of cases",
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) +
+  scale_color_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white"))
+```
+
+I don't hate it...but it is still kind of busy. I think part of the problem is it is quite hard to compare 5 things over two axis simultaneously without a clear signal. Maybe if we could reduce it to comparisons between 2 things at a time?
 
 ## Plotly
 
@@ -307,4 +382,5 @@ ggplotly(p)
 ```
 
 You can click on the legend to hide counties, allowing you to compare just 2 at a time. This seems marginally better. 
+
 
