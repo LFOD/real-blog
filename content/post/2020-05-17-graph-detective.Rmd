@@ -81,7 +81,7 @@ d %>%
         title = element_text(color = "white"))
 ```
 
-Hmm, this is a remake of their plot, but with NY Times data. The dates are in the same order as their, but it doesn't give the same misleading message because they seemed to have sorted their x-axis to make it look like the cases were descending. We can remake that misleading plot using NY Times data too, though!
+Hmm, this is a remake of their plot, but with NY Times data. The dates are in the same order as theirs, but it doesn't give the same misleading message because they seemed to have sorted their x-axis to make it look like the cases were descending. We can remake that misleading plot using NY Times data too, though!
 
 ## Shuffled, still bad, plot
 
