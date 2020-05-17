@@ -1,0 +1,310 @@
+---
+title: 'Graph detective'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-17'
+slug: graph-detective
+categories: [rstats, covid-19, data visualizations]
+tags: [rstats, covid-19, data visualizations]
+math: no
+meta: yes
+excerpt: "A plot has been floating around on Twitter from Georgia where the x-axis is all scampled. Let's look into it and see if we can fix it!"
+---
+
+A plot has been floating around on Twitter from Georgia where the x-axis is all scrambled. Let's look into it and see if we can fix it!
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">From GA DPH, wtf?<br><br>&quot;On the official Georgia COVID stats web page is this graph. Looks good, getting better, right? Look closer at the dates on the X-axis. They have arranged the dates out of order to create a declining appearance.&quot;<a href="https://twitter.com/GaDPH?ref_src=twsrc%5Etfw">@GaDPH</a> <a href="https://twitter.com/georgiagov?ref_src=twsrc%5Etfw">@georgiagov</a> <a href="https://t.co/ScqExnI0aQ">pic.twitter.com/ScqExnI0aQ</a></p>&mdash; Dale Howard (@fdhjr71) <a href="https://twitter.com/fdhjr71/status/1261466653876879363?ref_src=twsrc%5Etfw">May 16, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(fig.width = 9)
+```
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(ggridges)
+
+d <- read_csv("https://github.com/nytimes/covid-19-data/raw/master/us-counties.csv")
+d <- d %>%
+  filter(state == "Georgia",
+         county %in% c("Cobb", "DeKalb", "Fulton", "Gwinnett", "Hall")) %>%
+  group_by(county) %>%
+  mutate(case = c(cases[1], diff(cases))) 
+```
+
+I pulled in the NY Times data to look at this. It looks like their estimates are different from the ones in the original graph (this is not unusual, I've noticed for my county the counts are quite different depending on which sources you pull from), so I am going to recreate the original atrocity using the NY Times data for comparison.
+
+<!-- ```{r} -->
+<!-- weird_hack <- function(date) { -->
+<!--   date <- as.Date(date) -->
+<!--   ifelse(date >= as.Date("2020-04-26") & date <= as.Date("2020-05-09"),  -->
+<!--          format(date, "%d%b%Y"), -->
+<!--          " ") -->
+<!-- } -->
+
+<!-- ``` -->
+
+## Remake their silly plot with NY Times data
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  mutate(
+    date = format(date, "%d%b%Y"),
+    date = factor(date,
+                  levels = c("28Apr2020", "27Apr2020", "29Apr2020",
+                             "01May2020", "30Apr2020", "04May2020",
+                             "06May2020", "05May2020", "02May2020",
+                             "07May2020", "26Apr2020", "03May2020",
+                             "08May2020", "09May2020"))) %>%
+  group_by(date) %>%
+  mutate(rank = rank(-case, ties = "first")) %>%
+  ggplot(aes(x = date, y = case, group = rank, fill = county)) +
+  geom_col(position = position_dodge()) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide =  guide_legend(title.position = "top",
+                                          title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white"))
+```
+
+Hmm, this is a remake of their plot, but with NY Times data. The dates are in the same order as their, but it doesn't give the same misleading message because they seemed to have sorted their x-axis to make it look like the cases were descending. We can remake that misleading plot using NY Times data too, though!
+
+## Shuffled, still bad, plot
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  mutate(
+    date = format(date, "%d%b%Y"),
+    date = factor(date,
+                  levels = c("02May2020", "06May2020", "04May2020",
+                             "01May2020", "27Apr2020", "29Apr2020",
+                             "28Apr2020", "05May2020", "08May2020",
+                             "30Apr2020", "09May2020", "03May2020",
+                             "07May2020", "26Apr2020"))) %>%
+  group_by(date) %>%
+  mutate(rank = rank(-case, ties = "first")) %>%
+  ggplot(aes(x = date, y = case, group = rank, fill = county)) +
+  geom_col(position = position_dodge()) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide =  guide_legend(title.position = "top",
+                                          title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white"))
+```
+
+Nice, that's good and misleading.
+
+## Fix plot
+
+Now this is what the plot would look like if we plot the x-axis sensibly.
+
+<span class="marginnote">
+Why am I not using something sensible like `scale_x_date(date_breaks = "1 day", guide = guide_axis(n.dodge = 2))`, well I was, but there was a weird issue that it either cut off half of the bars on the first & last date, or added an extra date to either side. I had a weird hack that fixed it, but then it didn't nicely match up with the other plot, so here we are.
+</span>
+
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  mutate(
+    date = format(date, "%d%b%Y"), 
+    date = factor(date,
+                  levels = c("26Apr2020", "27Apr2020", "28Apr2020", 
+                             "29Apr2020", "30Apr2020", "01May2020", 
+                             "02May2020", "03May2020", "04May2020",
+                             "05May2020", "06May2020", "07May2020", 
+                             "08May2020", "09May2020"))) %>%
+  ggplot(aes(x = date, y = case, group = county, fill = county)) +
+  geom_col(position = position_dodge()) + 
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648", 
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white"))
+```
+
+Hmm, ok that is better, in that at least the x-axis is sensible. It's still pretty hard to glean anything from this graph. Let's try a few different visualizations.
+
+## Overlaid Histograms
+
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  ggplot(aes(x = date, y = case, group = county, fill = county)) +
+  geom_col(position = "identity", alpha = 0.75) + 
+  scale_x_date(date_labels = "%d%b%Y",
+               date_breaks = "5 days") +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white")) 
+```
+
+Blah too busy.
+
+## Facet Histograms
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  ggplot(aes(x = date, y = case, group = county, fill = county)) +
+  geom_col() + 
+  scale_x_date(date_labels = "%d%b%Y",
+               date_breaks = "5 days") +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648", 
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white")) +
+  facet_grid(county~.)
+```
+
+This is okay, I still find it kind of hard to compare though
+
+## Maybe a combo?
+
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  ggplot(aes(x = date, y = county, fill = county, height = case)) +
+  geom_density_ridges(scale = 4, stat = "identity") + 
+  scale_x_date(date_labels = "%d%b%Y",
+               date_breaks = "5 days") +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white")) 
+```
+
+Ridgeline plots are nice, but I'm still not sure I get a lot out of this vis. Hmm. I think part of the problem is it is quite hard to compare 5 things over two axis simultaneously without a clear signal. Maybe if we could reduce it to comparisons between 2 things at a time?
+
+## Plotly
+
+```{r, message = FALSE, warning = FALSE}
+library(plotly)
+```
+
+
+```{r}
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  ggplot(aes(x = date, y = case, fill = county)) +
+  geom_col(position = "identity", alpha = 0.75) + 
+  scale_x_date(date_labels = "%d%b%Y",
+               date_breaks = "5 days") +
+  scale_fill_manual("County",
+                    values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB"),
+                    guide = guide_legend(title.position = "top",
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
+    subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
+  theme_classic() +
+  theme(legend.position = "top", 
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        legend.background = element_rect(fill = "#182F4E"),
+        legend.text = element_text(color = "white"),
+        legend.title = element_text(color = "white"),
+        title = element_text(color = "white")) -> p
+
+ggplotly(p)
+```
+
+You can click on the legend to hide counties, allowing you to compare just 2 at a time. This seems marginally better. 
+

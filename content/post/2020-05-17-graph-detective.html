@@ -1,0 +1,292 @@
+---
+title: 'Graph detective'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-17'
+slug: graph-detective
+categories: [rstats, covid-19, data visualizations]
+tags: [rstats, covid-19, data visualizations]
+math: no
+meta: yes
+excerpt: "A plot has been floating around on Twitter from Georgia where the x-axis is all scampled. Let's look into it and see if we can fix it!"
+---
+
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<p>A plot has been floating around on Twitter from Georgia where the x-axis is all scrambled. Let’s look into it and see if we can fix it!</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+From GA DPH, wtf?<br><br>“On the official Georgia COVID stats web page is this graph. Looks good, getting better, right? Look closer at the dates on the X-axis. They have arranged the dates out of order to create a declining appearance.”<a href="https://twitter.com/GaDPH?ref_src=twsrc%5Etfw"><span class="citation">@GaDPH</span></a> <a href="https://twitter.com/georgiagov?ref_src=twsrc%5Etfw"><span class="citation">@georgiagov</span></a> <a href="https://t.co/ScqExnI0aQ">pic.twitter.com/ScqExnI0aQ</a>
+</p>
+— Dale Howard (<span class="citation">@fdhjr71</span>) <a href="https://twitter.com/fdhjr71/status/1261466653876879363?ref_src=twsrc%5Etfw">May 16, 2020</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<pre class="r"><code>library(tidyverse)
+library(ggridges)
+
+d &lt;- read_csv(&quot;https://github.com/nytimes/covid-19-data/raw/master/us-counties.csv&quot;)
+d &lt;- d %&gt;%
+  filter(state == &quot;Georgia&quot;,
+         county %in% c(&quot;Cobb&quot;, &quot;DeKalb&quot;, &quot;Fulton&quot;, &quot;Gwinnett&quot;, &quot;Hall&quot;)) %&gt;%
+  group_by(county) %&gt;%
+  mutate(case = c(cases[1], diff(cases))) </code></pre>
+<p>I pulled in the NY Times data to look at this. It looks like their estimates are different from the ones in the original graph (this is not unusual, I’ve noticed for my county the counts are quite different depending on which sources you pull from), so I am going to recreate the original atrocity using the NY Times data for comparison.</p>
+<!-- ```{r} -->
+<!-- weird_hack <- function(date) { -->
+<!--   date <- as.Date(date) -->
+<!--   ifelse(date >= as.Date("2020-04-26") & date <= as.Date("2020-05-09"),  -->
+<!--          format(date, "%d%b%Y"), -->
+<!--          " ") -->
+<!-- } -->
+<!-- ``` -->
+<div id="remake-their-silly-plot-with-ny-times-data" class="section level2">
+<h2>Remake their silly plot with NY Times data</h2>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  mutate(
+    date = format(date, &quot;%d%b%Y&quot;),
+    date = factor(date,
+                  levels = c(&quot;28Apr2020&quot;, &quot;27Apr2020&quot;, &quot;29Apr2020&quot;,
+                             &quot;01May2020&quot;, &quot;30Apr2020&quot;, &quot;04May2020&quot;,
+                             &quot;06May2020&quot;, &quot;05May2020&quot;, &quot;02May2020&quot;,
+                             &quot;07May2020&quot;, &quot;26Apr2020&quot;, &quot;03May2020&quot;,
+                             &quot;08May2020&quot;, &quot;09May2020&quot;))) %&gt;%
+  group_by(date) %&gt;%
+  mutate(rank = rank(-case, ties = &quot;first&quot;)) %&gt;%
+  ggplot(aes(x = date, y = case, group = rank, fill = county)) +
+  geom_col(position = position_dodge()) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;,
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide =  guide_legend(title.position = &quot;top&quot;,
+                                          title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;))</code></pre>
+<p><img src="/post/2020-05-17-graph-detective_files/figure-html/unnamed-chunk-3-1.png" width="864" /></p>
+<p>Hmm, this is a remake of their plot, but with NY Times data. The dates are in the same order as their, but it doesn’t give the same misleading message because they seemed to have sorted their x-axis to make it look like the cases were descending. We can remake that misleading plot using NY Times data too, though!</p>
+</div>
+<div id="shuffled-still-bad-plot" class="section level2">
+<h2>Shuffled, still bad, plot</h2>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  mutate(
+    date = format(date, &quot;%d%b%Y&quot;),
+    date = factor(date,
+                  levels = c(&quot;02May2020&quot;, &quot;06May2020&quot;, &quot;04May2020&quot;,
+                             &quot;01May2020&quot;, &quot;27Apr2020&quot;, &quot;29Apr2020&quot;,
+                             &quot;28Apr2020&quot;, &quot;05May2020&quot;, &quot;08May2020&quot;,
+                             &quot;30Apr2020&quot;, &quot;09May2020&quot;, &quot;03May2020&quot;,
+                             &quot;07May2020&quot;, &quot;26Apr2020&quot;))) %&gt;%
+  group_by(date) %&gt;%
+  mutate(rank = rank(-case, ties = &quot;first&quot;)) %&gt;%
+  ggplot(aes(x = date, y = case, group = rank, fill = county)) +
+  geom_col(position = position_dodge()) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;,
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide =  guide_legend(title.position = &quot;top&quot;,
+                                          title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;))</code></pre>
+<p><img src="/post/2020-05-17-graph-detective_files/figure-html/unnamed-chunk-4-1.png" width="864" /></p>
+<p>Nice, that’s good and misleading.</p>
+</div>
+<div id="fix-plot" class="section level2">
+<h2>Fix plot</h2>
+<p>Now this is what the plot would look like if we plot the x-axis sensibly.</p>
+<p><span class="marginnote">
+Why am I not using something sensible like <code>scale_x_date(date_breaks = &quot;1 day&quot;, guide = guide_axis(n.dodge = 2))</code>, well I was, but there was a weird issue that it either cut off half of the bars on the first &amp; last date, or added an extra date to either side. I had a weird hack that fixed it, but then it didn’t nicely match up with the other plot, so here we are.
+</span></p>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  mutate(
+    date = format(date, &quot;%d%b%Y&quot;), 
+    date = factor(date,
+                  levels = c(&quot;26Apr2020&quot;, &quot;27Apr2020&quot;, &quot;28Apr2020&quot;, 
+                             &quot;29Apr2020&quot;, &quot;30Apr2020&quot;, &quot;01May2020&quot;, 
+                             &quot;02May2020&quot;, &quot;03May2020&quot;, &quot;04May2020&quot;,
+                             &quot;05May2020&quot;, &quot;06May2020&quot;, &quot;07May2020&quot;, 
+                             &quot;08May2020&quot;, &quot;09May2020&quot;))) %&gt;%
+  ggplot(aes(x = date, y = case, group = county, fill = county)) +
+  geom_col(position = position_dodge()) + 
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;, 
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide = guide_legend(title.position = &quot;top&quot;,
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;))</code></pre>
+<p><img src="/post/2020-05-17-graph-detective_files/figure-html/unnamed-chunk-5-1.png" width="864" /></p>
+<p>Hmm, ok that is better, in that at least the x-axis is sensible. It’s still pretty hard to glean anything from this graph. Let’s try a few different visualizations.</p>
+</div>
+<div id="overlaid-histograms" class="section level2">
+<h2>Overlaid Histograms</h2>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  ggplot(aes(x = date, y = case, group = county, fill = county)) +
+  geom_col(position = &quot;identity&quot;, alpha = 0.75) + 
+  scale_x_date(date_labels = &quot;%d%b%Y&quot;,
+               date_breaks = &quot;5 days&quot;) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;,
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide = guide_legend(title.position = &quot;top&quot;,
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;)) </code></pre>
+<p><img src="/post/2020-05-17-graph-detective_files/figure-html/unnamed-chunk-6-1.png" width="864" /></p>
+<p>Blah too busy.</p>
+</div>
+<div id="facet-histograms" class="section level2">
+<h2>Facet Histograms</h2>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  ggplot(aes(x = date, y = case, group = county, fill = county)) +
+  geom_col() + 
+  scale_x_date(date_labels = &quot;%d%b%Y&quot;,
+               date_breaks = &quot;5 days&quot;) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;, 
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide = guide_legend(title.position = &quot;top&quot;,
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;)) +
+  facet_grid(county~.)</code></pre>
+<p><img src="/post/2020-05-17-graph-detective_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+<p>This is okay, I still find it kind of hard to compare though</p>
+</div>
+<div id="maybe-a-combo" class="section level2">
+<h2>Maybe a combo?</h2>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  ggplot(aes(x = date, y = county, fill = county, height = case)) +
+  geom_density_ridges(scale = 4, stat = &quot;identity&quot;) + 
+  scale_x_date(date_labels = &quot;%d%b%Y&quot;,
+               date_breaks = &quot;5 days&quot;) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;,
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide = guide_legend(title.position = &quot;top&quot;,
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;)) </code></pre>
+<p><img src="/post/2020-05-17-graph-detective_files/figure-html/unnamed-chunk-8-1.png" width="864" /></p>
+<p>Ridgeline plots are nice, but I’m still not sure I get a lot out of this vis. Hmm. I think part of the problem is it is quite hard to compare 5 things over two axis simultaneously without a clear signal. Maybe if we could reduce it to comparisons between 2 things at a time?</p>
+</div>
+<div id="plotly" class="section level2">
+<h2>Plotly</h2>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre class="r"><code>d %&gt;%
+  filter(date &gt;= &quot;2020-04-26&quot;, date &lt;= &quot;2020-05-09&quot;) %&gt;%
+  ggplot(aes(x = date, y = case, fill = county)) +
+  geom_col(position = &quot;identity&quot;, alpha = 0.75) + 
+  scale_x_date(date_labels = &quot;%d%b%Y&quot;,
+               date_breaks = &quot;5 days&quot;) +
+  scale_fill_manual(&quot;County&quot;,
+                    values = c(&quot;#5854A8&quot;, &quot;#46868E&quot;, &quot;#958648&quot;,
+                               &quot;#8F5D37&quot;, &quot;#5D98DB&quot;),
+                    guide = guide_legend(title.position = &quot;top&quot;,
+                                         title.hjust = 0.5)) + 
+  ggtitle(
+    &quot;Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases&quot;,
+    subtitle = &quot;The chart below represents the most impacted counties over the past 15 days and the number of cases over time.&quot;) +
+  theme_classic() +
+  theme(legend.position = &quot;top&quot;, 
+        panel.background = element_rect(fill = &quot;#182F4E&quot;),
+        plot.background = element_rect(fill = &quot;#182F4E&quot;),
+        axis.line = element_line(color = &quot;white&quot;),
+        axis.text = element_text(color = &quot;white&quot;),
+        axis.title = element_text(color = &quot;white&quot;),
+        legend.background = element_rect(fill = &quot;#182F4E&quot;),
+        legend.text = element_text(color = &quot;white&quot;),
+        legend.title = element_text(color = &quot;white&quot;),
+        title = element_text(color = &quot;white&quot;)) -&gt; p
+
+ggplotly(p)</code></pre>
+<div id="htmlwidget-1" style="width:864px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":[{"orientation":"v","width":[0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[18378,18379,18380,18381,18382,18383,18384,18385,18386,18387,18388,18389,18390,18391],"y":[33,55,56,42,40,58,70,19,71,48,111,26,48,56],"text":["date: 2020-04-26<br />case:  33<br />county: Cobb","date: 2020-04-27<br />case:  55<br />county: Cobb","date: 2020-04-28<br />case:  56<br />county: Cobb","date: 2020-04-29<br />case:  42<br />county: Cobb","date: 2020-04-30<br />case:  40<br />county: Cobb","date: 2020-05-01<br />case:  58<br />county: Cobb","date: 2020-05-02<br />case:  70<br />county: Cobb","date: 2020-05-03<br />case:  19<br />county: Cobb","date: 2020-05-04<br />case:  71<br />county: Cobb","date: 2020-05-05<br />case:  48<br />county: Cobb","date: 2020-05-06<br />case: 111<br />county: Cobb","date: 2020-05-07<br />case:  26<br />county: Cobb","date: 2020-05-08<br />case:  48<br />county: Cobb","date: 2020-05-09<br />case:  56<br />county: Cobb"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(88,84,168,0.75)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Cobb","legendgroup":"Cobb","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[18378,18379,18380,18381,18382,18383,18384,18385,18386,18387,18388,18389,18390,18391],"y":[12,55,52,73,47,46,75,36,71,29,73,39,49,44],"text":["date: 2020-04-26<br />case:  12<br />county: DeKalb","date: 2020-04-27<br />case:  55<br />county: DeKalb","date: 2020-04-28<br />case:  52<br />county: DeKalb","date: 2020-04-29<br />case:  73<br />county: DeKalb","date: 2020-04-30<br />case:  47<br />county: DeKalb","date: 2020-05-01<br />case:  46<br />county: DeKalb","date: 2020-05-02<br />case:  75<br />county: DeKalb","date: 2020-05-03<br />case:  36<br />county: DeKalb","date: 2020-05-04<br />case:  71<br />county: DeKalb","date: 2020-05-05<br />case:  29<br />county: DeKalb","date: 2020-05-06<br />case:  73<br />county: DeKalb","date: 2020-05-07<br />case:  39<br />county: DeKalb","date: 2020-05-08<br />case:  49<br />county: DeKalb","date: 2020-05-09<br />case:  44<br />county: DeKalb"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(70,134,142,0.75)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"DeKalb","legendgroup":"DeKalb","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[18378,18379,18380,18381,18382,18383,18384,18385,18386,18387,18388,18389,18390,18391],"y":[2,135,73,32,36,59,48,53,76,108,85,10,57,68],"text":["date: 2020-04-26<br />case:   2<br />county: Fulton","date: 2020-04-27<br />case: 135<br />county: Fulton","date: 2020-04-28<br />case:  73<br />county: Fulton","date: 2020-04-29<br />case:  32<br />county: Fulton","date: 2020-04-30<br />case:  36<br />county: Fulton","date: 2020-05-01<br />case:  59<br />county: Fulton","date: 2020-05-02<br />case:  48<br />county: Fulton","date: 2020-05-03<br />case:  53<br />county: Fulton","date: 2020-05-04<br />case:  76<br />county: Fulton","date: 2020-05-05<br />case: 108<br />county: Fulton","date: 2020-05-06<br />case:  85<br />county: Fulton","date: 2020-05-07<br />case:  10<br />county: Fulton","date: 2020-05-08<br />case:  57<br />county: Fulton","date: 2020-05-09<br />case:  68<br />county: Fulton"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(149,134,72,0.75)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Fulton","legendgroup":"Fulton","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[18378,18379,18380,18381,18382,18383,18384,18385,18386,18387,18388,18389,18390,18391],"y":[44,41,75,124,49,55,86,46,77,45,120,32,68,81],"text":["date: 2020-04-26<br />case:  44<br />county: Gwinnett","date: 2020-04-27<br />case:  41<br />county: Gwinnett","date: 2020-04-28<br />case:  75<br />county: Gwinnett","date: 2020-04-29<br />case: 124<br />county: Gwinnett","date: 2020-04-30<br />case:  49<br />county: Gwinnett","date: 2020-05-01<br />case:  55<br />county: Gwinnett","date: 2020-05-02<br />case:  86<br />county: Gwinnett","date: 2020-05-03<br />case:  46<br />county: Gwinnett","date: 2020-05-04<br />case:  77<br />county: Gwinnett","date: 2020-05-05<br />case:  45<br />county: Gwinnett","date: 2020-05-06<br />case: 120<br />county: Gwinnett","date: 2020-05-07<br />case:  32<br />county: Gwinnett","date: 2020-05-08<br />case:  68<br />county: Gwinnett","date: 2020-05-09<br />case:  81<br />county: Gwinnett"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(143,93,55,0.75)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Gwinnett","legendgroup":"Gwinnett","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455,0.900000000001455],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[18378,18379,18380,18381,18382,18383,18384,18385,18386,18387,18388,18389,18390,18391],"y":[1,65,87,76,85,136,212,6,76,70,68,42,41,5],"text":["date: 2020-04-26<br />case:   1<br />county: Hall","date: 2020-04-27<br />case:  65<br />county: Hall","date: 2020-04-28<br />case:  87<br />county: Hall","date: 2020-04-29<br />case:  76<br />county: Hall","date: 2020-04-30<br />case:  85<br />county: Hall","date: 2020-05-01<br />case: 136<br />county: Hall","date: 2020-05-02<br />case: 212<br />county: Hall","date: 2020-05-03<br />case:   6<br />county: Hall","date: 2020-05-04<br />case:  76<br />county: Hall","date: 2020-05-05<br />case:  70<br />county: Hall","date: 2020-05-06<br />case:  68<br />county: Hall","date: 2020-05-07<br />case:  42<br />county: Hall","date: 2020-05-08<br />case:  41<br />county: Hall","date: 2020-05-09<br />case:   5<br />county: Hall"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(93,152,219,0.75)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"Hall","legendgroup":"Hall","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":46.6849315068493,"r":7.30593607305936,"b":43.1050228310502,"l":43.1050228310502},"plot_bgcolor":"rgba(24,47,78,1)","paper_bgcolor":"rgba(24,47,78,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases","font":{"color":"rgba(255,255,255,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[18376.855,18392.145],"tickmode":"array","ticktext":["28Apr2020","03May2020","08May2020"],"tickvals":[18380,18385,18390],"categoryorder":"array","categoryarray":["28Apr2020","03May2020","08May2020"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(255,255,255,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"date","font":{"color":"rgba(255,255,255,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-10.6,222.6],"tickmode":"array","ticktext":["0","50","100","150","200"],"tickvals":[0,50,100,150,200],"categoryorder":"array","categoryarray":["0","50","100","150","200"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":true,"linecolor":"rgba(255,255,255,1)","linewidth":0.66417600664176,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":{"text":"case","font":{"color":"rgba(255,255,255,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(24,47,78,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(255,255,255,1)","family":"","size":11.689497716895},"y":0.913385826771654},"annotations":[{"text":"County","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(255,255,255,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"15a6f1803db85":{"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"15a6f1803db85","visdat":{"15a6f1803db85":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>You can click on the legend to hide counties, allowing you to compare just 2 at a time. This seems marginally better.</p>
+</div>
