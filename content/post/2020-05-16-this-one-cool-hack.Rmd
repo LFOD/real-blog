@@ -174,7 +174,7 @@ harry_potter %>%
 ranks <- tribble(
   ~House,      ~smart_rank, ~brave_rank, ~cunning_rank, ~kind_rank,
   "Gryffindor", 2,           1,          3,             2,
-  "Ravenclaw",  1,           3,          3,             3,
+  "Ravenclaw",  1,           3,          2,             3,
   "Hufflepuff", 4,           4,          4,             1,
   "Slytherin",  3,           2,          1,             4,
 )
