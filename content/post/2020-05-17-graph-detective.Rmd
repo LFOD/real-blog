@@ -279,10 +279,10 @@ d %>%
   scale_x_date(date_labels = "%d%b%Y",
                date_breaks = "5 days") +
   scale_color_manual("County",
-                    values = c("#5854A8", "#46868E", "#958648",
-                               "#8F5D37", "#5D98DB"),
-                    guide = guide_legend(title.position = "top",
-                                         title.hjust = 0.5)) + 
+                     values = c("#5854A8", "#46868E", "#958648",
+                                "#8F5D37", "#5D98DB"),
+                     guide = guide_legend(title.position = "top",
+                                          title.hjust = 0.5)) + 
   ggtitle(
     "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
     subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
@@ -312,20 +312,20 @@ Joshua suggested a bump chart with the dots scaled based on the number of cases.
 d %>%
   filter(date >= "2020-04-26", date <= "2020-05-09") %>%
   group_by(date) %>%
-    mutate(rank = rank(-case, ties = "first")) %>%
+  mutate(rank = rank(-case, ties = "first")) %>%
   ggplot(aes(x = date, y = rank, color = county)) +
   geom_line() + 
   geom_point(aes(size = case)) +
   scale_x_date(date_labels = "%d%b%Y",
                date_breaks = "5 days") +
   scale_size_continuous("Number of cases",
-                    guide = guide_legend(title.position = "top",
-                                         title.hjust = 0.5)) +
+                        guide = guide_legend(title.position = "top",
+                                             title.hjust = 0.5)) +
   scale_color_manual("County",
-                    values = c("#5854A8", "#46868E", "#958648",
-                               "#8F5D37", "#5D98DB"),
-                    guide = guide_legend(title.position = "top",
-                                         title.hjust = 0.5)) + 
+                     values = c("#5854A8", "#46868E", "#958648",
+                                "#8F5D37", "#5D98DB"),
+                     guide = guide_legend(title.position = "top",
+                                          title.hjust = 0.5)) + 
   ggtitle(
     "Top 5 Counties with the Greatest Number of Confirmed COVID-19 Cases",
     subtitle = "The chart below represents the most impacted counties over the past 15 days and the number of cases over time.") +
@@ -382,5 +382,58 @@ ggplotly(p)
 ```
 
 You can click on the legend to hide counties, allowing you to compare just 2 at a time. This seems marginally better. 
+
+## Barchart race
+
+Joshua also suggested (and created) a barchart race! I actually think this may have some utility here because it helps narrow the focus (looking at one day at a time), which is part of the problem with these visualizations. 
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Maybe this is a job for a bar chart race! <a href="https://t.co/BnTvHxKZ6f">https://t.co/BnTvHxKZ6f</a><br><br>If the goal is to show ranking across time. But that seems like a pretty volatile metric</p>&mdash; Joshua de la Bruere (@delaBJL) <a href="https://twitter.com/delaBJL/status/1262083510824775680?ref_src=twsrc%5Etfw">May 17, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+The barchart races I've seen are typically cumulative, so I'm not sure this is exactly the right use case (and in this particular case, the rankings of the cumulative counts don't change much over these 15 days), but let's see how it looks.
+
+`r tufte::margin_note("I learned how to do this from [Michael Toth](https://twitter.com/michael_toth)'s blogpost [How to Create a Bar Chart Race in R - Mapping United States City Population 1790-2010](https://michaeltoth.me/how-to-create-a-bar-chart-race-in-r-mapping-united-states-city-population-1790-2010.html)")`
+
+```{r, message = FALSE, warning = FALSE}
+library(gganimate)
+d %>%
+  filter(date >= "2020-04-26", date <= "2020-05-09") %>%
+  group_by(date) %>%
+  mutate(rank = rank(-case, ties = "first")) %>%
+  ggplot(aes(x = -rank, y = case, fill = county)) +
+  geom_tile(aes(y = case / 2, height = case), width = 0.9) +
+  geom_text(aes(label = county), hjust = "right", 
+            colour = "white", fontface = "bold",
+            nudge_y = -5) +
+  scale_fill_manual(values = c("#5854A8", "#46868E", "#958648",
+                               "#8F5D37", "#5D98DB")) +
+  geom_text(aes(label = scales::comma(case)), hjust = "left", 
+            nudge_y = 5, colour = "white") +
+  coord_flip(clip = "off") +
+  scale_x_discrete("") +
+  scale_y_continuous("") +
+  theme_classic() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        legend.position = "none",
+        plot.margin = margin(1, 1, 1, 2, "cm"),
+        axis.text.y = element_blank(),
+        panel.background = element_rect(fill = "#182F4E"),
+        plot.background = element_rect(fill = "#182F4E"),
+        axis.line = element_line(color = "white"),
+        axis.text = element_text(color = "white"),
+        axis.title = element_text(color = "white"),
+        title = element_text(color = "white")) +
+  transition_time(date) +
+  ease_aes("cubic-in-out") +
+  labs(
+    title = "Top 5 Counties with the Greatest Number of Confirmed \nCOVID-19 Cases",
+    subtitle = "Date: {as.Date(frame_time)}",
+    caption = "Data: NY Times\nGraph: @LucyStats") -> p
+```
+
+```{r, cache = TRUE}
+p
+```
+
 
 
