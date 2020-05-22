@@ -38,6 +38,8 @@ I spent [some time trying to recreate their analysis](https://github.com/LucyMcG
 library(tidyverse)
 library(survival)
 library(survminer)
+library(cowplot)
+library(cmprsk)
 d <- read_csv("https://raw.githubusercontent.com/LucyMcGowan/nejm-grein-reanalysis/master/data/data-fig-2.csv")
 ```
 
@@ -48,20 +50,29 @@ fig_3 <- tibble(
   time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
            10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
            13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
-           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           16, 17, 17, 17, 17, 18, 18, 20, 22, 22, 
            23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
   event = c(1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0,
             1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 
-            1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 
+            1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 
             0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
             0)
 )
 ```
 
 ```{r}
-s <- survfit(Surv(time = time, event = event) ~ 1, data = fig_3)
+s <- survfit(
+  Surv(time = time, event = event) ~ 1, 
+  data = fig_3
+)
 
-ggsurvplot(s, fun = "event", break.time.by = 4, ggtheme = theme_bw())
+ggsurvplot(fit = s, 
+           risk.table = TRUE, 
+           break.time.by = 4,
+           risk.table.y.text = FALSE,
+           ylab = "Days",
+           tables.theme = theme_cleantable(),
+           fun = "event")
 ```
 
 I haven't quite figured out how to map these back to Figure 2, but it seems it replicates Figure 3A pretty well. Let's estimate the cumulative incidence at 28 days:
@@ -70,7 +81,7 @@ I haven't quite figured out how to map these back to Figure 2, but it seems it r
 1-s$surv[s$time == 28]
 ```
 
-Looks very similar to the 84% reported in the initial paper. Cool, what's the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a given amount of time and record the final state you see them in. If this state is your _event_ of interest, they are coded as such (a `1` in the analysis above, for _improved_) otherwise they are _censored_ (coded as `0` in this analysis). In the figure here we have 33 patients that _improved_ and 20 that were censored. Sounds fine, what's the problem? A key assumption is that censoring should be "non-informative", in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we _know_ they didn't have the event up until the last day we saw them, so we _censor_ them on that day. Maybe they'll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let's pull up Figure 2 again.
+Looks very similar to the 84% reported in the initial paper. Cool, what's the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a certain amount of time. If they have an _event_ (for example in the analysis above if they _improve_) you record them as such and the time the event occured, otherwise you _censor_ them and record the final time they were observed. In the figure here we have 33 patients that _improved_ and 20 that were censored. Sounds fine, what's the problem? A key assumption is that censoring should be "non-informative", in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we _know_ they didn't have the event up until the last day we saw them, so we _censor_ them on that day. Maybe they'll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let's pull up Figure 2 again.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height = 9}
 long_dat <- d %>%
@@ -119,11 +130,11 @@ fig_3_fixed <- tibble(
   time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
            10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
            13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
-           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           16, 17, 17, 17, 17, 18, 18, 20, 22, 22, 
            23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
   event = c(1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2,
             1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 
-            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
+            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 2, 1, 
             2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
             0)
 )
@@ -133,12 +144,15 @@ fig_3_fixed <- tibble(
 
 Let's see how the plot looks now. 
 
-```{r}
-library(cmprsk)
+```{r, message = FALSE, warning = FALSE}
+x <- cuminc(fig_3_fixed$time,
+            fig_3_fixed$event, 
+            cencode = 0)
 
-x <- cuminc(fig_3_fixed$time, fig_3_fixed$event, cencode = 0)
-ggcompetingrisks(x, conf.int = TRUE,
-                 gnames = c("Improvement Improvement", "Death Death"))
+ggcompetingrisks(x, 
+                 conf.int = TRUE,
+                 gnames = c("Improvement Improvement", "Death Death"),
+                 ggtheme = theme_classic())
 ```
 
 Ok, let's calculate the cumulative incidence now, taking death into account.
@@ -147,5 +161,177 @@ Ok, let's calculate the cumulative incidence now, taking death into account.
 x$`1 1`$est[x$`1 1`$time == 28][2]
 ```
 
-The estimated cumulative incidence of clinical improvement by day 28 is 74%. 
+The estimated cumulative incidence of clinical improvement by day 28 is 73%. Here's an animation of the difference.
 
+```{r, results = "hide", message = FALSE, warning = FALSE, echo = FALSE}
+library(magick)
+original <- cuminc(fig_3$time, fig_3$event, cencode = 0)
+
+plot_dat1 <-  x %>% 
+  list_modify("Tests" = NULL) %>% 
+  map_df(`[`, c("time", "est", "var"), .id = "id") %>% 
+  filter(id %in% c("1 1")) %>%
+  mutate(std = sqrt(var))
+
+plot_dat2 <-  original %>% 
+  list_modify("Tests" = NULL) %>% 
+  map_df(`[`, c("time", "est", "var"), .id = "id") %>% 
+  filter(id %in% c("1 1")) %>%
+  mutate(std = sqrt(var))
+
+p1 <- ggplot(plot_dat1, aes(x = time, y = est)) +
+  geom_step(lwd = 1.2, color = "cornflower blue")  +
+  geom_ribbon(aes(ymin = est - 1.96 * std, ymax = est + 
+                    1.96 * std), alpha = 0.2, linetype = 0, fill = "cornflower blue") +
+  ylim(c(0, 1)) +
+  theme_classic() +
+  labs(x = "Days", 
+       y = "Cumulative incidence",
+       title = "Cumulative incidence of improvement (Competing risks)") 
+
+
+p2 <- ggplot(plot_dat2, aes(x = time, y = est)) +
+  geom_step(lwd = 1.2, color = "cornflower blue") +
+  geom_ribbon(aes(ymin = est - 1.96 * std, ymax = est + 
+                    1.96 * std), alpha = 0.2, linetype = 0, fill = "cornflower blue") +
+  ylim(c(0, 1)) +
+  theme_classic() +
+  labs(x = "Days", 
+       y = "Cumulative incidence",
+       title = "Cumulative incidence of improvement (Original)") 
+
+fig1 <- image_graph(width = 500, height = 300)
+p1
+dev.off()
+
+fig2 <- image_graph(width = 500, height = 300)
+p2
+dev.off()
+
+```
+
+```{r, echo = FALSE}
+image_join(fig1, fig2) %>%
+  image_animate(fps = 1)
+```
+
+Why does this matter? It's crucial that the questions we answer statistically match the ones we are posing in practice. Understanding the underlying assumptions of the models is so important!
+
+## Figure 3B
+
+It turns out _really_ this is a story abotu Figure 3B. Why? Because 100% of the patients who died were on invasive oxygen support at baseline, so modeling this correctly has the largest impact on the "Invasive" line on this plot. Here they were examining the same outcome, stratifying by whether patient had "invasive" or "noninvasive" baseline oxygen support.
+
+```{r}
+fig_3_fixed <- tibble(
+  time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
+           10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
+           13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
+           16, 17, 17, 17, 17, 18, 18, 20, 22, 22, 
+           23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
+  event = c(1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2,
+            1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 
+            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 2, 1, 
+            2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+            0),
+  invasive = c(0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 
+               0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 
+               1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 
+               1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+               1)
+)
+```
+
+
+```{r, message = FALSE, warning = FALSE}
+fit <- survfit(
+  Surv(time, ifelse(event == 1, 1, 0)) ~ invasive, 
+  data = fig_3_fixed
+)
+ggsurvplot(
+  fit = fit, 
+  risk.table = TRUE,
+  break.time.by = 4,
+  risk.table.y.text = FALSE,
+  xlim = c(0, 36),
+  tables.theme = theme_cleantable(),
+  conf.int = TRUE,
+  fun = "event",
+  legend.labs = c("Noninvasive", "Invasive"))
+```
+
+Now what happens if we do a competing risks model? Let's see what that looks like now
+
+```{r}
+x <- cuminc(fig_3_fixed$time, 
+            fig_3_fixed$event, 
+            group = fig_3_fixed$invasive,
+            cencode = 0)
+```
+
+```{r}
+ggcompetingrisks(x, 
+                 conf.int = TRUE,
+                 gnames = c("Noninvasive Improvement", "Invasive Improvement",
+                            "Noninvasive Death", "Invasive Death"),
+                 ggtheme = theme_classic(),
+                 ylim = c(0, 1))
+```
+
+
+
+We wouldn't expect the _Noninvasive_ group to change much, because only one patient in this stratum died. Let's focus instead on just the _Invasive_ group to compare how that line changes with a proper analaysis.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = "hide"}
+original <- cuminc(fig_3$time,
+                   fig_3$event,
+                   group = fig_3_fixed$invasive,
+                   cencode = 0)
+
+plot_dat1 <-  x %>% 
+  list_modify("Tests" = NULL) %>% 
+  map_df(`[`, c("time", "est", "var"), .id = "id") %>% 
+  filter(id %in% c("1 1")) %>%
+  mutate(std = sqrt(var))
+
+plot_dat2 <-  original %>% 
+  list_modify("Tests" = NULL) %>% 
+  map_df(`[`, c("time", "est", "var"), .id = "id") %>% 
+  filter(id %in% c("1 1")) %>%
+  mutate(std = sqrt(var))
+
+p1 <- ggplot(plot_dat1, aes(x = time, y = est)) +
+  geom_step(lwd = 1.2, color = "cornflower blue")  +
+  geom_ribbon(aes(ymin = est - 1.96 * std, ymax = est + 
+                    1.96 * std), alpha = 0.2, linetype = 0, fill = "cornflower blue") +
+  ylim(c(0, 1)) +
+  theme_classic() +
+  labs(x = "Days", 
+       y = "Cumulative incidence",
+       title = "Cumulative incidence of improvement\n among those with invasive oxygen support at baseline (Competing risks)") 
+
+
+p2 <- ggplot(plot_dat2, aes(x = time, y = est)) +
+  geom_step(lwd = 1.2, color = "cornflower blue") +
+  geom_ribbon(aes(ymin = est - 1.96 * std, ymax = est + 
+                    1.96 * std), alpha = 0.2, linetype = 0, fill = "cornflower blue") +
+  ylim(c(0, 1)) +
+  theme_classic() +
+  labs(x = "Days", 
+       y = "Cumulative incidence",
+       title = "Cumulative incidence of improvement\n among those with invasive oxygen support at baseline (Original)") 
+
+fig1 <- image_graph(width = 500, height = 300)
+p1
+dev.off()
+
+fig2 <- image_graph(width = 500, height = 300)
+p2
+dev.off()
+```
+
+```{r, echo = FALSE}
+image_join(fig1, fig2) %>%
+  image_animate(fps = 1)
+```
+
+Basically, all this is to say that a competing risk analysis would have been more approriate here. Hopefully this code-through has been helpful! 

@@ -41,27 +41,38 @@ excerpt: "A paper by Grein et al. was recently published in the New England Jour
 <pre class="r"><code>library(tidyverse)
 library(survival)
 library(survminer)
+library(cowplot)
+library(cmprsk)
 d &lt;- read_csv(&quot;https://raw.githubusercontent.com/LucyMcGowan/nejm-grein-reanalysis/master/data/data-fig-2.csv&quot;)</code></pre>
 <pre class="r"><code>fig_3 &lt;- tibble(
   time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
            10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
            13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
-           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           16, 17, 17, 17, 17, 18, 18, 20, 22, 22, 
            23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
   event = c(1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0,
             1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 
-            1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 
+            1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 
             0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
             0)
 )</code></pre>
-<pre class="r"><code>s &lt;- survfit(Surv(time = time, event = event) ~ 1, data = fig_3)
+<pre class="r"><code>s &lt;- survfit(
+  Surv(time = time, event = event) ~ 1, 
+  data = fig_3
+)
 
-ggsurvplot(s, fun = &quot;event&quot;, break.time.by = 4, ggtheme = theme_bw())</code></pre>
+ggsurvplot(fit = s, 
+           risk.table = TRUE, 
+           break.time.by = 4,
+           risk.table.y.text = FALSE,
+           ylab = &quot;Days&quot;,
+           tables.theme = theme_cleantable(),
+           fun = &quot;event&quot;)</code></pre>
 <p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>I haven’t quite figured out how to map these back to Figure 2, but it seems it replicates Figure 3A pretty well. Let’s estimate the cumulative incidence at 28 days:</p>
 <pre class="r"><code>1-s$surv[s$time == 28]</code></pre>
-<pre><code>## [1] 0.8499287</code></pre>
-<p>Looks very similar to the 84% reported in the initial paper. Cool, what’s the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a given amount of time and record the final state you see them in. If this state is your <em>event</em> of interest, they are coded as such (a <code>1</code> in the analysis above, for <em>improved</em>) otherwise they are <em>censored</em> (coded as <code>0</code> in this analysis). In the figure here we have 33 patients that <em>improved</em> and 20 that were censored. Sounds fine, what’s the problem? A key assumption is that censoring should be “non-informative”, in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we <em>know</em> they didn’t have the event up until the last day we saw them, so we <em>censor</em> them on that day. Maybe they’ll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let’s pull up Figure 2 again.</p>
+<pre><code>## [1] 0.8405492</code></pre>
+<p>Looks very similar to the 84% reported in the initial paper. Cool, what’s the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a certain amount of time. If they have an <em>event</em> (for example in the analysis above if they <em>improve</em>) you record them as such and the time the event occured, otherwise you <em>censor</em> them and record the final time they were observed. In the figure here we have 33 patients that <em>improved</em> and 20 that were censored. Sounds fine, what’s the problem? A key assumption is that censoring should be “non-informative”, in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we <em>know</em> they didn’t have the event up until the last day we saw them, so we <em>censor</em> them on that day. Maybe they’ll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let’s pull up Figure 2 again.</p>
 <p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>7 of the patients in this cohort <em>died</em>. If someone <em>dies</em> we know that they are not going to <em>improve</em> later. This is not non-informative censoring!! Luckily there is a very straightforward way to deal with this in statistics - competing risks!</p>
 </div>
@@ -72,24 +83,80 @@ ggsurvplot(s, fun = &quot;event&quot;, break.time.by = 4, ggtheme = theme_bw())<
   time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
            10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
            13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
-           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           16, 17, 17, 17, 17, 18, 18, 20, 22, 22, 
            23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
   event = c(1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2,
             1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 
-            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
+            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 2, 1, 
             2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
             0)
 )</code></pre>
 <p><span class="marginnote"> Interested in learning more about competing risk analyses in R? <a href="https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html#cumulative_incidence_for_competing_risks">Emily Zabor has an amazing tutorial on this</a> </span></p>
 <p>Let’s see how the plot looks now.</p>
-<pre class="r"><code>library(cmprsk)</code></pre>
-<pre><code>## Warning: package &#39;cmprsk&#39; was built under R version 3.5.2</code></pre>
-<pre class="r"><code>x &lt;- cuminc(fig_3_fixed$time, fig_3_fixed$event, cencode = 0)
-ggcompetingrisks(x, conf.int = TRUE,
-                 gnames = c(&quot;Improvement Improvement&quot;, &quot;Death Death&quot;))</code></pre>
+<pre class="r"><code>x &lt;- cuminc(fig_3_fixed$time,
+            fig_3_fixed$event, 
+            cencode = 0)
+
+ggcompetingrisks(x, 
+                 conf.int = TRUE,
+                 gnames = c(&quot;Improvement Improvement&quot;, &quot;Death Death&quot;),
+                 ggtheme = theme_classic())</code></pre>
 <p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Ok, let’s calculate the cumulative incidence now, taking death into account.</p>
 <pre class="r"><code>x$`1 1`$est[x$`1 1`$time == 28][2]</code></pre>
-<pre><code>## [1] 0.7430043</code></pre>
-<p>The estimated cumulative incidence of clinical improvement by day 28 is 74%.</p>
+<pre><code>## [1] 0.734131</code></pre>
+<p>The estimated cumulative incidence of clinical improvement by day 28 is 73%. Here’s an animation of the difference.</p>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-10-1.gif" /><!-- --></p>
+<p>Why does this matter? It’s crucial that the questions we answer statistically match the ones we are posing in practice. Understanding the underlying assumptions of the models is so important!</p>
+</div>
+<div id="figure-3b" class="section level2">
+<h2>Figure 3B</h2>
+<p>It turns out <em>really</em> this is a story abotu Figure 3B. Why? Because 100% of the patients who died were on invasive oxygen support at baseline, so modeling this correctly has the largest impact on the “Invasive” line on this plot. Here they were examining the same outcome, stratifying by whether patient had “invasive” or “noninvasive” baseline oxygen support.</p>
+<pre class="r"><code>fig_3_fixed &lt;- tibble(
+  time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
+           10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
+           13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
+           16, 17, 17, 17, 17, 18, 18, 20, 22, 22, 
+           23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
+  event = c(1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2,
+            1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 
+            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 0, 2, 1, 
+            2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+            0),
+  invasive = c(0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 
+               0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 
+               1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 
+               1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1,
+               1)
+)</code></pre>
+<pre class="r"><code>fit &lt;- survfit(
+  Surv(time, ifelse(event == 1, 1, 0)) ~ invasive, 
+  data = fig_3_fixed
+)
+ggsurvplot(
+  fit = fit, 
+  risk.table = TRUE,
+  break.time.by = 4,
+  risk.table.y.text = FALSE,
+  xlim = c(0, 36),
+  tables.theme = theme_cleantable(),
+  conf.int = TRUE,
+  fun = &quot;event&quot;,
+  legend.labs = c(&quot;Noninvasive&quot;, &quot;Invasive&quot;))</code></pre>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Now what happens if we do a competing risks model? Let’s see what that looks like now</p>
+<pre class="r"><code>x &lt;- cuminc(fig_3_fixed$time, 
+            fig_3_fixed$event, 
+            group = fig_3_fixed$invasive,
+            cencode = 0)</code></pre>
+<pre class="r"><code>ggcompetingrisks(x, 
+                 conf.int = TRUE,
+                 gnames = c(&quot;Noninvasive Improvement&quot;, &quot;Invasive Improvement&quot;,
+                            &quot;Noninvasive Death&quot;, &quot;Invasive Death&quot;),
+                 ggtheme = theme_classic(),
+                 ylim = c(0, 1))</code></pre>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>We wouldn’t expect the <em>Noninvasive</em> group to change much, because only one patient in this stratum died. Let’s focus instead on just the <em>Invasive</em> group to compare how that line changes with a proper analaysis.</p>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-16-1.gif" /><!-- --></p>
+<p>Basically, all this is to say that a competing risk analysis would have been more approriate here. Hopefully this code-through has been helpful!</p>
 </div>
