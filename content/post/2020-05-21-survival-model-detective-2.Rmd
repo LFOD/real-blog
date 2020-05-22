@@ -81,7 +81,7 @@ I haven't quite figured out how to map these back to Figure 2, but it seems it r
 1-s$surv[s$time == 28]
 ```
 
-Looks very similar to the 84% reported in the initial paper. Cool, what's the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a certain amount of time. If they have an _event_ (for example in the analysis above if they _improve_) you record them as such and the time the event occured, otherwise you _censor_ them and record the final time they were observed. In the figure here we have 33 patients that _improved_ and 20 that were censored. Sounds fine, what's the problem? A key assumption is that censoring should be "non-informative", in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we _know_ they didn't have the event up until the last day we saw them, so we _censor_ them on that day. Maybe they'll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let's pull up Figure 2 again.
+Looks very similar to the 84% reported in the initial paper. Cool, what's the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a certain amount of time. If they have an _event_ (for example in the analysis above if they _improve_) you record them as such and the time the event occurred, otherwise you _censor_ them and record the final time they were observed. In the figure here we have 33 patients that _improved_ and 20 that were censored. Sounds fine, what's the problem? A key assumption is that censoring should be "non-informative", in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we _know_ they didn't have the event up until the last day we saw them, so we _censor_ them on that day. Maybe they'll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let's pull up Figure 2 again.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height = 9}
 long_dat <- d %>%
@@ -219,7 +219,7 @@ Why does this matter? It's crucial that the questions we answer statistically ma
 
 ## Figure 3B
 
-It turns out _really_ this is a story abotu Figure 3B. Why? Because 100% of the patients who died were on invasive oxygen support at baseline, so modeling this correctly has the largest impact on the "Invasive" line on this plot. Here they were examining the same outcome, stratifying by whether patient had "invasive" or "noninvasive" baseline oxygen support.
+It turns out _really_ this is a story about Figure 3B. Why? Because 6/7 of the patients who died were on invasive oxygen support at baseline, so modeling this correctly has the largest impact on the _Invasive_ line on this plot. Here they were examining the same outcome, stratifying by whether patient had _invasive_ or _noninvasive_ baseline oxygen support.
 
 ```{r}
 fig_3_fixed <- tibble(
@@ -279,7 +279,7 @@ ggcompetingrisks(x,
 
 
 
-We wouldn't expect the _Noninvasive_ group to change much, because only one patient in this stratum died. Let's focus instead on just the _Invasive_ group to compare how that line changes with a proper analaysis.
+We wouldn't expect the _Noninvasive_ group to change much, because only one patient in this stratum died. Let's focus instead on just the _Invasive_ group to compare how that line changes with a proper analysis.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = "hide"}
 original <- cuminc(fig_3$time,
@@ -334,4 +334,4 @@ image_join(fig1, fig2) %>%
   image_animate(fps = 1)
 ```
 
-Basically, all this is to say that a competing risk analysis would have been more approriate here. Hopefully this code-through has been helpful! 
+Basically, all this is to say that a competing risk analysis would have been more appropriate here. Hopefully this code-through has been helpful! 
