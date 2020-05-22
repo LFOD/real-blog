@@ -72,4 +72,4 @@ long_dat %>%
   theme_classic()
 ```
 
-I definitely applaud the authors for making this so accessible! Check out [Part 2](https://livefreeordichotomize.com/2020/05/21/survival-model-detective-2/) to see a bit about how their statistics could be improved.
+I definitely applaud the authors for making this so accessible! Check out [Part 2](https://livefreeordichotomize.com/2020/05/22/survival-model-detective-2/) to see a bit about how their statistics could be improved.
