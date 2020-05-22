@@ -1,0 +1,151 @@
+---
+title: 'Survival Model Detective:   Part 2'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-22'
+slug: survival-model-detective-2
+categories: [rstats, covid-19, survival analysis, competing risks]
+tags: [rstats, covid-19, survival analysis, competing risks]
+math: no
+meta: yes
+excerpt: "A paper by Grein et al. was recently published in the New England Journal of Medicine examining a cohort of patients with COVID-19 who were treated with compassionate-use remdesivir. This paper had a flaw in it's main statistical analysis. Let's learn a bit about competing risks!"
+---
+
+A [paper by Grein et al. was recently published in the New England Journal of Medicine](https://www.nejm.org/doi/full/10.1056/NEJMoa2007016) examining a cohort of patients with COVID-19 who were treated with compassionate-use remdesivir. There are two things that were interesting about this paper:
+
+1. They had a very neat figure that included tons of information about their cohort
+2. The primary statistical analysis was not appropriately done
+
+Check out #1 in the [Part 1](https://livefreeordichotomize.com/2020/05/21/survival-model-detective-1/) post. This post focuses on #2, in particular it focuses on _competing risks_. This criticism was made by Stefanos Bonovas and Daniele Piovani in a [letter to the Editor](https://www.nejm.org/doi/full/10.1056/NEJMc2015312?source=nejmtwitter&medium=organic-social) a few days ago. 
+
+## What is their question?
+
+I believe the authors are interested in telling us about _clinical improvement_ in this cohort of patients taking remdesivir, in particular they want to estimate the cumulative incidence of clinical improvement by 28 days. For the purposes of their analysis "clinical improvement" is defined as being discharged alive or having a decrease of 2 points or more in a 6-level ordinal scale of oxygen support:
+
+* ECMO  
+* Mechanical ventilation  
+* NIPPV  
+* High-flow oxygen  
+* Low-flow oxygen 
+* Ambient air
+
+They use a Kaplan Meier plot to show this. Let's recreate it first.
+
+## Recreate their plots
+
+I spent [some time trying to recreate their analysis](https://github.com/LucyMcGowan/nejm-grein-reanalysis) using the data from Figure 2, and I wasn't quite about to do it. So I've painstakingly pulled every number from Figure 3A `r emo::ji("sweat_smile")`
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(survival)
+library(survminer)
+d <- read_csv("https://raw.githubusercontent.com/LucyMcGowan/nejm-grein-reanalysis/master/data/data-fig-2.csv")
+```
+
+
+
+```{r}
+fig_3 <- tibble(
+  time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
+           10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
+           13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
+           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
+  event = c(1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0,
+            1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 
+            1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 
+            0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+            0)
+)
+```
+
+```{r}
+s <- survfit(Surv(time = time, event = event) ~ 1, data = fig_3)
+
+ggsurvplot(s, fun = "event", break.time.by = 4, ggtheme = theme_bw())
+```
+
+I haven't quite figured out how to map these back to Figure 2, but it seems it replicates Figure 3A pretty well. Let's estimate the cumulative incidence at 28 days:
+
+```{r}
+1-s$surv[s$time == 28]
+```
+
+Looks very similar to the 84% reported in the initial paper. Cool, what's the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a given amount of time and record the final state you see them in. If this state is your _event_ of interest, they are coded as such (a `1` in the analysis above, for _improved_) otherwise they are _censored_ (coded as `0` in this analysis). In the figure here we have 33 patients that _improved_ and 20 that were censored. Sounds fine, what's the problem? A key assumption is that censoring should be "non-informative", in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we _know_ they didn't have the event up until the last day we saw them, so we _censor_ them on that day. Maybe they'll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let's pull up Figure 2 again.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.height = 9}
+long_dat <- d %>%
+  pivot_longer(day_1:day_36)
+
+cats <- tibble(
+  value = 1:6,
+  cat = factor(c("Ambient air", "Low-flow oxygen", "High-flow oxygen", "NIPPV", 
+                 "Mechanical ventilation", "ECMO"),
+               levels = c("ECMO", "Mechanical ventilation", "NIPPV", 
+                          "High-flow oxygen", "Low-flow oxygen", "Ambient air"))
+)
+long_dat %>%
+  left_join(cats, by = "value") %>%
+  filter(!is.na(value)) %>%
+  mutate(day_oxy = as.numeric(gsub("day_", "", name)) - 1,
+         day_oxy = ifelse(day_oxy > 28, 28, day_oxy),
+         day = ifelse(day > 28, 28, day),
+         patient = factor(patient, levels = 53:1),
+         event = ifelse(event == "censor", NA, event)
+  ) %>%
+  ggplot(aes(x = patient, y = day_oxy, fill = cat)) +
+  geom_segment(aes(x = patient, xend = patient,
+                   y = 0, yend = day - 0.5), lty = 3) +
+  geom_tile(width = 0.5) + 
+  scale_fill_manual("Oxygen support",
+                    values = c("#7D3A2C", "#AA3B2F", "#D36446", "#DEA568", 
+                               "#F5D280", "#FCEEBC")) +
+  geom_point(aes(x = patient, y = day - 0.5, shape = event)) +
+  scale_shape_manual("Event", values = c(15, 5),
+                     labels = c("Death", "Discharge", "")) +
+  guides(fill = guide_legend(override.aes = list(shape = NA), order = 1)) +
+  coord_flip() +
+  labs(y = "day", x = "") +
+  theme_classic()
+```
+
+7 of the patients in this cohort _died_. If someone _dies_ we know that they are not going to _improve_ later. This is not non-informative censoring!! Luckily there is a very straightforward way to deal with this in statistics - competing risks!
+
+## Competing Risks
+
+In a competing risk analysis, we can separate out the the _death_ outcome from the remaining _censored_ outcomes. We can then appropriately estimate the cumulative incidence of _improving_. I've recoded the 7 deaths (guessed from Figure 2) below.
+
+```{r}
+fig_3_fixed <- tibble(
+  time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
+           10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
+           13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
+           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
+  event = c(1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2,
+            1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 
+            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
+            2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+            0)
+)
+```
+
+<span class="marginnote"> Interested in learning more about competing risk analyses in R? [Emily Zabor has an amazing tutorial on this](https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html#cumulative_incidence_for_competing_risks) </span>
+
+Let's see how the plot looks now. 
+
+```{r}
+library(cmprsk)
+
+x <- cuminc(fig_3_fixed$time, fig_3_fixed$event, cencode = 0)
+ggcompetingrisks(x, conf.int = TRUE,
+                 gnames = c("Improvement Improvement", "Death Death"))
+```
+
+Ok, let's calculate the cumulative incidence now, taking death into account.
+
+```{r}
+x$`1 1`$est[x$`1 1`$time == 28][2]
+```
+
+The estimated cumulative incidence of clinical improvement by day 28 is 74%. 
+

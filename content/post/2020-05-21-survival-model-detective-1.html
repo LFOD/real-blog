@@ -1,0 +1,69 @@
+---
+title: 'Survival Model Detective:   Part 1'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-21'
+slug: survival-model-detective-1
+categories: [rstats, covid-19, survival analysis, competing risks]
+tags: [rstats, covid-19, survival analysis, competing risks]
+math: no
+meta: yes
+excerpt: "A paper by Grein et al. was recently published in the New England Journal of Medicine examining a cohort of patients with COVID-19 who were treated with compassionate-use remdesivir. This paper had a very cool figure - here's how to recreate it in R!"
+---
+
+
+
+<p>A <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2007016">paper by Grein et al. was recently published in the New England Journal of Medicine</a> examining a cohort of patients with COVID-19 who were treated with compassionate-use remdesivir. There are two things that were interesting about this paper:</p>
+<ol style="list-style-type: decimal">
+<li>They had a very neat figure that included tons of information about their cohort</li>
+<li>The primary statistical analysis was not appropriately done</li>
+</ol>
+<p>This post focuses on the very neat figure!</p>
+<div id="figure-2" class="section level2">
+<h2>Figure 2</h2>
+<p>Figure 2 in the original paper shows the changes in oxygen-support status from baseline for each of the 53 patients. This figure includes information about:</p>
+<ul>
+<li>The duration of follow up for each individual patient</li>
+<li>Each patient’s oxygen trajectory</li>
+<li>Each patient’s ultimate outcome (death, discharged, censored)</li>
+</ul>
+<p>You can construct a whole dataset from this (and I did!) - you can find it <a href="https://github.com/LucyMcGowan/nejm-grein-reanalysis">on my GitHub</a>.</p>
+<p><img src = "/images/2020-05-21/fig2.png"></img></p>
+<p>Below is code to recreate their Figure 2 using #rstats 😎.</p>
+<pre class="r"><code>library(tidyverse)
+d &lt;- read_csv(&quot;https://raw.githubusercontent.com/LucyMcGowan/nejm-grein-reanalysis/master/data/data-fig-2.csv&quot;)</code></pre>
+<pre class="r"><code>long_dat &lt;- d %&gt;%
+  pivot_longer(day_1:day_36)
+
+cats &lt;- tibble(
+  value = 1:6,
+  cat = factor(c(&quot;Ambient air&quot;, &quot;Low-flow oxygen&quot;, &quot;High-flow oxygen&quot;, &quot;NIPPV&quot;, 
+                 &quot;Mechanical ventilation&quot;, &quot;ECMO&quot;),
+               levels = c(&quot;ECMO&quot;, &quot;Mechanical ventilation&quot;, &quot;NIPPV&quot;, 
+                          &quot;High-flow oxygen&quot;, &quot;Low-flow oxygen&quot;, &quot;Ambient air&quot;))
+)
+long_dat %&gt;%
+  left_join(cats, by = &quot;value&quot;) %&gt;%
+  filter(!is.na(value)) %&gt;%
+  mutate(day_oxy = as.numeric(gsub(&quot;day_&quot;, &quot;&quot;, name)) - 1,
+         day_oxy = ifelse(day_oxy &gt; 28, 28, day_oxy),
+         day = ifelse(day &gt; 28, 28, day),
+         patient = factor(patient, levels = 53:1),
+         event = ifelse(event == &quot;censor&quot;, NA, event)
+  ) %&gt;%
+  ggplot(aes(x = patient, y = day_oxy, fill = cat)) +
+  geom_segment(aes(x = patient, xend = patient,
+                   y = 0, yend = day - 0.5), lty = 3) +
+  geom_tile(width = 0.5) + 
+  scale_fill_manual(&quot;Oxygen support&quot;,
+                    values = c(&quot;#7D3A2C&quot;, &quot;#AA3B2F&quot;, &quot;#D36446&quot;, &quot;#DEA568&quot;, 
+                               &quot;#F5D280&quot;, &quot;#FCEEBC&quot;)) +
+  geom_point(aes(x = patient, y = day - 0.5, shape = event)) +
+  scale_shape_manual(&quot;Event&quot;, values = c(15, 5),
+                     labels = c(&quot;Death&quot;, &quot;Discharge&quot;, &quot;&quot;)) +
+  guides(fill = guide_legend(override.aes = list(shape = NA), order = 1)) +
+  coord_flip() +
+  labs(y = &quot;day&quot;, x = &quot;&quot;) +
+  theme_classic()</code></pre>
+<p><img src="/post/2020-05-21-survival-model-detective-1_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>I definitely applaud the authors for making this so accessible! Check out <a href="https://livefreeordichotomize.com/2020/05/21/survival-model-detective-2/">Part 2</a> to see a bit about how their statistics could be improved.</p>
+</div>

@@ -1,0 +1,95 @@
+---
+title: 'Survival Model Detective:   Part 2'
+author: "Lucy D'Agostino McGowan"
+date: '2020-05-22'
+slug: survival-model-detective-2
+categories: [rstats, covid-19, survival analysis, competing risks]
+tags: [rstats, covid-19, survival analysis, competing risks]
+math: no
+meta: yes
+excerpt: "A paper by Grein et al. was recently published in the New England Journal of Medicine examining a cohort of patients with COVID-19 who were treated with compassionate-use remdesivir. This paper had a flaw in it's main statistical analysis. Let's learn a bit about competing risks!"
+---
+
+
+
+<p>A <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2007016">paper by Grein et al. was recently published in the New England Journal of Medicine</a> examining a cohort of patients with COVID-19 who were treated with compassionate-use remdesivir. There are two things that were interesting about this paper:</p>
+<ol style="list-style-type: decimal">
+<li>They had a very neat figure that included tons of information about their cohort</li>
+<li>The primary statistical analysis was not appropriately done</li>
+</ol>
+<p>Check out #1 in the <a href="https://livefreeordichotomize.com/2020/05/21/survival-model-detective-1/">Part 1</a> post. This post focuses on #2, in particular it focuses on <em>competing risks</em>. This criticism was made by Stefanos Bonovas and Daniele Piovani in a <a href="https://www.nejm.org/doi/full/10.1056/NEJMc2015312?source=nejmtwitter&amp;medium=organic-social">letter to the Editor</a> a few days ago.</p>
+<div id="what-is-their-question" class="section level2">
+<h2>What is their question?</h2>
+<p>I believe the authors are interested in telling us about <em>clinical improvement</em> in this cohort of patients taking remdesivir, in particular they want to estimate the cumulative incidence of clinical improvement by 28 days. For the purposes of their analysis “clinical improvement” is defined as being discharged alive or having a decrease of 2 points or more in a 6-level ordinal scale of oxygen support:</p>
+<ul>
+<li>ECMO<br />
+</li>
+<li>Mechanical ventilation<br />
+</li>
+<li>NIPPV<br />
+</li>
+<li>High-flow oxygen<br />
+</li>
+<li>Low-flow oxygen</li>
+<li>Ambient air</li>
+</ul>
+<p>They use a Kaplan Meier plot to show this. Let’s recreate it first.</p>
+</div>
+<div id="recreate-their-plots" class="section level2">
+<h2>Recreate their plots</h2>
+<p>I spent <a href="https://github.com/LucyMcGowan/nejm-grein-reanalysis">some time trying to recreate their analysis</a> using the data from Figure 2, and I wasn’t quite about to do it. So I’ve painstakingly pulled every number from Figure 3A 😅</p>
+<pre class="r"><code>library(tidyverse)
+library(survival)
+library(survminer)
+d &lt;- read_csv(&quot;https://raw.githubusercontent.com/LucyMcGowan/nejm-grein-reanalysis/master/data/data-fig-2.csv&quot;)</code></pre>
+<pre class="r"><code>fig_3 &lt;- tibble(
+  time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
+           10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
+           13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
+           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
+  event = c(1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0,
+            1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 
+            1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 
+            0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+            0)
+)</code></pre>
+<pre class="r"><code>s &lt;- survfit(Surv(time = time, event = event) ~ 1, data = fig_3)
+
+ggsurvplot(s, fun = &quot;event&quot;, break.time.by = 4, ggtheme = theme_bw())</code></pre>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>I haven’t quite figured out how to map these back to Figure 2, but it seems it replicates Figure 3A pretty well. Let’s estimate the cumulative incidence at 28 days:</p>
+<pre class="r"><code>1-s$surv[s$time == 28]</code></pre>
+<pre><code>## [1] 0.8499287</code></pre>
+<p>Looks very similar to the 84% reported in the initial paper. Cool, what’s the problem? The idea main idea is to examine time to clinical improvement and assess at 28 days what the cumulative incidence of improvement is. The way a typical survival analysis (like the ones the authors did here) works is typically you follow a group of patients for a given amount of time and record the final state you see them in. If this state is your <em>event</em> of interest, they are coded as such (a <code>1</code> in the analysis above, for <em>improved</em>) otherwise they are <em>censored</em> (coded as <code>0</code> in this analysis). In the figure here we have 33 patients that <em>improved</em> and 20 that were censored. Sounds fine, what’s the problem? A key assumption is that censoring should be “non-informative”, in other words, the patient is followed for a certain amount of time, never has the event, and then is no longer followed. Our best guess is that we <em>know</em> they didn’t have the event up until the last day we saw them, so we <em>censor</em> them on that day. Maybe they’ll have the event the next day, or maybe in a year - in order for the assumptions to be appropriately met, it must be the case that patients who have been censored are just as likely to have the event as those who are still being followed in the study. Let’s pull up Figure 2 again.</p>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>7 of the patients in this cohort <em>died</em>. If someone <em>dies</em> we know that they are not going to <em>improve</em> later. This is not non-informative censoring!! Luckily there is a very straightforward way to deal with this in statistics - competing risks!</p>
+</div>
+<div id="competing-risks" class="section level2">
+<h2>Competing Risks</h2>
+<p>In a competing risk analysis, we can separate out the the <em>death</em> outcome from the remaining <em>censored</em> outcomes. We can then appropriately estimate the cumulative incidence of <em>improving</em>. I’ve recoded the 7 deaths (guessed from Figure 2) below.</p>
+<pre class="r"><code>fig_3_fixed &lt;- tibble(
+  time = c(4, 6, 6, 7, 7, 7, 7, 7, 7, 7, 8, 8, 9,
+           10, 10, 10, 11, 11, 11, 11, 12, 12, 13,
+           13, 13, 13, 14, 14, 15, 15, 16, 16, 16, 
+           16, 16, 17, 17, 17, 18, 18, 20, 22, 22, 
+           23, 23, 23, 25, 26, 27, 28, 28, 29, 33),
+  event = c(1, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 2,
+            1, 1, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 0, 
+            1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 
+            2, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0,
+            0)
+)</code></pre>
+<p><span class="marginnote"> Interested in learning more about competing risk analyses in R? <a href="https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html#cumulative_incidence_for_competing_risks">Emily Zabor has an amazing tutorial on this</a> </span></p>
+<p>Let’s see how the plot looks now.</p>
+<pre class="r"><code>library(cmprsk)</code></pre>
+<pre><code>## Warning: package &#39;cmprsk&#39; was built under R version 3.5.2</code></pre>
+<pre class="r"><code>x &lt;- cuminc(fig_3_fixed$time, fig_3_fixed$event, cencode = 0)
+ggcompetingrisks(x, conf.int = TRUE,
+                 gnames = c(&quot;Improvement Improvement&quot;, &quot;Death Death&quot;))</code></pre>
+<p><img src="/post/2020-05-21-survival-model-detective-2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Ok, let’s calculate the cumulative incidence now, taking death into account.</p>
+<pre class="r"><code>x$`1 1`$est[x$`1 1`$time == 28][2]</code></pre>
+<pre><code>## [1] 0.7430043</code></pre>
+<p>The estimated cumulative incidence of clinical improvement by day 28 is 74%.</p>
+</div>
