@@ -92,6 +92,17 @@ These are interactive tutorials that teach everything from basic R skills to ite
 * Learn best from self-paced interactive modules
 * Are interested in learning everything from the basics in R to more advanced skill
 
+<span style="font-size:30px">**8.** *Suggested by [Giulio Centorame](https://twitter.com/GiulioCentorame)*
+**Ready for R [[link](https://ready4r.netlify.app/)]**</span>
+
+### What is it?
+
+A course by [Ted Laderas](https://twitter.com/tladeras) meant to be a gentle introduction to using R/Rstudio in your daily work. 
+
+### This is good for you if you
+
+* Learn best from a self-paced online course
+* Are interested in learning the basics of R and RStudio
 
 ## A little past beginner
 
@@ -127,5 +138,27 @@ A video-lecture by [Tyler Morgan-Wall](https://twitter.com/tylermorganwall) on m
 
 * Learn best from video lectures
 * Are interested in 3D visualizations in R
+
+<span style="font-size:30px">**4.** *Suggested by [Alireza Akhondi-asl](https://twitter.com/AkhondiAsl)* **Interactive web-based data visualization with R, plotly, and shiny [[link](https://plotly-r.com)]**</span>
+
+### What is it?
+
+A book by [Carson Sievert](https://twitter.com/cpsievert) describing how to create interactive visualizations in R.
+
+### This is good for you if you
+
+* Learn best working through a self-paced book
+* Are interested in creating interactive visualizations
+
+<span style="font-size:30px">**5.** *Suggested by [Lisa Lendway](https://twitter.com/lisalendway)* **Getting Started with Tidymodels [[link](https://www.tidymodels.org/start/)]** </span>
+
+### What is it?
+
+An set of modules by RStudio focused on the tidymodels package.
+
+### This is good for you if you
+
+* Learn best working through self-paced coding modules
+* Are interested in learning advanced statistical modeling in R
 
 **Did I miss one of your favorites? Please let me know!**
