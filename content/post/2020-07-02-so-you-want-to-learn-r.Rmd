@@ -63,7 +63,7 @@ This is a college-level online course taught by [Kelly Bodwin](https://www.twitt
 
 ### What is it?
 
-This is a learning community started by [Jessie Mostipak](https://twitter.com/kierisi) that intitially went through Garret Grolemund and Hadley Wickham's [R For Data Science](http://r4ds.had.co.nz/) book. The group has since expanded to broadly welcome folks interested in learning R and / or improving their skills! The community is centered around a Slack group ([join here:](https://r4ds.io/join)) and you can join as a learner or a mentor.
+This is a learning community started by [Jessie Mostipak](https://twitter.com/kierisi) that intitially went through Garret Grolemund and Hadley Wickham's [R For Data Science](https://r4ds.had.co.nz/) book. The group has since expanded to broadly welcome folks interested in learning R and / or improving their skills! The community is centered around a Slack group ([join here:](https://r4ds.io/join)) and you can join as a learner or a mentor.
 
 ### This is good for you if you
 
@@ -161,11 +161,11 @@ An set of modules by RStudio focused on the tidymodels package.
 * Learn best working through self-paced coding modules
 * Are interested in learning advanced statistical modeling in R
 
-<span style="font-size:30px">**6.** *Suggested by [Lisa Lendway](https://twitter.com/lisalendway) and [Alex Hayes](https://twitter.com/alexpghayes)* **Tidy machine learning in R [[link](http://www.rebeccabarter.com/blog/2020-03-25_machine_learning/)]**</span>
+<span style="font-size:30px">**6.** *Suggested by [Lisa Lendway](https://twitter.com/lisalendway) and [Alex Hayes](https://twitter.com/alexpghayes)* **Tidy machine learning in R [[link](https://www.rebeccabarter.com/blog/2020-03-25_machine_learning/)]**</span>
 
 ### What is it?
 
-A tutorial code-along by [Rebecca Barter](http://twitter.com/rlbarter) on machine learning focusing on the tidymodels package. 
+A tutorial code-along by [Rebecca Barter](https://twitter.com/rlbarter) on machine learning focusing on the tidymodels package. 
 
 ### This is good for you if you
 
