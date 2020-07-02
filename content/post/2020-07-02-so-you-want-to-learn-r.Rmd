@@ -1,6 +1,6 @@
 ---
 title: So you want to learn R...
-author: ~
+author: "Lucy D'Agostino McGowan"
 date: '2020-07-02'
 slug: so-you-want-to-learn-r
 categories: [rstats]
