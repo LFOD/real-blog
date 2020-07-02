@@ -161,4 +161,15 @@ An set of modules by RStudio focused on the tidymodels package.
 * Learn best working through self-paced coding modules
 * Are interested in learning advanced statistical modeling in R
 
+<span style="font-size:30px">**6.** *Suggested by [Lisa Lendway](https://twitter.com/lisalendway) and [Alex Hayes](https://twitter.com/alexpghayes)* **Tidy machine learning in R [[link](http://www.rebeccabarter.com/blog/2020-03-25_machine_learning/)]**</span>
+
+### What is it?
+
+A tutorial code-along by [Rebecca Barter](http://twitter.com/rlbarter) on machine learning focusing on the tidymodels package. 
+
+### This is good for you if you
+
+* Learn best working through self-paced code-alongs
+* Are interested in learning advanced statistical modeling in R 
+
 **Did I miss one of your favorites? Please let me know!**
