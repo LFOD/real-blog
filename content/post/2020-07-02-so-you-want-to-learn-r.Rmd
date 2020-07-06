@@ -10,7 +10,7 @@ meta: yes
 excerpt: "There have been several twitter threads circulating with (free!) resources for learning R - I wanted to collect some of my favorites here."
 ---
 
-There have been several twitter threads circulating with (free!) resources for learning R - I wanted to collect some of my favorites here. Thanks to [Jessica Lavery](https://twitter.com/jessicallavs), [Danielle Navarro](https://twitter.com/djnavarro), [Kelly Bodwin](https://www.twitter.com/kbodwin), [Jon Harmon](https://twitter.com/Jonthegeek), [Tyler Morgan-Wall](https://twitter.com/tylermorganwall), [Rachael Tatman](https://twitter.com/rctatman) for their awesome threads on these topics!
+There have been several twitter threads circulating with (free!) resources for learning R - I wanted to collect some of my favorites here. Thanks to [Jessica Lavery](https://twitter.com/jessicallavs), [Danielle Navarro](https://twitter.com/djnavarro), [Kelly Bodwin](https://www.twitter.com/kellybodwin), [Jon Harmon](https://twitter.com/Jonthegeek), [Tyler Morgan-Wall](https://twitter.com/tylermorganwall), [Rachael Tatman](https://twitter.com/rctatman) for their awesome threads on these topics!
 
 ## Beginnner
 
@@ -52,7 +52,7 @@ This is a series of online learning resources for using R geared for beginners b
 
 ### What is it?
 
-This is a college-level online course taught by [Kelly Bodwin](https://www.twitter.com/kbodwin) focusing on using R for Statistics and Data Science.
+This is a college-level online course taught by [Kelly Bodwin](https://www.twitter.com/kellybodwin) focusing on using R for Statistics and Data Science.
 
 ### This is good for you if you
 
