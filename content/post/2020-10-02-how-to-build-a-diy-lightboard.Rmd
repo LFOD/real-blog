@@ -1,0 +1,51 @@
+---
+title: How to build a DIY Lightboard
+author: "Lucy D'Agostino McGowan"
+date: '2020-10-02'
+slug: how-to-build-a-diy-lightboard
+categories: []
+tags: [diy, lightboard]
+math: no
+meta: yes
+excerpt: "Learn how to build a lightboard with 5 quick supplies for less than $100!"
+---
+
+This summer in an effort to spruce up my home office and online statistics courses, I was in search of a simple solution that would let me walk through equations, as I normally would with a whiteboard in my office, remotely. Enter the **lightboard**! I _love_ the aesthetic of these! They let you work through fun equations while still letting the viewer see your facial expressions, getting as close to an "in person" interaction as I've seen! The downside? They are super pricey! Some sites were quoting over $2,500 for the simpliest models. Even DIY "kits" were coming in at over $1,000 - yikes! Then I came across this [amazing YouTube video](https://www.youtube.com/watch?v=L1au1JxMSaA) that lays out a simple DIY method that can be put together for _much_ less - in fact, I was able to get my supplies together for less than $100. I put together a [quick tweetorial](https://twitter.com/LucyStats/status/1285336981292163072) outlining the steps and the supplies I used; I thought I'd copy the contents here, since a blogpost is sometimes a bit easier to read!
+
+## Supplies
+
+`r emo::ji("white_large_square")` [1/4 x 24 x 36 plexiglass](https://www.amazon.com/gp/product/B00C13ZSBA/)  
+`r emo::ji("bulb")` [16ft of LED strip lights](https://www.amazon.com/MINGER-Changing-Lighting-Flexible-Decoration/dp/B07JP5375R/)  
+`r emo::ji("clamp")`[2 one inch C-clamps](https://www.amazon.com/TEKTON-Malleable-C-Clamp-Opening-4011/dp/B000NY32AI)  
+`r emo::ji("book")` [4 bookshelf L brackets](https://www.amazon.com/STARVAST-Brackets-Floating-Supporter-250x160mm/dp/B07RHLZDL4/)  
+`r emo::ji("pen")` [neon markers](https://www.amazon.com/Quartet-Whiteboard-Assorted-Teachers-79551/dp/B008DQXN48/)
+
+### Step 1
+
+`r emo::ji("bulb")` stick 3ft of the LED strip lights on a table  
+`r emo::ji("point_up")` your plexiglass will sit on top of this
+
+![](/images/2020-10-02/step1.jpeg)
+
+### Step 2
+
+`r emo::ji("sandwich")` put your plexiglass between two of the shelf brackets on one side  
+`r emo::ji("clamp")` fasten with the C-clamp  
+`r emo::ji("repeat")` repeat on the other side  
+
+![](/images/2020-10-02/step2.jpeg)
+
+### Step 3
+
+`r emo::ji("bulb")` wrap the LED strip lights around the remainder of the plexiglass  
+`r emo::ji("point_up")` I used a little tape to hold it on
+
+![](/images/2020-10-02/step3.jpeg)
+
+### Step 4
+
+`r emo::ji("selfie")` set up camera  
+`r emo::ji("partying_face")` use fun markers  
+`r emo::ji("left_right_arrow")` flip video to mirror image
+
+![](/images/2020-10-02/lightboard.gif)
