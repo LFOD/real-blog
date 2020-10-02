@@ -10,6 +10,13 @@ meta: yes
 excerpt: "Learn how to build a lightboard with 5 quick supplies for less than $100!"
 ---
 
+<span class = "marginnote">
+Here are some examples of my DIY lightboard in action! <br>
+* [How logging symptoms helps slow the virus spread](https://youtu.be/caThvcHkysc)<br>
+* [Lucy D’Agostino McGowan discusses peer learning communities](https://youtu.be/fczR2ZOL_h8)<br>
+* [Law of Iterated Expectation](https://youtu.be/Z8jToqxnAeU)
+</span>
+
 This summer in an effort to spruce up my home office and online statistics courses, I was in search of a simple solution that would let me walk through equations, as I normally would with a whiteboard in my office, remotely. Enter the **lightboard**! I _love_ the aesthetic of these! They let you work through fun equations while still letting the viewer see your facial expressions, getting as close to an "in person" interaction as I've seen! The downside? They are super pricey! Some sites were quoting over $2,500 for the simpliest models. Even DIY "kits" were coming in at over $1,000 - yikes! Then I came across this [amazing YouTube video](https://www.youtube.com/watch?v=L1au1JxMSaA) that lays out a simple DIY method that can be put together for _much_ less - in fact, I was able to get my supplies together for less than $100. I put together a [quick tweetorial](https://twitter.com/LucyStats/status/1285336981292163072) outlining the steps and the supplies I used; I thought I'd copy the contents here, since a blogpost is sometimes a bit easier to read!
 
 ## Supplies
