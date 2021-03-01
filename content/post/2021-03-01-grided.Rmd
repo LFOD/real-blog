@@ -31,22 +31,22 @@ The goal of Grided is to simplify the very first part of building a grid-layout.
 
 ## Usage
 
-![](images/start-view.png)
+![](/grided/start-view.png)
 
 The page starts with an empty grid layout. From here you can adjust the number of rows and columns along with the gap between those rows and columns. As you do this the faux app on the right updates in real time. Each column and row can be resized by a control form. `r tufte::margin_note("A fun hidden feature is that when you use the pixel-sizing a drag interface appears for resizing.")` For instance you can have a fixed-width sidebar.
 
-![](images/custom-rows-cols.png)
+![](/grided/custom-rows-cols.png)
 
 Once you have your desired grid, you add your elements by clicking and dragging them on the grid. Once you have placed an element you provide its ID. Messed up where you placed it? Just drag it around with the supplied interaction handles to move it.  `r tufte::margin_note("A little dashed box shows you the extent of your drag, while the element snaps to the grid.")`
 
-![](images/editing-element.png)
+![](/grided/editing-element.png)
 
 Decide you actually want a footer on your page after declaring a bunch of other stuff? No worries, simply add another row, your elements will stay where they are. Decide you don't want a footer? Just remove a a row. If elements reside in the deleted row/column you will be asked how you want to update them in a popup. 
 
-![](images/conflicts-popup.png)
+![](/grided/conflicts-popup.png)
 Happy with your layout and ready to get building your site? Click the "Get code" button in the top right and you will be provided the CSS and HTML code necessary to recreate your layout on your site. 
 
-![](images/get-layout-code.png)
+![](/grided/get-layout-code.png)
 `r tufte::margin_note("For the Shiny users, the main version of the app will give you R/Shiny code instead of CSS and HTML.")`
 
 ## Tech-Specs
