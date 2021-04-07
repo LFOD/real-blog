@@ -8,6 +8,8 @@ tags: [rstats, nytimes, covid-19]
 math: no
 meta: yes
 excerpt: "A quick how-to for a neat New York Times visualization, inspired by an IsoStat listserv conversation."
+editor_options: 
+  chunk_output_type: console
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
@@ -62,8 +64,11 @@ library(zoo)</code></pre>
   scale_fill_manual(values = c(&quot;white&quot;, &quot;#BE2D22&quot;)) +
   facet_geo(~state) + 
   theme_minimal() +
-  scale_x_continuous(&quot;&quot;) + 
-  scale_y_continuous(&quot;&quot;) + 
+  labs(x = &quot;&quot;, 
+       y = &quot;&quot;,
+       title = &quot;Cases per 100,000&quot;,
+       subtitle = &quot;Feb 1 - Apr 4, Red area indicates rise since lowest point of 2021&quot;,
+       caption = &quot;Note: Shows seven-day average&quot;) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid.minor = element_blank(),

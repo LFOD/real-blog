@@ -8,6 +8,8 @@ tags: [rstats, nytimes, covid-19]
 math: no
 meta: yes
 excerpt: "A quick how-to for a neat New York Times visualization, inspired by an IsoStat listserv conversation."
+editor_options: 
+  chunk_output_type: console
 ---
 
 There was a recent email thread in the [IsoStat listserv](https://ww2.amstat.org/committees/isostat/isostat.html) about a cool visualization that recently came out in the New York Times showing COVID-19 cases over time. This sparked a discussion about whether this was possible to recreate in R with ggplot, so of course I gave it a try!
@@ -90,8 +92,11 @@ ggplot(d, aes(x = date, y = case_per_100)) +
   scale_fill_manual(values = c("white", "#BE2D22")) +
   facet_geo(~state) + 
   theme_minimal() +
-  scale_x_continuous("") + 
-  scale_y_continuous("") + 
+  labs(x = "", 
+       y = "",
+       title = "Cases per 100,000",
+       subtitle = "Feb 1 - Apr 4, Red area indicates rise since lowest point of 2021",
+       caption = "Note: Shows seven-day average") +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid.minor = element_blank(),
