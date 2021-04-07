@@ -34,6 +34,7 @@ library(zoo)</code></pre>
 <li>I created a 7 day rolling average</li>
 <li>I created a variable for 7 day average per 100,000 people - this is the main variable used in the plot</li>
 <li>I filtered to the range used in the original visualization - from Februrary 1st to April 4th</li>
+<li>I merged in state abbreviations to make the plot easier to read</li>
 </ul>
 <pre class="r"><code>d &lt;- cases %&gt;%
   group_by(state) %&gt;%
@@ -47,7 +48,14 @@ library(zoo)</code></pre>
     case_7 = rollmean(case, k = 7, fill = NA),
     case_per_100 = (case_7 / estimate) * 100000) %&gt;%
   ungroup() %&gt;%
-  filter(date &gt; as.Date(&quot;2021-01-31&quot;), date &lt; as.Date(&quot;2021-04-05&quot;))</code></pre>
+  filter(date &gt; as.Date(&quot;2021-01-31&quot;), date &lt; as.Date(&quot;2021-04-05&quot;))
+
+states &lt;- tibble(state = state.name,
+                 state_ = state.abb) %&gt;%
+   add_row(state = &quot;District of Columbia&quot;, state_ = &quot;DC&quot;)
+
+d &lt;- left_join(d, states, by = &quot;state&quot;) %&gt;%
+  filter(!is.na(state_))</code></pre>
 <p>This plot had a neat feature that it filled in the area from the lowest point onward; to replicate this I found the date with the minimum cases per 100,000 and created a variable <code>col</code> to indicate any date after this point.</p>
 <pre class="r"><code>d &lt;- d %&gt;% 
   group_by(state) %&gt;%
@@ -62,7 +70,7 @@ library(zoo)</code></pre>
   geom_line(color = &quot;#BE2D22&quot;) + 
   geom_area(aes(fill = col), alpha = 0.75) +
   scale_fill_manual(values = c(&quot;white&quot;, &quot;#BE2D22&quot;)) +
-  facet_geo(~state) + 
+  facet_geo(~state_) + 
   theme_minimal() +
   labs(x = &quot;&quot;, 
        y = &quot;&quot;,

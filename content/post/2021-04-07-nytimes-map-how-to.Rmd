@@ -51,7 +51,8 @@ These need to be wrangled a bit:
 * I merged in the state populations that I pulled from the census
 * I created a 7 day rolling average
 * I created a variable for 7 day average per 100,000 people - this is the main variable used in the plot
-* I filtered to the range used in the original visualization - from Februrary 1st to April 4th
+* I filtered to the range used in the original visualization - from Februrary 1st to April 4th 
+* I merged in state abbreviations to make the plot easier to read
 
 ```{r}
 d <- cases %>%
@@ -67,6 +68,13 @@ d <- cases %>%
     case_per_100 = (case_7 / estimate) * 100000) %>%
   ungroup() %>%
   filter(date > as.Date("2021-01-31"), date < as.Date("2021-04-05"))
+
+states <- tibble(state = state.name,
+                 state_ = state.abb) %>%
+   add_row(state = "District of Columbia", state_ = "DC")
+
+d <- left_join(d, states, by = "state") %>%
+  filter(!is.na(state_))
 ```
 
 
@@ -85,12 +93,12 @@ d <- d %>%
 
 Now time to plot! The x-axis is `date`, the y-axis is `case_per_100` and voila!
 
-```{r, width = 11, fig.fullwidth = TRUE}
+```{r, fig.fullwidth = TRUE}
 ggplot(d, aes(x = date, y = case_per_100)) + 
   geom_line(color = "#BE2D22") + 
   geom_area(aes(fill = col), alpha = 0.75) +
   scale_fill_manual(values = c("white", "#BE2D22")) +
-  facet_geo(~state) + 
+  facet_geo(~state_) + 
   theme_minimal() +
   labs(x = "", 
        y = "",
