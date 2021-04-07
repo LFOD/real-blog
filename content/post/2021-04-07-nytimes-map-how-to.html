@@ -1,0 +1,72 @@
+---
+title: "NYTimes Map How-to"
+author: "Lucy D'Agostino McGowan"
+date: '2021-04-07'
+slug: nytimes-map-how-to
+categories: [rstats, nytimes, covid-19]
+tags: [rstats, nytimes, covid-19]
+math: no
+meta: yes
+excerpt: "A quick how-to for a neat New York Times visualization, inspired by an IsoStat listserv conversation."
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>There was a recent email thread in the <a href="https://ww2.amstat.org/committees/isostat/isostat.html">IsoStat listserv</a> about a cool visualization that recently came out in the New York Times showing COVID-19 cases over time. This sparked a discussion about whether this was possible to recreate in R with ggplot, so of course I gave it a try!</p>
+<pre class="r"><code>library(tidycensus)
+library(tidyverse)
+library(geofacet)
+library(zoo)</code></pre>
+<p>The plot shows cases per 100,000 by state, so I first needed to pull population data. To do that I used the <strong>tidycensus</strong> package. (If you don’t have an API key, you can get one <a href="https://api.census.gov/data/key_signup.html">here</a>)</p>
+<pre class="r"><code>census_api_key(&quot;YOUR API KEY&quot;)</code></pre>
+<p>I pulled the population by state from 2019.</p>
+<pre class="r"><code>pop &lt;- get_acs(geography = &quot;state&quot;, variables = &quot;B01003_001&quot;, year = 2019)</code></pre>
+<p>Then I pulled the cases in from the New York Times GitHub repo.</p>
+<pre class="r"><code>cases &lt;- read_csv(&quot;https://github.com/nytimes/covid-19-data/raw/master/us-states.csv&quot;)</code></pre>
+<p>These need to be wrangled a bit:</p>
+<ul>
+<li>The data come in as cumulative cases, and we want cases per day, so I create a new variable <code>case</code> for this purpose</li>
+<li>There is a weirdo data point in Missouri on March 8th (it looks like there were 50,000 cases!) so I just removed that</li>
+<li>I merged in the state populations that I pulled from the census</li>
+<li>I created a 7 day rolling average</li>
+<li>I created a variable for 7 day average per 100,000 people - this is the main variable used in the plot</li>
+<li>I filtered to the range used in the original visualization - from Februrary 1st to April 4th</li>
+</ul>
+<pre class="r"><code>d &lt;- cases %&gt;%
+  group_by(state) %&gt;%
+  mutate(case = c(cases[1], diff(cases))) %&gt;%
+  ungroup() %&gt;%
+  filter(!(date == as.Date(&quot;2021-03-08&quot;) &amp; state == &quot;Missouri&quot;)) %&gt;% 
+  left_join(pop, by = c(&quot;fips&quot; = &quot;GEOID&quot;)) %&gt;%
+  group_by(state) %&gt;%
+  arrange(date) %&gt;%
+  mutate(
+    case_7 = rollmean(case, k = 7, fill = NA),
+    case_per_100 = (case_7 / estimate) * 100000) %&gt;%
+  ungroup() %&gt;%
+  filter(date &gt; as.Date(&quot;2021-01-31&quot;), date &lt; as.Date(&quot;2021-04-05&quot;))</code></pre>
+<p>This plot had a neat feature that it filled in the area from the lowest point onward; to replicate this I found the date with the minimum cases per 100,000 and created a variable <code>col</code> to indicate any date after this point.</p>
+<pre class="r"><code>d &lt;- d %&gt;% 
+  group_by(state) %&gt;%
+  slice_min(case_per_100) %&gt;%
+  slice(1) %&gt;%
+  mutate(min_date = date) %&gt;%
+  select(min_date, state) %&gt;%
+  left_join(d, by = &quot;state&quot;) %&gt;%
+  mutate(col = ifelse(date &gt;= min_date, &quot;yes&quot;, &quot;no&quot;))</code></pre>
+<p>Now time to plot! The x-axis is <code>date</code>, the y-axis is <code>case_per_100</code> and voila!</p>
+<pre class="r"><code>ggplot(d, aes(x = date, y = case_per_100)) + 
+  geom_line(color = &quot;#BE2D22&quot;) + 
+  geom_area(aes(fill = col), alpha = 0.75) +
+  scale_fill_manual(values = c(&quot;white&quot;, &quot;#BE2D22&quot;)) +
+  facet_geo(~state) + 
+  theme_minimal() +
+  scale_x_continuous(&quot;&quot;) + 
+  scale_y_continuous(&quot;&quot;) + 
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank(),
+        legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2021-04-07-nytimes-map-how-to_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
