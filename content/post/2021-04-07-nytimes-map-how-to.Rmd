@@ -93,11 +93,11 @@ d <- d %>%
 
 Now time to plot! The x-axis is `date`, the y-axis is `case_per_100` and voila!
 
-```{r, fig.fullwidth = TRUE}
-ggplot(d, aes(x = date, y = case_per_100)) + 
+```{r}
+ggplot(d, aes(x = date, y = case_per_100)) +
   geom_line(color = "#BE2D22") + 
-  geom_area(aes(fill = col), alpha = 0.75) +
-  scale_fill_manual(values = c("white", "#BE2D22")) +
+  geom_area(aes(alpha = col), fill = "#BE2D22") +
+  scale_alpha_discrete(range = c(0, 0.7)) +
   facet_geo(~state_) + 
   theme_minimal() +
   labs(x = "", 

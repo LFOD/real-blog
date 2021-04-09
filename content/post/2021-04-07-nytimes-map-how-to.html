@@ -66,10 +66,10 @@ d &lt;- left_join(d, states, by = &quot;state&quot;) %&gt;%
   left_join(d, by = &quot;state&quot;) %&gt;%
   mutate(col = ifelse(date &gt;= min_date, &quot;yes&quot;, &quot;no&quot;))</code></pre>
 <p>Now time to plot! The x-axis is <code>date</code>, the y-axis is <code>case_per_100</code> and voila!</p>
-<pre class="r"><code>ggplot(d, aes(x = date, y = case_per_100)) + 
+<pre class="r"><code>ggplot(d, aes(x = date, y = case_per_100)) +
   geom_line(color = &quot;#BE2D22&quot;) + 
-  geom_area(aes(fill = col), alpha = 0.75) +
-  scale_fill_manual(values = c(&quot;white&quot;, &quot;#BE2D22&quot;)) +
+  geom_area(aes(alpha = col), fill = &quot;#BE2D22&quot;) +
+  scale_alpha_discrete(range = c(0, 0.7)) +
   facet_geo(~state_) + 
   theme_minimal() +
   labs(x = &quot;&quot;, 
