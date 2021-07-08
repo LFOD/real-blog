@@ -71,19 +71,19 @@ I had committee meetings every three months. This was double the number required
 
 `r tufte::margin_note("Not familiar with .Rmd files? Check out [these awesome resources from RStudio](https://rmarkdown.rstudio.com/lesson-1.html).")`
 
-Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/commitee-agenda.Rmd).
+Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/committee-agenda.Rmd).
 
 4. Send a follow up email after the meeting with the meeting minutes and a poll to schedule the subsequent meeting. For this, I liked to just fill in my agenda with the next steps we discussed. It would often look something like this.
 
 ![](/images/2018-09-14/committee-minutes.png)
 
-Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/commitee-minutes.Rmd).
+Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/committee-minutes.Rmd).
 
 5. Compile a final document with the meeting minutes, the date for the next committee meeting, and a line indicating that all committee members signed off on the current plan. Here is what mine often looked like.
 
 ![](/images/2018-09-14/committee-final-doc.png)
 
-Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/commitee-final-doc.Rmd).
+Click here to [download the .Rmd file from GitHub](https://github.com/LucyMcGowan/dissertation-toolkit/blob/master/committee-final-doc.Rmd).
 
 ### Drafting your thesis
 
