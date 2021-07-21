@@ -16,7 +16,6 @@ I've seen a lot today about how effective the vaccines are; mistakes aside, lots
 
 If you see something like x% of the sick/hospitalized/deceased were vaccinated, the *better* the vaccine uptake the *scarier* this number will seem! It is using the wrong denominator. For example, here is a scenario with 90% vaccination, 4 people got sick: 2 vaccinated 2 unvaccinated:
 
-
 ![](/images/2021-07-21/scenario.jpeg)
 
 In this scenario, 50% of the sick were vaccinated, but this is the wrong metric to look at! It is using the wrong denominator. It doesn't take into account that *90%* of the population is vaccinated (yay!).  `r tufte::margin_note('Even Bill Gates made this mistake when he said he\'d [rather encounter a shark than a mosquito](https://twitter.com/BillGates/status/1118196606975787008).')`This is called *flipping the conditional* (and is a problem that we see all the time!). Instead of looking at the probability of being vaccinated given you are sick, you want to look at the probability of being sick given you are vaccinated.
