@@ -1,0 +1,28 @@
+---
+title: Denominators Matter
+author: "Lucy D'Agostino McGowan"
+date: '2021-07-21'
+slug: denominators-matter
+categories: [covid-19, statistics]
+tags: [covid-19, statistics]
+meta: yes
+excerpt: "I've seen a lot today about how effective the vaccines are; mistakes aside, lots of folks seem to be mixing up which denominators matter - good thing statisticians *LOVE* denominators"
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>I’ve seen a lot today about how effective the vaccines are; mistakes aside, lots of folks seem to be mixing up which denominators matter - good thing statisticians <em>LOVE</em> denominators!</p>
+<p><img src="/images/2021-07-21/effective.gif" /></p>
+<p>If you see something like x% of the sick/hospitalized/deceased were vaccinated, the <em>better</em> the vaccine uptake the <em>scarier</em> this number will seem! It is using the wrong denominator. For example, here is a scenario with 90% vaccination, 4 people got sick: 2 vaccinated 2 unvaccinated:</p>
+<p><img src="/images/2021-07-21/scenario.jpeg" /></p>
+<p>In this scenario, 50% of the sick were vaccinated, but this is the wrong metric to look at! It is using the wrong denominator. It doesn’t take into account that <em>90%</em> of the population is vaccinated (yay!). <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Even Bill Gates made this mistake when he said he’d <a href="https://twitter.com/BillGates/status/1118196606975787008">rather encounter a shark than a mosquito</a>.</span>This is called <em>flipping the conditional</em> (and is a problem that we see all the time!). Instead of looking at the probability of being vaccinated given you are sick, you want to look at the probability of being sick given you are vaccinated.</p>
+<p><img src="/images/2021-07-21/scenario-wrong.jpg" />
+What you need to do is look at the rates among the vaccinated and unvaccinated separately, and then compare them. Here 11% of the vaccinated got sick, 100% of the unvaccinated got sick.</p>
+<p><img src="/images/2021-07-21/scenario-right1.jpg" /></p>
+<p><img src="/images/2021-07-21/scenario-right2.jpg" /></p>
+<p>We calculate vaccine efficacy as</p>
+<p>(risk among unvaccinated - risk among vaccinated) / risk among unvaccinated</p>
+<p>so in this case, 89% (yay!)</p>
+<p><img src="/images/2021-07-21/scenario-effective.png" /></p>
+<p>So in sum, denominators matter! When scrolling past headlines, be sure to think about what denominators are in play!</p>
