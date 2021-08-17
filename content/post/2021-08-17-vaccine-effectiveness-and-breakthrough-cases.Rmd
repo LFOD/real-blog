@@ -1,0 +1,61 @@
+---
+title: Vaccine effectiveness and breakthrough cases
+author: "Lucy D'Agostino McGowan"
+date: '2021-08-17'
+slug: vaccine-effectiveness-and-breakthrough-cases
+categories: [covid-19, statistics]
+tags: [covid-19, statistics]
+meta: yes
+excerpt: "I’m seeing lots of confusion around the *frequency* of breakthrough cases and the effectiveness of vaccines (in fact, a recent interview I did resulted in a confusing headline on this topic!) so let’s dive in!"
+---
+
+I’m seeing lots of confusion around the *frequency* of breakthrough cases and the effectiveness of vaccines (in fact, a recent interview I did resulted in a confusing headline on this topic!) so let’s dive in! 
+
+Vaccine effectiveness is a relative measure, it tells us how protected you will be relative to an unvaccinated person. Even with delta, this looks ok for infections (and *very good* for severe illness)
+
+### Scenario 1: 
+
+🤒 if an unvaccinated person has a 10% chance of getting sick 
+💉 and we think the vaccine effectiveness is 60%
+💪 a vaccinated person’s chance of getting sick is only 4%
+
+Why? Here's the math:
+
+<center>
+
+Vaccine effectiveness is:
+
+(risk unvaxed - risk vaxed) / (risk unvaxed)
+
+(.10 - .04) / .10 = 0.6
+
+-or-
+
+Risk for vaccinated is: 
+
+risk unvaxed - (vaccine effectiveness x risk unvaxed)
+
+.10 - (.60  x .10) = .04
+
+</center>
+
+But what if there is more virus around / fewer mitigation efforts in place?
+
+### Scenario 2
+
+With more virus around /fewer mitigation efforts in place, everyone’s risk may increase by 2.5x 
+
+🤒 an unvaccinated person has a 25% chance of getting sick 
+💉 we still think the vaccine effectiveness is 60%
+💪 a vaccinated person’s chance of getting sick is 10%
+
+In these scenarios, the vaccine effectiveness didn’t change, but the risk for the vaccinated increased because the overall risk increased. In fact in Scenario 2 the risk to the vaccinated person was equal to the risk of the unvaccinated person in Scenario 1!
+
+Why does this matter? Breakthrough cases are going to be more frequent for this exact reason. It doesn’t mean the vaccine isn’t effective, it means everyone’s baseline risk is increasing because Covid-19 is just more prevalent everywhere.
+
+There is hope, though! There are many things we can do to bring that baseline risk back down!
+
+💉 get more people vaccinated 
+😷 mask up 
+🧪 make liberal use of testing
+⚠️ use caution when possible until things improve 
