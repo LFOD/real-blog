@@ -77,7 +77,7 @@ d %&gt;%
   labs(caption = &quot;@LucyStats&quot;)  +
   scale_x_date(&quot;Date&quot;, limits = c(as.Date(&quot;2021-12-07&quot;), NA))</code></pre>
 <p><img src="/post/2022-01-16-would-seeing-spider-man-no-way-home-decrease-covid19-cases_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let’s talk about how we can think about this from a <em>causal</em> perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a lice way to dip your toe into causal thinking.</p>
+<p>So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let’s talk about how we can think about this from a <em>causal</em> perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking.</p>
 <div id="strength" class="section level2">
 <h2>Strength</h2>
 <p>The first criteria is what is the <em>strength</em> of the association. Our goofy linear model suggested that 16% of the variability in the number of daily cases in the US could be explained by the Spider-Man: No Way Home domestic box office. Is this strong? The coefficient in our linear model suggests that every $1,000 dollar increase in domestic box office sales results in a <em>decrease</em> of 3-4 COVID-19 cases! That sounds pretty strong? I’m not sure this criteria is helping me assess whether this relationship is causal so I’m going to move on to the next one and rate strength as 🤷.</p>
@@ -92,7 +92,7 @@ d %&gt;%
 </div>
 <div id="temporality" class="section level2">
 <h2>Temporality</h2>
-<p>Does the cause precede the effect? Kind of? It looks like sales are decreasing rapidly from Dec 7th through Dec 20 and cases appear to dramatically increase thereafter? At least in the window that we’ve collected data, I’m going to say this holds. 👍</p>
+<p>Does the cause precede the effect? Kind of? It looks like sales are decreasing rapidly from Dec 7th through Dec 20 and cases appear to dramatically increase thereafter? But wait! Could the opposite be true? What if the surge in COVID-19 cases is causing a decrease in box office sales? (Acutally there may be some merit to this, but also we can just look at box office trends and see that they tend to decrease over time since lots of excited people go the first weekend and fewer as time goes on but I DIGRESS!) I’m going to give this a 🤷.</p>
 </div>
 <div id="biological-gradient" class="section level2">
 <h2>Biological gradient</h2>
@@ -117,7 +117,7 @@ d %&gt;%
 <p><strong>Strength</strong> 🤷<br />
 <strong>Consistency</strong> 👎<br />
 <strong>Specificity</strong> 👎<br />
-<strong>Temporality</strong> 👍<br />
+<strong>Temporality</strong> 🤷<br />
 <strong>Biological gradient</strong> 👎<br />
 <strong>Plausibility</strong> 👎<br />
 <strong>Coherence</strong> 👎<br />

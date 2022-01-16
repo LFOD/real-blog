@@ -97,7 +97,7 @@ d %>%
   scale_x_date("Date", limits = c(as.Date("2021-12-07"), NA))
 ```
 
-So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let's talk about how we can think about this from a *causal* perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill's Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a lice way to dip your toe into causal thinking. 
+So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let's talk about how we can think about this from a *causal* perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill's Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking. 
 
 ## Strength
 
@@ -113,7 +113,7 @@ Specificity means the exposure of interest (in this case Spider-Man domestic box
 
 ## Temporality
 
-Does the cause precede the effect? Kind of? It looks like sales are decreasing rapidly from Dec 7th through Dec 20 and cases appear to dramatically increase thereafter? At least in the window that we've collected data, I'm going to say this holds.  `r emo::ji("+1")`
+Does the cause precede the effect? Kind of? It looks like sales are decreasing rapidly from Dec 7th through Dec 20 and cases appear to dramatically increase thereafter? But wait! Could the opposite be true? What if the surge in COVID-19 cases is causing a decrease in box office sales? (Acutally there may be some merit to this, but also we can just look at box office trends and see that they tend to decrease over time since lots of excited people go the first weekend and fewer as time goes on but I DIGRESS!) I'm going to give this a `r emo::ji("shrug")`.
 
 ## Biological gradient
 
@@ -140,7 +140,7 @@ Ok, so using these criteria, let's assess the overall likelihood of a causal eff
 **Strength** `r emo::ji("shrug")`  
 **Consistency** `r emo::ji("-1")`  
 **Specificity** `r emo::ji("-1")`  
-**Temporality** `r emo::ji("+1")`  
+**Temporality** `r emo::ji("shrug")`  
 **Biological gradient** `r emo::ji("-1")`  
 **Plausibility** `r emo::ji("-1")`  
 **Coherence** `r emo::ji("-1")`  
