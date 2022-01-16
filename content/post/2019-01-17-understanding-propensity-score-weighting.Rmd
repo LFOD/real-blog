@@ -10,7 +10,7 @@ excerpt: "Come enjoy a graphical exploration of various propensity score weighti
 
 ## Let's create a toy dataset
 
-For this post, I'm going to use this generated dataset as an example. `r tufte::margin_note("Here I am using the terminology 'treatment' for consistency, but these methods are not confined to the medical setting. You can also think of this as an 'exposure'. For example, you could be interested in how 'exposing' users to a certain UI effects an outcome, like whether they purchase a product.")` Here, I am simulating two variables, $x_1$ and $x_2$. These are my _pre-treatment characteristics_ (we'll define that soon!). I am then using these to create a binary `treatment` variable. This `treatment` variable depends on `x_1` and `x_2`. Finally, I have generated an `outcome` variable dependent on the `treatment`, making the treatment effect equal to 2.
+For this post, I'm going to use this generated dataset as an example. `r tufte::margin_note("Here I am using the terminology 'treatment' for consistency, but these methods are not confined to the medical setting. You can also think of this as an 'exposure'. For example, you could be interested in how 'exposing' users to a certain UI effects an outcome, like whether they purchase a product.")` Here, I am simulating two variables, $x_1$ and $x_2$. These are my _pre-treatment characteristics_ (we'll define that soon!). I am then using these to create a binary `treatment` variable. This `treatment` variable depends on `x_1` and `x_2`. Finally, I have generated an `outcome` variable dependent on the `treatment` and these pre-treatment characteristics, making the treatment effect equal to 2.
 
 
 ```{r, message = FALSE, warning = FALSE}
