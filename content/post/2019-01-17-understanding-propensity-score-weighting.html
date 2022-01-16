@@ -8,6 +8,7 @@ tags: ["propensity scores", "causal inference"]
 excerpt: "Come enjoy a graphical exploration of various propensity score weighting schemes."
 ---
 
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="lets-create-a-toy-dataset" class="section level2">
@@ -15,7 +16,7 @@ excerpt: "Come enjoy a graphical exploration of various propensity score weighti
 <p>For this post, I’m going to use this generated dataset as an example. <label for="tufte-mn-" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-" class="margin-toggle"><span class="marginnote">Here I am using the terminology ‘treatment’ for consistency, but these methods are not confined to the medical setting. You can also think of this as an ‘exposure’. For example, you could be interested in how ‘exposing’ users to a certain UI effects an outcome, like whether they purchase a product.</span> Here, I am simulating two variables, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. These are my <em>pre-treatment characteristics</em> (we’ll define that soon!). I am then using these to create a binary <code>treatment</code> variable. This <code>treatment</code> variable depends on <code>x_1</code> and <code>x_2</code>. Finally, I have generated an <code>outcome</code> variable dependent on the <code>treatment</code>, making the treatment effect equal to 2.</p>
 <pre class="r"><code>library(tidyverse)
 set.seed(928)
-n &lt;- 1000
+n &lt;- 10000
 X &lt;- mvtnorm::rmvnorm(n,
                       mean = c(0.5, 1),
                       sigma = matrix(c(2, 1, 1, 1), ncol = 2)
@@ -25,23 +26,23 @@ dat &lt;- tibble(
   x_1 = X[, 1],
   x_2 = X[, 2],
   treatment = as.numeric(- 0.5 + 0.25 * x_1 + 0.75 * x_2 + rnorm(n, 0, 1) &gt; 0),
-  outcome = 2 * treatment + rnorm(n, 0, 1)
+  outcome = 2 * treatment + x_1 + x_2 + rnorm(n, 0, 1)
 )
 dat</code></pre>
-<pre><code>## # A tibble: 1,000 x 4
+<pre><code>## # A tibble: 10,000 × 4
 ##       x_1    x_2 treatment outcome
 ##     &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-##  1 -0.554  1.57          1  2.65  
-##  2 -0.154  0.949         0  0.0561
-##  3  0.138  2.42          1  1.83  
-##  4  0.668  1.36          0 -0.845 
-##  5  3.11   2.76          1  1.46  
-##  6 -0.151  0.683         0 -0.0211
-##  7  1.01  -0.414         0  0.317 
-##  8 -0.114  0.856         1  3.35  
-##  9  2.66   1.23          1  2.41  
-## 10  2.96   2.53          1  2.73  
-## # ... with 990 more rows</code></pre>
+##  1 -0.554  1.57          0   0.832
+##  2 -0.154  0.949         1   2.68 
+##  3  0.138  2.42          1   5.12 
+##  4  0.668  1.36          1   4.27 
+##  5  3.11   2.76          1   7.87 
+##  6 -0.151  0.683         0  -0.260
+##  7  1.01  -0.414         0   0.551
+##  8 -0.114  0.856         0   1.63 
+##  9  2.66   1.23          1   6.41 
+## 10  2.96   2.53          1   8.91 
+## # … with 9,990 more rows</code></pre>
 </div>
 <div id="what-are-propensity-scores-good-for" class="section level2">
 <h2>What are propensity scores good for?</h2>
@@ -55,7 +56,7 @@ dat</code></pre>
     propensity_score = glm(treatment ~ x_1 + x_2, data = dat, family = &quot;binomial&quot;) %&gt;%
       predict(type = &quot;response&quot;)
   )</code></pre>
-<p>Notice here I fit a logistic regression, predicting the <code>treatment</code> from the pre-treatment characteristics, <code>x_1</code> and <code>x_2</code> using the <code>glm()</code> function along with the <code>family = &quot;binomial&quot;</code> option. I then used the <code>predict()</code> function along with <code>type = &quot;response&quot;</code> to obtain the conditional probabilities of treatment assignment.</p>
+<p>Notice here I fit a logistic regression, predicting the <code>treatment</code> from the pre-treatment characteristics, <code>x_1</code> and <code>x_2</code> using the <code>glm()</code> function along with the <code>family = "binomial"</code> option. I then used the <code>predict()</code> function along with <code>type = "response"</code> to obtain the conditional probabilities of treatment assignment.</p>
 </div>
 <div id="what-are-we-trying-to-estimate" class="section level2">
 <h2>What are we trying to estimate?</h2>
@@ -192,13 +193,13 @@ ggplot(d) +
 <div id="estimating-the-treatment-effect" class="section level2">
 <h2>Estimating the treatment effect</h2>
 <p>Now that we have a bit of an understanding of what these weights do, we can estimate the treatment effect in each of these “pseudo-populations”. Mathematically, we can write this as follows, with the outcome for each individual defined as <span class="math inline">\(Y_i\)</span>, the treatment <span class="math inline">\(Z_i\)</span> and the weight <span class="math inline">\(w_i\)</span>.</p>
-<p><span class="math inline">\(\frac{\sum{Y_i Z_i w_i}}{\sum{Y_i w_i}} + \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}\)</span></p>
+<p><span class="math inline">\(\frac{\sum{Y_i Z_i w_i}}{\sum{Y_i w_i}} - \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}\)</span></p>
 <p>In R, we can make a function to do this.</p>
 <pre class="r"><code>treatment_effect &lt;- function(treatment, outcome, weight) {
-  (sum(treatment * outcome * weight) / sum(treatment * weight)) + (sum((1 - treatment) * outcome * weight) / sum((1 - treatment) * weight))
+  (sum(treatment * outcome * weight) / sum(treatment * weight)) - (sum((1 - treatment) * outcome * weight) / sum((1 - treatment) * weight))
 }</code></pre>
 <p>For example, to estimate the ATO for this population, we can do the following.</p>
 <pre class="r"><code>treatment_effect(dat$treatment, dat$outcome, dat$w_ato)</code></pre>
-<pre><code>## [1] 2.046207</code></pre>
+<pre><code>## [1] 2.006989</code></pre>
 <p>And we did it! Hopefully this helped to elucidate what is going on with propensity score weighting - please let me know if there are any parts that can be clarified!</p>
 </div>
