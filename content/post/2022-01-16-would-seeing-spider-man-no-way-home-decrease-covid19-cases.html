@@ -68,9 +68,10 @@ d %&gt;%
                   method = &quot;loess&quot;, formula = y ~ x) +
   scale_y_continuous(&quot;Spiderman Daily Domestic Box Office&quot;, 
                      label = scales::dollar,
-                     sec.axis = sec_axis(~ . / 120, 
-                                         label = scales::comma, 
-                                         name = &quot;Daily new COVID-19 cases in the US&quot;)
+                     sec.axis = sec_axis(
+                       ~ . / 120, 
+                       label = scales::comma, 
+                       name = &quot;Daily new COVID-19 cases in the US&quot;)
   ) +
   theme_minimal() +
   theme(legend.position = &quot;none&quot;) +
@@ -95,9 +96,10 @@ spiderman %&gt;%
                   method = &quot;loess&quot;, formula = y ~ x) +
   scale_y_continuous(&quot;Spiderman Daily Domestic Box Office&quot;, 
                      label = scales::dollar,
-                     sec.axis = sec_axis(~ . / 120, 
-                                         label = scales::comma, 
-                                         name = &quot;Daily new COVID-19 cases in the US (7 days later)&quot;)
+                     sec.axis = sec_axis(
+                       ~ . / 120, 
+                       label = scales::comma, 
+                       name = &quot;Daily new COVID-19 cases in the US (7 days later)&quot;)
   ) +
   theme_minimal() +
   theme(legend.position = &quot;none&quot;) +
