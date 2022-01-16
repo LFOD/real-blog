@@ -77,7 +77,34 @@ d %&gt;%
   labs(caption = &quot;@LucyStats&quot;)  +
   scale_x_date(&quot;Date&quot;, limits = c(as.Date(&quot;2021-12-07&quot;), NA))</code></pre>
 <p><img src="/post/2022-01-16-would-seeing-spider-man-no-way-home-decrease-covid19-cases_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let’s talk about how we can think about this from a <em>causal</em> perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking.</p>
+<p>The actual SNL sketch claimed there was a one week lag – that Spider-Man sales a week ago caused cases 7 days later. Let’s check that too!</p>
+<pre class="r"><code>cases &lt;- cases %&gt;%
+  mutate(case_lag = lead(case, 7)) 
+
+spiderman %&gt;%
+  left_join(cases) %&gt;%
+  pivot_longer(cols = c(domestic_box_office, case_lag)) %&gt;%
+  filter(!is.na(value)) %&gt;%
+  mutate(value = ifelse(name == &quot;case_lag&quot;, value * 120, value),
+         name = ifelse(name == &quot;domestic_box_office&quot;, 
+                       &quot;Spiderman daily domestic box office&quot;, 
+                       &quot;US daily COVID-19 cases (7 days later)&quot;)) %&gt;%
+  ggplot(aes(x = date, y = value, color = name)) +
+  geom_point(alpha = 0.2) +
+  geom_textsmooth(aes(label = name), hjust = .95,
+                  method = &quot;loess&quot;, formula = y ~ x) +
+  scale_y_continuous(&quot;Spiderman Daily Domestic Box Office&quot;, 
+                     label = scales::dollar,
+                     sec.axis = sec_axis(~ . / 120, 
+                                         label = scales::comma, 
+                                         name = &quot;Daily new COVID-19 cases in the US (7 days later)&quot;)
+  ) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(caption = &quot;@LucyStats&quot;)  +
+  scale_x_date(&quot;Date&quot;, limits = c(as.Date(&quot;2021-12-07&quot;), NA))</code></pre>
+<p><img src="/post/2022-01-16-would-seeing-spider-man-no-way-home-decrease-covid19-cases_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Well there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let’s talk about how we can think about this from a <em>causal</em> perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking.</p>
 <div id="strength" class="section level2">
 <h2>Strength</h2>
 <p>The first criteria is what is the <em>strength</em> of the association. Our goofy linear model suggested that 16% of the variability in the number of daily cases in the US could be explained by the Spider-Man: No Way Home domestic box office. Is this strong? The coefficient in our linear model suggests that every $1,000 dollar increase in domestic box office sales results in a <em>decrease</em> of 3-4 COVID-19 cases! That sounds pretty strong? I’m not sure this criteria is helping me assess whether this relationship is causal so I’m going to move on to the next one and rate strength as 🤷.</p>
@@ -123,5 +150,5 @@ d %&gt;%
 <strong>Coherence</strong> 👎<br />
 <strong>Experiment</strong> 👎<br />
 <strong>Analogy</strong> 👎</p>
-<p>I’m going to go ahead and rate this one 👎 not causal!</p>
+<p>I’m going to go ahead and rate this one 👎 not likely causal!</p>
 </div>

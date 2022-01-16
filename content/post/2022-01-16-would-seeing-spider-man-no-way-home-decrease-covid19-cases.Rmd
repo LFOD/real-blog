@@ -97,7 +97,37 @@ d %>%
   scale_x_date("Date", limits = c(as.Date("2021-12-07"), NA))
 ```
 
-So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let's talk about how we can think about this from a *causal* perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill's Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking. 
+The actual SNL sketch claimed there was a one week lag -- that Spider-Man sales a week ago caused cases 7 days later. Let's check that too!
+
+```{r, message = FALSE, warning = FALSE}
+cases <- cases %>%
+  mutate(case_lag = lead(case, 7)) 
+
+spiderman %>%
+  left_join(cases) %>%
+  pivot_longer(cols = c(domestic_box_office, case_lag)) %>%
+  filter(!is.na(value)) %>%
+  mutate(value = ifelse(name == "case_lag", value * 120, value),
+         name = ifelse(name == "domestic_box_office", 
+                       "Spiderman daily domestic box office", 
+                       "US daily COVID-19 cases (7 days later)")) %>%
+  ggplot(aes(x = date, y = value, color = name)) +
+  geom_point(alpha = 0.2) +
+  geom_textsmooth(aes(label = name), hjust = .95,
+                  method = "loess", formula = y ~ x) +
+  scale_y_continuous("Spiderman Daily Domestic Box Office", 
+                     label = scales::dollar,
+                     sec.axis = sec_axis(~ . / 120, 
+                                         label = scales::comma, 
+                                         name = "Daily new COVID-19 cases in the US (7 days later)")
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  labs(caption = "@LucyStats")  +
+  scale_x_date("Date", limits = c(as.Date("2021-12-07"), NA))
+```
+
+Well there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let's talk about how we can think about this from a *causal* perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill's Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking. 
 
 ## Strength
 
@@ -147,4 +177,4 @@ Ok, so using these criteria, let's assess the overall likelihood of a causal eff
 **Experiment** `r emo::ji("-1")`  
 **Analogy** `r emo::ji("-1")`
 
-I'm going to go ahead and rate this one `r emo::ji("-1")` not causal!
+I'm going to go ahead and rate this one `r emo::ji("-1")` not likely causal!
