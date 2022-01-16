@@ -1,0 +1,127 @@
+---
+title: "Would seeing Spider-Man: No Way Home decrease COVID-19 Cases?"
+author: "Lucy D'Agostino McGowan"
+date: '2022-01-16'
+slug: would-seeing-spider-man-no-way-home-decrease-covid19-cases
+categories: [covid-19, statistics, causal inference]
+tags: [covid-19, statistics, causal inference]
+meta: yes
+excerpt: "In SNL's cold open last night, President Joe Biden suggested that the COVID-19 surge we are seeing in the US is due to people seeing Spider-Man: No Way Home. If people would just stop seeing this film, he argues, cases will go back down! Interesting hypothesis, let's take a looksy at the data, shall we?"
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>In SNL’s cold open last night, “President Joe Biden” suggested that the COVID-19 surge we are seeing in the US is due to people seeing Spider-Man: No Way Home. If people would just stop seeing this film, he argues, cases will go back down! Interesting hypothesis, let’s take a looksy at the data, shall we?</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+And now, a message from President Joe Biden. <a href="https://t.co/Q8TglFNBlF">pic.twitter.com/Q8TglFNBlF</a>
+</p>
+— Saturday Night Live - SNL (<span class="citation">@nbcsnl</span>) <a href="https://twitter.com/nbcsnl/status/1482574817035444227?ref_src=twsrc%5Etfw">January 16, 2022</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>I pulled the domestic box office data from <a href="https://www.the-numbers.com/movies/custom-comparisons/Spider-Man-No-Way-Home-(2021)#tab=day_by_day_comparison">the-numbers.com</a> and put them in <code>spiderman.csv</code> (if you want to code along, you can do the same! My .csv has two columns: <code>date</code> and <code>domestic_box_office</code>) and US COVID-19 cases from the <a href="https://github.com/nytimes/covid-19-data">NY Times GitHub repository</a>. Here’s a little code-along.</p>
+<pre class="r"><code>library(tidyverse)
+
+spiderman &lt;- read_csv(&quot;spiderman.csv&quot;,
+                      col_types = cols(
+                        date = col_date(format = &quot;%m/%d/%y&quot;),
+                        domestic_box_office = col_double()
+                      ))
+cases &lt;- read_csv(&quot;https://github.com/nytimes/covid-19-data/raw/master/us.csv&quot;)
+
+# get daily cases from cumulative cases
+cases &lt;- cases %&gt;%
+  mutate(case = c(cases[1], diff(cases)))
+
+d &lt;- spiderman %&gt;%
+  left_join(cases)</code></pre>
+<p>Now, let’s look at the relationship between daily domestic box office and new COVID-19 cases in the US.</p>
+<p><span class="marginnote">
+Warning: The following is a very silly analysis. It is a joke. Please do not try at home!
+</span></p>
+<pre class="r"><code>lm(case ~ domestic_box_office, data = d)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = case ~ domestic_box_office, data = d)
+## 
+## Coefficients:
+##         (Intercept)  domestic_box_office  
+##           3.559e+05           -3.691e-03</code></pre>
+<p>Oh my heavens! Not only does it not look like ticket sales for Spider-Man: No Way Home are increasing COVID-19 cases…it looks like the <em>opposite</em>. According to our very silly model, every $1,000 dollar increase in domestic box office sales results in a <em>decrease</em> of 3-4 COVID-19 cases! Pandemic solved! We just need to buy more Spider-Man: No Way Home tickets!! Since we’re looking at a silly analysis, let’s do something horrible, shall we? A double y-axis!</p>
+<p><span class="marginnote">
+I just learned about the <a href="https://github.com/AllanCameron/geomtextpath">geomtextpath</a> package from <span class="citation">@timelyportfolio</span> on <a href="https://twitter.com/timelyportfolio/status/1469683836107866120">Twitter</a>, it’s amazing!
+</span></p>
+<pre class="r"><code>library(geomtextpath)
+
+
+d %&gt;%
+  pivot_longer(cols = c(domestic_box_office, case)) %&gt;%
+  filter(!is.na(value)) %&gt;%
+  mutate(value = ifelse(name == &quot;case&quot;, value * 120, value),
+         name = ifelse(name == &quot;domestic_box_office&quot;, 
+                       &quot;Spiderman daily domestic box office&quot;, 
+                       &quot;US daily COVID-19 cases&quot;)) %&gt;%
+  ggplot(aes(x = date, y = value, color = name)) +
+  geom_point(alpha = 0.2) +
+  geom_textsmooth(aes(label = name), hjust = 0.05,
+                  method = &quot;loess&quot;, formula = y ~ x) +
+  scale_y_continuous(&quot;Spiderman Daily Domestic Box Office&quot;, 
+                     label = scales::dollar,
+                     sec.axis = sec_axis(~ . / 120, 
+                                         label = scales::comma, 
+                                         name = &quot;Daily new COVID-19 cases in the US&quot;)
+  ) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(caption = &quot;@LucyStats&quot;)  +
+  scale_x_date(&quot;Date&quot;, limits = c(as.Date(&quot;2021-12-07&quot;), NA))</code></pre>
+<p><img src="/post/2022-01-16-would-seeing-spider-man-no-way-home-decrease-covid19-cases_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>So there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let’s talk about how we can think about this from a <em>causal</em> perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a lice way to dip your toe into causal thinking.</p>
+<div id="strength" class="section level2">
+<h2>Strength</h2>
+<p>The first criteria is what is the <em>strength</em> of the association. Our goofy linear model suggested that 16% of the variability in the number of daily cases in the US could be explained by the Spider-Man: No Way Home domestic box office. Is this strong? The coefficient in our linear model suggests that every $1,000 dollar increase in domestic box office sales results in a <em>decrease</em> of 3-4 COVID-19 cases! That sounds pretty strong? I’m not sure this criteria is helping me assess whether this relationship is causal so I’m going to move on to the next one and rate strength as 🤷.</p>
+</div>
+<div id="consistency" class="section level2">
+<h2>Consistency</h2>
+<p>Have other studies shown a similar association? I’m going to say no…consistency is going to get rated as 👎.</p>
+</div>
+<div id="specificity" class="section level2">
+<h2>Specificity</h2>
+<p>Specificity means the exposure of interest (in this case Spider-Man domestic box office) only causes one thing (and that thing is COVID-19 cases in this case). I’m going to go with no again. 👎.</p>
+</div>
+<div id="temporality" class="section level2">
+<h2>Temporality</h2>
+<p>Does the cause precede the effect? Kind of? It looks like sales are decreasing rapidly from Dec 7th through Dec 20 and cases appear to dramatically increase thereafter? At least in the window that we’ve collected data, I’m going to say this holds. 👍</p>
+</div>
+<div id="biological-gradient" class="section level2">
+<h2>Biological gradient</h2>
+<p>Do we see a dose effect? Indeed we do! As domestic box office decreases, COVID-19 cases increase, so can we infer the opposite, if domestic box office sales were to increase, would we see <em>fewer</em> COVID-19 cases? From our little window of data it looks like we can’t know (but reality check, if we had started the analysis from the day before, we actually have box office going from 0 to $121,964,712 and we don’t see a precipitous drop in COVID-19 cases, so I’m going to give this one a 👎).</p>
+</div>
+<div id="plausibility" class="section level2">
+<h2>Plausibility</h2>
+<p>Is this plausible? No, it’s silly. 👎</p>
+</div>
+<div id="coherence" class="section level2">
+<h2>Coherence</h2>
+<p>Is there a coherent argument to be made? Again, no. 👎</p>
+</div>
+<div id="experiment" class="section level2">
+<h2>Experiment</h2>
+<p>Was there a randomized trial // some attempt at estimating a causal effect to explore this relationship? Nope. 👎</p>
+</div>
+<div id="analogy" class="section level2">
+<h2>Analogy</h2>
+<p>Is there strong evidence for a similar exposure (something like Spider-Man box office sales) to cause a similar outcome (COVID-19 cases in the US)? Nope. 👎</p>
+<p>Ok, so using these criteria, let’s assess the overall likelihood of a causal effect:</p>
+<p><strong>Strength</strong> 🤷<br />
+<strong>Consistency</strong> 👎<br />
+<strong>Specificity</strong> 👎<br />
+<strong>Temporality</strong> 👍<br />
+<strong>Biological gradient</strong> 👎<br />
+<strong>Plausibility</strong> 👎<br />
+<strong>Coherence</strong> 👎<br />
+<strong>Experiment</strong> 👎<br />
+<strong>Analogy</strong> 👎</p>
+<p>I’m going to go ahead and rate this one 👎 not causal!</p>
+</div>
