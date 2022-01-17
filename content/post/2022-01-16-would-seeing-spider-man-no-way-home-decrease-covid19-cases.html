@@ -106,7 +106,8 @@ spiderman %&gt;%
   labs(caption = &quot;@LucyStats&quot;)  +
   scale_x_date(&quot;Date&quot;, limits = c(as.Date(&quot;2021-12-07&quot;), NA))</code></pre>
 <p><img src="/post/2022-01-16-would-seeing-spider-man-no-way-home-decrease-covid19-cases_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Well there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let’s talk about how we can think about this from a <em>causal</em> perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking.</p>
+<p>Well there you have it. It looks like SNL was onto something, but got it backwards! Just kidding.</p>
+<p>So <em>new</em> claim! a higher Spider-Man: No Way Home domestic box office would lead to <em>fewer</em> COVID-19 cases. Let’s talk about how we can think about this claim from a <em>causal</em> perspective if it was presented as I have done here. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill’s Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking.</p>
 <div id="strength" class="section level2">
 <h2>Strength</h2>
 <p>The first criteria is what is the <em>strength</em> of the association. Our goofy linear model suggested that 16% of the variability in the number of daily cases in the US could be explained by the Spider-Man: No Way Home domestic box office. Is this strong? The coefficient in our linear model suggests that every $1,000 dollar increase in domestic box office sales results in a <em>decrease</em> of 3-4 COVID-19 cases! That sounds pretty strong? I’m not sure this criteria is helping me assess whether this relationship is causal so I’m going to move on to the next one and rate strength as 🤷.</p>
@@ -117,7 +118,7 @@ spiderman %&gt;%
 </div>
 <div id="specificity" class="section level2">
 <h2>Specificity</h2>
-<p>Specificity means the exposure of interest (in this case Spider-Man domestic box office) only causes one thing (and that thing is COVID-19 cases in this case). I’m going to go with no again. 👎.</p>
+<p>Specificity means the exposure of interest (in this case Spider-Man domestic box office) only causes one thing (and that thing is a decrease in COVID-19 cases in this case). I’m going to go with no again. 👎.</p>
 </div>
 <div id="temporality" class="section level2">
 <h2>Temporality</h2>
@@ -141,7 +142,7 @@ spiderman %&gt;%
 </div>
 <div id="analogy" class="section level2">
 <h2>Analogy</h2>
-<p>Is there strong evidence for a similar exposure (something like Spider-Man box office sales) to cause a similar outcome (COVID-19 cases in the US)? Nope. 👎</p>
+<p>Is there strong evidence for a similar exposure (something like Spider-Man box office sales) to cause a similar outcome (a decrease in COVID-19 cases in the US)? Nope. 👎</p>
 <p>Ok, so using these criteria, let’s assess the overall likelihood of a causal effect:</p>
 <p><strong>Strength</strong> 🤷<br />
 <strong>Consistency</strong> 👎<br />
@@ -152,5 +153,5 @@ spiderman %&gt;%
 <strong>Coherence</strong> 👎<br />
 <strong>Experiment</strong> 👎<br />
 <strong>Analogy</strong> 👎</p>
-<p>I’m going to go ahead and rate this one 👎 not likely causal!</p>
+<p>I’m going to go ahead and rate this one 👎 not likely causal! Sorry! Looks like increasing box office sales of Spider-Man: No Way Home is not likely to get us out of the pandemic.</p>
 </div>

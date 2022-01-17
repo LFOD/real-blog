@@ -129,7 +129,10 @@ spiderman %>%
   scale_x_date("Date", limits = c(as.Date("2021-12-07"), NA))
 ```
 
-Well there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. Let's talk about how we can think about this from a *causal* perspective. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill's Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking. 
+Well there you have it. It looks like SNL was onto something, but got it backwards! Just kidding. 
+
+
+So *new* claim! a higher Spider-Man: No Way Home domestic box office would lead to *fewer* COVID-19 cases. Let's talk about how we can think about this claim from a *causal* perspective if it was presented as I have done here. There are lots of ways to introduce causal thinking; in my class, one of the first ways I like to get my students thinking about causal assumptions is via Hill's Criteria. These are 9 things to think about when trying to assess whether an association is causal; it is not meant to be a checklist (and the list is not exhaustive!) but I find it is a nice way to dip your toe into causal thinking. 
 
 ## Strength
 
@@ -141,7 +144,7 @@ Have other studies shown a similar association? I'm going to say no...consistenc
 
 ## Specificity
 
-Specificity means the exposure of interest (in this case Spider-Man domestic box office) only causes one thing (and that thing is COVID-19 cases in this case). I'm going to go with no again. `r emo::ji("-1")`.
+Specificity means the exposure of interest (in this case Spider-Man domestic box office) only causes one thing (and that thing is a decrease in COVID-19 cases in this case). I'm going to go with no again. `r emo::ji("-1")`.
 
 ## Temporality
 
@@ -165,7 +168,7 @@ Was there a randomized trial // some attempt at estimating a causal effect to ex
 
 ## Analogy
 
-Is there strong evidence for a similar exposure (something like Spider-Man box office sales) to cause a similar outcome (COVID-19 cases in the US)? Nope. `r emo::ji("-1")`
+Is there strong evidence for a similar exposure (something like Spider-Man box office sales) to cause a similar outcome (a decrease in COVID-19 cases in the US)? Nope. `r emo::ji("-1")`
 
 Ok, so using these criteria, let's assess the overall likelihood of a causal effect:
 
@@ -179,4 +182,4 @@ Ok, so using these criteria, let's assess the overall likelihood of a causal eff
 **Experiment** `r emo::ji("-1")`  
 **Analogy** `r emo::ji("-1")`
 
-I'm going to go ahead and rate this one `r emo::ji("-1")` not likely causal!
+I'm going to go ahead and rate this one `r emo::ji("-1")` not likely causal! Sorry! Looks like increasing box office sales of Spider-Man: No Way Home is not likely to get us out of the pandemic.
