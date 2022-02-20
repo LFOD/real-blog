@@ -293,7 +293,7 @@ p1 <- ggplot(new_largesd, aes(x = gmt_ratio, y = y, color = success)) +
   scale_y_continuous("Random sample # of\n253 people who got the new intervention",
                      breaks = 1:10) +
   scale_x_continuous("Sample GMT Ratio (95% confidence interval)",
-                     limits = c(0.5, 1.2)) +
+                     limits = c(0.45, 1.2)) +
   theme_minimal() +
   labs(title = "Two thresholds: lower bound ≥ 0.67 upper bound ≥ 1",
        subtitle = "truth: new = 0.75 x old\nstandard deviation larger than expected") +
@@ -321,7 +321,7 @@ p2 <- ggplot(new_smallsd, aes(x = gmt_ratio, y = y, color = success)) +
   scale_y_continuous("Random sample # of\n253 people who got the new intervention",
                      breaks = 1:10) +
   scale_x_continuous("Sample GMT Ratio (95% confidence interval)",
-                     limits = c(0.5, 1.2)) +
+                     limits = c(0.45, 1.2)) +
   theme_minimal() +
   labs(title = "Two thresholds: lower bound ≥ 0.67 upper bound ≥ 1",
        subtitle = "truth: new = 0.75 x old\nstandard deviation smaller than expected") +
@@ -349,7 +349,7 @@ p3 <-  ggplot(new, aes(x = gmt_ratio, y = y, color = success)) +
   scale_y_continuous("Random sample # of\n253 people who got the new intervention",
                      breaks = 1:10) +
   scale_x_continuous("Sample GMT Ratio (95% confidence interval)",
-                     limits = c(0.5, 1.2)) +
+                     limits = c(0.45, 1.2)) +
   theme_minimal() +
   labs(title = "Two thresholds: lower bound ≥ 0.67 upper bound ≥ 1",
        subtitle = "truth: new = old\nstandard deviation is as expected") +
