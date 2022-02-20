@@ -2,11 +2,9 @@
 title: "Exploring the impacts of noninferiority trial thresholds"
 author: "Lucy D'Agostino McGowan"
 date: '2022-02-20'
-excerpt: ""
-categories: ["data-science","epidemiology","biostatistics", "COVID-19"]
+excerpt: "This post explores the impact of setting particular criteria for 'success' in clinical trial designs, with a specific example from the recent vaccine immunobridging trials."
 comments: true
 ---
-
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
