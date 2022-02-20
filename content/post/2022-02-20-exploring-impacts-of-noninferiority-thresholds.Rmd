@@ -294,7 +294,8 @@ p1 <- ggplot(new_largesd, aes(x = gmt_ratio, y = y, color = success)) +
                    hjust = 0.2) +
   scale_y_continuous("Random sample # of\n253 people who got the new intervention",
                      breaks = 1:10) +
-  scale_x_continuous("Sample GMT Ratio (95% confidence interval)") +
+  scale_x_continuous("Sample GMT Ratio (95% confidence interval)",
+                     limits = c(0.5, 1.2)) +
   theme_minimal() +
   labs(title = "Two thresholds: lower bound ≥ 0.67 upper bound ≥ 1",
        subtitle = "truth: new = 0.75 x old\nstandard deviation larger than expected") +
@@ -321,7 +322,8 @@ p2 <- ggplot(new_smallsd, aes(x = gmt_ratio, y = y, color = success)) +
                    hjust = 0.2) +
   scale_y_continuous("Random sample # of\n253 people who got the new intervention",
                      breaks = 1:10) +
-  scale_x_continuous("Sample GMT Ratio (95% confidence interval)") +
+  scale_x_continuous("Sample GMT Ratio (95% confidence interval)",
+                     limits = c(0.5, 1.2)) +
   theme_minimal() +
   labs(title = "Two thresholds: lower bound ≥ 0.67 upper bound ≥ 1",
        subtitle = "truth: new = 0.75 x old\nstandard deviation smaller than expected") +
@@ -348,7 +350,8 @@ p3 <-  ggplot(new, aes(x = gmt_ratio, y = y, color = success)) +
                    hjust = 0.2) +
   scale_y_continuous("Random sample # of\n253 people who got the new intervention",
                      breaks = 1:10) +
-  scale_x_continuous("Sample GMT Ratio (95% confidence interval)") +
+  scale_x_continuous("Sample GMT Ratio (95% confidence interval)",
+                     limits = c(0.5, 1.2)) +
   theme_minimal() +
   labs(title = "Two thresholds: lower bound ≥ 0.67 upper bound ≥ 1",
        subtitle = "truth: new = old\nstandard deviation is as expected") +
@@ -407,9 +410,16 @@ This is where things get tricky! Recall from the very first scenario that we loo
 ### Scenario 6: By "non-inferiority" we mean we can have some level of confidence that the new intervention is not more than 67% worse than the old and the new intervention and even more confidence that it is not *any* worse than the old intervention
 ### Thresholds: GMT ratio *lower bound* $\ge 0.67$ AND GMT ratio *point estimate* $\ge 1$ 
 
-If we think that an antibody response *exactly equal* to that seen by 16-25 year olds is sufficient to deem this vaccine *non inferior*, then this is not the right threshold, as a trial testing this way will **fail 50% of the time**. That is, the chance of failing is a coin toss, even if the two groups are exactly equal. Below shows this again. Remember for a given trial, we are only lucky enough to see *one* of these outcomes in the plot below; I am showing 10 so you can see the variation based on the sampling variabilty. 
+If we think that an antibody response *exactly equal* to that seen by 16-25 year olds is sufficient to deem this vaccine *non inferior*, then this is not the right threshold, as a trial testing this way will **fail 50% of the time**. That is, the chance of failing is a coin toss, even if the two groups are exactly equal. Below shows this again. Remember for a given trial, we are only lucky enough to see *one* of these outcomes in the plot below; I am showing 10 so you can see the variation based on the sampling variability. 
 
 ```{r}
+new %>%
+  mutate(
+    success = case_when(
+      gmt_ratio >= 1 & lb > 0.67~ "success",
+      TRUE ~ "failure"
+    ),
+    y = 1:10) -> new 
 ggplot(new, aes(x = gmt_ratio, y = y, color = success)) +
   geom_point() +
   geom_vline(xintercept = c(0.67, 1), lty = 2) +
