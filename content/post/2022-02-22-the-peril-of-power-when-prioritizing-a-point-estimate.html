@@ -23,64 +23,10 @@ toc: no
 <li>The <em>point estimate</em> of the GMT ratio must be <span class="math inline">\(\ge 1\)</span></li>
 </ol>
 <p>The second criteria was originally set by Pfizer to require that the <em>point estimate</em> of the GMT ratio must be <span class="math inline">\(\ge 0.8\)</span>, however after their data lock the FDA requested this to be changed to the higher threshold. While at first glance, this may seem to make sense, after all we often want to make sure that we hold our pediatric trials to a high standard of efficacy, it turns out this change has statistical implications that change the target in ways that are non-standard for non-inferiority trials.</p>
-<p>What do I mean? If we believe that the distribution of antibody concentration in children is <em>exactly the same</em> as what we observed in adolescents, we would expect this second criteria to <em>fail</em> 50% of the time. Why? When doing any trial, we are observing a <em>sample</em>, not the whole population. We expect a certain amount of uncertainty in our estimates. Here is a small example. Below I have generated 10 samples of 250 people from a log normal distribution with a mean of 1142.5 (log mean of 7.04) and a log standard deviation of 0.8. I am comparing this to an observed sample of 253 individuals drawn from the <em>exact</em> same distribution.</p>
-<pre class="r"><code>library(tidyverse)
-library(broom)
-library(geomtextpath)
-set.seed(6000)
-
-# generated &quot;observed&quot; adolescent data
-observed_data &lt;- tibble(
-  titer = rlnorm(253, mean = 7.040974, sd = 0.8),
-  group = &quot;adolescents&quot;
-)
-# 10 samples
-samps &lt;- 10
-
-# 250 in each sample
-n &lt;- 250
-
-# generate 10 example samples of children data from the exact same distribution 
-# as the adolescent data
-
-ten_samples &lt;- tibble(
-  titer = rlnorm(n * samps, mean = 7.040974, sd = 0.8),
-  sample = rep(1:samps, each = n),
-  group = &quot;children&quot;
-) 
-
-ten_samples %&gt;%
-  group_by(sample) %&gt;%
-  do(m = tidy(glm(log(titer) ~ group, data = bind_rows(., observed_data)),
-              conf.int = TRUE, exponentiate = TRUE)) %&gt;%
-  pull(m) %&gt;%
-  bind_rows() %&gt;%
-  filter(term == &quot;groupchildren&quot;) %&gt;%
-  mutate(success = case_when(
-    estimate &gt;= 1 ~ &quot;success&quot;,
-    TRUE ~ &quot;failure&quot;),
-  sample = 1:10) -&gt; o
-
-
-ggplot(o, aes(x = estimate, y = sample, color = success)) +
-  geom_point() +
-  geom_vline(xintercept = 1, lty = 2) +
-  scale_color_manual(values = c(&quot;orange&quot;, &quot;cornflower blue&quot;)) + 
-  geom_textsegment(data = o[o$success == &quot;success&quot;,],
-                   aes(x = conf.low, xend = conf.high, y = sample, yend = sample), 
-                   label = &quot;success&quot;, color = &quot;cornflower blue&quot;,
-                   hjust = 0.8) +
-  geom_textsegment(data = o[o$success == &quot;failure&quot;,],
-                   aes(x = conf.low, xend = conf.high, y = sample, yend = sample), 
-                   label = &quot;failure&quot;, color = &quot;orange&quot;, 
-                   hjust = 0.2) +
-  scale_y_continuous(&quot;Random sample # of\nn=250 people&quot;,
-                     breaks = 1:10) +
-  scale_x_continuous(&quot;Sample GMT Ratio (95% confidence interval)&quot;) +
-  labs(title = &quot;Success threshold: point estimate ≥ 1&quot;,
-       subtitle = &quot;truth: GMT Ratio = 1&quot;) +
-  theme_minimal() +
-  theme(legend.position = &quot;none&quot;)</code></pre>
+<p>What do I mean? If we believe that the distribution of antibody concentration in children is <em>exactly the same</em> as what we observed in adolescents, we would expect this second criteria to <em>fail</em> 50% of the time. Why? When doing any trial, we are observing a <em>sample</em>, not the whole population. We expect a certain amount of uncertainty in our estimates. Here is a small example. Below I have generated 10 samples of 250 people from a log normal distribution with a mean of 1142.5 (log mean of 7.04) and a log standard deviation of 0.8. I am comparing this to an observed sample of 253 individuals drawn from the <em>exact</em> same distribution (incidentally, there were 253 adolescents that led to the “benchmark” of a geometric mean of 1142.5).</p>
+<p><span class="marginnote">
+Want to try it yourself? You can generate samples from a lognormal distribution in R like this <code>rlnorm(253, mean = 7.040974, sd = 0.8)</code>. You can then compare the geometric mean ratio across several samples generated from the same distribution.
+</span></p>
 <p><img src="/post/2022-02-22-the-peril-of-power-when-prioritizing-a-point-estimate_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>Notice in the above plot that even though the <em>true</em> GMT ratio between these groups should be 1 (they were drawn from the exact same distribution!), when using the point estimate as the threshold for success, we “failed” 50% of the time. It was a coin toss whether this trial succeeded or failed by this criteria.</p>
 <p><span class="marginnote">
