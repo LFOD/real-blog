@@ -84,7 +84,7 @@ ggplot(o, aes(x = estimate, y = sample, color = success)) +
   scale_y_continuous("Random sample # of\nn=250 people",
                      breaks = 1:10) +
   scale_x_continuous("Sample GMT Ratio (95% confidence interval)") +
-  labs(title = "Success threshold: point estimate ≥ 1",
+  labs(title = "Success threshold: GMT Ratio ≥ 1",
        subtitle = "truth: GMT Ratio = 1") +
   theme_minimal() +
   theme(legend.position = "none")
