@@ -4,18 +4,20 @@ author: Lucy D'Agostino McGowan
 date: '2022-02-21'
 slug: the-peril-of-power-when-prioritizing-a-point-estimate
 categories: ["COVID-19", "non-inferiority trials", "clinical trials", "power"]
-excerpt: "I recently noticed that the Pfizer immunobridging trials, presumably set up to demonstrate that their COVID-19 vaccines elicit the same antibody response in children as was seen in adolescents, for whom efficacy has previously been demonstrated, have a strange criteria for \"success\"."
+excerpt: "I recently noticed that the Pfizer immunobridging trials, presumably set up to demonstrate that their COVID-19 vaccines elicit the same antibody response in children as was seen in 16-25 year olds, for whom efficacy has previously been demonstrated, have a strange criteria for \"success\"."
 math: yes
 toc: no
+editor_options: 
+  chunk_output_type: console
 ---
 
-I recently noticed that the Pfizer immunobridging trials, presumably set up to demonstrate that their COVID-19 vaccines elicit the same antibody response in children as was seen in adolescents, for whom efficacy has previously been demonstrated, have a strange criteria for "success". 
+I recently noticed that the Pfizer immunobridging trials, presumably set up to demonstrate that their COVID-19 vaccines elicit the same antibody response in children as was seen in 16-25 year olds, for whom efficacy has previously been demonstrated, have a strange criteria for "success". 
 
 <span class="marginnote">
 **GMT:** geometric mean titer. This is a measure of the antibody titers. We use the *geometric* mean because this data is quite skewed (it is also why you typically see it plotted on the log scale). For those of you who `r emo::ji("heart")` math, the equation for the geometric mean is just $\exp\{\frac{\sum_{i=1}^n\textrm{log}(x_i)}{n}\}$
 </span> 
 
-The primary endpoint of these trials is *geomteric mean titer ratio*, that is, the ratio between the geometric mean antibody concentration in the younger age groups compared to the adolescent geometric mean antibody concentration. 
+The primary endpoint of these trials is *geomteric mean titer ratio*, that is, the ratio between the geometric mean antibody concentration in the younger age groups compared to the 16-25 year olds' geometric mean antibody concentration. 
 
 According to the [recent write-up from the 5-11 trial in the New England Journal of Medicine](https://www.nejm.org/doi/full/10.1056/NEJMoa2116298), the trials have been set with two measures of success:
 
@@ -24,7 +26,7 @@ According to the [recent write-up from the 5-11 trial in the New England Journal
 
 The second criteria was originally set by Pfizer to require that the *point estimate* of the GMT ratio must be $\ge 0.8$, however after their data lock the FDA requested this to be changed to the higher threshold. While at first glance, this may seem to make sense, after all we often want to make sure that we hold our pediatric trials to a high standard of efficacy, it turns out this change has statistical implications that change the target in ways that are non-standard for non-inferiority trials. 
 
-What do I mean? If we believe that the distribution of antibody concentration in children is *exactly the same* as what we observed in adolescents, we would expect this second criteria to *fail* 50% of the time. Why? When doing any trial, we are observing a *sample*, not the whole population. We expect a certain amount of uncertainty in our estimates. Here is a small example. Below I have generated 10 samples of 250 people from a log normal distribution with a mean of 1142.5 (log mean of 7.04) and a log standard deviation of 0.8. I am comparing this to an observed sample of 253 individuals drawn from the *exact* same distribution (incidentally, there were 253 adolescents that led to the "benchmark" of a geometric mean of 1142.5).
+What do I mean? If we believe that the distribution of antibody concentration in children is *exactly the same* as what we observed in 16-25 year olds, we would expect this second criteria to *fail* 50% of the time. Why? When doing any trial, we are observing a *sample*, not the whole population. We expect a certain amount of uncertainty in our estimates. Here is a small example. Below I have generated 10 samples of 250 people from a log normal distribution with a mean of 1142.5 (log mean of 7.04) and a log standard deviation of 0.8. I am comparing this to an observed sample of 253 individuals drawn from the *exact* same distribution (incidentally, there were 253 16-25 year olds that led to the "benchmark" of a geometric mean of 1142.5).
 
 <span class ="marginnote">
 Want to try it yourself? You can generate samples from a lognormal distribution in R like this `rlnorm(253, mean = 7.040974, sd = 0.8)`. You can then compare the geometric mean ratio across several samples generated from the same distribution.
@@ -104,7 +106,7 @@ This may not be completely intuitive at first glance, but in fact we can show th
 This standard error multiplier is just the critical value derived from a standard normal distribution at a given quantile. You can calculate any success probability in R using the `qnorm()` function. For example, if we wanted to know the standard error multiplier we'd need to have at least a 70% chance of succeeding by this criteria, you would run `qnorm(0.7)`, revealing we'd need to be at least $0.52 \times \textrm{standard errors}$ better than the target.
 </span>
 
-In order to have a probability of success greater than 80%, for example, the childrens' antibody response would need to be at least $0.84 \times$ standard errors **better** than the adolescents'. To have a probability of success greater than 90%, the childrens' antibody response would need to be at least $1.28 \times$ standard errors **better** than the adolescents'. 
+In order to have a probability of success greater than 80%, for example, the childrens' antibody response would need to be at least $0.84 \times$ standard errors **better** than the 16-25 year olds'. To have a probability of success greater than 90%, the childrens' antibody response would need to be at least $1.28 \times$ standard errors **better** than the 16-25 year olds'. 
 
 As many have pointed out, it is not uncommon for pediatric trials to be held to a higher standard, often requiring efficacy beyond what is required of adults due to an appropriate caution against intervention in an often vulnerable group. I fully believe that the regulators that requested this had every best intention in doing so. In this particular case, however, this type of threshold can potentially lead to the *opposite* effect. By requiring the younger children to mount a *higher* antibody response than the older cohort in order to pass regulatory hurdles, we may be inadvertently pushing towards higher dosing, for example. 
 
