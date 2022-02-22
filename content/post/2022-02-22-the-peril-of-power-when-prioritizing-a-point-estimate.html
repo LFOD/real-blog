@@ -1,0 +1,95 @@
+---
+title: The Peril of Power when Prioritizing a Point Estimate
+author: Lucy D'Agostino McGowan
+date: '2022-02-21'
+slug: the-peril-of-power-when-prioritizing-a-point-estimate
+categories: ["COVID-19", "non-inferiority trials", "clinical trials", "power"]
+excerpt: "I recently noticed that the Pfizer immunobridging trials, presumably set up to demonstrate that their COVID-19 vaccines elicit the same antibody response in children as was seen in adolescents, for whom efficacy has previously been demonstrated, have a strange criteria for \"success\"."
+math: yes
+toc: no
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>I recently noticed that the Pfizer immunobridging trials, presumably set up to demonstrate that their COVID-19 vaccines elicit the same antibody response in children as was seen in adolescents, for whom efficacy has previously been demonstrated, have a strange criteria for “success”.</p>
+<p><span class="marginnote">
+<strong>GMT:</strong> geometric mean titer. This is a measure of the antibody titers. We use the <em>geometric</em> mean because this data is quite skewed (it is also why you typically see it plotted on the log scale). For those of you who ❤️ math, the equation for the geometric mean is just <span class="math inline">\(\exp\{\frac{\sum_{i=1}^n\textrm{log}(x_i)}{n}\}\)</span>
+</span></p>
+<p>The primary endpoint of these trials is <em>geomteric mean titer ratio</em>, that is, the ratio between the geometric mean antibody concentration in the younger age groups compared to the adolescent geometric mean antibody concentration.</p>
+<p>According to the <a href="https://www.nejm.org/doi/full/10.1056/NEJMoa2116298">recent write-up from the 5-11 trial in the New England Journal of Medicine</a>, the trials have been set with two measures of success:</p>
+<ol style="list-style-type: decimal">
+<li>The lower bound of the GMT ratio must be <span class="math inline">\(\ge 0.67\)</span></li>
+<li>The <em>point estimate</em> of the GMT ratio must be <span class="math inline">\(\ge 1\)</span></li>
+</ol>
+<p>The second criteria was originally set by Pfizer to require that the <em>point estimate</em> of the GMT ratio must be <span class="math inline">\(\ge 0.8\)</span>, however after their data lock the FDA requested this to be changed to the higher threshold. While at first glance, this may seem to make sense, after all we often want to make sure that we hold our pediatric trials to a high standard of efficacy, it turns out this change has statistical implications that change the target in ways that are non-standard for non-inferiority trials.</p>
+<p>What do I mean? If we believe that the distribution of antibody concentration in children is <em>exactly the same</em> as what we observed in adolescents, we would expect this second criteria to <em>fail</em> 50% of the time. Why? When doing any trial, we are observing a <em>sample</em>, not the whole population. We expect a certain amount of uncertainty in our estimates. Here is a small example. Below I have generated 10 samples of 250 people from a log normal distribution with a mean of 1142.5 (log mean of 7.04) and a log standard deviation of 0.8. I am comparing this to an observed sample of 253 individuals drawn from the <em>exact</em> same distribution.</p>
+<pre class="r"><code>library(tidyverse)
+library(broom)
+library(geomtextpath)
+set.seed(6000)
+
+# generated &quot;observed&quot; adolescent data
+observed_data &lt;- tibble(
+  titer = rlnorm(253, mean = 7.040974, sd = 0.8),
+  group = &quot;adolescents&quot;
+)
+# 10 samples
+samps &lt;- 10
+
+# 250 in each sample
+n &lt;- 250
+
+# generate 10 example samples of children data from the exact same distribution 
+# as the adolescent data
+
+ten_samples &lt;- tibble(
+  titer = rlnorm(n * samps, mean = 7.040974, sd = 0.8),
+  sample = rep(1:samps, each = n),
+  group = &quot;children&quot;
+) 
+
+ten_samples %&gt;%
+  group_by(sample) %&gt;%
+  do(m = tidy(glm(log(titer) ~ group, data = bind_rows(., observed_data)),
+              conf.int = TRUE, exponentiate = TRUE)) %&gt;%
+  pull(m) %&gt;%
+  bind_rows() %&gt;%
+  filter(term == &quot;groupchildren&quot;) %&gt;%
+  mutate(success = case_when(
+    estimate &gt;= 1 ~ &quot;success&quot;,
+    TRUE ~ &quot;failure&quot;),
+  sample = 1:10) -&gt; o
+
+
+ggplot(o, aes(x = estimate, y = sample, color = success)) +
+  geom_point() +
+  geom_vline(xintercept = 1, lty = 2) +
+  scale_color_manual(values = c(&quot;orange&quot;, &quot;cornflower blue&quot;)) + 
+  geom_textsegment(data = o[o$success == &quot;success&quot;,],
+                   aes(x = conf.low, xend = conf.high, y = sample, yend = sample), 
+                   label = &quot;success&quot;, color = &quot;cornflower blue&quot;,
+                   hjust = 0.8) +
+  geom_textsegment(data = o[o$success == &quot;failure&quot;,],
+                   aes(x = conf.low, xend = conf.high, y = sample, yend = sample), 
+                   label = &quot;failure&quot;, color = &quot;orange&quot;, 
+                   hjust = 0.2) +
+  scale_y_continuous(&quot;Random sample # of\nn=250 people&quot;,
+                     breaks = 1:10) +
+  scale_x_continuous(&quot;Sample GMT Ratio (95% confidence interval)&quot;) +
+  labs(title = &quot;Success threshold: point estimate ≥ 1&quot;,
+       subtitle = &quot;truth: GMT Ratio = 1&quot;) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2022-02-22-the-peril-of-power-when-prioritizing-a-point-estimate_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Notice in the above plot that even though the <em>true</em> GMT ratio between these groups should be 1 (they were drawn from the exact same distribution!), when using the point estimate as the threshold for success, we “failed” 50% of the time. It was a coin toss whether this trial succeeded or failed by this criteria.</p>
+<p><span class="marginnote">
+The standard error is just the {standard devation} divided by the square-root of the sample size, <span class="math inline">\(n\)</span>, <span class="math inline">\(\frac{sd}{\sqrt{n}}\)</span>
+</span></p>
+<p>This may not be completely intuitive at first glance, but in fact we can show that the probability of “succeeding” under this criteria is driven by how much better the antibody concentration is in children compared to the benchmark – it is tied to the standard error.</p>
+<p><span class="marginnote">
+This standard error multiplier is just the critical value derived from a standard normal distribution at a given quantile. You can calculate any success probability in R using the <code>qnorm()</code> function. For example, if we wanted to know the standard error multiplier we’d need to have at least a 70% chance of succeeding by this criteria, you would run <code>qnorm(0.7)</code>, revealing we’d need to be at least <span class="math inline">\(0.52 \times \textrm{standard errors}\)</span> better than the target.
+</span>
+In order to have a probability of success greater than 80%, for example, the childrens’ antibody response would need to be at least <span class="math inline">\(0.84 \times \textrm{standard errors}\)</span> <strong>better</strong> than the adolescents’. To have a probability of success greater than 90%, the childrens’ antibody response would need to be at least <span class="math inline">\(1.28 \times \textrm{standard errors}\)</span> <strong>better</strong> than the adolescents’.</p>
+<p>As many have pointed out, it is not uncommon for pediatric trials to be held to a higher standard, often requiring efficacy beyond what is required of adults due to an appropriate caution against intervention in an often vulnerable group. I fully believe that the regulators that requested this had every best intention in doing so. In this particular case, however, this type of threshold can potentially lead to the <em>opposite</em> effect. By requiring the younger children to mount a <em>higher</em> antibody response than the older cohort in order to pass regulatory hurdles, we may be inadvertently pushing towards higher dosing, for example.</p>
+<p>Is this why the 2-4 year old vaccine failed previously? It’s not totally clear since the data hasn’t been released, however based on the tid bits we’ve gotten from media reports, I don’t think so. <a href="https://www.nytimes.com/2022/02/11/us/politics/fda-children-pfizer-vaccine.html">The New York Times reported</a>, for example, that the 2-4 vaccine only elicited 60% of the response compared to the 16-25 year olds, suggesting that it would have failed by the lower bound criteria alone. So why does this matter? Presumably, these thresholds will be used to compare the post-3rd dose response to the 16-25 year olds as well – does it make sense to require the under 5s to have a <strong>stronger</strong> antibody response than the 16-25 year olds? Especially with no other option for protection via a vaccine for this age group, I would say no.</p>
