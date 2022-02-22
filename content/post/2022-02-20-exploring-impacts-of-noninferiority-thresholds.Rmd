@@ -19,8 +19,8 @@ The standard error is just the {standard devation} divided by the square-root of
 In statistics speak, this *uncertainty* is often quantified as a *standard error*, a measure that takes into account both the standard deviation of our outcome of interest and the number of people we have measured this outcome on. What do I mean? Here is an example. 
 
 <span class="marginnote">
-**GMT:** geometric mean titer. This is a measure of the antibody titers. We use the *geometric* mean because this data is quite skewed (it is also why you typically see it plotted on the log scale). For those of you who `r emo::ji("heart")` math, the equation for the geomteric mean is just $\exp\{\frac{\sum_{i=1}^n\textrm{log}(x_i)}{n}\}$
-</span>
+**GMT:** geometric mean titer. This is a measure of the antibody titers. We use the *geometric* mean because this data is quite skewed (it is also why you typically see it plotted on the log scale). For those of you who `r emo::ji("heart")` math, the equation for the geometric mean is just $\exp\{\frac{\sum_{i=1}^n\textrm{log}(x_i)}{n}\}$
+</span> 
 
 Let's say we want to know whether `new intervention` is not inferior to `benchmark intervention` with respect to some measure, in this case we are going to use the geometric mean titers (GMT), a common measure of antibody response. In this first example, the *truth* is these two interventions yield the same `GMT`, that is, they are equivalent, so `new intervention` is not inferior to `benchmark intervention`. Let's say we have a sample of 253 people who received the benchmark intervention. The *truth* is that `GMT` is 1142.5 with a standard deviation of 0.8. We won't see these *exact* results in our benchmark intervention group since we're just looking at one sample of 253. The plot below shows what our 253 folks could look like if we were to collect these data 10 different times. The circles represent the `GMT` in each sample and the lines show the 95% confidence intervals. 
 
