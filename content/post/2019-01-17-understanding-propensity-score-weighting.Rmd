@@ -215,7 +215,7 @@ This looks a lot like the ATM graph, except shifted just a bit to improve the va
 
 Now that we have a bit of an understanding of what these weights do, we can estimate the treatment effect in each of these "pseudo-populations". Mathematically, we can write this as follows, with the outcome for each individual defined as $Y_i$, the treatment $Z_i$ and the weight $w_i$.
 
-$\frac{\sum{Y_i Z_i w_i}}{\sum{Y_i w_i}} - \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}$
+$\frac{\sum{Y_i Z_i w_i}}{\sum{Z_i w_i}} - \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}$
 
 In R, we can make a function to do this.
 ```{r}

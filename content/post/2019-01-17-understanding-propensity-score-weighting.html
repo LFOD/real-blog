@@ -193,7 +193,7 @@ ggplot(d) +
 <div id="estimating-the-treatment-effect" class="section level2">
 <h2>Estimating the treatment effect</h2>
 <p>Now that we have a bit of an understanding of what these weights do, we can estimate the treatment effect in each of these “pseudo-populations”. Mathematically, we can write this as follows, with the outcome for each individual defined as <span class="math inline">\(Y_i\)</span>, the treatment <span class="math inline">\(Z_i\)</span> and the weight <span class="math inline">\(w_i\)</span>.</p>
-<p><span class="math inline">\(\frac{\sum{Y_i Z_i w_i}}{\sum{Y_i w_i}} - \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}\)</span></p>
+<p><span class="math inline">\(\frac{\sum{Y_i Z_i w_i}}{\sum{Z_i w_i}} - \frac{\sum{Y_i(1-Z_i)w_i}}{\sum{(1-Z_i)w_i}}\)</span></p>
 <p>In R, we can make a function to do this.</p>
 <pre class="r"><code>treatment_effect &lt;- function(treatment, outcome, weight) {
   (sum(treatment * outcome * weight) / sum(treatment * weight)) - (sum((1 - treatment) * outcome * weight) / sum((1 - treatment) * weight))
