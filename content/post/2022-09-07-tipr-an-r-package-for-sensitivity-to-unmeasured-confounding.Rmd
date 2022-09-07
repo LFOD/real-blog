@@ -124,6 +124,7 @@ exdata_rr %>%
 
 The actual difference is `0.5`. Returning to our plot, we can see that this point is to the right of the "tipping" bound, indicating that this unmeasured confounder is "large" enough to tip our result (which is exactly what we saw! Before adjusting for this, we had a risk ratio of 1.5, after adjusting we observe a "tip" (crossing the null, 1) to 0.9).
 
+
 ```{r}
 ggplot(tip_df,
        aes(x = exposure_confounder_effect, y = confounder_outcome_effect)) + 
