@@ -74,7 +74,67 @@ coef(mod) %&gt;%
 ##             &lt;dbl&gt;           &lt;dbl&gt;                      &lt;dbl&gt;               &lt;dbl&gt;
 ## 1               1             1.5                        0.5                2.25
 ## # … with 1 more variable: n_unmeasured_confounders &lt;dbl&gt;</code></pre>
-<p>This results in a confounder-outcome effect of 2.25, meaning that a hypothetical unobserved continuous confounder with a mean difference of <code>0.5</code> would need a relationship of at least <code>2.25</code> with the outcome to tip the analysis at the point estimate.</p>
+<p>The output is a data frame with 5 variables – in this case, we are interested in the <code>confounder_outcome_effect</code> column, as this tells us the magnitude of the relationship between an unmeasured confounder and outcome needed to tip this analysis. This results in a confounder-outcome effect of 2.25, meaning that a hypothetical unobserved continuous confounder with a mean difference of <code>0.5</code> would need a relationship of at least <code>2.25</code> with the outcome to tip the analysis at the point estimate.</p>
+<p>Alternatively, you could look at a range of potential values for the <code>exposure_confounder_effect</code> and plot the relationship.</p>
+<pre class="r"><code>tip_df &lt;- tip_with_continuous(
+  effect_observed = 1.5,
+  exposure_confounder_effect = seq(0.1, 1, by = 0.1),
+  verbose = FALSE
+)</code></pre>
+<p>We could then plot these results:</p>
+<pre class="r"><code>library(ggplot2)
+
+ggplot(tip_df,
+       aes(x = exposure_confounder_effect, y = confounder_outcome_effect)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(x = &quot;Exposure - unmeasured confounder effect&quot;,
+       y = &quot;Unmeasured confounder - outcome effect&quot;)</code></pre>
+<p><img src="/post/2022-09-07-tipr-an-r-package-for-sensitivity-to-unmeasured-confounding_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>The line represents the values needed for the unobserved confounder to tip this relationship.</p>
+<p>Since this data was simulated, we can calculated what the <em>actual</em> effect is.</p>
+<pre class="r"><code>mod_actual &lt;- glm(outcome ~ exposure + measured_confounder + .unmeasured_confounder,
+    data = exdata_rr,
+    family = poisson)
+
+coef(mod_actual) %&gt;%
+  exp()</code></pre>
+<pre><code>##            (Intercept)               exposure    measured_confounder 
+##             0.02450901             0.92108511             2.43654796 
+## .unmeasured_confounder 
+##             2.41680059</code></pre>
+<pre class="r"><code>lmtest::coefci(mod_actual, vcov = sandwich::vcovHC) %&gt;% 
+  exp()</code></pre>
+<pre><code>##                             2.5 %     97.5 %
+## (Intercept)            0.01801732 0.03333966
+## exposure               0.68914975 1.23107900
+## measured_confounder    2.12823267 2.78952863
+## .unmeasured_confounder 2.10602770 2.77343223</code></pre>
+<p>The <em>actual</em> risk ratio is 0.9 (95% CI: 0.7, 1.2) (so null!). The actual relationship between the unmeasured confounder and outcome is 2.4. We can also calculate the actual exposure - unmeasured confounder effect:</p>
+<pre class="r"><code>exdata_rr %&gt;%
+  dplyr::group_by(exposure) %&gt;%
+  dplyr::summarise(m = mean(.unmeasured_confounder))</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   exposure      m
+##      &lt;dbl&gt;  &lt;dbl&gt;
+## 1        0 0.0438
+## 2        1 0.547</code></pre>
+<p>The actual difference is <code>0.5</code>. Returning to our plot, we can see that this point is to the right of the “tipping” bound, indicating that this unmeasured confounder is “large” enough to tip our result (which is exactly what we saw! Before adjusting for this, we had a risk ratio of 1.5, after adjusting we observe a “tip” (crossing the null, 1) to 0.9).</p>
+<pre class="r"><code>ggplot(tip_df,
+       aes(x = exposure_confounder_effect, y = confounder_outcome_effect)) + 
+  geom_point() + 
+  geom_line() + 
+  annotate(
+    &quot;point&quot;,
+    x = 0.5,
+    y = 2.4,
+    size = 2,
+    shape = &quot;square&quot;,
+    color = &quot;red&quot;
+  ) + 
+  labs(x = &quot;Exposure - unmeasured confounder effect&quot;,
+       y = &quot;Unmeasured confounder - outcome effect&quot;)</code></pre>
+<p><img src="/post/2022-09-07-tipr-an-r-package-for-sensitivity-to-unmeasured-confounding_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="the-details" class="section level2">
 <h2>The details</h2>
