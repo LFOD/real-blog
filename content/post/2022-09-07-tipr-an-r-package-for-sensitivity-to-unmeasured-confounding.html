@@ -1,0 +1,174 @@
+---
+title: "tipr: An R package for sensitivity analyses for unmeasured confounding"
+author: Lucy D'Agostino McGowan
+date: '2022-09-08'
+slug: tipr-an-r-package-for-sensitivity-to-unmeasured-confounding
+categories: ["rstats"]
+excerpt: "The tipr R package has new updates!"
+math: yes
+toc: no
+editor_options: 
+  chunk_output_type: console
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>The <code>tipr</code> R package has some new features! And a new and improved API!</p>
+<div id="what-is-tipr" class="section level2">
+<h2>What is <code>tipr</code></h2>
+<p><code>tipr</code> is an R package that allows you to conduct sensitivity analyses for unmeasured confounders. Why might you want to do that? Well, as it turns out, the assumption of “no unmeasured confounders” is integral to any estimation of a causal effect. This assumption is untestable, so often the best we can do is examine how far off our estimates would be should an unmeasured confounder exists, hence <strong>sensitivity analyses</strong>!</p>
+</div>
+<div id="how-do-i-use-tipr" class="section level2">
+<h2>How do I use <code>tipr</code></h2>
+<p>You can install the CRAN version by running the following:</p>
+<pre class="r"><code>install.packages(&quot;tipr&quot;)</code></pre>
+<pre class="r"><code>library(tipr)</code></pre>
+<p>The package comes with a few example data sets. For example, the dataframe <code>exdata_rr</code> is simulated data that can be used to estimate the effect of a binary exposure on a binary outcome, estimated via a risk ratio. This data set has 4 columns:</p>
+<pre class="r"><code>exdata_rr</code></pre>
+<pre><code>## # A tibble: 2,000 × 4
+##    .unmeasured_confounder measured_confounder exposure outcome
+##                     &lt;dbl&gt;               &lt;dbl&gt;    &lt;dbl&gt;   &lt;int&gt;
+##  1                0.716                -0.890        0       0
+##  2                0.134                -0.249        0       0
+##  3                0.238                -0.104        0       0
+##  4                0.0286                0.165        0       0
+##  5               -0.598                 0.812        0       0
+##  6                0.00419              -0.563        0       0
+##  7               -0.960                -0.559        0       0
+##  8               -1.15                  1.14         0       0
+##  9               -0.374                -1.23         0       0
+## 10                1.80                  0.495        0       0
+## # … with 1,990 more rows</code></pre>
+<p>Using this data, we could estimate the exposure-outcome relationship using the measured confounder as follows:</p>
+<pre class="r"><code>mod &lt;- glm(outcome ~ exposure + measured_confounder,
+           data = exdata_rr,
+           family = poisson)
+
+## calculate the risk ratio by exponentiating the coefficient
+coef(mod) %&gt;%
+  exp()</code></pre>
+<pre><code>##         (Intercept)            exposure measured_confounder 
+##          0.03656318          1.49477100          2.42566275</code></pre>
+<p>We observe a risk ratio of 1.5 for the exposure after adjusting for the measured confounder. We can then get a confidence interval for this output. Note that here we are using a generalized linear model with a log link (via the Poisson family) to estimate this risk ratio. When estimating the risk ratio using this method, it is important to estimate the variability using <strong>robust standard errors</strong> (a sandwich estimator). In R, you can use the <code>sandwich</code> and <code>lmtest</code> packages to do this.</p>
+<pre class="r"><code>lmtest::coefci(mod, vcov = sandwich::vcovHC) %&gt;% 
+  exp()</code></pre>
+<pre><code>##                          2.5 %     97.5 %
+## (Intercept)         0.02778992 0.04810614
+## exposure            1.10497223 2.02207828
+## measured_confounder 2.13761161 2.75252986</code></pre>
+<p>Our observed effect, after adjusting for our measured confounder is a risk ratio of 1.5 (95% CI: 1.1, 2.0).</p>
+<p>Let’s assume our unmeasured confounder is normally distributed with a mean of 0.5 in the exposed group and 0 in the unexposed (and unit variance in both) resulting in a mean difference of 0.5. We can use this to solve for the relationship between the unmeasured confounder and outcome needed to “tip” the analysis (that is needed to make the observed effect, 1.5, cross 1).</p>
+<p>To do this, we are going to use the <code>tip_with_continuous</code> function. We will set the <code>effect_observed</code> to 1.5 and the <code>exposure_confounder_effect</code> to 0.5.</p>
+<pre class="r"><code>tip_with_continuous(
+  effect_observed = 1.5,
+  exposure_confounder_effect = 0.5
+)</code></pre>
+<pre><code>## The observed effect (1.5) WOULD be tipped by 1 unmeasured confounder
+## with the following specifications:
+##   * estimated difference in scaled means between the unmeasured confounder
+##     in the exposed population and unexposed population: 0.5
+##   * estimated relationship between the unmeasured confounder and the outcome: 2.25</code></pre>
+<pre><code>## # A tibble: 1 × 5
+##   effect_adjusted effect_observed exposure_confounder_effect confounder_outcome…
+##             &lt;dbl&gt;           &lt;dbl&gt;                      &lt;dbl&gt;               &lt;dbl&gt;
+## 1               1             1.5                        0.5                2.25
+## # … with 1 more variable: n_unmeasured_confounders &lt;dbl&gt;</code></pre>
+<p>This results in a confounder-outcome effect of 2.25, meaning that a hypothetical unobserved continuous confounder with a mean difference of <code>0.5</code> would need a relationship of at least <code>2.25</code> with the outcome to tip the analysis at the point estimate.</p>
+</div>
+<div id="the-details" class="section level2">
+<h2>The details</h2>
+<p>The functions in the tipr package follow a unified grammar. The function names follow this form: <code>{action}_{effect}_with_{what}</code>.</p>
+<p>For example, to adjust (<code>action</code>) a coefficient (<code>effect</code>) with a binary unmeasured confounder (<code>what</code>), we use the function <code>adjust_coef_with_binary()</code>.</p>
+<p>Below is a copy of the table included in a <a href="https://doi.org/10.21105/joss.04495">recent JOSS article</a> about this package.</p>
+<p><strong>Table 1</strong>. Grammar of <code>tipr</code> functions.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="13%" />
+<col width="26%" />
+<col width="59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>category</th>
+<th>Function term</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>action</strong></td>
+<td><code>adjust</code></td>
+<td>These functions adjust observed effects,
+requiring both the unmeasured
+confounder-exposure relationship and
+unmeasured confounder-outcome relationship to
+be specified.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>tip</code></td>
+<td>These functions tip observed effects. Only
+one relationship, either the unmeasured
+confounder-exposure relationship or
+unmeasured confounder-outcome relationship
+needs to be specified.</td>
+</tr>
+<tr class="odd">
+<td><strong>effect</strong></td>
+<td><code>coef</code></td>
+<td>These functions specify an observed
+coefficient from a linear, log-linear,
+logistic, or Cox proportional hazards model</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>rr</code></td>
+<td>These functions specify an observed
+relative risk</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>or</code></td>
+<td>These functions specify an observed
+odds ratio</td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>hr</code></td>
+<td>These functions specify an observed
+hazard ratio</td>
+</tr>
+<tr class="odd">
+<td><strong>what</strong></td>
+<td><code>continuous</code></td>
+<td>These functions specify an unmeasured
+standardized Normally distributed confounder.
+These functions will include the parameters
+<code>exposure_confounder_effect</code> and
+<code>confounder_outcome_effect</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>binary</code></td>
+<td>These functions specify an unmeasured binary
+confounder. These functions will include the
+parameters <code>exposed_confounder_prev</code>,
+<code>unexposed_confounder_prev</code>, and
+<code>confounder_outcome_effect</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>r2</code></td>
+<td>These functions specify an unmeasured
+confounder parameterized by specifying the
+percent of variation in the exposure / outcome
+explained by the unmeasured confounder. These
+functions will include the parameters
+<code>confounder_exposure_r2</code> and
+<code>outcome_exposure_r2</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can find full documentation here: <a href="https://lucymcgowan.github.io/tipr/" class="uri">https://lucymcgowan.github.io/tipr/</a></p>
+</div>

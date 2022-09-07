@@ -1,0 +1,139 @@
+---
+title: "tipr: An R package for sensitivity analyses for unmeasured confounding"
+author: Lucy D'Agostino McGowan
+date: '2022-09-08'
+slug: tipr-an-r-package-for-sensitivity-to-unmeasured-confounding
+categories: ["rstats"]
+excerpt: "The tipr R package has new updates!"
+math: yes
+toc: no
+editor_options: 
+  chunk_output_type: console
+---
+
+The `tipr` R package has some new features! And a new and improved API! 
+
+## What is `tipr`
+
+`tipr` is an R package that allows you to conduct sensitivity analyses for unmeasured confounders. Why might you want to do that? Well, as it turns out, the assumption of "no unmeasured confounders" is integral to any estimation of a causal effect. This assumption is untestable, so often the best we can do is examine how far off our estimates would be should an unmeasured confounder exists, hence **sensitivity analyses**!
+
+## How do I use `tipr`
+
+You can install the CRAN version by running the following:
+
+```{r}
+#| eval: false
+install.packages("tipr")
+```
+
+```{r}
+#| include: false
+library(tidyverse)
+```
+
+```{r}
+library(tipr)
+```
+
+The package comes with a few example data sets. For example, the dataframe `exdata_rr` is simulated data that can be used to estimate the effect of a binary exposure on a binary outcome, estimated via a risk ratio. This data set has 4 columns:
+
+```{r}
+exdata_rr
+```
+
+Using this data, we could estimate the exposure-outcome relationship using the measured confounder as follows:
+
+```{r}
+mod <- glm(outcome ~ exposure + measured_confounder,
+           data = exdata_rr,
+           family = poisson)
+
+## calculate the risk ratio by exponentiating the coefficient
+coef(mod) %>%
+  exp()
+```
+
+We observe a risk ratio of 1.5 for the exposure after adjusting for the measured confounder. We can then get a confidence interval for this output. Note that here we are using a generalized linear model with a log link (via the Poisson family) to estimate this risk ratio. When estimating the risk ratio using this method, it is important to estimate the variability using **robust standard errors** (a sandwich estimator). In R, you can use the `sandwich` and `lmtest` packages to do this.
+
+```{r}
+lmtest::coefci(mod, vcov = sandwich::vcovHC) %>% 
+  exp()
+```
+
+Our observed effect, after adjusting for our measured confounder is a risk ratio of 1.5 (95% CI: 1.1, 2.0).
+
+Let's assume our unmeasured confounder is normally distributed with a mean of 0.5 in the exposed group and 0 in the unexposed (and unit variance in both) resulting in a mean difference of 0.5. We can use this to solve for the relationship between the unmeasured confounder and outcome needed to "tip" the analysis (that is needed to make the observed effect, 1.5, cross 1).
+
+To do this, we are going to use the `tip_with_continuous` function. We will set the `effect_observed` to 1.5 and the `exposure_confounder_effect` to 0.5.
+
+```{r}
+tip_with_continuous(
+  effect_observed = 1.5,
+  exposure_confounder_effect = 0.5
+)
+```
+
+This results in a confounder-outcome effect of 2.25, meaning that a hypothetical unobserved continuous confounder with a mean difference of `0.5` would need a relationship of at least `2.25` with the outcome to tip the analysis at the point estimate.
+
+## The details
+
+The functions in the tipr package follow a unified grammar. The function names follow this form: `{action}_{effect}_with_{what}`.
+
+For example, to adjust (`action`) a coefficient (`effect`) with a binary unmeasured confounder (`what`), we use the function `adjust_coef_with_binary()`. 
+
+
+Below is a copy of the table included in a [recent JOSS article](https://doi.org/10.21105/joss.04495) about this package.
+
+**Table 1**. Grammar of `tipr` functions.
+
++----------+--------------------+----------------------------------------------+
+| category | Function term      | Use                                          |
++==========+====================+==============================================+
+|**action**| `adjust`           | These functions adjust observed effects,     |
+|          |                    | requiring both the unmeasured        |
+|          |                    | confounder-exposure relationship and         |
+|          |                    | unmeasured confounder-outcome relationship to|
+|          |                    | be specified.                                |
++----------+--------------------+----------------------------------------------+
+|          | `tip`              | These functions tip observed effects. Only   |
+|          |                    | one relationship, either the unmeasured      |
+|          |                    | confounder-exposure relationship or          |
+|          |                    | unmeasured confounder-outcome relationship   |
+|          |                    | needs to be specified.                       |
++----------+--------------------+----------------------------------------------+
+|**effect**| `coef`             | These functions specify an observed          |
+|          |                    | coefficient from a linear, log-linear,       |
+|          |                    | logistic, or Cox proportional hazards model  |
++----------+--------------------+----------------------------------------------+
+|          | `rr`               | These functions specify an observed          |
+|          |                    | relative risk                                |
++----------+--------------------+----------------------------------------------+
+|          | `or`               | These functions specify an observed          |
+|          |                    | odds ratio                                   |
++----------+--------------------+----------------------------------------------+
+|          | `hr`               | These functions specify an observed          |
+|          |                    | hazard ratio                                 |
+|          |                    |  
++----------+--------------------+----------------------------------------------+
+|**what**  | `continuous`       | These functions specify an unmeasured 
+|          |                    | standardized Normally distributed confounder. 
+|          |                    | These functions will include the parameters
+|          |                    | `exposure_confounder_effect` and 
+|          |                    | `confounder_outcome_effect`
++----------+--------------------+----------------------------------------------+
+|          | `binary`           | These functions specify an unmeasured binary
+|          |                    | confounder. These functions will include the 
+|          |                    | parameters `exposed_confounder_prev`, 
+|          |                    | `unexposed_confounder_prev`, and
+|          |                    | `confounder_outcome_effect`
++----------+--------------------+----------------------------------------------+
+|          | `r2`               | These functions specify an unmeasured 
+|          |                    | confounder parameterized by specifying the  
+|          |                    | percent of variation in the exposure / outcome  
+|          |                    | explained by the unmeasured confounder. These  
+|          |                    | functions will include the parameters 
+|          |                    | `confounder_exposure_r2` and 
+|          |                    | `outcome_exposure_r2`
++----------+--------------------+----------------------------------------------+
+
+You can find full documentation here: https://lucymcgowan.github.io/tipr/
