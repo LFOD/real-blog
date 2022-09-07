@@ -73,7 +73,75 @@ tip_with_continuous(
 )
 ```
 
-This results in a confounder-outcome effect of 2.25, meaning that a hypothetical unobserved continuous confounder with a mean difference of `0.5` would need a relationship of at least `2.25` with the outcome to tip the analysis at the point estimate.
+The output is a data frame with 5 variables -- in this case, we are interested in the `confounder_outcome_effect` column, as this tells us the magnitude of the relationship between an unmeasured confounder and outcome needed to tip this analysis. This results in a confounder-outcome effect of 2.25, meaning that a hypothetical unobserved continuous confounder with a mean difference of `0.5` would need a relationship of at least `2.25` with the outcome to tip the analysis at the point estimate.
+
+Alternatively, you could look at a range of potential values for the `exposure_confounder_effect` and plot the relationship.
+
+```{r}
+tip_df <- tip_with_continuous(
+  effect_observed = 1.5,
+  exposure_confounder_effect = seq(0.1, 1, by = 0.1),
+  verbose = FALSE
+)
+```
+
+We could then plot these results:
+
+```{r}
+library(ggplot2)
+
+ggplot(tip_df,
+       aes(x = exposure_confounder_effect, y = confounder_outcome_effect)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(x = "Exposure - unmeasured confounder effect",
+       y = "Unmeasured confounder - outcome effect")
+```
+
+The line represents the values needed for the unobserved confounder to tip this relationship. 
+
+Since this data was simulated, we can calculated what the *actual* effect is.
+
+```{r}
+mod_actual <- glm(outcome ~ exposure + measured_confounder + .unmeasured_confounder,
+    data = exdata_rr,
+    family = poisson)
+
+coef(mod_actual) %>%
+  exp()
+
+lmtest::coefci(mod_actual, vcov = sandwich::vcovHC) %>% 
+  exp()
+```
+
+The *actual* risk ratio is 0.9 (95% CI: 0.7, 1.2) (so null!). The actual relationship between the unmeasured confounder and outcome is 2.4. We can also calculate the actual exposure - unmeasured confounder effect:
+
+```{r}
+exdata_rr %>%
+  dplyr::group_by(exposure) %>%
+  dplyr::summarise(m = mean(.unmeasured_confounder))
+```
+
+The actual difference is `0.5`. Returning to our plot, we can see that this point is to the right of the "tipping" bound, indicating that this unmeasured confounder is "large" enough to tip our result (which is exactly what we saw! Before adjusting for this, we had a risk ratio of 1.5, after adjusting we observe a "tip" (crossing the null, 1) to 0.9).
+
+```{r}
+ggplot(tip_df,
+       aes(x = exposure_confounder_effect, y = confounder_outcome_effect)) + 
+  geom_point() + 
+  geom_line() + 
+  annotate(
+    "point",
+    x = 0.5,
+    y = 2.4,
+    size = 2,
+    shape = "square",
+    color = "red"
+  ) + 
+  labs(x = "Exposure - unmeasured confounder effect",
+       y = "Unmeasured confounder - outcome effect")
+```
+
+
 
 ## The details
 
